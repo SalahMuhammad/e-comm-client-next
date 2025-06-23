@@ -1,0 +1,13 @@
+{
+    "navLinks": {
+        "warehouse": {
+            "title": "المستودع",
+            "subLinks": {
+                "items": "العناصر",
+                "createItem": "إنشاء عنصر",
+                "repositories": "المستودعات",
+                "createRepository": "إنشاء مستودع"
+            }
+        }
+    }
+}

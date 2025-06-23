@@ -1,0 +1,28 @@
+{
+	"navLinks": {
+		"warehouse": {
+			"title": "Warehouse",
+			"subLinks": {
+				"items": "Items",
+				"createItem": "Creat Item",
+				"repositories": "Repositories",
+				"createRepository": "Create Repository"
+			}
+		}
+	},
+	"warehouse": {
+		"items": {
+			"card": {
+				"origin": "Origin",
+				"place": "Place",
+				"edit": "Edit"
+			},
+			"paginationControls": {
+				"next": "Next",
+				"prev": "Prev",
+				"page": "Page",
+				"of": "of"
+			}
+		}
+	}
+}
