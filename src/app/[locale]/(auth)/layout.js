@@ -1,4 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";;
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 
 const geistSans = Geist({
@@ -19,14 +21,20 @@ export const metadata = {
 
 export default async function RootLayout({
   children,
+  params
 }) {
+  const { locale } = await params;
+
 
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <NextIntlClientProvider>
+          {children}
+        </NextIntlClientProvider>
+
       </body>
     </html>
   );

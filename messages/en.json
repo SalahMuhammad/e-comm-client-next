@@ -24,5 +24,21 @@
 				"of": "of"
 			}
 		}
+	},
+	"auth": {
+		"welcome": "Welcome Back",
+		"username": "Username",
+		"password": "Password",
+		"errors": {
+			"missing": {
+				"username": "Username is required",
+				"password": "Password is required",
+				"general": "Username and password are required."
+			},
+			"403": "Invalid credentials.",
+			"404": "Service not found.",
+			"500": "Server error. Please try again later.",
+			"etc": "Server error during login. Please try again."
+		}
 	}
 }
