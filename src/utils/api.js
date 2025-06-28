@@ -4,7 +4,6 @@ const BASE_URL = process.env.API_URL || 'http://localhost:8000';
 
 export async function apiRequest(endpoint, options = {}) {
     const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
-    console.log(await getServerAuthToken(), 5435345)
     // if (endpoint === '/auth/login/' || endpoint === 'auth/login/') {
         // Clear any existing token for login
         // document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -39,8 +38,26 @@ export async function apiRequest(endpoint, options = {}) {
     });
 
     if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
+        let errorMessage = response.statusText || 'Request failed';
+        
+        try {
+            const errorBody = await response.text();
+            if (errorBody) {
+                try {
+                    const errorJson = JSON.parse(errorBody);
+                    errorMessage = errorJson.message || errorJson.detail || errorMessage;
+                } catch {
+                    errorMessage = errorBody;
+                }       
+            }
+        } catch {}
+        
+        const error = new Error(errorMessage);
+        error.status = response.status;
+        error.statusText = response.statusText;
+        
+        throw error;
     }
 
-    return response.json()
+    return await response.json();
 }
