@@ -1,13 +1,98 @@
 {
     "navLinks": {
+        "dashboard": {
+            "headLabel": "لوحة التحكم"
+        },
         "warehouse": {
-            "title": "المستودع",
-            "subLinks": {
-                "items": "العناصر",
+            "headLabel": "المخزن",
+            "subLabels": {
+                "items": "قائمة العناصر",
                 "createItem": "إنشاء عنصر",
-                "repositories": "المستودعات",
+                "repositories": "قائمة المستودعات",
                 "createRepository": "إنشاء مستودع"
             }
+        },
+        "sales": {
+            "headLabel": "المبيعات",
+            "subLabels": {
+                "invoiceManagement": "إدارة الفواتير",
+                "createInvoice": "إنشاء فاتورة"
+            }
+        },
+        "customersSuppliers": {
+            "headLabel": "العملاء/الموردين",
+            "subLabels": {
+                "management": "إدارة العملاء/الموردين",
+                "createInvoice": "إنشاء عميل/مورد"
+            }
+        },
+        "finance": {
+            "headLabel": "المالية",
+            "subLabels": {
+                "payments": "المدفوعات",
+                "addPayment": "إضافة دفعة",
+                "expenses": "المصروفات",
+                "addExpenses": "إضافة مصروفات",
+                "debts": "الديون"
+            }
+        },
+        "reports": {
+            "headLabel": "التقارير",
+            "subLabels": {
+                "refilled": "أسطوانات معبأة",
+                "payments": "المدفوعات خلال فترة"
+            }
+        },
+        "refilledCans": {
+            "headLabel": "العبوات المعبأة",
+            "subLabels": {
+                "refilled": "العبوات المعبأة",
+                "cansWithClints": "العبوات مع العملاء",
+                "create": "إنشاء"
+            }
+        },
+        "userDropDown": {
+            "settings": "الإعدادات",
+            "signOut": "تسجيل الخروج"
+        },
+        "signUp": "إنشاء حساب"
+    },
+
+    "warehouse": {
+        "items": {
+            "card": {
+                "origin": "المنشأ",
+                "place": "المكان",
+                "edit": "تعديل"
+            },
+            "paginationControls": {
+                "next": "الصفحة التالية",
+                "prev": "السابق",
+                "page": "صفحة",
+                "of": "من"
+            }
         }
+    },
+    "auth": {
+        "welcome": "مرحبًا بعودتك",
+        "username": "اسم المستخدم",
+        "password": "كلمة المرور",
+        "errors": {
+            "missing": {
+                "username": "اسم المستخدم مطلوب",
+                "password": "كلمة المرور مطلوبة",
+                "general": "اسم المستخدم وكلمة المرور مطلوبان."
+            },
+            "403": "بيانات الاعتماد غير صحيحة.",
+            "404": "الخدمة غير موجودة.",
+            "500": "خطأ في الخادم. يرجى المحاولة لاحقًا.",
+            "etc": "حدث خطأ في الخادم أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى."
+        },
+        "logout": {
+			"loading": "جاري تسجيل الخروخ",
+			"failed": "فشل تسجيل الخروخ",
+			"retry": "اعادة المحاولة",
+			"error": "فشل تسجيل الدخول, الرجاء اعادة"
+		}
     }
 }

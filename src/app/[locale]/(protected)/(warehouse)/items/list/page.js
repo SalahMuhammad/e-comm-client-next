@@ -12,6 +12,7 @@ async function Items({ searchParams }) {
     const data = await getItems(`?limit=${limit}&offset=${offset}`);
 
     return (
+        <>
         <div className={styles['items-wrapper']}>
             {data.results.map((item) => (
                 <Card 
@@ -24,12 +25,13 @@ async function Items({ searchParams }) {
                     imgSrc={item.images[0]}
                 />
             ))}
-            <PaginationControls 
+        </div>
+        <PaginationControls 
                 resCount={data.count}
                 hasNext={data.next}
                 hasPrev={data.previous}
-            />
-        </div>
+        />  
+        </>
     )
 }
 

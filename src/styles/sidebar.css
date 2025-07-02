@@ -1,0 +1,41 @@
+#SidebarDiv {
+  /* direction: rtl; */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
+  overflow: overlay;
+
+}
+
+/* #SidebarDiv ul {
+  direction: ltr;
+}*/
+
+#SidebarDiv::-webkit-scrollbar {
+  width: 6px;
+}
+
+#SidebarDiv::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#SidebarDiv::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.5);
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+#SidebarDiv::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.8);
+}
+
+html.dark #SidebarDiv {
+  scrollbar-color: rgba(75, 85, 99, 0.5) transparent;
+}
+
+html.dark #SidebarDiv::-webkit-scrollbar-thumb {
+  background-color: rgba(75, 85, 99, 0.5);
+}
+
+html.dark #SidebarDiv::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(75, 85, 99, 0.8);
+}
