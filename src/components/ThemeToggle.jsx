@@ -5,8 +5,12 @@ import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import { setCookie } from '@/utils/cookieHandler';
 
 export default function ThemeToggle() {
-  const baseTheme = localStorage.getItem('theme') || 'light'
-  console.log("la b2a", baseTheme)
+  let baseTheme = "light"
+  try {
+    baseTheme = localStorage.getItem('theme') || 'light'
+  } catch {
+    console.log("LoaclStorge Err")
+  }
   const [theme, setTheme] = useState(baseTheme);
 
   // useEffect(() => {

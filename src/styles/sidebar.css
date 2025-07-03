@@ -1,3 +1,5 @@
+@reference "../app/[locale]/globals.css";
+
 #SidebarDiv {
   /* direction: rtl; */
   scrollbar-width: thin;
@@ -26,6 +28,10 @@
 
 #SidebarDiv::-webkit-scrollbar-thumb:hover {
   background-color: rgba(156, 163, 175, 0.8);
+}
+
+#themeToggle {
+  @apply mr-3;
 }
 
 html.dark #SidebarDiv {

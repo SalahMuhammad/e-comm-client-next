@@ -1,10 +1,11 @@
 // tailwind.config.js
-export default {
+module.exports = {
   darkMode: 'class',
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './node_modules/flowbite/**/*.js',
+    './styles/**/*.{css,pcss}',
   ],
   theme: {
     extend: {
@@ -18,7 +19,8 @@ export default {
       },
     },
   },
-  plugins: [require('flowbite/plugin'), require('tailwind-scrollbar')],
+  // plugins: [require('flowbite/plugin'), require('tailwind-scrollbar')],
+  plugins: [require('flowbite/plugin')],
 };
 
 // module.exports = {
@@ -43,6 +45,3 @@ export default {
 // export const plugins = [
 //     require('flowbite/plugin')
 // ];
-
-
-// you can remove
