@@ -5,6 +5,8 @@ import '@/styles/auth/login.css';
 import { UserIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import Form from 'next/form'
 import { useTranslations } from "next-intl";
+import ThemeToggle from '@/components/ThemeToggle';
+import LanguageToggle from '@/components/LanguageToggle';
 
 export default function Page() {
   const [state, formAction, isPending] = useActionState(Login, { errors: {} });
@@ -38,7 +40,9 @@ export default function Page() {
 
 
   return (
+    <>   
     <div className="login-container">
+
       <div className="shape shape-1"></div>
       <div className="shape shape-2"></div>
       <div className="shape shape-3"></div>
@@ -47,7 +51,7 @@ export default function Page() {
         <div className="login-logo">
           <div className="logo-inner">
             <img
-              src="/assets/logo/fav.svg"
+              src="/assets/logo/fav2.png"
               alt="Logo"
               width={100}
               height={100}
@@ -107,5 +111,8 @@ export default function Page() {
         </Form>
       </div>
     </div>
+    <ThemeToggle />
+    <LanguageToggle />
+    </>
   );
 }

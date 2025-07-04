@@ -115,10 +115,10 @@
 }
 
 .logo-image {
-  width: 85%;
-  height: 85%;
+  width: 95%;
+  height: 95%;
   object-fit: contain;
-  filter: brightness(0) saturate(100%);
+  /* filter: brightness(0) saturate(100%); */
 }
 
 .login-box h1 {
@@ -173,7 +173,7 @@ input:focus {
   outline: none;
 }
 
-button {
+.submit-button {
   width: 100%;
   height: 52px;
   background: linear-gradient(135deg, #2563eb, #3b82f6);
@@ -192,13 +192,13 @@ button {
   margin-top: 24px;
 }
 
-button span {
+.submit-button span {
   position: relative;
   z-index: 2;
   color: white;
 }
 
-button::before {
+.submit-button::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -209,18 +209,18 @@ button::before {
   border-radius: inherit;
 }
 
-button:hover {
+.submit-button:hover {
   transform: translateY(-2px);
   box-shadow: 
     0 10px 25px rgba(37, 99, 235, 0.25),
     0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
-button:hover::before {
+.submit-button:hover::before {
   opacity: 1;
 }
 
-button:active {
+.submit-button:active {
   transform: translateY(0);
   box-shadow: 
     0 5px 15px rgba(37, 99, 235, 0.2),
@@ -292,4 +292,105 @@ button:active {
   .shape-2 {
     right: 20px;
   }
+}
+
+#themeToggle {
+  position: fixed;
+  right: 70px;
+  top: 30px;
+}
+
+#languageToggle {
+  position: fixed;
+  right: 30px;
+  top: 30px;
+}
+
+/* === Dark Mode === */
+html.dark {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+html.dark .login-container {
+  background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+}
+
+html.dark .login-box {
+  background: rgba(30, 41, 59, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  box-shadow: 
+    0 20px 40px rgba(30, 58, 138, 0.2),
+    0 0 0 1px rgba(148, 163, 184, 0.2);
+}
+
+html.dark .login-box h1 {
+  color: #f1f5f9;
+}
+
+html.dark .input-icon {
+  color: #94a3b8;
+}
+
+html.dark input {
+  background: rgba(30, 41, 59, 0.9);
+  border-color: rgba(148, 163, 184, 0.3);
+  color: #f8fafc;
+}
+
+html.dark input::placeholder {
+  color: #94a3b8;
+}
+
+html.dark input:focus {
+  background: rgba(30, 41, 59, 1);
+  border-color: #3b82f6;
+  box-shadow: 
+    0 0 0 3px rgba(59, 130, 246, 0.2),
+    0 1px 2px rgba(148, 163, 184, 0.05);
+}
+
+html.dark .submit-button {
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+}
+
+html.dark .submit-button::before {
+  background: linear-gradient(135deg, #1e40af, #1d4ed8);
+}
+
+html.dark .error-message {
+  color: #f87171;
+}
+
+html.dark .logo-inner {
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 
+    0 4px 20px rgba(59, 130, 246, 0.25),
+    0 0 0 1px rgba(59, 130, 246, 0.3);
+}
+
+html.dark .shape {
+  background: rgba(30, 41, 59, 0.9);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 
+    0 0 40px rgba(59, 130, 246, 0.05),
+    inset 0 0 20px rgba(59, 130, 246, 0.1);
+}
+
+html.dark .shape::before {
+  background: linear-gradient(90deg, 
+    transparent,
+    rgba(59, 130, 246, 0.6),
+    rgba(59, 130, 246, 0.1)
+  );
+  filter: blur(2px);
+}
+
+html.dark .shape::after {
+  background: linear-gradient(90deg,
+    rgba(30, 58, 138, 0.1),
+    rgba(59, 130, 246, 0.1),
+    rgba(30, 58, 138, 0.1)
+  );
+  opacity: 0.4;
 }

@@ -1,15 +1,63 @@
 {
 	"navLinks": {
+		"dashboard": {
+			"headLabel": "Dashboard"
+		},
 		"warehouse": {
-			"title": "Warehouse",
-			"subLinks": {
-				"items": "Items",
-				"createItem": "Creat Item",
-				"repositories": "Repositories",
+			"headLabel": "Warehouse",
+			"subLabels": {
+				"items": "Item List",
+				"createItem": "Create Item",
+				"repositories": "Repository List",
 				"createRepository": "Create Repository"
 			}
-		}
+		},
+		"sales": {
+			"headLabel": "Sales",
+			"subLabels": {
+				"invoiceManagement": "Invoice management",
+				"createInvoice": "Create invoice"
+			}
+		},
+		"customersSuppliers": {
+			"headLabel": "Customers/Suppliers",
+			"subLabels": {
+				"management": "Customer/supplier management",
+				"createInvoice": "Create customer/supplier"
+			}
+		},
+		"finance": {
+			"headLabel": "Finance",
+			"subLabels": {
+				"payments": "Payments",
+				"addPayment": "Add Payment",
+				"expenses": "Expenses",
+				"addExpenses": "Add Expenses",
+				"debts": "Debts"
+			}
+		},
+		"reports": {
+			"headLabel": "Reports",
+			"subLabels": {
+				"refilled": "Refilled cylinders",
+				"payments": "Payments within a period"
+			}
+		},
+		"refilledCans": {
+			"headLabel": "Refilled cans",
+			"subLabels": {
+				"refilled": "Refilled cans",
+				"cansWithClints": "Cans with clints",
+				"create": "Create"
+			}
+		},
+		"userDropDown": {
+			"settings": "Settings",
+			"signOut": "Sign out"
+		},
+		"signUp": "Sign Up"
 	},
+
 	"warehouse": {
 		"items": {
 			"card": {
@@ -18,8 +66,8 @@
 				"edit": "Edit"
 			},
 			"paginationControls": {
-				"next": "Next",
-				"prev": "Prev",
+				"next": "Next Page",
+				"prev": "Prev Page",
 				"page": "Page",
 				"of": "of"
 			}
@@ -39,6 +87,12 @@
 			"404": "Service not found.",
 			"500": "Server error. Please try again later.",
 			"etc": "Server error during login. Please try again."
+		},
+		"logout": {
+			"loading": "Logging you out…",
+			"failed": "Logout Failed",
+			"retry": "Retry Logout",
+			"error": "Logout failed. Please try again."
 		}
 	}
 }

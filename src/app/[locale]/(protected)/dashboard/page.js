@@ -106,8 +106,8 @@ export default function Dashboard() {
           </div>
         </div>
       {/* </div> */}
-      <h1>('warehouse.headLabel')</h1>
-      fdsfds
+      {/* <h1>('warehouse.headLabel')</h1> */}
+      {/* fdsfds */}
     </>
   );
 }

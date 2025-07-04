@@ -2,7 +2,8 @@
 
 import { useTranslations } from "next-intl"
 import { useRouter, useSearchParams } from "next/navigation"
-
+import { ArrowLongRightIcon, ArrowLongLeftIcon } from '@heroicons/react/24/outline';
+import '@/styles/paginationControls.css'
 
 function PaginationControls({ resCount, hasNext, hasPrev }) {
   const router = useRouter()
@@ -22,25 +23,41 @@ function PaginationControls({ resCount, hasNext, hasPrev }) {
     router.push(`?${params.toString()}`);
   }
 
+  let notNext = currentPage == totalPages
+  let notPrev = currentPage == 1
   return (
-    <div className="flex items-center gap-4">
-      <button
-        className="bg-gray-300 text-gray-700 px-3 py-1 rounded disabled:opacity-50"
-        onClick={() => handlePageChange(Math.max(0, offset - limit))}
-        disabled={!hasPrev}
+    <div id="paginationControls" className="flex justify-between items-center w-full">
+      <div className="flex items-center gap-4 mx-auto">
+        <button
+          id="PrevPage"
+          disabled={!hasPrev}
+          onClick={() => handlePageChange(Math.max(0, offset - limit))}
+          className={`transition-opacity duration-200 
+            ${notPrev ? "opacity-30 cursor-not-allowed" : "opacity-93 hover:opacity-100 cursor-pointer"}
+            ${!(!notPrev && notNext) && "arrowOnly"} 
+          `}
+        >
+          <ArrowLongLeftIcon />
+          {(!notPrev && notNext) && t("items.paginationControls.prev")}
+        </button>
+
+        <button
+          id="NextPage"
+          disabled={!hasNext}
+          onClick={() => handlePageChange(Number(offset) + Number(limit))}
+          className={`transition-opacity duration-200 
+            ${notNext ? "opacity-30 cursor-not-allowed" : "opacity-93 hover:opacity-100 cursor-pointer"}
+          `}
+        >
+          {t("items.paginationControls.next")}
+          <ArrowLongRightIcon />
+        </button>
+      </div>
+      <span 
+        // className="text-gray-600"
       >
-        {t("items.paginationControls.prev")}
-      </button>
-      <span className="text-gray-600">
         {t("items.paginationControls.page")} {currentPage} {t("items.paginationControls.of")} {totalPages}
       </span>
-      <button
-        className="bg-blue-500 text-white px-3 py-1 rounded disabled:opacity-50"
-        onClick={() => handlePageChange(Number(offset) + Number(limit))}
-        disabled={!hasNext}
-      >
-        {t("items.paginationControls.next")}
-      </button>
     </div>
   )
 }
