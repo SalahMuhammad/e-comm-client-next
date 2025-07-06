@@ -1,0 +1,344 @@
+.logout-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(214, 214, 214);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: overlayFadeIn 0.4s ease-out;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+@keyframes overlayFadeIn {
+    from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+
+    to {
+        opacity: 1;
+        backdrop-filter: blur(10px);
+    }
+}
+
+.logout-container {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 48px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.15),
+        0 10px 40px rgba(0, 0, 0, 0.1);
+    min-width: 480px;
+    max-width: 520px;
+    animation: containerSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes containerSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(60px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.logout-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: iconPulse 2.5s ease-in-out infinite;
+    box-shadow: 0 8px 30px rgba(79, 70, 229, 0.3);
+}
+
+@keyframes iconPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow: 0 8px 30px rgba(79, 70, 229, 0.3);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 12px 40px rgba(79, 70, 229, 0.4);
+    }
+}
+
+.logout-icon svg {
+    width: 32px;
+    height: 32px;
+    fill: white;
+}
+
+.logout-title {
+    color: #111827;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+    animation: textFadeIn 0.8s ease-out 0.2s both;
+}
+
+.logout-subtitle {
+    color: #6b7280;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+    animation: textFadeIn 0.8s ease-out 0.4s both;
+}
+
+@keyframes textFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.activity-text {
+    color: #4f46e5;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+.activity-section {
+    margin: 32px 0;
+}
+
+.spinner-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #e5e7eb;
+    border-top: 3px solid #4f46e5;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.security-notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    color: #1e40af;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 24px;
+}
+
+.security-notice svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+.success-content {
+    text-align: center;
+    animation: successFadeIn 0.6s ease-out;
+}
+
+@keyframes successFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: successPulse 0.8s ease-out;
+    box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.success-icon svg {
+    width: 36px;
+    height: 36px;
+    fill: white;
+}
+
+.success-title {
+    color: #059669;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.success-subtitle {
+    color: #6b7280;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+.redirect-notice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    color: #6b7280;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.redirect-notice svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+.logout-icon-svg,
+.check-icon-svg,
+.info-icon-svg,
+.security-icon-svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+/* Dark Mode Styles */
+.dark .logout-overlay {
+    background: rgb(36, 36, 36);
+}
+.dark .logout-container {
+    background: rgba(31, 41, 55, 0.98);
+    border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.dark .logout-title {
+    color: #f9fafb;
+}
+
+.dark .logout-subtitle {
+    color: #d1d5db;
+}
+
+.dark .progress-label {
+    color: #e5e7eb;
+}
+
+.dark .spinner-container {
+    background: #374151;
+    border-color: #4b5563;
+}
+
+.dark .activity-text {
+    color: #93c5fd;
+}
+
+.dark .step-text {
+    color: #e5e7eb;
+}
+
+.dark .status-step.pending .step-indicator {
+    background: #4b5563;
+    color: #9ca3af;
+}
+
+.dark .security-notice {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+    border-color: #3b82f6;
+    color: #93c5fd;
+}
+
+.dark .success-title {
+    color: #34d399;
+}
+
+.dark .success-subtitle {
+    color: #d1d5db;
+}
+
+.dark .redirect-notice {
+    background: #374151;
+    border-color: #4b5563;
+    color: #d1d5db;
+}
+
+.dark .progress-bar-container {
+    background: #4b5563;
+}

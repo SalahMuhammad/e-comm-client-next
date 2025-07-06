@@ -1,8 +1,8 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 .login-container {
   min-height: 100vh;
@@ -196,6 +196,12 @@ input:focus {
   position: relative;
   z-index: 2;
   color: white;
+  display: flex;
+  align-items: center;
+}
+
+.loader {
+  margin-left: 10px;
 }
 
 .submit-button::before {
@@ -225,6 +231,13 @@ input:focus {
   box-shadow: 
     0 5px 15px rgba(37, 99, 235, 0.2),
     0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.submit-button:disabled {
+  /* cursor: not-allowed; */
+  cursor: wait;
+  transform: none;
+  box-shadow: none;
 }
 
 .error-message {
@@ -294,7 +307,17 @@ input:focus {
   }
 }
 
-#themeToggle {
+#control {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  width: 81px;
+  justify-content: space-around;
+}
+
+/* #themeToggle {
   position: fixed;
   right: 70px;
   top: 30px;
@@ -304,7 +327,7 @@ input:focus {
   position: fixed;
   right: 30px;
   top: 30px;
-}
+} */
 
 /* === Dark Mode === */
 html.dark {

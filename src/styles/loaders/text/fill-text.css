@@ -1,0 +1,24 @@
+.loading-text-4 {
+  font-size: 2rem;
+  color: var(--text-color, white);
+  font-weight: 400;
+  margin: 20px 0;
+  position: relative;
+}
+
+.loading-text-4::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background: var(--before-bg, rgba(255, 255, 255, 0.3));
+  animation: fillText 3s infinite;
+}
+
+@keyframes fillText {
+  0% { width: 0; }
+  50% { width: 100%; }
+  100% { width: 0; }
+}

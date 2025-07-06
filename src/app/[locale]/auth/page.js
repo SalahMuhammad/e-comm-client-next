@@ -7,11 +7,11 @@ import Form from 'next/form'
 import { useTranslations } from "next-intl";
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from '@/components/LanguageToggle';
+import {PulsingDots} from '@/components/loaders';
 
 export default function Page() {
   const [state, formAction, isPending] = useActionState(Login, { errors: {} });
   const t = useTranslations("auth")
-
 
   function handleErrors(data) {
     if (data.success) {
@@ -19,7 +19,6 @@ export default function Page() {
     }
 
     const errorCode = data?.errors?.general;
-
     switch (errorCode) {
       case 403:
         return t('errors.403');
@@ -32,15 +31,16 @@ export default function Page() {
           return t("errors.500");
         } else if (errorCode) {
           return t("errors.etc");
+        } else {
+          return t("errors.etc");
         }
     }
 
     return false;
   }
 
-
   return (
-    <>   
+    <>  
     <div className="login-container">
 
       <div className="shape shape-1"></div>
@@ -106,13 +106,16 @@ export default function Page() {
             className={`submit-button ${isPending ? 'loading' : ''}`}
             disabled={isPending}
           >
-            <span>{isPending ? 'Logging in...' : 'Login'}</span>
+            <span>{isPending ? t("loading") : t("login")} {isPending && <PulsingDots color='#eee' className='loader' size='sm' /> }</span>
           </button>
         </Form>
       </div>
     </div>
-    <ThemeToggle />
-    <LanguageToggle />
+
+    <div id="control">
+      <ThemeToggle />
+      <LanguageToggle />
+    </div>
     </>
   );
 }

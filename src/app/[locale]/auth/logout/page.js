@@ -5,21 +5,27 @@ import { logoutAction } from "./actions";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import "@/styles/auth/logout.css";
+import LogoutLoader from "@/components/LogoutAnimation";
 
 export default function Page() {
     const t = useTranslations('auth')
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isLogoutComplete, setIsLogoutComplete] = useState(false);
     const router = useRouter();
+
+    const handleLogoutComplete = () => {
+        router.replace("/auth/");
+    };
 
     async function handleLogout() {
         setError(null);
         setLoading(true);
         try {
             await logoutAction();
-            router.replace("/auth/");
+            setIsLogoutComplete(true);
         } catch (e) { 
-            setError(t('error'));
+            setError(t('logout.error'));
             setLoading(false);
         }
     }
@@ -32,9 +38,18 @@ export default function Page() {
         <>
             {loading && !error && (
                 <div className="logout-loading-center">
+                    {/* Loading GIF */}
                     {/* <img src="/logout.gif" alt="Logging out..." className="logout-loading-gif" /> */}
-                    <div className="logout-loading-spinner"></div>
-                    <div className="logout-loading-text">{t('logout.loading')}</div>
+                    
+                    {/* Loading Spinner */}
+                    {/* <div className="logout-loading-spinner"></div> */}
+                    {/* <div className="logout-loading-text">{t('logout.loading')}</div> */}
+
+                    {/* Logout Animation */}
+                    <LogoutLoader 
+                        isComplete={isLogoutComplete} 
+                        onComplete={handleLogoutComplete} 
+                    />
                 </div>
             )}
             {error && !loading && (

@@ -6,15 +6,15 @@ import "./globals.css";
 import 'flowbite'
 import { getServerCookie } from "@/utils/serverCookieHandelr";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata = {
   title: "MedPro Corp",
@@ -33,10 +33,19 @@ export default async function RootLayout({ children, params }) {
     notFound();
   }
 
+  let themeClass = ""
+  if (theme == "auto") {
+    let PreferredTheme = await getServerCookie("lastPreferredTheme");
+    if (PreferredTheme == "dark") {
+      themeClass = "dark"
+    }
+  } else if(theme == "dark") {
+    themeClass = "dark"
+  }
   return (
     <html 
       lang={locale}
-      className={`${theme === 'dark' ? 'dark' : ''}`}
+      className={`${themeClass}`}
     >
       <head>
         {/* <script type="module" src="/theme-init.js" /> */}
