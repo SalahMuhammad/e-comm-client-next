@@ -1,0 +1,11 @@
+@import './dots/bouncing-dots.css';
+@import './dots/pulsing-dots.css';
+@import './dots/wave-dots.css';
+@import './dots/growing-dots.css';
+@import './spin-loader.css';
+@import './bar-loader.css';
+@import './skeleton-loader.css';
+@import './text/wave-text.css';
+@import './text/fill-text.css';
+@import './text/shimmer-text.css';
+@import './text/transparent-fill-text.css';

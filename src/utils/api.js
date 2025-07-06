@@ -25,18 +25,25 @@ export async function apiRequest(endpoint, options = {}) {
     // }
     const headersss = { ...options.headers }
     delete options['headers']
-    const response = await fetch(url, {
-        headers: {
-            "auth": await getServerAuthToken(),
-            ...headersss,
-            
-        },
-        // 'credentials': 'include',  // Important for cookies
-        // cache: 'no-store', // 'force-cache', // or 'no-store' for dynamic data
-        // next: { revalidate: 3600 }, // revalidate every hour
-        ...options,
-    });
-
+    let response;
+    try {
+        response = await fetch(url, {
+            headers: {
+                "auth": await getServerAuthToken(),
+                ...headersss,
+                
+            },
+            // 'credentials': 'include',  // Important for cookies
+            // cache: 'no-store', // 'force-cache', // or 'no-store' for dynamic data
+            // next: { revalidate: 3600 }, // revalidate every hour
+            ...options,
+        });
+    } catch (error) {
+        const err = new Error('Service Unavailable');
+        err.status = 503;
+        err.statusText = 'Failed to connect to the server. Please try again later.';
+        throw err;
+    }
     if (!response.ok) {
         let errorMessage = response.statusText || 'Request failed';
         
@@ -51,7 +58,7 @@ export async function apiRequest(endpoint, options = {}) {
                 }       
             }
         } catch {}
-        
+
         const error = new Error(errorMessage);
         error.status = response.status;
         error.statusText = response.statusText;

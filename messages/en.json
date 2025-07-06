@@ -77,6 +77,8 @@
 		"welcome": "Welcome Back",
 		"username": "Username",
 		"password": "Password",
+		"login": "Login",
+		"loading": "Logging in",
 		"errors": {
 			"missing": {
 				"username": "Username is required",
@@ -89,7 +91,12 @@
 			"etc": "Server error during login. Please try again."
 		},
 		"logout": {
-			"loading": "Logging you out…",
+			"loading": "Logging out…",
+			"completed": "Logout completed",
+			"progress": "Logout in Progress",
+			"progressMessage": "Please wait while we terminate your session",
+			"completedMessage": "Your session has been terminated",
+			"redirect": "Redirecting to login page in a few seconds...",
 			"failed": "Logout Failed",
 			"retry": "Retry Logout",
 			"error": "Logout failed. Please try again."

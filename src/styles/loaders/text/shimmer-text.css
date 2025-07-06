@@ -1,0 +1,25 @@
+.loading-text-2 {
+  font-size: 2rem;
+  color: var(--text-color, white);;
+  font-weight: 400;
+  margin: 20px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-text-2::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--before-bg, rgba(255, 255, 255, 0.8)), transparent);
+  animation: shimmer 2s infinite;
+  transform: translateX(-100%);
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}

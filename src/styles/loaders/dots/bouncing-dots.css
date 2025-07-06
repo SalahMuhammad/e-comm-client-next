@@ -1,0 +1,41 @@
+.bouncing-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  justify-content: center;
+}
+
+.bouncing-dots .dot {
+  border-radius: 50%;
+  background-color: #3498db;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.bouncing-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.bouncing-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+.bouncing-dots .dot:nth-child(3) { animation-delay: 0s; }
+
+/* Size variants */
+.bouncing-dots-sm .dot {
+  width: 8px;
+  height: 8px;
+}
+
+.bouncing-dots-md .dot {
+  width: 12px;
+  height: 12px;
+}
+
+.bouncing-dots-lg .dot {
+  width: 16px;
+  height: 16px;
+}
+
+@keyframes bounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}

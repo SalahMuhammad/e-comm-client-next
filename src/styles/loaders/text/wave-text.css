@@ -1,0 +1,16 @@
+.loading-text-3 {
+  font-size: 1.8rem;
+  /* color: white; */
+  font-weight: 400;
+  margin: 20px 0;
+}
+
+.char {
+  display: inline-block;
+  animation: wave 1.5s infinite;
+}
+
+@keyframes wave {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-10px); }
+}
