@@ -1,8 +1,8 @@
 import { apiRequest } from "@/utils/api";
 
 
-export async function getItems(paginationParam) {
-    const res = await apiRequest(`/api/items/${paginationParam ? paginationParam : ''}`, {
+export async function getItems(queryStringParams) {
+    const res = await apiRequest(`/api/items/${queryStringParams ? queryStringParams : ''}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

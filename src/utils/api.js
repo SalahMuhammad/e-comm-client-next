@@ -45,6 +45,7 @@ export async function apiRequest(endpoint, options = {}) {
         throw err;
     }
     if (!response.ok) {
+        return response
         let errorMessage = response.statusText || 'Request failed';
         
         try {
