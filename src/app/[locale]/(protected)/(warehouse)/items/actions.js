@@ -4,6 +4,11 @@ import { apiRequest } from "@/utils/api";
 
 
 export async function submitItemForm(formData) {
+    const images = formData.getAll('images_upload');
+    if (images[0].size === 0) {
+        formData.delete('images_upload');
+    }
+
     const response = await apiRequest('/api/items/', {
         method: 'POST',
         body: formData,
@@ -11,16 +16,19 @@ export async function submitItemForm(formData) {
 
     if (!response.id) {
         if (response.status === 400) {
-            console.log(await response.json())
-            return{
-                name: 'fdsfd'
-            }
+            const errorData = await response.json();
+            return errorData
         }
-        // throw new Error('Failed to submit form');
-        return 
+        console.log(
+            'Error submitting form:', 
+            response.statusText, 
+            'response', 
+            response
+        );
     }
 
-    console.log(11111, response)
+    // toast message/
+    console.log(11111, 'success')
 }
 
 export async function getPP() {
@@ -28,5 +36,5 @@ export async function getPP() {
     if (!response.ok) {
         // throw new Error('Failed to fetch item types');
     }
-    return response;
+    return await response.json();
 }
