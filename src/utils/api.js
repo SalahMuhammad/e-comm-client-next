@@ -44,28 +44,6 @@ export async function apiRequest(endpoint, options = {}) {
         err.statusText = 'Failed to connect to the server. Please try again later.';
         throw err;
     }
-    if (!response.ok) {
-        return response
-        let errorMessage = response.statusText || 'Request failed';
-        
-        try {
-            const errorBody = await response.text();
-            if (errorBody) {
-                try {
-                    const errorJson = JSON.parse(errorBody);
-                    errorMessage = errorJson.message || errorJson.detail || errorMessage;
-                } catch {
-                    errorMessage = errorBody;
-                }       
-            }
-        } catch {}
 
-        const error = new Error(errorMessage);
-        error.status = response.status;
-        error.statusText = response.statusText;
-        
-        throw error;
-    }
-
-    return await response.json();
+    return response;
 }
