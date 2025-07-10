@@ -1,6 +1,7 @@
 'use client';
 import AsyncSelect from 'react-select/async';
 import { apiRequest } from '@/utils/api';
+import { useId } from 'react';
 
 
 const SearchableDropdown = ({ url, label, ...props }) => {
@@ -9,6 +10,7 @@ const SearchableDropdown = ({ url, label, ...props }) => {
 	//   const [isDisabled, setIsDisabled] = useState(false);
 	// const [isLoading, setIsLoading] = useState(false);
 	//   const [isRtl, setIsRtl] = useState(true);
+  const selectId = useId();
 
 	const loadOptions = (searchValue, callback) => {
 		apiRequest(`${url}${searchValue}`, { method: 'GET' }).then((res) => 
@@ -25,6 +27,7 @@ const SearchableDropdown = ({ url, label, ...props }) => {
     <>
     <div className="relative z-0 w-full mb-5 group"> 
     <AsyncSelect
+      instanceId={selectId} // This ensures consistent ID
       id={url}
       className="basic-single"
       classNamePrefix="select"

@@ -4,21 +4,29 @@ import { apiRequest } from "@/utils/api";
 
 
 export async function submitItemForm(formData) {
-    
-    const form = Object.fromEntries(formData.entries());
-    console.log('Form data submitted:', form);
-    // console.log(formData.getAll('images'))
     const response = await apiRequest('/api/items/', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
+        body: formData,
     });
-console.log(response)
-    // if (!response.ok) {
-    //     throw new Error('Failed to submit form');
-    // }
 
-    // return response.json();
+    if (!response.id) {
+        if (response.status === 400) {
+            console.log(await response.json())
+            return{
+                name: 'fdsfd'
+            }
+        }
+        // throw new Error('Failed to submit form');
+        return 
+    }
+
+    console.log(11111, response)
+}
+
+export async function getPP() {
+    const response = await apiRequest('/api/pp/', {method: 'GET'});
+    if (!response.ok) {
+        // throw new Error('Failed to fetch item types');
+    }
+    return response;
 }
