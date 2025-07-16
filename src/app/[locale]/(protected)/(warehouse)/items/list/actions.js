@@ -10,5 +10,9 @@ export async function getItems(queryStringParams) {
         cashe: "no-store", // Disable caching for this request
     })
 
+    if (res.cMessage) {
+        return null
+    }
+
     return await res.json()
 }

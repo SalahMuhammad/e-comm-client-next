@@ -8,7 +8,7 @@ import '@/styles/paginationControls.css'
 function PaginationControls({ resCount, hasNext, hasPrev }) {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const t = useTranslations('warehouse')
+  const t = useTranslations('paginationControls')
 
   const limit = searchParams.get('limit') ?? 12
   const offset = searchParams.get('offset') ?? 0
@@ -23,7 +23,7 @@ function PaginationControls({ resCount, hasNext, hasPrev }) {
     router.push(`?${params.toString()}`);
   }
 
-  let notNext = currentPage == totalPages
+  let notNext = currentPage == totalPages || totalPages == 0
   let notPrev = currentPage == 1
   return (
     <div id="paginationControls" className="flex justify-between items-center w-full">
@@ -38,7 +38,7 @@ function PaginationControls({ resCount, hasNext, hasPrev }) {
           `}
         >
           <ArrowLongLeftIcon />
-          {(!notPrev && notNext) && t("items.paginationControls.prev")}
+          {(!notPrev && notNext) && t("prev")}
         </button>
 
         <button
@@ -49,14 +49,14 @@ function PaginationControls({ resCount, hasNext, hasPrev }) {
             ${notNext ? "opacity-30 cursor-not-allowed" : "opacity-93 hover:opacity-100 cursor-pointer"}
           `}
         >
-          {t("items.paginationControls.next")}
+          {t("next")}
           <ArrowLongRightIcon />
         </button>
       </div>
       <span 
         // className="text-gray-600"
       >
-        {t("items.paginationControls.page")} {currentPage} {t("items.paginationControls.of")} {totalPages}
+        {t("page")} {currentPage} {t("of")} {totalPages}
       </span>
     </div>
   )

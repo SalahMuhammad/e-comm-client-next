@@ -4,25 +4,7 @@ const BASE_URL = process.env.API_URL || 'http://localhost:8000';
 
 export async function apiRequest(endpoint, options = {}) {
     const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
-    // if (endpoint === '/auth/login/' || endpoint === 'auth/login/') {
-        // Clear any existing token for login
-        // document.cookie = 'csrftoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    // }
 
-    // if (true) {
-    //     const res = await fetch(
-    //         `${BASE_URL}/auth/csrf/`, 
-    //         {
-    //             credentials: 'include'  // This is crucial!
-    //         }
-    //     );
-        
-    //     if (!res.ok) {
-    //         throw new Error(`CSRF Token Fetch Error: ${res.status}`);
-    //     }
-    
-    //     await res.json();
-    // }
     const headersss = { ...options.headers }
     delete options['headers']
     let response;
@@ -39,11 +21,21 @@ export async function apiRequest(endpoint, options = {}) {
             ...options,
         });
     } catch (error) {
-        const err = new Error('Service Unavailable');
-        err.status = 503;
-        err.statusText = 'Failed to connect to the server. Please try again later.';
-        throw err;
+        return {
+            cMessage: '503 Service Unavailable',
+            status: 503
+        }
     }
 
-    return response;
+    switch (response.status) {
+        case 404:
+        case 403:
+        case 500:
+            return { 
+                cMessage: response.status + " " + response.statusText, 
+                status: response.status 
+            } 
+        default:
+            return response
+    }
 }

@@ -7,7 +7,6 @@
 
 .pulsing-dots .dot {
   border-radius: 50%;
-  background-color: #e74c3c;
   animation: pulse 1.5s infinite ease-in-out;
 }
 
