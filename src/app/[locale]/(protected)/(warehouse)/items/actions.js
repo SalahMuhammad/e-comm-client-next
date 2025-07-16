@@ -3,22 +3,44 @@
 import { apiRequest } from "@/utils/api";
 
 
-export async function submitItemForm(formData) {
-    
-    const form = Object.fromEntries(formData.entries());
-    console.log('Form data submitted:', form);
-    // console.log(formData.getAll('images'))
+export async function submitItemForm(prevState, formData) {
+    const images = formData.getAll('images_upload');
+    if (images[0].size === 0) {
+        formData.delete('images_upload');
+    }
     const response = await apiRequest('/api/items/', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
+        body: formData,
     });
-console.log(response)
-    // if (!response.ok) {
-    //     throw new Error('Failed to submit form');
-    // }
+    
+    const formValues = Object.fromEntries(formData.entries());
+    if (response?.cMessage) {
+        return {
+            success: false,
+            errors: { general: response.status },
+            ...formValues,
+        }
+    }
+    if (!response?.ok) {
+        if (response.status === 400) {
+            const errorData = await response.json();
+            return {
+                success: false,
+                errors: errorData || { general: '400' },
+                ...formValues,
+            }
+        }
+    }
 
-    // return response.json();
+    return {
+        success: true,
+    }
+}
+
+export async function getPP() {
+    const response = await apiRequest('/api/pp/', { method: 'GET' });
+    if (!response.ok) {
+        throw new Error('Failed to fetch item types');
+    }
+    return await response.json();
 }

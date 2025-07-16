@@ -42,7 +42,9 @@ export default function Card({ id, name, origin, place, p1, p2, p3, p4, stock, i
             </div>
 
             {/* <Link href={`${id}`}> */}
-                <img className="p-8 rounded-t-lg" src={imgSrc} alt="product image" />
+            {imgSrc && (
+            <img className="p-8 rounded-t-lg" src={imgSrc} alt="product image" />
+            )}
             {/* </Link> */}
             <div className="px-5 pb-5">
                 {/* <a href="#"> */}

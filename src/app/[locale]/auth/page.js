@@ -72,7 +72,7 @@ export default function Page() {
               name="username"
               placeholder={t("username")}
               required
-              className="input-animate"
+              className="input-animate LoginUsername"
               defaultValue={state?.username || ''} 
             />
             {state?.errors?.username && (
@@ -89,7 +89,7 @@ export default function Page() {
               name="password"
               placeholder={t("password")}
               required
-              className="input-animate"
+              className="input-animate LoginPassword"
               defaultValue={state?.password || ''}
             />
             {state?.errors?.password && (
@@ -106,7 +106,7 @@ export default function Page() {
             className={`submit-button ${isPending ? 'loading' : ''}`}
             disabled={isPending}
           >
-            <span>{isPending ? t("loading") : t("login")} {isPending && <PulsingDots color='#eee' className='loader' size='sm' /> }</span>
+            <span>{isPending ? t("loading") : t("login")} {isPending && <PulsingDots className='loader' color='bg-gray-200' size='sm' /> }</span>
           </button>
         </Form>
       </div>

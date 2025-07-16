@@ -25,46 +25,42 @@ export async function Login(prevState, formData) {
     };
   }
   
-  try {
-    const res = await apiRequest('/api/users/login/', {
-      method: 'POST',
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
-    });
-        
-    if (!res?.jwt) {
+  const RawRes = await apiRequest('/api/users/login/', {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password }),
+  });
+
+  if (RawRes.cMessage) {
+    if (RawRes.status === 403) {
       return { 
         success: false, 
-        errors: { general: 403 } 
+        errors: { general: RawRes.status },
+        username
       };
     }
-    
-    await setServerCookie('auth_0', res.jwt.slice(0, res.jwt.length / 2));
-    await setServerCookie('auth_1', res.jwt.slice(res.jwt.length / 2));
-    await setServerCookie('username', res.username)
-    
-  } catch (error) {
-    let a = {}
-
-    if (error.status === 403) {
-       a.username = username
-    } else if (error.status === 404) {
-      a.username = username
-      a.password = password
-    } else if (error.status >= 500) {
-      a.username = username
-      a.password = password
-    } else {
-      a.username = username
-      a.password = password
-    }
-
     return { 
       success: false, 
-      errors: { general: error.status},
-      ...a
+      errors: { general: RawRes.status },
+      username,
+      password
     };
   }
+
+  const res = await RawRes.json()    
+
+  if (!res?.jwt) {
+    return { 
+      success: false, 
+      errors: { general: 403 },
+      username
+    };
+  }
+    
+  await setServerCookie('auth_0', res.jwt.slice(0, res.jwt.length / 2));
+  await setServerCookie('auth_1', res.jwt.slice(res.jwt.length / 2));
+  await setServerCookie('username', res.username)
+    
   
   redirect('/dashboard');
 }

@@ -2,7 +2,7 @@ import '@/styles/loaders/dots/pulsing-dots.css';
 
 export default function PulsingDots({ 
   size = 'md', 
-  color = '#e74c3c', 
+  color = 'bg-gray-500 dark:bg-gray-300', 
   className = '' 
 }) {
   const sizeClasses = {
@@ -13,9 +13,9 @@ export default function PulsingDots({
 
   return (
     <div className={`pulsing-dots ${sizeClasses[size]} ${className}`}>
-      <div className="dot" style={{ backgroundColor: color }} />
-      <div className="dot" style={{ backgroundColor: color }} />
-      <div className="dot" style={{ backgroundColor: color }} />
+      <div className={`dot ${color}`} />
+      <div className={`dot ${color}`}  />
+      <div className={`dot ${color}`}  />
     </div>
   );
 }

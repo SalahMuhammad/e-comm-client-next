@@ -65,13 +65,46 @@
 				"place": "Place",
 				"edit": "Edit"
 			},
-			"paginationControls": {
-				"next": "Next Page",
-				"prev": "Prev Page",
-				"page": "Page",
-				"of": "of"
+			"form": {
+				"type": "Type",
+				"name": "Name",
+				"private": "Private",
+				"wholesale": "Wholesale",
+				"piece": "Piece",
+				"collapsible": {
+					"prices": "Prices",
+					"hide": "Hide",
+					"show": "Show",
+					"inputs": "Inputs"
+				},
+				"origin": "Origin",
+				"place": "Place",
+				"submit": "Submit",
+
+				"success": "Item created successfully",
+				"errors": {
+					"400": "Invalid data. Please check your input.",
+					"500": "Server error. Please try again later.",
+					"etc": "An unexpected error occurred. Please try again.",
+
+					"inputs": {
+						"name": "Name is invalid",
+						"images_upload": "Images are invalid",
+						"origin": "Origin is invalid",
+						"place": "Place is invalid"
+					}
+				}
+			},
+			"list": {
+				"error": "Error loading items."
 			}
 		}
+	},
+	"paginationControls": {
+		"next": "Next Page",
+		"prev": "Prev Page",
+		"page": "Page",
+		"of": "of"
 	},
 	"auth": {
 		"welcome": "Welcome Back",
@@ -100,6 +133,28 @@
 			"failed": "Logout Failed",
 			"retry": "Retry Logout",
 			"error": "Logout failed. Please try again."
+		}
+	},
+	"inputs": {
+		"file": {
+			"upload": "Choose Files or drag and drop",
+			"browse": "or click to browse",
+			"maxSize": "Maximum file size is 100MB",
+			"accepted": {
+				"all": "All Files",
+				"images": "Images",
+				"videos": "Videos",
+				"audio": "Audio",
+				"documents": "Documents",
+				"archives": "Archives"
+			},
+			"only": "Only"
+		},
+		"searchableDropdown": {
+			"noOptions": "No options available",
+			"loading": "Loading",
+			"placeholder": "Select an option",
+			"searchPlaceholder": "Select..."
 		}
 	}
 }
