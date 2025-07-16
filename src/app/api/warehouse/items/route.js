@@ -36,8 +36,6 @@ export async function GET(req) {
 }
 
 export async function POST() {
-    console.log(22222)
-
     return NextResponse.json({
         aa: '22 '
     })
