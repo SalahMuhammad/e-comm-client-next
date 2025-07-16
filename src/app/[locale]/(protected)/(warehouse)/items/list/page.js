@@ -6,13 +6,13 @@ import SearchInput from '@/components/SearchInput';
 import ErrorLoading from '@/components/ErrorLoading';
 
 async function Items({ searchParams }) {
+    const searchParamName = 's'; // The query parameter name for search
     const params = await searchParams;
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
-    const search = params['s'] ?? '';
+    const search = params[searchParamName] ?? '';
 
     const data = await getItems(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
-
     return (
         <>
             <SearchInput />

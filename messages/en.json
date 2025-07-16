@@ -98,6 +98,16 @@
 			"list": {
 				"error": "Error loading items."
 			}
+		},
+		"repositories": {
+			"table": {
+				"head": {
+					"name": "Name",
+					"actions": "Actions"
+				},
+				"place": "Place",
+				"edit": "Edit"
+			}
 		}
 	},
 	"paginationControls": {
