@@ -2,26 +2,26 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-function SearchInput() {
+function SearchInput({ paramName, }) {
     const router = useRouter()
     const searchParams = useSearchParams()
-    const [query, setQuery] = useState(searchParams.get('s') || '')
+    const [query, setQuery] = useState(searchParams.get(paramName) || '')
 
     const handleChange = (e) => {
         const value = e.target.value
         setQuery(value)
         const params = new URLSearchParams(Array.from(searchParams.entries()))
         if (value) {
-            params.set('s', value)
+            params.set(paramName, value)
         } else {
-            params.delete('s')
+            params.delete(paramName)
         }
         params.delete('offset') // Reset offset when searching
         router.replace(`?${params.toString()}`, { scroll: false })
     }
 
     return (
-        <form action={'/items/list'} onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={(e) => e.preventDefault()} className='pb-4'>
             <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div className="relative">
                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">

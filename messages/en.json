@@ -71,6 +71,16 @@
 				"page": "Page",
 				"of": "of"
 			}
+		},
+		"repositories": {
+			"table": {
+				"head": {
+					"name": "Name",
+					"actions": "Actions"
+				},
+				"place": "Place",
+				"edit": "Edit"
+			}
 		}
 	},
 	"auth": {

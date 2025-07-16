@@ -56,12 +56,12 @@ export default function Sidebar({username}) {
                 },
                 { 
                     label: t('warehouse.subLabels.repositories'), 
-                    path: '/items/edit-profit-percentages',
+                    path: '/repository/list',
                     icon: <BuildingStorefrontIcon className="w-4 h-4" />
                 },
                 { 
                     label: t('warehouse.subLabels.createRepository'), 
-                    path: '/items/edit-profit-percentages',
+                    path: '/repository/form',
                     icon: <HomeModernIcon className="w-4 h-4" />
                 },
             ]

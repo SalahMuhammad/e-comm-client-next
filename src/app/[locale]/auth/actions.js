@@ -31,17 +31,18 @@ export async function Login(prevState, formData) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
-        
-    if (!res?.jwt) {
+    
+    const resJson = await res.json();
+    if (!resJson?.jwt) {
       return { 
         success: false, 
         errors: { general: 403 } 
       };
     }
     
-    await setServerCookie('auth_0', res.jwt.slice(0, res.jwt.length / 2));
-    await setServerCookie('auth_1', res.jwt.slice(res.jwt.length / 2));
-    await setServerCookie('username', res.username)
+    await setServerCookie('auth_0', resJson.jwt.slice(0, resJson.jwt.length / 2));
+    await setServerCookie('auth_1', resJson.jwt.slice(resJson.jwt.length / 2));
+    await setServerCookie('username', resJson.username)
     
   } catch (error) {
     let a = {}
@@ -65,6 +66,6 @@ export async function Login(prevState, formData) {
       ...a
     };
   }
-  
+
   redirect('/dashboard');
 }

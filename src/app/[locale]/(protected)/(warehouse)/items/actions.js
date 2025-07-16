@@ -14,21 +14,21 @@ export async function submitItemForm(formData) {
         body: formData,
     });
 
-    if (!response.id) {
-        if (response.status === 400) {
-            const errorData = await response.json();
-            return errorData
-        }
-        console.log(
-            'Error submitting form:', 
-            response.statusText, 
-            'response', 
-            response
-        );
+    switch (response.status) {
+        case 201:
+            // Successfully created
+            break;
+        case 400:
+            const errorObject = await response.json();
+            // Handle validation errors
+            break;
+    
+        default:
+            // an unexpected error occurred
+            // 'Error submitting form:', 
+            return 
+            break;
     }
-
-    // toast message/
-    console.log(11111, 'success')
 }
 
 export async function getPP() {
