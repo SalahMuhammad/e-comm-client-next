@@ -21,7 +21,6 @@ function page() {
     const p3 = useRef()
     const p4 = useRef()
 
-
     useEffect(() => {
         if (!state?.success) {
             return
@@ -74,7 +73,6 @@ function page() {
                 label={t('type')}
                 name="type"
             />
-
             <TextInput name="name" id="name" placeholder={t("name")} deffaultValue={state?.name} required error={state?.errors?.name ? t("errors.inputs.name") : ""} />
 
             <Collapsible.Root open={open} onOpenChange={setOpen} className="mb-3">

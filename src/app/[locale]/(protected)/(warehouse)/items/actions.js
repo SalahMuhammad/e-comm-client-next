@@ -8,6 +8,7 @@ export async function submitItemForm(prevState, formData) {
     if (images[0].size === 0) {
         formData.delete('images_upload');
     }
+  
     const response = await apiRequest('/api/items/', {
         method: 'POST',
         body: formData,
