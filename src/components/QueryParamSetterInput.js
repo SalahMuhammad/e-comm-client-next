@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-function SearchInput({placeholder = 'Search ...'}) {
+function SearchInput({ paramName, placeholder = 'Search ...' }) {
     const router = useRouter()
     const searchParams = useSearchParams()
     const [query, setQuery] = useState(searchParams.get(paramName) || '')

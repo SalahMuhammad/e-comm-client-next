@@ -1,3 +1,4 @@
+import ErrorLoading from "@/components/ErrorLoading"
 import { getRepository } from "../../actions"
 import RepositoryForm from "../page"
 
@@ -10,7 +11,7 @@ async function page({ params }) {
             {repo?.id ? (
                 <RepositoryForm obj={repo} />
             ) : (
-                <div className="text-center text-red-500">page not found</div>
+                <ErrorLoading name={"warehouse.repositories.form"} />
             ) }
         </div>
     )
