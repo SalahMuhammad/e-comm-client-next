@@ -110,6 +110,19 @@
 			}
 		}
 	},
+	"customer-supplier": {
+		"table": {
+			"head": {
+				"name": "Name",
+				"details": "Details",
+				"actions": "Actions"
+			}
+		},
+		"form": {
+			"name": "Name",
+			"detail": "Detail"
+		}
+	},
 	"paginationControls": {
 		"next": "Next Page",
 		"prev": "Prev Page",
@@ -165,6 +178,17 @@
 			"loading": "Loading",
 			"placeholder": "Select an option",
 			"searchPlaceholder": "Select..."
+		}
+	},
+	"global": {
+		"form": {
+			"submit": "Submit"
+		},
+		"errors": {
+			"400": "Bad Request",
+			"404": "Not Found",
+			"500": "Internal Server Error",
+			"etc": "An unexpected error occurred. Please try again."
 		}
 	}
 }

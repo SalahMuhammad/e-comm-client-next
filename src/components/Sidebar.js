@@ -96,12 +96,12 @@ export default function Sidebar({username}) {
             links: [
                 { 
                     label: t('customersSuppliers.subLabels.management'), 
-                    path: '/client-supplier/list',
+                    path: '/customer-supplier/list',
                     icon: <UsersIcon className="w-4 h-4" />
                 },
                 { 
                     label: t('customersSuppliers.subLabels.createInvoice'), 
-                    path: '/client-supplier/form',
+                    path: '/customer-supplier/form',
                     icon: <UserPlusIcon className="w-4 h-4" />
                 },
             ]
