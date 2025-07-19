@@ -151,6 +151,19 @@
 			}
 		}
 	},
+	"customer-supplier": {
+		"table": {
+			"head": {
+				"name": "Name",
+				"details": "Details",
+				"actions": "Actions"
+			}
+		},
+		"form": {
+			"name": "Name",
+			"detail": "Detail"
+		}
+	},
 	"paginationControls": {
 		"next": "Next Page",
 		"prev": "Prev Page",
@@ -208,12 +221,15 @@
 			"searchPlaceholder": "Select..."
 		}
 	},
-	"errors": {
-		"500": "Server error. Please try again later.",
-		"503": "Service unavailable. Please try again later.",
-		"404": "Resource not found.",
-		"403": "Access denied.",
-		"400": "Bad request. Please check your input.",
-		"etc": "An unexpected error occurred. Please try again."
+	"global": {
+		"form": {
+			"submit": "Submit"
+		},
+		"errors": {
+			"400": "Bad Request",
+			"404": "Not Found",
+			"500": "Internal Server Error",
+			"etc": "An unexpected error occurred. Please try again."
+		}
 	}
 }
