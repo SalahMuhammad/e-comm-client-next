@@ -1,32 +1,72 @@
-// import { useActionState } from "react"
+"use client";
+import { useActionState, useEffect } from "react"
+import { useTranslations } from "next-intl";
 import { createUpdateRepository } from "../actions"
+import Form from "next/form";
+import { TextInput, NumberInput } from "@/components/inputs/index"
+import FormButton from "@/components/FormButton"
+import { toast } from 'sonner'
+import { useRouter } from "next/navigation";
 
-
-// obj in case of update 
 function RepositoryForm({ obj }) {
-    // console.log(55555, 'Params:', id, obj)
-    //   const [state, action, pending] = useActionState(createPost, false)
+    const t = useTranslations("warehouse.repositories.form");
+    const [state, formAction, isPending] = useActionState(createUpdateRepository, { errors: {} });
+    const router = useRouter();
 
-    // const useActionState(createRepository, '')
-  return (
-        <form
-            action={createUpdateRepository}
-            className="max-w-md mx-auto"
-            style={{ paddingTop: '1rem'}}
-        // className="flex flex-col gap-4 p-4"
+    useEffect(() => {
+        if (!state?.success) {
+            return
+        }
+        if (state?.success) {
+            toast.success(t(obj?.id ? "successEdit" : "successCreate"));
+            if (obj?.id) {
+                router.replace("/repository/list/");
+            }
+        }
+
+        const errorCode = state?.errors?.general.status;
+        switch (errorCode) {
+            case 400:
+                toast.error(state?.errors || t('errors.400'));
+                break;
+
+            default:
+                if (errorCode >= 500) {
+                    toast.error(state?.errors?.general.text || t("errors.500"));
+                } else if (errorCode) {
+                    toast.error(state?.errors?.general.text || t("errors.etc"));
+                }
+            //  else {
+            //     toast.error(t("errors.etc"));
+            // }
+        }
+    }, [state])
+
+    return (
+        <Form
+            action={formAction}
+            className="max-w-md mx-auto mt-15"
+            style={{ paddingTop: '1rem' }}
         >
             {obj?.id && (
-                <input type="hidden" name="id" value={obj.id} />
+                <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
             )}
 
-            <div className="relative z-0 w-full mb-5 group">
-                <input type="text" name="name" id="name" defaultValue={obj?.name} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label htmlFor="name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Repository Name</label>
-            </div>
-            
-            
-            <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-        </form>
+            <TextInput name="name" id="name" defaultValue={state?.name || obj?.name} placeholder={t("name")} error={state?.errors?.name || ""} required />
+
+            <FormButton
+                type="submit"
+                variant={obj?.id ? "secondary" : "danger"}
+                size="md"
+                bgColor="bg-neutral-100 dark:bg-neutral-800"
+                hoverBgColor="bg-neutral-200 dark:bg-neutral-700"
+                textColor="text-black dark:text-white"
+                className="w-full mt-3"
+                isLoading={isPending}
+            >
+                {obj?.id ? t("edit") : t("submit")}
+            </FormButton>
+        </Form>
     )
 }
 

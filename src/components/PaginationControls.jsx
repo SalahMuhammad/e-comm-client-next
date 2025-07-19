@@ -32,7 +32,7 @@ function PaginationControls({ resCount, hasNext, hasPrev }) {
           id="PrevPage"
           disabled={!hasPrev}
           onClick={() => handlePageChange(Math.max(0, offset - limit))}
-          className={`transition-opacity duration-200 
+          className={`transition-opacity duration-200 text-sm sm:text-base w-[100px] sm:w-[140px]
             ${notPrev ? "opacity-30 cursor-not-allowed" : "opacity-93 hover:opacity-100 cursor-pointer"}
             ${!(!notPrev && notNext) && "arrowOnly"} 
           `}
@@ -45,7 +45,7 @@ function PaginationControls({ resCount, hasNext, hasPrev }) {
           id="NextPage"
           disabled={!hasNext}
           onClick={() => handlePageChange(Number(offset) + Number(limit))}
-          className={`transition-opacity duration-200 
+          className={`transition-opacity duration-200 text-sm sm:text-base w-[100px] sm:w-[140px]
             ${notNext ? "opacity-30 cursor-not-allowed" : "opacity-93 hover:opacity-100 cursor-pointer"}
           `}
         >
@@ -54,7 +54,7 @@ function PaginationControls({ resCount, hasNext, hasPrev }) {
         </button>
       </div>
       <span 
-        // className="text-gray-600"
+        className="ml-1"
       >
         {t("page")} {currentPage} {t("of")} {totalPages}
       </span>

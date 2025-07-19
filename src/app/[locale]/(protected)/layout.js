@@ -27,7 +27,7 @@ export default async function ProtectedLayout({ children }) {
       />
 
       <Sidebar username={username} />
-      <div className="p-4 sm:ml-64 mt-14" >
+      <div className="p-4 sm:ml-64 mt-14 min-h-screen flex flex-col" >
         { children }
       </div>
     </>

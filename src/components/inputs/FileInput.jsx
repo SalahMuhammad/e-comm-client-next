@@ -25,7 +25,9 @@ export default function FileUploadInput({
   acceptedTypes = "images", // "all", "images", "documents", "audio", "video", "archives"
   multiple = false,
   maxSize = 10 * 1024 * 1024, // 10MB default
-  state
+  state,
+  defaultValue = [],
+  ...props
 }) {
 
   const t = useTranslations("inputs.file")
@@ -39,6 +41,27 @@ export default function FileUploadInput({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const fileInputRef = useRef(null);
   const hasError = Boolean(error);
+
+  useEffect(() => {
+    if (!defaultValue || defaultValue.length === 0) return;
+
+    const fetchFiles = async () => {
+      const fetchedFiles = await Promise.all(defaultValue.map(async (url) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+
+        // Create a File-like object (or real File if name is known)
+        const fileName = url.split("/").pop();
+        return new File([blob], fileName, { type: blob.type });
+      }));
+
+      setFiles(fetchedFiles);
+      onChange(fetchedFiles);
+    };
+
+    fetchFiles();
+  }, [defaultValue]);
+
 
   useEffect(() => {
     setFiles([])
@@ -99,22 +122,23 @@ export default function FileUploadInput({
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
-    const handleFileChange = (selectedFiles) => {
+  const handleFileChange = (selectedFiles) => {
     const fileList = Array.from(selectedFiles);
     const validFiles = fileList.filter(file => {
-        if (file.size > maxSize) return false;
-        if (!isAcceptedFileType(file, selectedType.value)) return false;
-        return true;
+      if (file.size > maxSize) return false;
+      if (!isAcceptedFileType(file, selectedType.value)) return false;
+      return true;
     });
 
     if (multiple) {
-        setFiles(prev => [...prev, ...validFiles]);
+      const uniqueFiles = validFiles.filter(file => !files.some(f => f.name === file.name));
+      setFiles(prev => [...prev, ...uniqueFiles]);
+      onChange([...files, ...uniqueFiles]);
     } else {
-        setFiles(validFiles);
+      setFiles(validFiles);
+      onChange(validFiles);
     }
-
-    onChange(validFiles);
-    };
+  };
 
 
   // Handle drag events
@@ -255,6 +279,7 @@ export default function FileUploadInput({
           }}
           onFocus={() => setIsFocused(true)}
           className="absolute inset-0 opacity-0 cursor-pointer"
+          {...props}
         />
       </div>
 

@@ -63,9 +63,23 @@
 			"card": {
 				"origin": "Origin",
 				"place": "Place",
-				"edit": "Edit"
+				"edit": "Edit",
+				"gallery": "Gallery",
+				"table": "Table",
+				"delete": "Delete",
+				"Edit": "Edit",
+				"remove": {
+					"label": "Remove",
+					"confirm": "Are you sure you want to remove this item?",
+					"yes": "Yes",
+					"no": "No",
+					"success": "Item deleted",
+					"canceled": "Deletion canceled",
+					"error": "Error Deleting Item"
+				}
 			},
 			"form": {
+				"id": "ID",
 				"type": "Type",
 				"name": "Name",
 				"private": "Private",
@@ -80,8 +94,10 @@
 				"origin": "Origin",
 				"place": "Place",
 				"submit": "Submit",
-
-				"success": "Item created successfully",
+				"edit":"Edit Item",
+				"successCreate": "Item created successfully",
+				"successEdit": "Item updated successfully",
+				"error": "page not found",
 				"errors": {
 					"400": "Invalid data. Please check your input.",
 					"500": "Server error. Please try again later.",
@@ -100,13 +116,38 @@
 			}
 		},
 		"repositories": {
+			"form": {
+				"id": "ID",
+				"name": "Repository Name",
+				"submit": "Submit Repository",
+				"edit": "Edit Repository",
+				"errors": {
+					"400": "Invalid data. Please check your input.",
+					"500": "Server error. Please try again later.",
+					"etc": "An unexpected error occurred. Please try again."
+				},
+				"error": "page not found",
+				"successCreate": "Repository created successfully",
+				"successEdit": "Repository updated successfully"
+			},
 			"table": {
 				"head": {
 					"name": "Name",
 					"actions": "Actions"
 				},
 				"place": "Place",
-				"edit": "Edit"
+				"edit": "Edit",
+				"remove": {
+					"label": "Remove",
+					"confirm": "Are you sure you want to remove this repository?",
+					"yes": "Yes",
+					"no": "No",
+					"success": "Repository deleted",
+					"canceled": "Deletion canceled",
+					"error": "Error Deleting Repository"
+				},
+				"error": "Error loading repositories.",
+				"nothing": "Nothing here to show"
 			}
 		}
 	},
