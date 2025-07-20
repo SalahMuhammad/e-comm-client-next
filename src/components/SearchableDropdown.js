@@ -12,9 +12,9 @@ const SearchableDropdown = ({ url, label, ...props }) => {
 
   const loadOptions = (searchValue, callback) => {
     apiRequest(`${url}${searchValue}`, { method: 'GET' })
-    .then((res) =>
-      callback(
-        res.results.map((obj) => ({
+    .then(async (res) =>
+    callback(
+        (await res.json()).results.map((obj) => ({
           value: obj.id,
           label: obj.name,
         }))

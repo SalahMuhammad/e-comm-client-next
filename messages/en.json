@@ -12,8 +12,13 @@
 				"createRepository": "Create Repository"
 			}
 		},
-		"sales": {
-			"headLabel": "Sales",
+		"invoice": {
+			"sales": {
+				"headLabel": "Sales"
+			},
+			"purchase": {
+				"headLabel": "Purchase"
+			},
 			"subLabels": {
 				"invoiceManagement": "Invoice management",
 				"createInvoice": "Create invoice"
@@ -121,6 +126,19 @@
 		"form": {
 			"name": "Name",
 			"detail": "Detail"
+		}
+	},
+	"invoice": {
+		"table": {
+			"head": {
+				"owner": "Owner",
+				"issueDate": "Issue Date",
+				"dueDate": "Due Date",
+				"totalAmount": "Total Amount",
+				"repositoryPremit": "Repository Permit",
+				"notes": "Notes",
+				"actions": "Actions"
+			}
 		}
 	},
 	"paginationControls": {
