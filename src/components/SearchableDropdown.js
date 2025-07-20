@@ -1,6 +1,6 @@
 'use client';
 import AsyncSelect from 'react-select/async';
-import { useState, useId } from 'react';
+import { useState, useId, useEffect } from 'react';
 import { apiRequest } from '@/utils/api';
 import { useTranslations } from 'next-intl';
 import { PulsingDots } from './loaders';
@@ -9,6 +9,18 @@ const SearchableDropdown = ({ url, label, ...props }) => {
   const t = useTranslations("inputs.searchableDropdown");
   const selectId = useId();
   const [isFocused, setIsFocused] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    return () => observer.disconnect();
+  }, []);
+
+
 
   const loadOptions = (searchValue, callback) => {
     apiRequest(`${url}${searchValue}`, { method: 'GET' })
@@ -27,20 +39,22 @@ const SearchableDropdown = ({ url, label, ...props }) => {
       ...provided,
       backgroundColor: 'transparent',
       border: 'none',
-      borderBottom: `2px solid ${state.isFocused ? '#2563eb' : '#d1d5db'}`, // blue-600 / gray-300
+      borderBottom: `2px solid ${state.isFocused
+        ? isDarkMode ? '#3b82f6' : '#2563eb'
+        : isDarkMode ? '#4b5563' : '#d1d5db'}`,
       borderRadius: 0,
       boxShadow: 'none',
       paddingLeft: '0.5rem',
       paddingRight: '0.5rem',
-      color: '#111827',
+      color: isDarkMode ? '#fff' : '#111827',
     }),
     singleValue: (provided) => ({
       ...provided,
-      color: '#111827',
+      color: isDarkMode ? '#fff' : '#111827',
     }),
     input: (provided) => ({
       ...provided,
-      color: '#111827',
+      color: isDarkMode ? '#fff' : '#111827',
     }),
     placeholder: (provided) => ({
       ...provided,
@@ -49,55 +63,19 @@ const SearchableDropdown = ({ url, label, ...props }) => {
     menu: (provided) => ({
       ...provided,
       zIndex: 9999,
-      backgroundColor: 'oklch(98.5% .002 247.839)',
-      // color: '#111827',
+      backgroundColor: isDarkMode ? '#1e2939' : 'oklch(98.5% .002 247.839)',
+      color: isDarkMode ? '#f9fafb' : '#111827',
+      border: 'none',
     }),
     option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isFocused ? '#e0e7ff' : '#fff',
-      color: '#111827',
+      backgroundColor: state.isFocused
+        ? isDarkMode ? '#374151' : '#e0e7ff'
+        : isDarkMode ? '#1f2937' : '#fff',
+      color: isDarkMode ? '#f9fafb' : '#111827',
     }),
-
-    // Dark mode
-    ...(typeof window !== 'undefined' &&
-      document.documentElement.classList.contains('dark')
-      ? {
-        control: (provided, state) => ({
-          ...provided,
-          backgroundColor: 'transparent',
-          border: 'none',
-          borderBottom: `2px solid ${state.isFocused ? '#3b82f6' : '#4b5563'}`, // blue-500 / gray-600
-          borderRadius: 0,
-          boxShadow: 'none',
-          paddingLeft: '0.5rem',
-          paddingRight: '0.5rem',
-          color: '#fff',
-        }),
-        singleValue: (provided) => ({
-          ...provided,
-          color: '#fff',
-        }),
-        input: (provided) => ({
-          ...provided,
-          color: '#fff',
-        }),
-        placeholder: (provided) => ({
-          ...provided,
-          color: '#9ca3af',
-        }),
-        menu: (provided) => ({
-            ...provided,
-            background: '#1e2939', 
-            border: "none", 
-        }),
-        option: (provided, state) => ({
-          ...provided,
-          backgroundColor: state.isFocused ? '#374151' : '#1f2937',
-          color: '#f9fafb',
-        }),
-      }
-      : {}),
   };
+
 
   const NoOptionsMessage = () => (
     <div className="text-gray-500 dark:text-gray-400 text-sm w-full text-center py-2 bg-gray-50 dark:bg-gray-800 h-full">

@@ -3,7 +3,8 @@
 
 :root {
   --background: #fff;
-  --foreground: #1717;
+  /* --foreground: #1717; */
+  --foreground: #1e293b;
   /* direction: rtl; */
 }
 

@@ -2,23 +2,48 @@
 
 import { apiRequest } from "@/utils/api";
 
+export async function getItem(id) {
+    'use server'
+    const res = await apiRequest(`/api/items/${id}/`, {
+        method: "Get",
+    })
 
-export async function submitItemForm(prevState, formData) {
+    switch (res.status) {
+        case 200:
+            return await res.json()
+        case 404:
+            console.log('not found')
+            // not found
+            return {err: res.cMessage}
+        default:
+            // an unexpected error occurred
+            console.log('An unexpected error occurred:', res.statusText);
+            return {err: res.cMessage}
+    }
+}
+
+export async function createUpdateItem(prevState, formData) {
+    const rawFormData = formData
+    formData.delete("type_input");
+
+    const isUpdate = formData.get('id') ? true : false
+
     const images = formData.getAll('images_upload');
     if (images[0].size === 0) {
+        // Fix:: When 0 delete the image
         formData.delete('images_upload');
     }
   
-    const response = await apiRequest('/api/items/', {
-        method: 'POST',
+    const response = await apiRequest(`/api/items/${isUpdate ? formData.get('id') + '/' : ''}`, {
+        method: `${isUpdate ? 'PUT' : 'POST'}`,
         body: formData,
     });
     
-    const formValues = Object.fromEntries(formData.entries());
+    const formValues = Object.fromEntries(rawFormData.entries());
     if (response?.cMessage) {
         return {
             success: false,
-            errors: { general: response.status },
+            errors: { general: {status: response.status, text: response.cMessage} },
             ...formValues,
         }
     }

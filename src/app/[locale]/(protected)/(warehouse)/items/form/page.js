@@ -1,6 +1,6 @@
 "use client";
 import SearchableDropdown from "@/components/SearchableDropdown"
-import { getPP, submitItemForm } from "../actions"
+import { getPP, createUpdateItem } from "../actions"
 import { useEffect, useRef, useState } from "react";
 import { TextInput, NumberInput, FileInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
@@ -10,11 +10,13 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import Form from "next/form";
 import { useActionState } from 'react';
 import { toast } from 'sonner'
+import { useRouter } from "next/navigation";
 
-function page() {
+function ItemsForm({obj}) {
     const t = useTranslations("warehouse.items.form");
     const [open, setOpen] = useState(false);
-    const [state, formAction, isPending] = useActionState(submitItemForm, { errors: {} });
+    const [state, formAction, isPending] = useActionState(createUpdateItem, { errors: {} });
+    const router = useRouter();
     const [p1, setP1] = useState(1);
     const [pp, setPP] = useState(null);
     const p2 = useRef()
@@ -26,20 +28,23 @@ function page() {
             return
         }
         if (state?.success) {
-            toast.success(t('success'));
+            toast.success(t(obj?.id ? "successEdit" : "successCreate"));
+            if (obj?.id) {
+                router.replace("/items/list/");
+            }
         }
 
-        const errorCode = state?.errors?.general;
+        const errorCode = state?.errors?.general.status;
         switch (errorCode) {
             case 400:
-                toast.error(t('errors.400'));
+                toast.error(state?.errors || t('errors.400'));
                 break;
 
             default:
                 if (errorCode >= 500) {
-                    toast.error(t("errors.500"));
+                    toast.error(state?.errors?.general.text || t("errors.500"));
                 } else if (errorCode) {
-                    toast.error(t("errors.etc"));
+                    toast.error(state?.errors?.general.text || t("errors.etc"));
                 }
                 //  else {
                 //     toast.error(t("errors.etc"));
@@ -65,15 +70,23 @@ function page() {
             // method="POST"
             className="max-w-md mx-auto"
             style={{ paddingTop: '3rem' }}
-        // className="flex flex-col gap-4 p-4"
+            // className="flex flex-col gap-4 p-4"
         >
+            {obj?.id && (
+                <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
+            )}
+
             {/* Causes Hydration issue */}
+            <input type="text" className="hidden" name="type_name" value={state.type_name} readOnly />
             <SearchableDropdown
                 url={'api/items/types/?s='}
                 label={t('type')}
                 name="type"
+                defaultValue={{value: "state.type", label: "state.type_name"}}
+                // defaultValue={state?.type ? {value: state.type, label: state.type_name} : {value: obj.type, label: obj.type_name} }
             />
-            <TextInput name="name" id="name" placeholder={t("name")} deffaultValue={state?.name} required error={state?.errors?.name ? t("errors.inputs.name") : ""} />
+
+            <TextInput name="name" id="name" placeholder={t("name")} defaultValue={state?.name || obj?.name} required error={state?.errors?.name || ""} />
 
             <Collapsible.Root open={open} onOpenChange={setOpen} className="mb-3">
                 <div className="flex items-center justify-between mb-3">
@@ -95,16 +108,28 @@ function page() {
                 <Collapsible.Content
                     className="grid md:grid-cols-2 md:gap-2 mt-5 mb-1  transition-all duration-300 ease-in-out data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp"
                 >
-                    <NumberInput value={p1} id="p1" name="p1" placeholder={t("private")} deffaultValue={state?.p1} onChange={(e) => { setP1(e.target.value) }} error={state?.errors?.price1 ? t("errors.inputs.price1") : ""} />
-                    <NumberInput id="p2" name="p2" placeholder={t("wholesale")} deffaultValue={state?.p2} ref={p2} error={state?.errors?.price2 ? t("errors.inputs.price2") : ""} />
-                    <NumberInput id="p3" name="p3" placeholder={t("piece")} deffaultValue={state?.p3} ref={p3} error={state?.errors?.price3 ? t("errors.inputs.price3") : ""} />
-                    <NumberInput id="p4" name="p4" placeholder={t("collapsible.prices")} deffaultValue={state?.p4} ref={p4} error={state?.errors?.price4 ? t("errors.inputs.price4") : ""} />
+                    <NumberInput  
+                        id="p1" 
+                        name="p1" 
+                        placeholder={t("private")} 
+                        onChange={(e) => { setP1(e.target.value) }} 
+                        error={state?.errors?.price1 ||  ""}
+                        // value={p1} 
+                        // defaultValue={state?.p1} 
+                        {...(p1 !== undefined && p1 !== null
+                            ? { value: p1 }
+                            : { defaultValue: state?.p1 || obj?.p1 })}
+
+                    />
+                    <NumberInput id="p2" name="p2" placeholder={t("wholesale")} defaultValue={state?.p2 || obj?.p2} ref={p2} error={state?.errors?.price2 || ""} />
+                    <NumberInput id="p3" name="p3" placeholder={t("piece")} defaultValue={state?.p3 || obj?.p3} ref={p3} error={state?.errors?.price3 || ""} />
+                    <NumberInput id="p4" name="p4" placeholder={t("collapsible.prices")} defaultValue={state?.p4 || obj?.p4} ref={p4} error={state?.errors?.price4 || ""} />
                 </Collapsible.Content>
             </Collapsible.Root>
 
-            <TextInput name="origin" id="origin" deffaultValue={state?.origin} placeholder={t("origin")} error={state?.errors?.origin ? t("errors.inputs.origin") : ""} />
+            <TextInput name="origin" id="origin" defaultValue={state?.origin || obj?.origin} placeholder={t("origin")} error={state?.errors?.origin || ""} />
 
-            <TextInput name="place" id="place" deffaultValue={state?.place} placeholder={t("place")} error={state?.errors?.place ? t("errors.inputs.place") : ""} />
+            <TextInput name="place" id="place" defaultValue={state?.place || obj?.place} placeholder={t("place")} error={state?.errors?.place || ""} />
 
             <FileInput
                 name="images_upload"
@@ -114,6 +139,7 @@ function page() {
                 className="mt-3"
                 
                 state={state}
+                defaultValue={obj.images}
 
                 error={state?.errors?.images_upload ? t("errors.inputs.images_upload") : ""}
             />
@@ -128,11 +154,11 @@ function page() {
                 className="w-full"
                 isLoading={isPending}
             >
-                {t('submit')}
+                {obj?.id ? t("edit") : t("submit")}
             </FormButton>
 
         </Form>
     )
 }
 
-export default page
+export default ItemsForm

@@ -3,10 +3,8 @@ import { useState } from "react";
 
 export default function TextInput({
   className = "",
-  name = "",
   id = "",
   placeholder = "",
-  deffaultValue = "",
   required = false,
   onChange = () => {},
   onBlur = () => {},
@@ -18,6 +16,14 @@ export default function TextInput({
   labelColor = "text-gray-500 dark:text-gray-400",
   focusLabelColor = "peer-focus:text-blue-600 peer-focus:dark:text-blue-500",
   errorColor = "text-red-500 dark:text-red-400",
+
+  // name = "",
+  // defaultValue,
+  // value,
+  // required,
+  // onChange,
+
+  ...props
 }) {
   const hasError = Boolean(error);
   const [isFocused, setIsFocused] = useState(false);
@@ -36,12 +42,8 @@ export default function TextInput({
       )}
 
       <input
-        name={name}
         id={id}
         placeholder=" "
-        defaultValue={deffaultValue}
-        required={required}
-        onChange={onChange}
         onBlur={e => {
           setIsFocused(false);
           onBlur(e);
@@ -56,6 +58,13 @@ export default function TextInput({
           }
           appearance-none focus:outline-none focus:ring-0 peer
         `}
+
+        // name={name}
+        // defaultValue={defaultValue}
+        // value={value}
+        // required={required}
+        // onChange={onChange}
+        {...props}
       />
 
       <label

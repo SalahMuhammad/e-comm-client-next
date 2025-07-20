@@ -1,8 +1,8 @@
-import Card from '@/components/warehouse/items/Card'
+import { ItemsView } from '@/components/warehouse/items/Card'
 import { getItems } from "./actions";
 import PaginationControls from '@/components/PaginationControls';
 import styles from "./itemsList.module.css";
-import SearchInput from '@/components/SearchInput';
+import QueryParamSetterInput from '@/components/QueryParamSetterInput';
 import ErrorLoading from '@/components/ErrorLoading';
 
 async function Items({ searchParams }) {
@@ -13,36 +13,28 @@ async function Items({ searchParams }) {
     const search = params[searchParamName] ?? '';
 
     const data = await getItems(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
+    
     return (
         <>
-            <SearchInput />
-            {data === null ?
-                <ErrorLoading name="warehouse.items.list" />
+            <QueryParamSetterInput
+                paramName={searchParamName}
+            />    
+            {data.err || data?.count == 0 ? 
+                data.err &&  
+                    <ErrorLoading name="warehouse.items.list" message={data.err} className="w-full mt-3 transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md" />
                 :
                 <>
-                <div className="columns-1 sm:columns-2 lg:columns-3 gap-2 space-y-2 mt-4">
-                    {data.results.map((item) => (
-                        <div key={item.id} className="break-inside-avoid">
-                            <Card
-                                id={item.id}
-                                name={item.name}
-                                origin={item.origin}
-                                place={item.place}
-                                p4={item.price4}
-                                imgSrc={item.images[0]}
-                            />
-                        </div>
-                    ))}
-                </div>
-
-                <PaginationControls
-                    resCount={data.count}
-                    hasNext={data.next}
-                    hasPrev={data.previous}
-                />
+                    <ItemsView items={data.results} />
+                    <PaginationControls
+                        resCount={data.count}
+                        hasNext={data.next}
+                        hasPrev={data.previous}
+                    />
                 </>
             }
-
+            {data.count == 0 && 
+                <ErrorLoading name="warehouse.repositories.table" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md" />
+            }
         </>
     )
 }

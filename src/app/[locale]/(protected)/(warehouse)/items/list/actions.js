@@ -11,8 +11,30 @@ export async function getItems(queryStringParams) {
     })
 
     if (res.cMessage) {
-        return null
+        return {err: res.cMessage}
     }
 
     return await res.json()
+}
+
+export async function deleteItem(id) {
+    // "use server";
+
+    const res = await apiRequest(`/api/items/${id}/`, {
+        method: "DELETE",
+    })
+
+    switch (res.status) {
+        case 204:
+            // success
+            return { success: true }
+        case 400:
+            // bad request
+            console.log('bad requesrt')
+            return { error: (await res.json()).detail }
+        default:
+            // an unexpected error occurred
+            console.log('An unexpected error occurred:', res.statusText);
+            return { error: 'An unexpected error occurred' }
+    }
 }
