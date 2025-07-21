@@ -245,8 +245,10 @@
 		},
 		"errors": {
 			"400": "Bad Request",
+            "403": "Access denied.",
 			"404": "Not Found",
 			"500": "Internal Server Error",
+            "503": "Service unavailable. Please try again later.",
 			"etc": "An unexpected error occurred. Please try again."
 		}
 	}
