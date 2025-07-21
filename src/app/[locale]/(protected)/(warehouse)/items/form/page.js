@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 function ItemsForm({obj}) {
     const t = useTranslations("warehouse.items.form");
     const [open, setOpen] = useState(false);
+    const [FileLoading, setFileLoading] = useState(false);
     const [state, formAction, isPending] = useActionState(createUpdateItem, { errors: {} });
     const router = useRouter();
     const [p1, setP1] = useState(1);
@@ -77,7 +78,7 @@ function ItemsForm({obj}) {
             )}
 
             {/* Causes Hydration issue */}
-            <input type="text" className="hidden" name="type_name" value={state.type_name} readOnly />
+            <input type="text" className="hidden" name="type_name" value={state.type_name ?? ''} readOnly />
             <SearchableDropdown
                 url={'api/items/types/?s='}
                 label={t('type')}
@@ -131,17 +132,40 @@ function ItemsForm({obj}) {
 
             <TextInput name="place" id="place" defaultValue={state?.place || obj?.place} placeholder={t("place")} error={state?.errors?.place || ""} />
 
+            {/* <input type="text" className="hidden" name="images_upload_urls" value={obj?.images || state?.images_upload_urls} readOnly /> */}
+            <input
+                type="text"
+                className="hidden"
+                name="images_upload_urls"
+                value={
+                    Array.isArray(obj?.images)
+                    ? obj.images.join(",")
+                    : typeof obj?.images === "string"
+                    ? obj.images
+                    : state?.images_upload_urls || ""
+                }
+                readOnly
+            />
+
+
             <FileInput
                 name="images_upload"
                 id="images_upload"
                 acceptedTypes="images"
                 multiple={true}
                 className="mt-3"
-                
-                state={state}
-                defaultValue={obj.images}
+                showPreview={true}
+                setLoadind={setFileLoading}
+                defaultValue={
+                    obj?.images ??
+                    (state?.images_upload_urls
+                        ? state.images_upload_urls.includes(',')
+                        ? state.images_upload_urls.split(',').map(url => url.trim())
+                        : [state.images_upload_urls.trim()]
+                        : null)
+                }
 
-                error={state?.errors?.images_upload ? t("errors.inputs.images_upload") : ""}
+                error={state?.errors?.images_upload || ""}
             />
 
             <FormButton
@@ -152,7 +176,7 @@ function ItemsForm({obj}) {
                 hoverBgColor="bg-neutral-200 dark:bg-neutral-700"
                 textColor="text-black dark:text-white"
                 className="w-full"
-                isLoading={isPending}
+                isLoading={(FileLoading || isPending ) ? true : false}
             >
                 {obj?.id ? t("edit") : t("submit")}
             </FormButton>

@@ -23,23 +23,29 @@ export async function getItem(id) {
 }
 
 export async function createUpdateItem(prevState, formData) {
-    const rawFormData = formData
+    'use server';
+    
+    const formValues = Object.fromEntries(formData.entries());
+
     formData.delete("type_input");
+    formData.delete("images_upload_urls");    
 
     const isUpdate = formData.get('id') ? true : false
 
     const images = formData.getAll('images_upload');
-    if (images[0].size === 0) {
+
+    if (images[0]?.size === 0) {
+        // formData.images_upload = {}
+        formData.set("images_upload", [])
         // Fix:: When 0 delete the image
-        formData.delete('images_upload');
+        // formData.delete('images_upload');
     }
   
     const response = await apiRequest(`/api/items/${isUpdate ? formData.get('id') + '/' : ''}`, {
         method: `${isUpdate ? 'PUT' : 'POST'}`,
         body: formData,
     });
-    
-    const formValues = Object.fromEntries(rawFormData.entries());
+
     if (response?.cMessage) {
         return {
             success: false,

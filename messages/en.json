@@ -157,11 +157,26 @@
 				"name": "Name",
 				"details": "Details",
 				"actions": "Actions"
+			},
+			"edit": "Edit",
+			"remove": {
+					"label": "Remove",
+					"confirm": "Are you sure you want to remove this Customer/Supplier?",
+					"yes": "Yes",
+					"no": "No",
+					"success": "Customer/Supplier deleted",
+					"canceled": "Deletion canceled",
+					"error": "Error Deleting Customer/Supplier"
 			}
 		},
 		"form": {
+			"id": "ID",
 			"name": "Name",
-			"detail": "Detail"
+			"detail": "Detail",
+			"submit": "Submit Customer/Supplier",
+			"edit": "Edit Customer/Supplier",
+			"successCreate": "Customer/Supplier created successfully",
+			"successEdit": "Customer/Supplier updated successfully"
 		}
 	},
 	"paginationControls": {
@@ -212,7 +227,8 @@
 				"documents": "Documents",
 				"archives": "Archives"
 			},
-			"only": "Only"
+			"only": "Only",
+			"preview": "Click to preview"
 		},
 		"searchableDropdown": {
 			"noOptions": "No options available",
@@ -229,7 +245,8 @@
 			"400": "Bad Request",
 			"404": "Not Found",
 			"500": "Internal Server Error",
-			"etc": "An unexpected error occurred. Please try again."
+			"etc": "An unexpected error occurred. Please try again.",
+			"pageNotFound": "page not found"
 		}
 	}
 }

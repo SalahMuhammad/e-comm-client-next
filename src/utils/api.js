@@ -5,7 +5,7 @@ const BASE_URL = process.env.API_URL || 'http://localhost:8000';
 
 export async function apiRequest(endpoint, options = {}) {
     const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
-    const t = await getTranslations("errors")
+    const t = await getTranslations("global.errors")
     const headersss = { ...options.headers }
     delete options['headers']
     let response;
