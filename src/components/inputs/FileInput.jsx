@@ -25,8 +25,10 @@ export default function FileUploadInput({
   acceptedTypes = "images", // "all", "images", "documents", "audio", "video", "archives"
   multiple = false,
   maxSize = 10 * 1024 * 1024, // 10MB default
-  state,
+  // state,
   defaultValue = [],
+  showPreview = false,
+  setLoadind = (e) => {},
   ...props
 }) {
 
@@ -41,31 +43,51 @@ export default function FileUploadInput({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const fileInputRef = useRef(null);
   const hasError = Boolean(error);
+  
+  // useEffect(() => {
+  //   setFiles([])
+  // }, [state])
 
   useEffect(() => {
-    if (!defaultValue || defaultValue.length === 0) return;
+    const handleDefaultValue = async () => {
+      if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
+        setFiles([]);
+        onChange([]);
+        setLoadind(false);
+        return;
+      }
 
-    const fetchFiles = async () => {
-      const fetchedFiles = await Promise.all(defaultValue.map(async (url) => {
-        const response = await fetch(url);
-        const blob = await response.blob();
+      setFiles([]);
+      setLoadind(true);
 
-        // Create a File-like object (or real File if name is known)
-        const fileName = url.split("/").pop();
-        return new File([blob], fileName, { type: blob.type });
-      }));
+      try {
+        const fetchedFiles = await Promise.all(
+          defaultValue.map(async (url) => {
+            try {
+              const response = await fetch(url);
+              if (!response.ok) throw new Error("Failed to fetch");
+              const blob = await response.blob();
+              const fileName = url.split("/").pop();
+              return new File([blob], fileName, { type: blob.type });
+            } catch (err) {
+              return null;
+            }
+          })
+        );
 
-      setFiles(fetchedFiles);
-      onChange(fetchedFiles);
+        const validFiles = fetchedFiles.filter((file) => file !== null);
+        setFiles(validFiles);
+        onChange(validFiles);
+      } catch (e) {
+        setFiles([]);
+        onChange([]);
+      } finally {
+        setLoadind(false);
+      }
     };
 
-    fetchFiles();
+    handleDefaultValue();
   }, [defaultValue]);
-
-
-  useEffect(() => {
-    setFiles([])
-  }, [state])
 
   const isAcceptedFileType = (file, accept) => {
     if (!accept || accept === '*/*') return true;
@@ -190,6 +212,8 @@ export default function FileUploadInput({
     labelColorClass = "text-blue-600 dark:text-blue-500";
   }
 
+  const [previewFile, setPreviewFile] = useState(null);
+
   return (
     <div className={`relative w-full mb-5 ${className}`}>
       {/* File Type Dropdown - Only show if acceptedTypes is "all" */}
@@ -294,6 +318,23 @@ export default function FileUploadInput({
               <div className="text-gray-400 dark:text-gray-300">
                 {getFileIcon(file)}
               </div>
+              {showPreview && file.type.startsWith("image/") && (
+                <button
+                  type="button"
+                  onClick={() => setPreviewFile(file)}
+                  className="relative group w-[80px] h-[80px]"
+                >
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt={file.name}
+                    className="rounded border border-gray-300 dark:border-gray-600 w-full h-full object-cover group-hover:opacity-80 transition"
+                  />
+                  <div className="rounded absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition">
+                    <p className="text-xs text-white text-center px-1">{t("preview")}</p>
+                  </div>
+                </button>
+             )}
+
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
                   {file.name}
@@ -332,6 +373,41 @@ export default function FileUploadInput({
           <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         )}
       </div>
+
+      {previewFile && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setPreviewFile(null)} // close when clicking outside
+        >
+          <div
+            className="relative bg-white dark:bg-gray-900 p-4 rounded-xl shadow-2xl max-w-[90vw] max-h-[90vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()} // prevent modal from closing when clicking inside
+          >
+            {/* Image with filename overlay */}
+            <div className="relative z-0">
+              <img
+                src={URL.createObjectURL(previewFile)}
+                alt={previewFile.name}
+                className="max-w-full max-h-[75vh] rounded-lg object-contain"
+              />
+
+              <div className="absolute bottom-2 left-2 right-2 px-3 py-1 text-xs text-white bg-black/50 backdrop-blur-sm rounded shadow-inner text-center">
+                {previewFile.name}
+              </div>
+            </div>
+
+            {/* Close button */}
+            <button
+              onClick={() => setPreviewFile(null)}
+              className="absolute top-3 right-3 z-10 text-gray-400 hover:text-red-500 transition"
+              title="Close"
+            >
+              <XMarkIcon className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      )}
+      
     </div>
   );
 }

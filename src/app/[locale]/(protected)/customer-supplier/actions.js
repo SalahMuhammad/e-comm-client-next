@@ -2,13 +2,16 @@
 
 import { apiRequest } from "@/utils/api";
 
-
 export async function getCSs(queryStringParams) {
     'use server'
     const res = await apiRequest(`/api/buyer-supplier-party/${queryStringParams ? queryStringParams : ''}`, {
         method: "GET",
         cashe: "no-store",
     })
+
+    if (res.cMessage) {
+        return {err: res.cMessage}
+    }
 
     return await res.json()
 }
@@ -33,7 +36,7 @@ export async function getCS(id) {
     }
 }
 
-export async function createUpdateCS(formData) {
+export async function createUpdateCS(prevState, formData) {
     'use server' 
     const isUpdate = formData.get('id') ? true : false   
     // Convert FormData to JSON object
@@ -49,23 +52,28 @@ export async function createUpdateCS(formData) {
         },
     })
 
+    const formValues = Object.fromEntries(formData.entries());
+
     switch (res.status) {
         case 200:
         case 201:
-
-            console.log('success 200')
-            // success message in case of update and redirect in create just success message
-            // success
+            return {
+                success: true,
+            }
             break;
         case 400:
-            console.log('bad request')
-            // failed validation
-            return await res.json()
+            return {
+                success: false,
+                errors: await res.json(),
+                ...formValues,
+            }
             break
         default:
-            // an unexpected error occurred
-            console.log('An unexpected error occurred:', res.statusText);
-            break;
+            return {
+                success: false,
+                errors: res?.cMessage || { general: res.status },
+                ...formValues,
+            }
     }
 }
 

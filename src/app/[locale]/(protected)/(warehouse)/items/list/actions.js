@@ -1,7 +1,8 @@
+"use server";
 import { apiRequest } from "@/utils/api";
 
-
 export async function getItems(queryStringParams) {
+    "use server";
     const res = await apiRequest(`/api/items/${queryStringParams ? queryStringParams : ''}`, {
         method: "GET",
         headers: {
@@ -18,7 +19,7 @@ export async function getItems(queryStringParams) {
 }
 
 export async function deleteItem(id) {
-    // "use server";
+    "use server";
 
     const res = await apiRequest(`/api/items/${id}/`, {
         method: "DELETE",
