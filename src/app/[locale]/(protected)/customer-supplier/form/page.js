@@ -1,34 +1,73 @@
-// import { useActionState } from "react"
+"use client";
+import Form from "next/form";
 import { createUpdateCS } from "../actions"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl";
+import { useActionState, useEffect } from "react"
+import { toast } from 'sonner'
+import { useRouter } from "next/navigation";
+import FormButton from "@/components/FormButton"
+import { TextInput, TextAreaInput, NumberInput } from "@/components/inputs/index"
 
+function CSForm({ obj }) {
+    const t = useTranslations("customer-supplier.form");
+    const tGlobal = useTranslations("");
+    const [state, formAction, isPending] = useActionState(createUpdateCS, { errors: {} });
+    const router = useRouter();
 
-async function CSForm({ obj }) {
-    const t = await getTranslations();
+    useEffect(() => {
+        if (!state?.success) {
+            return
+        }
+        if (state?.success) {
+            toast.success(t(obj?.id ? "successEdit" : "successCreate"));
+            if (obj?.id) {
+                router.replace("/customer-supplier/list/");
+            }
+        }
+
+        const errorCode = state?.errors?.general.status;
+        switch (errorCode) {
+            case 400:
+                toast.error(state?.errors || tGlobal('errors.400'));
+                break;
+
+            default:
+                if (errorCode >= 500) {
+                    toast.error(state?.errors?.general.text || tGlobal("errors.500"));
+                } else if (errorCode) {
+                    toast.error(state?.errors?.general.text || tGlobal("errors.etc"));
+                }
+        }
+    }, [state])
 
     return (
-        <form
-            action={createUpdateCS}
-            className="max-w-md mx-auto"
+        <Form
+            action={formAction}
+            className="max-w-md mx-auto mt-15"
             style={{ paddingTop: '1rem' }}
             // className="flex flex-col gap-4 p-4"
         >
             {obj?.id && (
-                <input type="hidden" name="id" value={obj.id} />
+                <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
             )}
 
-            <div className="relative z-0 w-full mb-5 group">
-                <input type="text" name="name" id="name" defaultValue={obj?.name} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-                <label htmlFor="name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">{t('customer-supplier.form.name')}</label>
-            </div>
+            <TextInput name="name" id="name" defaultValue={state?.name || obj?.name} placeholder={t("detail")} error={state?.errors?.name || ""} required />
 
-            <div className="relative z-0 w-full mb-5 group">
-                <textarea name="detail" id="detail" rows={7} defaultValue={obj?.detail} className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "></textarea>
-                <label htmlFor="detail" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">{t('customer-supplier.form.detail')}</label>
-            </div>
+            <TextAreaInput name="detail" id="detail" defaultValue={state?.detail || obj?.detail} placeholder={t("detail")} />
 
-            <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{t('global.form.submit')}</button>
-        </form>
+            <FormButton
+                type="submit"
+                variant={obj?.id ? "secondary" : "danger"}
+                size="md"
+                bgColor="bg-neutral-100 dark:bg-neutral-800"
+                hoverBgColor="bg-neutral-200 dark:bg-neutral-700"
+                textColor="text-black dark:text-white"
+                className="w-full mt-3"
+                isLoading={isPending}
+            >
+                {obj?.id ? t("edit") : t("submit")}
+            </FormButton>  
+        </Form>
     )
 }
 

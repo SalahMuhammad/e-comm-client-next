@@ -2,19 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import DeleteButton from '@/app/[locale]/(protected)/(warehouse)/repository/list/DeleteButton';
-// import DeleteButton from './DeleteButton';
+import DeleteButton from './DeleteButton';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
 
-export default function RepositoryTable({ repositories }) {
-  const t = useTranslations("warehouse.repositories")
-  const [items, setItems] = useState(repositories);
+export default function CustomerSupplierTable({ CSs }) {
+  const t = useTranslations("customer-supplier")
+  const [items, setItems] = useState(CSs);
   const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
-    setItems(repositories);
-  }, [repositories]);
+    setItems(CSs);
+  }, [CSs]);
 
   const handleDelete = (id) => {
     // trigger fade-out
@@ -22,20 +21,18 @@ export default function RepositoryTable({ repositories }) {
 
     // wait for animation before removing
     setTimeout(() => {
-      setItems(prev => prev.filter(repo => repo.id !== id));
+      setItems(prev => prev.filter(CS => CS.id !== id));
       setDeletingId(null);
     }, 300); // match the transition duration
   };
 
-  
-
   return (
     <tbody>
-      {items.map((repository) => {
-        const isDeleting = deletingId === repository.id;
+      {items.map((CS) => {
+        const isDeleting = deletingId === CS.id;
         return (
           <tr
-            key={repository.id}
+            key={CS.id}
             className={`
               transition-all duration-300 ease-in-out 
               ${isDeleting ? 'opacity-0 -translate-x-5 pointer-events-none' : ''}
@@ -43,12 +40,17 @@ export default function RepositoryTable({ repositories }) {
             `}
           >
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              {repository.name}
+              {CS.name}
             </th>
+            <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                <pre className="whitespace-pre-wrap">
+                    {CS.detail}
+                </pre>
+            </td>
             <td className="flex items-center px-6 py-4 justify-end">
 
               <Link
-                href={`/repository/form/${repository.id}`}
+                href={`/customer-supplier/form/${CS.id}`}
                 className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-500 dark:hover:text-blue-400"
               >
                 <PencilIcon
@@ -66,7 +68,7 @@ export default function RepositoryTable({ repositories }) {
                 </span>
               </Link>
 
-              <DeleteButton id={repository.id} onDelete={() => handleDelete(repository.id)} />
+              <DeleteButton id={CS.id} onDelete={() => handleDelete(CS.id)} />
 
             </td>
           </tr>

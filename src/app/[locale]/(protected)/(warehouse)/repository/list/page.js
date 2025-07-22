@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 // import DeleteButton from "./DeleteButton";
 // import Link from 'next/link';
 import ErrorLoading from "@/components/ErrorLoading";
-import RepositoryTable from "@/components/warehouse/repository/RepositoryTable";
+import RepositoryTable from "./RepositoryTable";
 
 async function Page({ searchParams }) {
     const searchParamName = 's';
