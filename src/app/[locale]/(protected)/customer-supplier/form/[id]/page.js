@@ -4,7 +4,7 @@ import ErrorLoading from "@/components/ErrorLoading"
 
 async function page({ params }) {
     const id = (await params).id
-    const CS = await getCS(id)
+    const CS = await (await getCS(id)).data
 
     return (
         <div>

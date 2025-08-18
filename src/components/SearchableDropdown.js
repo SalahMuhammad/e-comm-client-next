@@ -4,8 +4,11 @@ import { useState, useId, useEffect } from 'react';
 import { apiRequest } from '@/utils/api';
 import { useTranslations } from 'next-intl';
 import { PulsingDots } from './loaders';
+import useGenericResponseHandler from './custom hooks/useGenericResponseHandler';
 
-const SearchableDropdown = ({ url, label, ...props }) => {
+
+const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
+  const handleResponse = useGenericResponseHandler()
   const t = useTranslations("inputs.searchableDropdown");
   const selectId = useId();
   const [isFocused, setIsFocused] = useState(false);
@@ -22,16 +25,21 @@ const SearchableDropdown = ({ url, label, ...props }) => {
 
 
 
-  const loadOptions = (searchValue, callback) => {
-    apiRequest(`${url}${searchValue}`, { method: 'GET' })
-    .then(async (res) =>
+  const loadOptions = async (searchValue, callback) => {
+    const res = await apiRequest(`${url}${searchValue}`, { method: 'GET' })
+
+    if (handleResponse(res)) return;
+
+    if (customLoadOptions) {
+      return customLoadOptions(res?.data, callback);
+    }
+
     callback(
-        (await res.json()).results.map((obj) => ({
+        res?.data.results.map((obj) => ({
           value: obj.id,
           label: obj.name,
         }))
       )
-    );
   };
 
   const customStyles = {
@@ -91,7 +99,10 @@ const SearchableDropdown = ({ url, label, ...props }) => {
 
   return (
     <>
-      <div className="relative z-0 w-full mb-5 group">
+      <div 
+        className="relative z-0 w-full mb-5 group"
+        onClick={(e) => e.stopPropagation()}
+    >
         <AsyncSelect
           instanceId={selectId}
           id={url}

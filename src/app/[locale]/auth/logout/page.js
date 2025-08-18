@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { logoutAction } from "./actions";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import "@/styles/auth/logout.css";
 import LogoutLoader from "@/components/LogoutAnimation";
+import { useSearchParams } from 'next/navigation';
+
 
 export default function Page() {
     const t = useTranslations('auth')
@@ -13,6 +15,8 @@ export default function Page() {
     const [loading, setLoading] = useState(true);
     const [isLogoutComplete, setIsLogoutComplete] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams()
+
 
     const handleLogoutComplete = () => {
         router.replace("/auth/");
@@ -31,6 +35,10 @@ export default function Page() {
     }
 
     useEffect(() => {
+        if (searchParams.get('nexturl')) {
+            logoutAction()
+            redirect(`/auth?nexturl=${searchParams.get('nexturl') || '/dashboard'}`, 'replace')
+        }
         handleLogout();
     }, []);
 

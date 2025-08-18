@@ -2,9 +2,11 @@ import { getCSs } from "../actions";
 import PaginationControls from '@/components/PaginationControls';
 import QueryParamSetterInput from '@/components/QueryParamSetterInput';
 import { getTranslations } from "next-intl/server";
-import Link from 'next/link';
 import CustomerSupplierTable from "./CustomerSupplierTable"
 import ErrorLoading from "@/components/ErrorLoading";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
 
 async function Page({ searchParams }) {
     const searchParamName = 's';
@@ -14,7 +16,11 @@ async function Page({ searchParams }) {
     const search = params[searchParamName] ?? '';
     const t = await getTranslations("customer-supplier");
 
-    const data = await getCSs(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
+    const res = await getCSs(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
+    (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
+        redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
+    const data = res.data
+    
 
     return (
         <>

@@ -1,4 +1,5 @@
 "use client";
+
 import Form from "next/form";
 import { createUpdateCS } from "../actions"
 import { useTranslations } from "next-intl";
@@ -7,36 +8,26 @@ import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
 import FormButton from "@/components/FormButton"
 import { TextInput, TextAreaInput, NumberInput } from "@/components/inputs/index"
+import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
+
 
 function CSForm({ obj }) {
     const t = useTranslations("customer-supplier.form");
     const tGlobal = useTranslations("");
     const [state, formAction, isPending] = useActionState(createUpdateCS, { errors: {} });
     const router = useRouter();
+    const handleGenericErrors = useGenericResponseHandler()
+    const defaultName = state?.formData?.name || (! state?.ok && obj?.name) || ''
+    const defaultDetail = state?.formData?.detail || (! state?.ok && obj?.detail) || ''
 
     useEffect(() => {
-        if (!state?.success) {
-            return
-        }
-        if (state?.success) {
-            toast.success(t(obj?.id ? "successEdit" : "successCreate"));
-            if (obj?.id) {
+        if (! state?.status) return
+        if (handleGenericErrors(state)) return;
+
+        if (state.ok) {
+            toast.success('done');
+            obj?.id &&
                 router.replace("/customer-supplier/list/");
-            }
-        }
-
-        const errorCode = state?.errors?.general.status;
-        switch (errorCode) {
-            case 400:
-                toast.error(state?.errors || tGlobal('errors.400'));
-                break;
-
-            default:
-                if (errorCode >= 500) {
-                    toast.error(state?.errors?.general.text || tGlobal("errors.500"));
-                } else if (errorCode) {
-                    toast.error(state?.errors?.general.text || tGlobal("errors.etc"));
-                }
         }
     }, [state])
 
@@ -51,9 +42,9 @@ function CSForm({ obj }) {
                 <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
             )}
 
-            <TextInput name="name" id="name" defaultValue={state?.name || obj?.name} placeholder={t("detail")} error={state?.errors?.name || ""} required />
+            <TextInput name="name" id="name" defaultValue={defaultName} placeholder={t("name")} error={! state.ok && state.data?.name || ""} required />
 
-            <TextAreaInput name="detail" id="detail" defaultValue={state?.detail || obj?.detail} placeholder={t("detail")} />
+            <TextAreaInput name="detail" id="detail" defaultValue={defaultDetail} placeholder={t("detail")} />
 
             <FormButton
                 type="submit"
@@ -65,7 +56,7 @@ function CSForm({ obj }) {
                 className="w-full mt-3"
                 isLoading={isPending}
             >
-                {obj?.id ? t("edit") : t("submit")}
+                {obj?.id ? tGlobal("global.form.edit") : tGlobal("global.form.submit")}
             </FormButton>  
         </Form>
     )

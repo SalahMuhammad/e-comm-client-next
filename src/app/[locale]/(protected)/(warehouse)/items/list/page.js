@@ -4,6 +4,8 @@ import PaginationControls from '@/components/PaginationControls';
 import styles from "./itemsList.module.css";
 import QueryParamSetterInput from '@/components/QueryParamSetterInput';
 import ErrorLoading from '@/components/ErrorLoading';
+import { redirect } from 'next/navigation';
+import { headers } from 'next/headers';
 
 async function Items({ searchParams }) {
     const searchParamName = 's'; // The query parameter name for search
@@ -12,7 +14,10 @@ async function Items({ searchParams }) {
     const offset = params['offset'] ?? 0;
     const search = params[searchParamName] ?? '';
 
-    const data = await getItems(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
+    const res = await getItems(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
+    (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
+                redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
+    const data = res?.data
     
     return (
         <>

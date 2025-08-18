@@ -8,17 +8,24 @@ import { useTranslations } from "next-intl";
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from '@/components/LanguageToggle';
 import {PulsingDots} from '@/components/loaders';
+import { redirect, useSearchParams } from 'next/navigation';
 
 export default function Page() {
   const [state, formAction, isPending] = useActionState(Login, { errors: {} });
+  const searchParams = useSearchParams()
   const t = useTranslations("auth")
 
-  function handleErrors(data) {
-    if (data.success) {
-      return;
-    }
+  if (state.status === 200) {
+    if (searchParams.get('nexturl'))
+        redirect(searchParams.get('nexturl'), 'replace')
+    else
+        redirect('/dashboard')
+  }
 
-    const errorCode = data?.errors?.general;
+  function handleErrors(data) {
+    if (! state.status || data.success) return;
+
+    const errorCode = data?.status;
     switch (errorCode) {
       case 403:
         return t('errors.403');
@@ -97,7 +104,7 @@ export default function Page() {
             )}
           </div>
 
-          {state?.errors?.general && (
+          {! state?.ok && (
             <div className="error-message general">{handleErrors(state)}</div>
           )}
 

@@ -37,6 +37,50 @@ export default function Sidebar({username}) {
 
     const menuItems = [
         {
+            head: t('invoice.sales.headLabel'),
+            icon: (
+                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-6a6 6 0 100 12A6 6 0 0010 4zm1 7V7a1 1 0 10-2 0v5a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414l-2.707-2.707z"/>
+                </svg>
+            ),
+            links: [
+                { 
+                    label: t('invoice.subLabels.invoiceManagement'), 
+                    path: '/invoice/sales/list',
+                    icon: <DocumentTextIcon className="w-4 h-4" />
+                },
+                { 
+                    label: t('invoice.subLabels.createInvoice'), 
+                    path: '/invoice/sales/form',
+                    icon: <DocumentPlusIcon className="w-4 h-4" />
+                },
+                {
+                    label: t('invoice.subLabels.refund'), 
+                    path: '/invoice/sales/refund/list',
+                }
+            ]
+        },
+        {
+            head: t('invoice.purchase.headLabel'),
+            icon: (
+                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-6a6 6 0 100 12A6 6 0 0010 4zm1 7V7a1 1 0 10-2 0v5a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414l-2.707-2.707z"/>
+                </svg>
+            ),
+            links: [
+                { 
+                    label: t('invoice.subLabels.invoiceManagement'), 
+                    path: '/invoice/purchases/list',
+                    icon: <DocumentTextIcon className="w-4 h-4" />
+                },
+                { 
+                    label: t('invoice.subLabels.createInvoice'), 
+                    path: '/invoice/purchases/form',
+                    icon: <DocumentPlusIcon className="w-4 h-4" />
+                },
+            ]
+        },
+        {
             head: t('warehouse.headLabel'),
             icon: (
                 <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
@@ -63,26 +107,6 @@ export default function Sidebar({username}) {
                     label: t('warehouse.subLabels.createRepository'), 
                     path: '/repository/form',
                     icon: <HomeModernIcon className="w-4 h-4" />
-                },
-            ]
-        },
-        {
-            head: t('sales.headLabel'),
-            icon: (
-                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-6a6 6 0 100 12A6 6 0 0010 4zm1 7V7a1 1 0 10-2 0v5a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414l-2.707-2.707z"/>
-                </svg>
-            ),
-            links: [
-                { 
-                    label: t('sales.subLabels.invoiceManagement'), 
-                    path: '/invoice/s/list',
-                    icon: <DocumentTextIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('sales.subLabels.createInvoice'), 
-                    path: '/invoice/s/form',
-                    icon: <DocumentPlusIcon className="w-4 h-4" />
                 },
             ]
         },
@@ -116,22 +140,22 @@ export default function Sidebar({username}) {
             links: [
                 { 
                     label: t('finance.subLabels.payments'), 
-                    path: '/finance/payments',
+                    path: '/finance/payments/list',
                     icon: <CreditCardIcon className="w-4 h-4" />
                 },
                 { 
                     label: t('finance.subLabels.addPayment'), 
-                    path: '/finance/add-payment',
+                    path: '/finance/payments/form',
                     icon: <BanknotesIcon className="w-4 h-4" />
                 },
                 { 
                     label: t('finance.subLabels.expenses'), 
-                    path: '/finance/expenses',
+                    path: '/finance/expenses/list',
                     icon: <ReceiptPercentIcon className="w-4 h-4" />
                 },
                 { 
                     label: t('finance.subLabels.addExpenses'), 
-                    path: '/finance/add-expenses',
+                    path: '/finance/expenses/form',
                     icon: <ExclamationTriangleIcon className="w-4 h-4" />
                 },
                 { 

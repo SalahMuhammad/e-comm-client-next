@@ -5,28 +5,33 @@ import { routing } from './i18n/routing';
 const intlMiddleware = createMiddleware(routing);
 
 export default function middleware(request) {
-  const response = intlMiddleware(request);
+    const url = request.nextUrl.clone();
+    const originalUrl = url.pathname + url.search;
+    request.headers.set('x-original-url', originalUrl);
 
-  const { pathname } = request.nextUrl;
 
-  const username = request.cookies.get('username')?.value;
-  const auth0 = request.cookies.get('auth_0')?.value;
-  const auth1 = request.cookies.get('auth_1')?.value;
+    const response = intlMiddleware(request);
 
-  const isLogout = pathname.includes('/logout');
-  const isAuthPage = pathname.includes('/auth');
-  
-  // If Logged in redirect
-  if (username && auth0 && auth1 && !isLogout && isAuthPage) {
-    return NextResponse.redirect(new URL(`/dashboard`, request.url));
-  }
+    const { pathname } = request.nextUrl;
 
-  return response; 
+    const username = request.cookies.get('username')?.value;
+    const auth0 = request.cookies.get('auth_0')?.value;
+    const auth1 = request.cookies.get('auth_1')?.value;
+
+    const isLogout = pathname.includes('/logout');
+    const isAuthPage = pathname.includes('/auth');
+
+    // If Logged in redirect
+    if (username && auth0 && auth1 && !isLogout && isAuthPage) {
+        return NextResponse.redirect(new URL(`/dashboard`, request.url));
+    }
+
+    return response;
 }
-1
+
 export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)'
+    // Match all pathnames except for
+    // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
+    // - … the ones containing a dot (e.g. `favicon.ico`)
+    matcher: '/((?!api|trpc|_next|_vercel|.*\\..*).*)'
 };

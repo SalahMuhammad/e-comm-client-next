@@ -4,7 +4,7 @@ import RepositoryForm from "../page"
 
 async function page({ params }) {
     const id = (await params).id
-    const repo = await getRepository(id)
+    const repo = (await getRepository(id)).data
 
     return (
         <div>

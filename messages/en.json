@@ -21,7 +21,8 @@
 			},
 			"subLabels": {
 				"invoiceManagement": "Invoice management",
-				"createInvoice": "Create invoice"
+				"createInvoice": "Create invoice",
+                "refund": "Refund"
 			}
 		},
 		"customersSuppliers": {
@@ -63,6 +64,12 @@
 		"signUp": "Sign Up"
 	},
 
+    "toolTip": {
+        "created": "Created",
+        "lastUpdatedIn": "Last Updated IN",
+        "by": "By"
+    },
+
 	"warehouse": {
 		"items": {
 			"card": {
@@ -87,6 +94,7 @@
 				"id": "ID",
 				"type": "Type",
 				"name": "Name",
+                "itemName": "Item Name",
 				"private": "Private",
 				"wholesale": "Wholesale",
 				"piece": "Piece",
@@ -188,11 +196,35 @@
 				"dueDate": "Due Date",
 				"totalAmount": "Total Amount",
 				"repositoryPremit": "Repository Permit",
+                "originalInvoice": "Original Invoice",
 				"notes": "Notes",
 				"actions": "Actions"
 			}
 		}
 	},
+    "finance": {
+        "fields": {
+            "owner": "Owner",
+            "paymentMethod": "Payment Method",
+            "amount": "Amount",
+            "status": "Status",
+            "type": "Type",
+            "date": "Date",
+            "note": "Note"
+        },
+        "status": {
+            "paid": "Paid",
+            "onHold": "ON HOLD"
+        },
+        "success": {
+            "created": "Transaction Created Successfully",
+            "updated": "Transaction Updated Successfully",
+            "delete": "Transaction Deleted Successfully"
+        },
+        "assert": {
+            "message": "Are you sure you want to delete this transaction?"
+        }
+    },
 	"paginationControls": {
 		"next": "Next Page",
 		"prev": "Prev Page",
@@ -253,7 +285,8 @@
 	},
 	"global": {
 		"form": {
-			"submit": "Submit"
+			"submit": "Submit",
+            "edit": "Edit"
 		},
 		"errors": {
 			"400": "Bad Request",
@@ -263,6 +296,15 @@
             "503": "Service unavailable. Please try again later.",
 			"etc": "An unexpected error occurred. Please try again.",
             "pageNotFound": "page not found"
-		}
+		},
+        "delete": {
+            "label": "Remove",
+            "actionLabel": "Delete",
+            "cancelLabel": "Cancel",
+            "assert": {
+                "description": "This action cannot be undone.",
+                "canceled": "Canceled"
+            }
+        }
 	}
 }

@@ -11,11 +11,7 @@ export async function getItems(queryStringParams) {
         cashe: "no-store", // Disable caching for this request
     })
 
-    if (res.cMessage) {
-        return {err: res.cMessage}
-    }
-
-    return await res.json()
+    return res
 }
 
 export async function deleteItem(id) {

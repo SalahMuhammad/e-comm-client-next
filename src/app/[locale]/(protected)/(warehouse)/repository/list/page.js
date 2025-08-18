@@ -6,6 +6,8 @@ import { getTranslations } from "next-intl/server";
 // import Link from 'next/link';
 import ErrorLoading from "@/components/ErrorLoading";
 import RepositoryTable from "./RepositoryTable";
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 
 async function Page({ searchParams }) {
     const searchParamName = 's';
@@ -16,7 +18,10 @@ async function Page({ searchParams }) {
     const t = await getTranslations("warehouse.repositories");
 
 
-    const data = await getRepositories(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
+    const res = await getRepositories(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
+    (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
+                redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
+    const data = res.data;
 
     return (
         <>

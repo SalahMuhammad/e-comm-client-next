@@ -1,0 +1,262 @@
+@media print {
+	/* Hide everything not essential for printing */
+    :global(nav),
+    :global(aside) {
+	  display: none !important;
+	}
+
+    :global(.p-4.sm\:ml-64.mt-14.min-h-screen.flex.flex-col) {
+      padding: 0 !important;
+      margin: 0 !important;
+      margin-left: 0 !important;
+      margin-top: 0 !important;
+      min-height: auto !important;
+    }
+  
+	/* Show only the invoice container and its contents */
+	#root, 
+	#printarea {
+	  display: block !important;
+	  width: 100% !important;
+	  max-width: 100% !important;
+	  box-shadow: none !important;
+	  padding: 0 !important;
+	  margin: 0 !important;
+	}
+  
+	/* Hide specific UI elements within the invoice that shouldn't be printed */
+	.invoice-controls,
+	.edit-link,
+	.delivery-button,
+	.none-printable {
+	  display: none !important;
+	}
+  
+	/* Ensure proper page breaks */
+	@page {
+	  margin: 0.5cm;
+	}
+  
+	/* Ensure all content is visible */
+	#printarea * {
+	  /* overflow: visible !important; */
+	}
+  }
+
+
+
+
+
+
+/* view.module.css */
+
+.receipt-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+        overflow-x: auto; /* Add this line */
+
+}
+
+.receipt-card {
+    background: white;
+    width: 100%;
+    padding: 20px;
+    /* border: 2px solid #333; */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow-x: auto; /* Add this line */
+            min-width: 500px; /* Add this line */
+
+
+}
+
+.header-section {
+    display: grid;
+    /* justify-content: space-around; */
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+    overflow-x: auto; /* Add this line */
+}
+
+.company-info {
+    /* flex: 1; */
+}
+
+.company-name {
+    font-size: 24px;
+    font-weight: bold;
+    /* margin: 0 0 5px 0; */
+    color: #333;
+}
+
+.company-details {
+    font-size: 12px;
+    /* margin: 2px 0; */
+    color: #666;
+}
+
+.phone-number {
+    font-size: 12px;
+    /* margin: 2px 0; */
+    color: #666;
+}
+
+.logo-section {
+    flex-shrink: 0;
+    margin: 0 auto;
+    /* margin-left: 20px; */
+}
+
+.company-logo {
+    height: 75px;
+    object-fit: contain;
+    /* border: 1px solid #ddd; */
+    /* background-color: #f9f9f9; */
+}
+
+.header-right {
+    margin: 0 auto;
+    font-size: 1rem;
+    color: #000;
+}
+
+.values {
+    font-size: 12px;
+    color: #666;
+}
+
+.receipt-details {
+    margin-bottom: 20px;
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 10px;
+}
+
+.amount {
+    /* margin: 0 auto; */
+    width: 7rem;
+}
+
+.label {
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 110px;
+    color: #333;
+}
+/* fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff */
+/* @page {
+    size: 7in 9.25in;
+    margin: 27mm 16mm 27mm 16mm;
+} */
+.value-field {
+    flex: 1;
+    height: 25px;
+    border-bottom: 1px solid #333;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* Centers horizontally */
+    padding: 0 8px;
+    font-size: 14px;
+}
+
+.upper {
+    text-transform: capitalize;
+}
+
+.q::after {
+    content: "\00a0'''";
+}
+
+.q::before {
+    content: "'''\00a0";
+}
+
+.footer-section {
+    /* border-top: 1px solid #333; */
+    /* padding-top: 15px; */
+    position: relative;
+}
+
+.contact-info {
+    margin-bottom: 10px;
+}
+
+.contact-info p {
+    font-size: 11px;
+    margin: 2px 0;
+    color: #666;
+}
+
+.received-by {
+    display: felx;
+    position: absolute;
+    right: 3rem;
+    bottom: .2rem;
+}
+
+.thank-you {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.thank-you p {
+    font-size: 12px;
+    color: #333;
+    margin: 0;
+}
+
+.address {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.address p {
+    font-size: 10px;
+    color: #666;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .receipt-card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .header-section {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .logo-section {
+        margin-left: 0;
+        align-self: flex-end;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .label {
+        min-width: auto;
+    }
+
+    .value-field {
+        width: 100%;
+    }
+}

@@ -7,38 +7,28 @@ import { TextInput, NumberInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
+import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
+
 
 function RepositoryForm({ obj }) {
     const t = useTranslations("warehouse.repositories.form");
     const [state, formAction, isPending] = useActionState(createUpdateRepository, { errors: {} });
     const router = useRouter();
+    const handleGenericErrors = useGenericResponseHandler()
+    const defaultName = state?.formData?.name || (! state?.ok && obj?.name) || ''
 
     useEffect(() => {
-        if (!state?.success) {
+        if (state?.ok === undefined) {
             return
         }
-        if (state?.success) {
+        if (handleGenericErrors(state)) return
+
+
+        if (state?.ok) {
             toast.success(t(obj?.id ? "successEdit" : "successCreate"));
             if (obj?.id) {
                 router.replace("/repository/list/");
             }
-        }
-
-        const errorCode = state?.errors?.general.status;
-        switch (errorCode) {
-            case 400:
-                toast.error(state?.errors || t('errors.400'));
-                break;
-
-            default:
-                if (errorCode >= 500) {
-                    toast.error(state?.errors?.general.text || t("errors.500"));
-                } else if (errorCode) {
-                    toast.error(state?.errors?.general.text || t("errors.etc"));
-                }
-            //  else {
-            //     toast.error(t("errors.etc"));
-            // }
         }
     }, [state])
 
@@ -52,7 +42,7 @@ function RepositoryForm({ obj }) {
                 <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
             )}
 
-            <TextInput name="name" id="name" defaultValue={state?.name || obj?.name} placeholder={t("name")} error={state?.errors?.name || ""} required />
+            <TextInput name="name" id="name" defaultValue={defaultName} placeholder={t("name")} error={! state?.ok && state?.data?.name || ""} required />
 
             <FormButton
                 type="submit"
