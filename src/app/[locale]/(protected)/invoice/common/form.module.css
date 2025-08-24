@@ -6,35 +6,52 @@
 }
 
 .invoiceForm {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    background: var(--background);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     overflow: hidden;
 }
 
+:global(html.dark)  .invoiceForm {
+    background: #273549;
+}
+
 .invoiceHeader {
-    background: #f8f9fa;
-    padding: 24px;
-    border-bottom: 1px solid #e9ecef;
+    background: #f9f9fb;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+:global(html.dark)  .invoiceHeader {
+    background: #1e293b;
+    border-color: #374151;
 }
 
 .invoiceHeader h2 {
     margin: 0;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 600;
-    color: #2c3e50;
+    color: #1f2937;
+}
+
+:global(html.dark)  .invoiceHeader h2 {
+    color: #e2e8f0;
 }
 
 .invoiceDetails {
-    padding: 24px;
-    border-bottom: 1px solid #e9ecef;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+:global(html.dark)  .invoiceDetails {
+    border-color: #374151;
 }
 
 .formRow {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .formGroup {
@@ -44,60 +61,171 @@
 
 .formGroup label {
     font-weight: 500;
-    color: #495057;
-    margin-bottom: 6px;
-    font-size: 14px;
+    color: #4b5563;
+    margin-bottom: 0.375rem;
+    font-size: 0.875rem;
+}
+
+:global(html.dark)  .formGroup label {
+    color: #9ca3af;
 }
 
 .formGroup input,
 .formGroup textarea {
-    padding: 12px;
-    border: 1px solid #ced4da;
-    border-radius: 6px;
-    font-size: 14px;
+    padding: 0.75rem;
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    color: #1f2937;
+}
+
+:global(html.dark)  .formGroup input,
+:global(html.dark)  .formGroup textarea {
+    background-color: #1e293b;
+    border-color: #4b5563;
+    color: #e2e8f0;
 }
 
 .formGroup input:focus,
 .formGroup textarea:focus {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+:global(html.dark)  .formGroup input:focus,
+:global(html.dark)  .formGroup textarea:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
 }
 
 .itemsSection {
-    padding: 24px;
+    padding: 1.5rem;
 }
 
 .itemsHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
 }
 
 .itemsHeader h3 {
     margin: 0;
-    font-size: 18px;
+    font-size: 1.125rem;
     font-weight: 600;
-    color: #2c3e50;
+    color: #1f2937;
 }
 
-/* .addItemBtn {
-    background: #28a745;
-    color: white;
+:global(html.dark)  .itemsHeader h3 {
+    color: #e2e8f0;
+}
+
+.itemList {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.itemCard {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+:global(html.dark)  .itemCard {
+    background-color: #273549;
+    border-color: #374151;
+}
+
+.itemCard:hover {
+    border-color: #d1d5db;
+}
+
+:global(html.dark)  .itemCard:hover {
+    border-color: #4b5563;
+}
+
+.addItemButton {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background-color: #3b82f6;
+    color: #ffffff;
     border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 14px;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
-.addItemBtn:hover {
-    background: #218838;
-} */
+.addItemButton:hover {
+    background-color: #2563eb;
+}
+
+:global(html.dark)  .addItemButton {
+    background-color: #60a5fa;
+}
+
+:global(html.dark)  .addItemButton:hover {
+    background-color: #3b82f6;
+}
+
+.error {
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+:global(html.dark)  .error {
+    color: #f87171;
+}
+
+.formGroup input.hasError,
+.formGroup textarea.hasError {
+    border-color: #ef4444;
+}
+
+:global(html.dark)  .formGroup input.hasError,
+:global(html.dark)  .formGroup textarea.hasError {
+    border-color: #f87171;
+}
+
+.formGroup input:disabled,
+.formGroup textarea:disabled,
+.addItemButton:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+:global(html.dark)  .formGroup input:disabled,
+:global(html.dark)  .formGroup textarea:disabled,
+:global(html.dark)  .addItemButton:disabled {
+    background-color: #1f2937;
+}
+
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+:global(html.dark)  .loadingOverlay {
+    background-color: rgba(17, 24, 39, 0.7);
+}
 
 .itemsList {
     display: flex;
@@ -338,6 +466,16 @@
     border-top: 2px solid #dee2e6;
 }
 
+:global(html.dark) .invoiceSummary {
+    background: #1f2937; 
+    border-top: 1px solid #374151; 
+    color: #f9fafb; 
+}
+
+:global(html.dark)  .totalSection {
+    border-top: 2px solid #4b5563;
+}
+
 .totalRow {
     display: flex;
     justify-content: space-between;
@@ -348,6 +486,10 @@
 
 .totalLabel {
     color: #495057;
+}
+
+:global(html.dark) .totalLabel {
+    color: #fcfbfb;
 }
 
 .totalAmount {
@@ -363,7 +505,7 @@
 
 .submitBtn {
     background: #007bff;
-    color: white;
+    color: rgb(230, 224, 224);
     border: none;
     padding: 14px 32px;
     border-radius: 6px;
@@ -414,5 +556,143 @@
         flex-direction: column;
         gap: 12px;
         align-items: stretch;
+    }
+}
+
+/* Responsive Design */
+
+/* Tablets & below */
+@media (max-width: 992px) {
+    .invoiceContainer {
+        min-width: 100%;
+        padding: 15px;
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+
+    .itemHeader {
+        grid-template-columns: 30px 60px 1fr 80px 80px 20px;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .itemDescription,
+    .itemName {
+        max-width: 100%;
+        font-size: 14px;
+    }
+
+    .itemTotal {
+        font-size: 16px;
+    }
+
+    .detailsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .itemsHeader {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .submitBtn {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 576px) {
+    .invoiceContainer {
+        padding: 10px;
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .itemHeader {
+        grid-template-columns: 25px 50px 1fr 60px 60px 20px;
+        gap: 6px;
+        padding: 10px;
+    }
+
+    .itemDescription,
+    .itemName {
+        font-size: 13px;
+    }
+
+    .itemQuantity {
+        gap: 4px;
+        padding: 2px;
+    }
+
+    .qtyBtn {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+
+    .qtyInput {
+        width: 40px;
+        font-size: 12px;
+        padding: 2px;
+    }
+
+    .itemTotal {
+        font-size: 14px;
+    }
+
+    .invoiceSummary {
+        padding: 12px;
+    }
+
+    .totalSection {
+        padding-top: 12px;
+    }
+
+    .submitBtn {
+        min-width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 400px) {
+    .itemHeader {
+        grid-template-columns: 20px 40px 1fr 50px 50px 20px;
+        gap: 4px;
+        padding: 8px;
+    }
+
+    .itemDescription,
+    .itemName {
+        font-size: 12px;
+    }
+
+    .itemTotal {
+        font-size: 12px;
+    }
+
+    .qtyBtn {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .qtyInput {
+        width: 35px;
+        font-size: 10px;
+    }
+
+    .submitBtn {
+        padding: 8px;
+        font-size: 12px;
     }
 }

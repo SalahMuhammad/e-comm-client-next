@@ -25,7 +25,11 @@ function CSForm({ obj }) {
         if (handleGenericErrors(state)) return;
 
         if (state.ok) {
-            toast.success('done');
+            if(obj?.id) {
+                toast.success(tGlobal("global.form.editSuccess"));
+            } else {
+                toast.success(tGlobal("global.form.createSuccess"));
+            }
             obj?.id &&
                 router.replace("/customer-supplier/list/");
         }

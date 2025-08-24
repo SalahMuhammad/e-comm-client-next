@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { createUpdateInv, getDefaultRepository } from './actions';
 import styles from './form.module.css';
 import { addDays, formatDateManual } from '@/utils/dateFormatter';
@@ -11,7 +11,9 @@ import { getCookie } from '@/utils/cookieHandler';
 import FieldError from '@/components/FieldError';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-
+import Form from 'next/form';
+import FormButton from "@/components/FormButton"
+import { NumberInput } from '@/components/inputs';
 
 const InvoiceForm = ({ type, initialData = null }) => {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -19,11 +21,10 @@ const InvoiceForm = ({ type, initialData = null }) => {
     const [expandedItems, setExpandedItems] = useState(new Set());
     const [items, setItems] = useState(initialData?.[typePrefix] || []);
     const handleGenericErrors = useGenericResponseHandler()
-    const [formData, setFormData] = useState(initialData || {});
-    const [errors, setErrors] = useState({});
-    const [isPending, setIsPending] = useState(false);
     const router = useRouter();
-
+    const [state, formAction, isPending] = useActionState(createUpdateInv, { errors: {} });
+    const tGlobal = useTranslations('global.form');
+    const t = useTranslations('invoice.form');
 
     const toggleItemExpanded = (itemId) => {
         const newExpanded = new Set(expandedItems);
@@ -77,45 +78,30 @@ const InvoiceForm = ({ type, initialData = null }) => {
         }));
         callback(options);
     }
-
-    async function handleSubmit (e) {
-        e.preventDefault();
-        setIsPending(true);
-
-        const res = await createUpdateInv(new FormData(e.currentTarget))
-
-        if (handleGenericErrors(res)) {
-            setIsPending(false);
-            return;
+    
+    useEffect(() => {
+        if (state?.ok === undefined) {
+            return
         }
+        if (handleGenericErrors(state)) return
 
-        switch (res.status) {
-            case 400:
-                setErrors(res.data);
-                setFormData(res.formData);
-                setIsPending(false);
-                break;
-            case 200:
-            case 201:
-                toast.success(`done ${initialData?.id ? 'updated' : 'created'}`);
-                res.data.id && 
-                    router.push(`/invoice/${type}/view/${res.data.id}`);
+        if (state?.ok) {
+            toast.success(t(initialData?.id ? "successEdit" : "successCreate"));
+            if (initialData?.id) {
+                 router.push(`/invoice/${type}/view/${state.data.id}`);
+            }
         }
-    }
+    }, [state])
 
     return (
         <div className={styles.invoiceContainer}>
-            <form
+            <Form
                 // action={action}
-                onSubmit={handleSubmit}
+                action={formAction}
                 className={styles.invoiceForm}
             >
                 <div className={styles.invoiceHeader}>
-                    <h2>Invoice</h2>
-                    {initialData?.id && (
-                        <input type="hidden" name="id" value={initialData.id} />
-                    )}
-
+                    <h2>{t("invoice")}</h2>
                     <input type="hidden" name="type" value={type} />
 
                     {type.includes('refund') && (
@@ -124,54 +110,57 @@ const InvoiceForm = ({ type, initialData = null }) => {
                 </div>
 
                 <div className={styles.invoiceDetails}>
+                    {initialData?.id && (
+                        <NumberInput placeholder={tGlobal("id")} id="id" value={state?.data?.id || initialData.id} borderColor="border-green-500 dark:border-green-400 mt-2 mb-2" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly labelClass='z-20' />
+                    )}  
                     <div className={styles.formRow}>
                         <div className={styles.formGroup}>
-                            <label htmlFor="issue_date">Issue Date</label>
+                            <label htmlFor="issue_date">{t("issueDate")}</label>
                             <input
                                 type="date"
                                 id="issue_date"
                                 name="issue_date"
-                                defaultValue={formData?.issue_date || initialData?.issue_date || formatDateManual(new Date())}
+                                defaultValue={state?.formData?.issue_date || initialData?.issue_date || formatDateManual(new Date())}
                                 required
                             />
-                            <FieldError error={errors?.issue_date} />
+                            <FieldError error={state?.data?.issue_date} />
                         </div>
                         <div className={styles.formGroup}>
-                            <label htmlFor="due_date">Due Date</label>
+                            <label htmlFor="due_date">{t("dueDate")}</label>
                             <input
                                 type="date"
                                 id="due_date"
                                 name="due_date"
-                                defaultValue={formData?.due_date || initialData?.due_date || formatDateManual(addDays(14))}
+                                defaultValue={state?.formData?.due_date || initialData?.due_date || formatDateManual(addDays(14))}
                                 required
                             />
-                            <FieldError error={errors?.due_date} />
+                            <FieldError error={state?.data?.due_date} />
                         </div>
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`} >
                         <SearchableDropdown
                             url={'/api/buyer-supplier-party/?s='}
-                            label={'Owner'}
+                            label={t('owner')}
                             name="owner"
                             defaultValue={initialData?.owner ? { value: initialData?.owner, label: initialData?.owner_name } :  ''}
                             // required
                         />
-                        <FieldError error={errors?.owner} />
+                        <FieldError error={state?.data?.owner} />
                     </div>
                 </div>
 
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsHeader}>
-                        <h3>Invoice Items</h3>
-                        {typeof errors?.[typePrefix]?.[0] === 'string' && 
-                            <FieldError error={errors?.[typePrefix]} />
+                        <h3>{t("items")}</h3>
+                        {typeof state?.[typePrefix]?.[0] === 'string' && 
+                            <FieldError error={state?.data?.[typePrefix]} />
                         }
                     </div>
 
                     <SearchableDropdown
                         url={'/api/items/?s='}
-                        label={'Add Item'}
+                        label={t("addItem")}
                         customLoadOptions={itemsLoadOptions}
                         value={selectedItem}
                         onChange={(item) => addItem(item)}
@@ -207,9 +196,9 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                             {item.item_name || ''}
                                         </p>
                                         <div className={styles.itemMeta}>
-                                            <span className={styles.itemId}>Item ID: {item.item || 'Not set'}</span>
+                                            <span className={styles.itemId}>{t("itemId")} {item.item || t("notSet")}</span>
                                         </div>
-                                        <FieldError error={errors?.[typePrefix]?.[index]?.item} />
+                                        <FieldError error={state?.data?.[typePrefix]?.[index]?.item} />
                                     </div>
 
                                     <div className={styles.itemQuantity}>
@@ -233,7 +222,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                             className={styles.qtyInput}
                                             onClick={(e) => e.stopPropagation()}
                                         />
-                                        <FieldError error={errors?.items?.[index]?.quantity} />
+                                        <FieldError error={state?.data?.items?.[index]?.quantity} />
                                         <button
                                             type="button"
                                             onClick={(e) => {
@@ -262,7 +251,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                     <div className={styles.itemDetails}>
                                         <div className={styles.detailsRow}>
                                             <div className={styles.formGroup}>
-                                                <label>Unit Price</label>
+                                                <label>{t("unitPrice")}</label>
                                                 <input
                                                     type="number"
                                                     step="0.01"
@@ -271,10 +260,10 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                                     onChange={(e) => updateItem(item.id, 'unit_price', e.target.value)}
                                                     placeholder="0.00"
                                                 />
-                                                <FieldError error={errors?.[typePrefix]?.[index]?.unit_price} />
+                                                <FieldError error={state?.data?.[typePrefix]?.[index]?.unit_price} />
                                             </div>
                                             <div className={styles.formGroup}>
-                                                <label>Discount</label>
+                                                <label>{t("discount")}</label>
                                                 <input
                                                     type="number"
                                                     step="0.01"
@@ -283,12 +272,12 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                                     onChange={(e) => updateItem(item.id, 'discount', e.target.value)}
                                                     placeholder="0.00"
                                                 />
-                                                <FieldError error={errors?.[typePrefix]?.[index]?.discount} />
+                                                <FieldError error={state?.data?.[typePrefix]?.[index]?.discount} />
                                             </div>
                                         </div>
                                         <div className={styles.detailsRow}>
                                             <div className={styles.formGroup}>
-                                                <label>Tax Rate (%)</label>
+                                                <label>{t("taxRate")} (%)</label>
                                                 <input
                                                     type="number"
                                                     step="0.01"
@@ -298,22 +287,22 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                                     onChange={(e) => updateItem(item.id, 'tax_rate', e.target.value)}
                                                     placeholder="0.00"
                                                 />
-                                                <FieldError error={errors?.[typePrefix]?.[index]?.tax_rate} />
+                                                <FieldError error={state?.data?.[typePrefix]?.[index]?.tax_rate} />
                                             </div>
                                             <div className={styles.formGroup}>
-                                                <label>Description</label>
+                                                <label>{t("description")}</label>
                                                 <input
                                                     type="text"
-                                                    placeholder="description"
+                                                    placeholder={t("description")}
                                                     value={item.description}
                                                     onChange={(e) => updateItem(item.id, 'description', e.target.value)}
                                                 />
-                                                <FieldError error={errors?.[typePrefix]?.[index]?.description} />
+                                                <FieldError error={state?.data?.[typePrefix]?.[index]?.description} />
                                             </div>
                                         </div>
                                         <div className={styles.detailsRow}>
                                             <div className={styles.formGroup}>
-                                            <label>Repository</label>
+                                            <label>{t("repository")}</label>
                                             <SearchableDropdown
                                                 url={'/api/repositories/?s='}
                                                 name={`items[${index}][repository]`}
@@ -323,9 +312,9 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                                         iitem.id === item.id ? { ...iitem, repository_name: repo?.label || '', repository: repo?.value || '' } : iitem
                                                     ));}
                                                 }
-                                                placeholder="Select Repository"
+                                                placeholder={t("selectRepository")}
                                             />
-                                            <FieldError error={errors?.[typePrefix]?.[index]?.repository} />
+                                            <FieldError error={state?.data?.[typePrefix]?.[index]?.repository} />
                                             </div>
                                         </div>
                                     </div>
@@ -347,20 +336,20 @@ const InvoiceForm = ({ type, initialData = null }) => {
 
                 <div className={styles.invoiceSummary}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="notes">Notes</label>
+                        <label htmlFor="notes">{t("notes")}</label>
                         <textarea
                             id="notes"
                             name="notes"
                             rows="3"
                             defaultValue={initialData?.notes || ''}
-                            placeholder="Additional notes..."
+                            placeholder={t("additionalNotes")}
                         />
-                        <FieldError error={errors?.notes} />
+                        <FieldError error={state?.data?.notes} />
                     </div>
 
                     <div className={styles.totalSection}>
                         <div className={styles.totalRow}>
-                            <span className={styles.totalLabel}>Total Amount:</span>
+                            <span className={styles.totalLabel}>{t("totalAmount")}</span>
                             <span className={styles.totalAmount}>${calculateTotal(items)}</span>
                         </div>
                     </div>
@@ -369,11 +358,20 @@ const InvoiceForm = ({ type, initialData = null }) => {
                 </div>
 
                 <div className={styles.formActions}>
-                    <button type="submit" className={styles.submitBtn} disabled={isPending}>
-                        {initialData?.id ? 'Update Invoice' : 'Create Invoice'}
-                    </button>
+                    <FormButton
+                        type="submit"
+                        variant="secondary"
+                        size="md"
+                        bgColor="bg-neutral-200 dark:bg-neutral-700"
+                        hoverBgColor="bg-neutral-100 dark:bg-neutral-800"
+                        textColor="text-black dark:text-white"
+                        className="w-full"
+                        isLoading={(isPending ) ? true : false}
+                    >
+                        {initialData?.id ? t("update") : t("create")}
+                    </FormButton>
                 </div>
-            </form>
+            </Form>
         </div>
     );
 };

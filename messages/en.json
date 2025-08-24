@@ -83,8 +83,9 @@
 				"remove": {
 					"label": "Remove",
 					"confirm": "Are you sure you want to remove this item?",
-					"yes": "Yes",
-					"no": "No",
+					"description":"This action cannot be undone.",
+					"yes": "Delete",
+					"no": "Cancel",
 					"success": "Item deleted",
 					"canceled": "Deletion canceled",
 					"error": "Error Deleting Item"
@@ -153,8 +154,9 @@
 				"remove": {
 					"label": "Remove",
 					"confirm": "Are you sure you want to remove this repository?",
-					"yes": "Yes",
-					"no": "No",
+					"description":"This action cannot be undone.",
+					"yes": "Delete",
+					"no": "Cancel",
 					"success": "Repository deleted",
 					"canceled": "Deletion canceled",
 					"error": "Error Deleting Repository"
@@ -175,8 +177,9 @@
 			"remove": {
 					"label": "Remove",
 					"confirm": "Are you sure you want to remove this Customer/Supplier?",
-					"yes": "Yes",
-					"no": "No",
+					"description":"This action cannot be undone.",
+					"yes": "Delete",
+					"no": "Cancel",
 					"success": "Customer/Supplier deleted",
 					"canceled": "Deletion canceled",
 					"error": "Error Deleting Customer/Supplier"
@@ -188,7 +191,7 @@
 			"detail": "Detail"
 		}
 	},
-	"invoice": {
+	"invoice": { 
 		"table": {
 			"head": {
 				"owner": "Owner",
@@ -199,7 +202,40 @@
                 "originalInvoice": "Original Invoice",
 				"notes": "Notes",
 				"actions": "Actions"
-			}
+			},
+			"remove": {
+				"label": "Remove",
+				"confirm": "Are you sure you want to delete this item?",
+				"description":"This action cannot be undone.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "Item deleted",
+				"canceled": "Deletion canceled"
+			},
+			"edit": "Edit"
+		},
+		"form": {
+			"invoice": "Invoice",
+			"issueDate": "Issue Date",
+			"dueDate":"Due Date",
+			"owner": "Owner",
+			"items": "Invoice Items",
+			"addItem": "Add Item",
+			"notes": "Notes",
+			"additionalNotes": "Additional notes...",
+			"totalAmount": "Total Amount:",
+			"unitPrice": "Unit Price",
+			"discount": "Discount",
+			"taxRate": "Tax Rate",
+			"repository": "Repository",
+			"selectRepository": "Select a repository",
+			"update": "Update Invoice",
+			"create": "Create Invoice",
+			"successCreate": "Invoice created successfully",
+			"successEdit": "Invoice updated successfully",
+			"itemId": "Item ID:",
+			"notSet": "Not set",
+			"description": "Description"
 		}
 	},
     "finance": {
@@ -286,7 +322,10 @@
 	"global": {
 		"form": {
 			"submit": "Submit",
-            "edit": "Edit"
+            "edit": "Edit",
+			"editSuccess": "Edit successful",
+			"createSuccess": "Create successful",
+			"id": "ID"
 		},
 		"errors": {
 			"400": "Bad Request",
@@ -295,7 +334,8 @@
 			"500": "Internal Server Error",
             "503": "Service unavailable. Please try again later.",
 			"etc": "An unexpected error occurred. Please try again.",
-            "pageNotFound": "page not found"
+            "pageNotFound": "page not found",
+			"nothing": "Nothing here to show"
 		},
         "delete": {
             "label": "Remove",

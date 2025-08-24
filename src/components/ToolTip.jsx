@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "use-intl"
 
 
-function ToolTip({ obj }) {
+function ToolTip({ obj, className=""}) {
     const t = useTranslations('toolTip');
     const [mounted, setMounted] = useState(false);
     const [show, setShow] = useState(false);
@@ -17,7 +17,7 @@ function ToolTip({ obj }) {
     if (!mounted) return null;
 
     return (
-        <div className="relative inline-block">
+        <div className={`relative inline-block ${className}`}>
             <p
                 className="flex items-center text-sm text-gray-500 dark:text-gray-400"
                 onMouseEnter={() => setShow(true)}

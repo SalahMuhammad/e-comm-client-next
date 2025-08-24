@@ -23,7 +23,7 @@ export async function getInv(type, id) {
     return res
 }
 
-export async function createUpdateInv(actualFormData) {
+export async function createUpdateInv(_, actualFormData) {
     'use server'
     const isUpdate = actualFormData.get('id') ? true : false
     const type = actualFormData.get('type');

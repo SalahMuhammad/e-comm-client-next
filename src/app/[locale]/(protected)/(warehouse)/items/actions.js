@@ -1,24 +1,26 @@
 'use server';
 
 import { apiRequest } from "@/utils/api";
+import { getTranslations } from "next-intl/server";
 
 export async function getItem(id) {
     'use server'
+    const t = getTranslations("global")
+
     const res = await apiRequest(`/api/items/${id}/`, {
         method: "Get",
     })
 
     switch (res.status) {
         case 200:
-            return await res.json()
+            console.log(res)
+            return await res.data
         case 404:
-            console.log('not found')
-            // not found
-            return {err: res.cMessage}
+            return {err: t("errors.404")}
         default:
             // an unexpected error occurred
             console.log('An unexpected error occurred:', res.statusText);
-            return {err: res.cMessage}
+            return {err: t("errors.etc")}
     }
 }
 
@@ -35,27 +37,21 @@ export async function createUpdateItem(prevState, formData) {
     const images = formData.getAll('images_upload');
 
     if (images[0]?.size === 0) {
-        // formData.images_upload = {}
-        formData.set("images_upload", [])
-        // Fix:: When 0 delete the image
-        // formData.delete('images_upload');
+        if (isUpdate) {
+            formData.set("images_upload", [])
+        } else {
+            formData.delete('images_upload');
+        }
     }
   
     const response = await apiRequest(`/api/items/${isUpdate ? formData.get('id') + '/' : ''}`, {
         method: `${isUpdate ? 'PUT' : 'POST'}`,
         body: formData,
     });
-
-    if (response?.cMessage) {
-        return {
-            success: false,
-            errors: { general: {status: response.status, text: response.cMessage} },
-            ...formValues,
-        }
-    }
+    console.log(response)
     if (!response?.ok) {
         if (response.status === 400) {
-            const errorData = await response.json();
+            const errorData = await response.data;
             return {
                 success: false,
                 errors: errorData || { general: '400' },
@@ -74,5 +70,5 @@ export async function getPP() {
     if (!response.ok) {
         throw new Error('Failed to fetch item types');
     }
-    return await response.json();
+    return await response.data;
 }
