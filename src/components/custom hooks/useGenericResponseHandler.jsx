@@ -5,8 +5,8 @@ import { redirect } from 'next/navigation'
 import { toast } from 'sonner'
 
 
-export default function useGenericResponseHandler() {
-    const t = useTranslations('global.errors')
+export default function useGenericResponseHandler(t= useTranslations('global.errors')) {
+    // const t = useTranslations('global.errors')
 
     const handleResponse = (res) => {
         switch (res.status) {

@@ -1,4 +1,4 @@
-import { ItemsView } from '@/components/warehouse/items/Card'
+import { ItemsView } from './Card'
 import { getItems } from "./actions";
 import PaginationControls from '@/components/PaginationControls';
 import styles from "./itemsList.module.css";
