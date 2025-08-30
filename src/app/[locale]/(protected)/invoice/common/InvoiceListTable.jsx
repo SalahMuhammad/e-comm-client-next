@@ -63,7 +63,7 @@ export default function InvoiceListTable({ initialData, type }) {
                                     {inv.owner_name}
                                 </Link>
                             </th>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">                                <Link href={`/invoice/${type}/view/${inv.id}`} className="hover:bg-gray-100 dark:hover:bg-gray-600">
+                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                 {inv.issue_date}
                             </td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{inv.due_date}</td>
