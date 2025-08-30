@@ -21,7 +21,7 @@ async function InvoiceList({ searchParams, type }) {
     const isRefund = type.split('/')[1] || false;
 
 
-    const res = (await getInvs(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`));
+    const res = (await getInvs(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}`));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
             redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
@@ -70,12 +70,12 @@ async function InvoiceList({ searchParams, type }) {
                     {data.results.map((inv) => (
                         <tr key={inv.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {inv.owner_name}
+                                <Link className="text-blue-600 hover:underline" href={`/customer-supplier/view/${inv.owner}`}>
+                                    {inv.owner_name}
+                                </Link>
                             </th>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                <Link href={`/invoice/${type}/view/${inv.id}`} className="hover:bg-gray-100 dark:hover:bg-gray-600" passHref>
-                                    {inv.issue_date}
-                                </Link>
+                                {inv.issue_date}
                             </td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                 {inv.due_date}
@@ -102,6 +102,9 @@ async function InvoiceList({ searchParams, type }) {
                             )}
                             
                             <td className="flex items-center px-6 py-4">
+                                <Link href={`/invoice/${type}/view/${inv.id}`} className="text-blue-600 hover:underline">
+                                            view
+                                        </Link>
                                 {! isRefund && (
                                     <>
                                         <DeleteButton type={type} id={inv.id} />

@@ -19,101 +19,98 @@ async function List({ searchParams, type }) {
     const search = params[searchParamName] ?? '';
     const t = await getTranslations("finance");
 
-    function a() {
-        'use client'
-        const ag = 3
-        return 1
-    }
 
-    const res = (await getList(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`));
+    const res = (await getList(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}`));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
-            redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
+        redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
 
     return (
         <>
-        <QueryParamSetterInput 
-            paramName={searchParamName}
-        />
+            <QueryParamSetterInput
+                paramName={searchParamName}
+            />
 
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" className="px-6 py-3">
-                            {t('fields.owner')}
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            {t('fields.paymentMethod')}
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            {t('fields.amount')}
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            {t('fields.status')}
-                        </th>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                {t('fields.owner')}
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                {t('fields.paymentMethod')}
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                {t('fields.amount')}
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                {t('fields.status')}
+                            </th>
                             <th scope="col" className="px-6 py-3">
                                 {t('fields.type')}
                             </th>
-                        <th scope="col" className="px-6 py-3">
-                            {t('fields.date')}
-                        </th>
-                        <th scope="col" className="px-6 py-3">
-                            {t('fields.note')}
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {data?.results?.map((payment) => (
-                        <tr key={payment.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {payment.owner_name}
+                            <th scope="col" className="px-6 py-3">
+                                {t('fields.date')}
                             </th>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                {payment.payment_method_name}
-                            </td>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                <Link href={`/finance/payments/view/${payment.id}`}>
+                            <th scope="col" className="px-6 py-3">
+                                {t('fields.note')}
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data?.results?.map((payment) => (
+                            <tr key={payment.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <Link href={`/customer-supplier/view/${payment.owner}`} className="text-blue-600 hover:underline">
+                                        {payment.owner_name}
+                                    </Link>
+                                </th>
+                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                    {payment.payment_method_name}
+                                </td>
+                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                     {numberFormatter(payment.amount)}
-                                </Link>
-                            </td>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                <Toggle obj={payment} type={type} />
-                            </td>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                {payment.payment_type}
-                            </td>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                {payment.date}
-                            </td>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                <pre className="whitespace-pre-wrap">
-                                    {payment.note}
-                                </pre>
-                            </td>
-                            
-                            <td className="flex items-center px-6 py-4">
+                                </td>
+                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                    <Toggle obj={payment} type={type} />
+                                </td>
+                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                    {payment.payment_type}
+                                </td>
+                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                    {payment.date}
+                                </td>
+                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                    <pre className="whitespace-pre-wrap">
+                                        {payment.note}
+                                    </pre>
+                                </td>
+
+                                <td className="flex items-center px-6 py-4">
                                     <>
+                                        <Link className="text-blue-600 hover:underline" href={`/finance/${type}/view/${payment.id}`}>
+                                            view
+                                        </Link>
                                         <DeleteButton type={type} id={payment.id} />
                                         <Link href={`/finance/${type}/form/${payment.id}`} className="ml-2 text-blue-600 hover:underline">
                                             Edit
                                         </Link>
                                     </>
-                                <ToolTip obj={payment} />
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                                    <ToolTip obj={payment} />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-        
-        <PaginationControls 
+            <PaginationControls
                 resCount={data.count}
                 hasNext={data.next}
                 hasPrev={data.previous}
-        />  
+            />
         </>
     )
 }

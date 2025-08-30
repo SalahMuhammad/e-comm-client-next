@@ -5,15 +5,22 @@ import styles from './view.module.css'
 import s from '@/app/[locale]/(protected)/invoice/common/view.module.css'
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
+import { getCreditBalance } from '@/app/[locale]/(protected)/invoice/common/actions';
+import CompanyDetailsHead from '@/components/CompanyDetailsHead';
 
 
 async function TransactionView({ id, type }) {
     const transaction = (await getPayment(id, type)).data
+    const ownerData = (await getCreditBalance(transaction.owner, transaction.date)).data;
+    let credit = ownerData.credit || '00.00'
+
+
+    if (! transaction?.id) return 'not found'
 
 
     return (
-        <div id='printarea' className={styles["receipt-container"]}>
-            <div className={`${s['invoice-controls']}`}>
+        <div id='printarea' className={`p-4 ${styles["receipt-container"]}`}>
+            <div className={`${s['invoice-controls']} none-printable`}>
                 <Link href={`/finance/${type}/form/${id}`}>
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
@@ -25,32 +32,18 @@ async function TransactionView({ id, type }) {
 
             </div>
 
-            <div className={styles["receipt-card"]}>
-                {/* <!-- Header Section --> */}
-                <div className={styles["header-section"]}>
-                    <div className={styles["company-info"]}>
-                        <h1 className={styles["company-name"]}>Med Pro Corp</h1>
-                        <p className={styles["company-details"]}>GENERAL TRADING L.L.C</p>
-                        <p className={styles["phone-number"]}>(+20) 22507508</p>
-                        <div className={styles["contact-info"]}>
-                            <p>PHONE: (+20) 1002087584</p>
-                            <p>PHONE: (+20) 1000696011</p>
-                        </div>
+            <div className='pr-4 pb-4 w-full shadow-[8px_8px_8px_-5px_rgba(0,0,0,0.3)]'>
+                <CompanyDetailsHead>
+                    <div className="mx-auto text-base text-black">
+                        <p className="text-2xl">Receipt</p>
+                        <p>Date: <span className="text-xs text-gray-500">{transaction.date}</span></p>
+                        <p>No: <span className="text-xs text-gray-500">#{transaction.id}</span></p>
                     </div>
-                    <div className={styles["logo-section"]}>
-                        <img src="/logo.jpeg" alt="Med Pro Corp Logo" className={styles["company-logo"]} />
-                    </div>
-                    <div className={styles['header-right']}>
-                        <p style={{ fontSize: '1.5rem' }}>Receipt</p>
-                        <p>Date: <span className={styles['values']}>{transaction.date}</span></p>
-                        <p>No: <span className={styles['values']}>#{transaction.hashed_id}</span></p>
-                    </div>
-                </div>
-
+                </CompanyDetailsHead>
                 {/* <!-- Receipt Details --> */}
                 <div className={styles["receipt-details"]}>
                     <div className={styles["detail-row"]}>
-                        <span className={styles["label"]}>Received From</span>
+                        <span className={styles["label"]}>{type === 'payments' ? 'Received From' : 'Sent To'}</span>
                         <div className={`${styles["value-field"]}`}>{transaction.owner_name}</div>
                     </div>
 
@@ -90,12 +83,18 @@ async function TransactionView({ id, type }) {
                         <div className={styles["value-field"]} style={{ borderBottom: 'none' }}></div>
                     </div>
 
+                    {Number(credit) !== 0 && <div className={`${styles['remaining-credit']}`} style={{position: "relative"}}>
+                        <span className={styles["label"]}>Remaining Credit Balance: </span>
+                        <div className={styles["valfue-fieldf"]} style={{ borderBottom: 'none' }}>{numberFormatter(credit)}</div>
+                    </div>}
+
+                    
+
                     <div className={styles["thank-you"]}>
                         <p>Thank you for your business</p>
                     </div>
-
-                    <div className={styles["address"]}>
-                        <p>20 Block 2, Emergency city Emocaram, Cairo</p>
+                    <div className={styles["thank-you"]}>
+                        <p>Generated on {new Date(transaction.created_at).toString().split(' GMT')[0]}</p>
                     </div>
                 </div>
             </div>

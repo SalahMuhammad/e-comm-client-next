@@ -8,7 +8,7 @@ export async function getInvs(type, queryStringParams) {
     'use server'
     const res = await apiRequest(`/api/${type}/${queryStringParams ? queryStringParams : ''}`, {
         method: "GET",
-        cashe: "no-store",
+        cache: "no-store",
     })
 
     return res
@@ -68,13 +68,13 @@ export async function createUpdateInv(actualFormData) {
     }
 }
 
-export async function deleteInv(type, id) {
+export async function deleteInv(type, id, isDeleteFromView) {
     'use server'
     const res = await apiRequest(`/api/${type}/${id}/`, {
         method: "DELETE",
     })
     
-    if (res.ok) revalidatePath('/invoice/sales/list');
+    if (res.ok && ! isDeleteFromView) revalidatePath('/invoice/sales/list');
 
     return res
 }

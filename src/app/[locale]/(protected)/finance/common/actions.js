@@ -41,13 +41,13 @@ export async function createUpdateTransaction(formData, type) {
     }
 }
 
-export async function deletePayment(type, id) {
+export async function deletePayment(type, id, isDeleteFromView) {
     'use server'
     const res = await apiRequest(`/api/payment/${type}/${id}/`, {
         method: "DELETE",
     })
 
-    if (res.ok) revalidatePath('/finance/payments/list');
+    if (res.ok && ! isDeleteFromView) revalidatePath('/finance/payments/list');
 
     return res
 }
@@ -60,6 +60,18 @@ export async function updateStatus(id, type, paid) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ paid: ! paid })
+    })
+
+    return res
+}
+
+export async function getCompanyDetails() {
+    'use server'
+    const res = await apiRequest(`company-details/`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+        }
     })
 
     return res

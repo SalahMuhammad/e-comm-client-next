@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import { getCookie } from '@/utils/cookieHandler';
 import FieldError from '@/components/FieldError';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
 
 
@@ -22,7 +22,6 @@ const InvoiceForm = ({ type, initialData = null }) => {
     const [formData, setFormData] = useState(initialData || {});
     const [errors, setErrors] = useState({});
     const [isPending, setIsPending] = useState(false);
-    const router = useRouter();
 
 
     const toggleItemExpanded = (itemId) => {
@@ -99,7 +98,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
             case 201:
                 toast.success(`done ${initialData?.id ? 'updated' : 'created'}`);
                 res.data.id && 
-                    router.push(`/invoice/${type}/view/${res.data.id}`);
+                    redirect(`/invoice/${type}/view/${res.data.id}`)
         }
     }
 

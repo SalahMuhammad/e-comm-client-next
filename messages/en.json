@@ -46,7 +46,8 @@
 			"headLabel": "Reports",
 			"subLabels": {
 				"refilled": "Refilled cylinders",
-				"payments": "Payments within a period"
+				"payments": "Payments within a period",
+                "refillableItemsClientClientHas": "Refillable Items Client Has"
 			}
 		},
 		"refilledCans": {

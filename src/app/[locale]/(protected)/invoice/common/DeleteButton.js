@@ -3,9 +3,10 @@
 import { toast } from 'sonner';
 import { deleteInv } from './actions';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
+import { redirect } from 'next/navigation';
 
 
-function DeleteButton({ type, id }) {
+function DeleteButton({ type, id, isDeleteFromView = false }) {
     const genericErrorHandler = useGenericResponseHandler()
 
     const handleDelete = async () => {
@@ -14,11 +15,14 @@ function DeleteButton({ type, id }) {
             action: {
                 label: 'Delete',
                 onClick: async () => {
-                    const res = await deleteInv(type, id);
+                    const res = await deleteInv(type, id, isDeleteFromView);
                     if (genericErrorHandler(res)) return;
 
                     res?.ok &&
                         toast.success('Item deleted successfully');
+
+                    isDeleteFromView &&
+                        redirect(`/invoice/${type}/list`)
                 }
             },
             cancel: {

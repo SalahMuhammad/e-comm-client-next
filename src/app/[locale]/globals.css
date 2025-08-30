@@ -2,10 +2,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #fff;
-  /* --foreground: #1717; */
-  --foreground: #1e293b;
-  /* direction: rtl; */
+    --background: #fff;
+    /* --foreground: #1717; */
+    --foreground: #1e293b;
+    /* direction: rtl; */
+    --footer-message: #6b7280;
 }
 
 /* @theme inline {
@@ -23,39 +24,95 @@
 } */
 
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+    --background: #0a0a0a;
+    --foreground: #ededed;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  /* font-family: Arial, Helvetica, sans-serif; */
-font-family: 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--foreground);
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-family: 'Inter', sans-serif;
 }
 
 .transition-max-height {
-  transition: 0.3s ease-in-out;
-  overflow: hidden;
+    transition: 0.3s ease-in-out;
+    overflow: hidden;
 }
 
 html {
-  transition: background 0.4s ease, color 0.4s ease;
+    transition: background 0.4s ease, color 0.4s ease;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  background: transparent; 
-  color: black; 
+    background: transparent;
+    color: black;
 }
 
 @layer utilities {
-  .animate-fadeIn {
-    animation: fadeIn 0.25s ease-out;
-  }
+    .animate-fadeIn {
+        animation: fadeIn 0.25s ease-out;
+    }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
-  }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: scale(0.98);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
+
+
+@media print {
+    /* Hide everything not essential for printing */
+    nav,
+    aside {
+        display: none !important;
+    }
+
+    .p-4.sm\:ml-64.mt-14.min-h-screen.flex.flex-col {
+        /* padding: 0 !important; */
+        margin: 0 !important;
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        min-height: auto !important;
+    }
+
+    /* Show only the invoice container and its contents */
+    #root,
+    #printarea {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Hide specific UI elements within the invoice that shouldn't be printed */
+    .none-printable {
+        display: none !important;
+    }
+
+    /* Ensure proper page breaks */
+    @page {
+        margin: 0.5cm;
+    }
+
+    body {
+        background-color: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Ensure all content is visible */
+    #printarea * {
+        /* overflow: visible !important; */
+    }
 }
