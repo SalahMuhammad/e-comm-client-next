@@ -15,7 +15,7 @@ async function page({ params }) {
 
             <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>Sales invoices</Link>
             <Link className="text-blue-600 hover:underline p-4" href={'/invoices/purchases/list/ownerid'}>Purchase invoices</Link>
-            <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>Customer Account Statemnet Report</Link>
+            <Link className="text-blue-600 hover:underline p-4" href={`/reports/owner-account-statement/${ownerId}`}>Customer Account Statemnet Report</Link>
             <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>Payments</Link>
             <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>expenses</Link>
             <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>refillable items refund</Link>
