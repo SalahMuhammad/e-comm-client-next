@@ -59,12 +59,12 @@ export default function InvoiceListTable({ initialData, type }) {
                             `}
                         >
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                {inv.owner_name}
-                            </th>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                <Link href={`/invoice/${type}/view/${inv.id}`} className="hover:bg-gray-100 dark:hover:bg-gray-600">
-                                    {inv.issue_date}
+                                <Link className="text-blue-600 hover:underline" href={`/customer-supplier/view/${inv.owner}`}>
+                                    {inv.owner_name}
                                 </Link>
+                            </th>
+                            <td className="px-6 py-4 max-w-xs overflow-x-auto">                                <Link href={`/invoice/${type}/view/${inv.id}`} className="hover:bg-gray-100 dark:hover:bg-gray-600">
+                                {inv.issue_date}
                             </td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{inv.due_date}</td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{numberFormatter(inv.total_amount)}</td>
@@ -84,6 +84,9 @@ export default function InvoiceListTable({ initialData, type }) {
                                 </td>
                             )}
                             <td className="flex items-center px-6 py-4 dark:text-gray-300">
+                                <Link href={`/invoice/${type}/view/${inv.id}`} className="text-blue-600 hover:underline">
+                                    view
+                                </Link>
                                 {!isRefund && (
                                     <>
                                         <DeleteButton type={type} id={inv.id} onDelete={() => handleDelete(inv.id)} />
