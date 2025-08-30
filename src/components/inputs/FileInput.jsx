@@ -202,7 +202,7 @@ export default function FileUploadInput({
   let iconColorClass = "text-gray-400 dark:text-gray-300";
   let labelColorClass = "text-gray-500 dark:text-gray-400";
 
-  if (hasError) {
+  if (hasError && typeof error == "string") {
     borderColorClass = "border-red-500 dark:border-red-400";
     iconColorClass = "text-red-500 dark:text-red-400";
     labelColorClass = "text-red-500 dark:text-red-400";
@@ -310,10 +310,17 @@ export default function FileUploadInput({
       {/* Selected Files */}
       {files.length > 0 && (
         <div className="mt-3 space-y-2">
-          {files.map((file, index) => (
+          {files.map((file, index) => {
+            const isErrorObject = error && typeof error === "object"
+            const errorMessages = isErrorObject ? error[String(index)] : null;
+
+            return (
+            <div className={`relative ${hasError && "pb-6"} transition-[padding] duration-[200ms]`}>
+
             <div
               key={index}
-              className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
+              className={`flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 
+                          ${errorMessages && "border-red-500 dark:border-red-400"}`}
             >
               <div className="text-gray-400 dark:text-gray-300">
                 {getFileIcon(file)}
@@ -336,10 +343,10 @@ export default function FileUploadInput({
              )}
 
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                <p className={`text-sm font-medium truncate ${errorMessages ? "text-red-500 dark:text-red-400" : "text-gray-900 dark:text-white"}`}>
                   {file.name}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className={`text-xs text-gray-500 dark:text-gray-400`}>
                   {formatFileSize(file.size)}
                 </p>
               </div>
@@ -350,8 +357,13 @@ export default function FileUploadInput({
               >
                 <XMarkIcon className="w-4 h-4" />
               </button>
+            
             </div>
-          ))}
+              {errorMessages && (
+                <p className="absolute bottom-0 text-sm text-red-600 dark:text-red-400">{errorMessages}</p>
+              )}
+            </div>
+          )})}
         </div>
       )}
 
@@ -368,8 +380,8 @@ export default function FileUploadInput({
       </label>
 
       {/* Error Text */}
-      <div className="min-h-[1.25rem] mt-1">
-        {hasError && (
+      <div className={`${(hasError && typeof error == "string" ) && "min-h-[1.25rem] mt-1"} transition-all duration-[200ms]`}>
+        {(hasError && typeof error == "string" ) && (
           <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
         )}
       </div>

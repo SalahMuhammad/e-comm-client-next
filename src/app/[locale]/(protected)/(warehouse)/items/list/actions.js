@@ -21,17 +21,6 @@ export async function deleteItem(id) {
         method: "DELETE",
     })
 
-    switch (res.status) {
-        case 204:
-            // success
-            return { success: true }
-        case 400:
-            // bad request
-            console.log('bad requesrt')
-            return { error: (await res.json()).detail }
-        default:
-            // an unexpected error occurred
-            console.log('An unexpected error occurred:', res.statusText);
-            return { error: 'An unexpected error occurred' }
-    }
+
+    return res
 }

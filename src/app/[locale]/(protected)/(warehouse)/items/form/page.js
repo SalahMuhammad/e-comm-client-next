@@ -11,11 +11,12 @@ import Form from "next/form";
 import { useActionState } from 'react';
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
+import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 
 function ItemsForm({obj}) {
     const t = useTranslations("warehouse.items.form");
     const [open, setOpen] = useState(false);
-    const [FileLoading, setFileLoading] = useState(false);
+    const [FileLoading, setFileLoading] = useState(true);
     const [state, formAction, isPending] = useActionState(createUpdateItem, { errors: {} });
     const router = useRouter();
     const [p1, setP1] = useState(1);
@@ -83,7 +84,7 @@ function ItemsForm({obj}) {
                 url={'api/items/types/?s='}
                 label={t('type')}
                 name="type"
-                defaultValue={{value: "state.type", label: "state.type_name"}}
+                // defaultValue={obj.type ? {value: obj.type, label: obj.type}}
                 // defaultValue={state?.type ? {value: state.type, label: state.type_name} : {value: obj.type, label: obj.type_name} }
             />
 

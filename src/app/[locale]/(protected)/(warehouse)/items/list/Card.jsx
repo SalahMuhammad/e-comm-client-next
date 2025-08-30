@@ -5,27 +5,30 @@ import Link from "next/link";
 import { initFlowbite } from 'flowbite'
 import { TrashIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { FillText } from "@/components/loaders";
-import { deleteItem } from "@/app/[locale]/(protected)/(warehouse)/items/list/actions";
+import { deleteItem } from "./actions";
 import { toast } from "sonner";
+import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 
 function handleDelete(t, id, onDelete, funs) {
-    toast(t("items.card.remove.confirm"), {
+    const handleGenericErrors = useGenericResponseHandler(t)
+
+    toast(t("warehouse.items.card.remove.confirm"), {
         action: {
-        label: t('items.card.remove.yes'),
+        label: t('warehouse.items.card.remove.yes'),
         onClick: async () => {
             const res = await deleteItem(id);
-            if (res.success) {
-                toast.success(t('items.card.remove.success'));
+            
+            if(handleGenericErrors(res)) return;
+            if (res.ok) {
+                toast.success(t('warehouse.items.card.remove.success'));
                 onDelete?.(funs.setItems, funs.setDeletingId, id);
-            } else {
-                toast.error(res.error || t('items.card.remove.error'));
             }
         },
         },
         cancel: {
-        label: t('items.card.remove.no'),
+        label: t('warehouse.items.card.remove.no'),
         onClick: () => {
-            toast.info(t('items.card.remove.canceled'));
+            toast.info(t('warehouse.items.card.remove.canceled'));
         },
         },
         duration: 10000,
@@ -35,6 +38,7 @@ function handleDelete(t, id, onDelete, funs) {
 
 // Table Row Component
 function TableRow({ id, name, origin, place, p4, imgSrc, isDeleting = false, funs}) {
+    const tGlobal = useTranslations("");
     const t = useTranslations("warehouse");
 
     const handleOnDelete = (setItems, setDeletingId, id) => {
@@ -94,7 +98,7 @@ function TableRow({ id, name, origin, place, p4, imgSrc, isDeleting = false, fun
                     <button className="group flex items-center gap-1 px-2 py-1 rounded-md
                         text-red-600 dark:text-red-500 cursor-pointer
                         transition-all duration-300 ease-in-out"
-                        onClick={() => handleDelete(t, id, handleOnDelete, funs=funs)}    
+                        onClick={() => handleDelete(tGlobal, id, handleOnDelete, funs=funs)}    
                     >
                         <TrashIcon
                             className="
@@ -119,7 +123,8 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc, i
         initFlowbite();
     }, []);
     const t = useTranslations("warehouse");
-    
+    const tGlobal = useTranslations("");
+
     return (
     <div className={`
         w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700
@@ -161,7 +166,7 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc, i
                         </li> */}
                         <li>
                             <button
-                                onClick={() => handleDelete(t, id, (setItems, setDeletingId, id) => {
+                                onClick={() => handleDelete(tGlobal, id, (setItems, setDeletingId, id) => {
                                     setDeletingId(id);
                                     setTimeout(() => {
                                         setItems(prev => prev.filter(item => item.id !== id));
