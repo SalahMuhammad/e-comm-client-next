@@ -7,7 +7,7 @@ import Form from "next/form";
 import { NumberInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
 import { toast } from 'sonner'
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import styles from '@/app/[locale]/(protected)/invoice/common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
@@ -50,7 +50,7 @@ function MyForm({ initialData, type }) {
             case 201:
                 toast.success(`${initialData?.id ? t('finance.success.updated') : t('finance.success.created')}...`);
                 res.data.id &&
-                    router.push(`/finance/${type}/view/${res.data.id}`);
+                    redirect(`/finance/${type}/view/${res.data.id}`);
         }
 
         setIsPending(false)
@@ -116,7 +116,7 @@ function MyForm({ initialData, type }) {
                         options={options}
                         name={'payment_type'}
                         label={t('finance.fields.type')}
-                        defaultValue={initialData?.payment_type ? { value: initialData?.payment_type, label: initialData?.payment_type } : ''}
+                        defaultValue={initialData?.payment_type ? { value: initialData?.payment_type, label: initialData?.payment_type } : 0}
                     />
                     <FieldError error={errors?.payment_type} />
                 </div>

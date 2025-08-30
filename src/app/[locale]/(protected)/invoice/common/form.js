@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import { getCookie } from '@/utils/cookieHandler';
 import FieldError from '@/components/FieldError';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
 import Form from 'next/form';
 import FormButton from "@/components/FormButton"
@@ -21,7 +21,6 @@ const InvoiceForm = ({ type, initialData = null }) => {
     const [expandedItems, setExpandedItems] = useState(new Set());
     const [items, setItems] = useState(initialData?.[typePrefix] || []);
     const handleGenericErrors = useGenericResponseHandler()
-    const router = useRouter();
     const [state, formAction, isPending] = useActionState(createUpdateInv, { errors: {} });
     const tGlobal = useTranslations('global.form');
     const t = useTranslations('invoice.form');
@@ -87,8 +86,8 @@ const InvoiceForm = ({ type, initialData = null }) => {
 
         if (state?.ok) {
             toast.success(t(initialData?.id ? "successEdit" : "successCreate"));
-            if (initialData?.id) {
-                 router.push(`/invoice/${type}/view/${state.data.id}`);
+            if (state.data?.id) {
+                 redirect(`/invoice/${type}/view/${state.data?.id}`)
             }
         }
     }, [state])

@@ -9,11 +9,16 @@ export default function useGenericResponseHandler(t= useTranslations('global.err
     // const t = useTranslations('global.errors')
 
     const handleResponse = (res) => {
+        if (! res.status) return true
+        
         switch (res.status) {
             case 200:
             case 201:
             case 204:
+                break;
             case 400:
+                res.data?.detail &&
+                    toast.error(res.data?.detail)
                 break;
             case 403:
                 if (res.data?.detail?.includes('jwt')) {

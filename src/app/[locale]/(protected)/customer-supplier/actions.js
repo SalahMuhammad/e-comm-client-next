@@ -21,6 +21,15 @@ export async function getCS(id) {
     return res
 }
 
+export async function getCSView(id) {
+    'use server'
+    const res = await apiRequest(`/api/buyer-supplier-party/owner/view/${id}/`, {
+        method: "Get",
+    })
+
+    return res
+}
+
 export async function createUpdateCS(prevState, formData) {
     'use server' 
     const isUpdate = formData.get('id') ? true : false   

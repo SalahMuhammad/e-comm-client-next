@@ -17,7 +17,7 @@ function DeleteButton({ type, id, isDeleteFromView = false }) {
             action: {
                 label: t('global.delete.actionLabel'),
                 onClick: async () => {
-                    const res = await deletePayment(type, id);
+                    const res = await deletePayment(type, id, isDeleteFromView);
                     if (genericErrorHandler(res)) return;
 
                     res?.ok &&

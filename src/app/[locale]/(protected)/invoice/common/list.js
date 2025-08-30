@@ -17,7 +17,7 @@ async function InvoiceList({ searchParams, type }) {
     const isRefund = type.split('/')[1] || false;
 
 
-    const res = (await getInvs(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`));
+    const res = (await getInvs(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}`));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
             redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data

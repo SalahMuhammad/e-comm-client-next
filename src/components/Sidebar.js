@@ -182,7 +182,13 @@ export default function Sidebar({username}) {
                     label: t('reports.subLabels.payments'), 
                     path: '/report/payments',
                     icon: <CurrencyDollarIcon className="w-4 h-4" />
-                },
+                }
+                // ,
+                // { 
+                //     label: t('reports.subLabels.refillableItemsClientClientHas'), 
+                //     path: '/reports/refillable-items-client-has',
+                //     icon: <CurrencyDollarIcon className="w-4 h-4" />
+                // },
             ]
         },
         {

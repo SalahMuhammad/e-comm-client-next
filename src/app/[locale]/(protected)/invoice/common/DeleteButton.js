@@ -3,10 +3,11 @@
 import { toast } from 'sonner';
 import { deleteInv } from './actions';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
+import { redirect } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { TrashIcon } from '@heroicons/react/24/outline';
 
-function DeleteButton({ type, id, onDelete }) {
+function DeleteButton({ type, id, onDelete, isDeleteFromView = false }) {
     const genericErrorHandler = useGenericResponseHandler()
     const t = useTranslations('invoice.table.remove');
 
@@ -16,10 +17,13 @@ function DeleteButton({ type, id, onDelete }) {
             action: {
                 label: t('yes'),
                 onClick: async () => {
-                    const res = await deleteInv(type, id);
+                    const res = await deleteInv(type, id, isDeleteFromView);
                     if (genericErrorHandler(res)) return;
 
-                    if (res?.ok) {
+                    isDeleteFromView &&
+                        redirect(`/invoice/${type}/list`)
+
+                  if (res?.ok) {
                         toast.success(t('success'));
                         onDelete?.(); 
                     }
