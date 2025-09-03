@@ -62,7 +62,7 @@ async function List({ searchParams, type }) {
                     <tbody>
                         {data?.results?.map((payment) => (
                             <tr key={payment.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <th scope="row" className="px-6 py-4 w-[12rem] max-w-[12rem] font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <Link href={`/customer-supplier/view/${payment.owner}`} className="text-blue-600 hover:underline">
                                         {payment.owner_name}
                                     </Link>
@@ -82,8 +82,8 @@ async function List({ searchParams, type }) {
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                     {payment.date}
                                 </td>
-                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    <pre className="whitespace-pre-wrap">
+                                <td className="px-6 py-4 w-[12rem] max-w-[12rem]">
+                                    <pre>
                                         {payment.note}
                                     </pre>
                                 </td>

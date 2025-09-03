@@ -75,7 +75,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                         <h1 className={`text-xl font-bold font-serif`}>{type.includes('sales') ? isRefund ? `REFUND SALES` : 'PROFORMA' : 'PURCHASE'} INVOICE</h1>
                         <p className={`text-sm font-serif wrap-break-word break-all whitespace-normal max-w-57`}>Billed To: <span className="text-xs text-gray-500">{invoice.owner_name}</span></p>
                         {ownerData?.address && <p className={`text-sm font-serif pl-1 wrap-break-word break-all whitespace-normal max-w-57`}><span className="text-xs text-gray-500">{ownerData?.addressDetails + ownerData?.address}</span></p>}
-                        <p className={`text-sm font-serif`}>Order no: <span className="text-xs text-gray-500">#{invoice.hashed_id}</span></p>
+                        <p className={`text-sm font-serif`}>{isRefund ? 'Refund': 'Order'} No: <span className="text-xs text-gray-500">#{invoice.id}</span></p>
                         <p className={`text-sm font-serif none-printable`}>Created by: <span className="text-xs text-gray-500">{invoice.by_username}</span></p>
                         <p className={`text-sm font-serif`}>Issued: <span className="text-xs text-gray-500">{formatDate(invoice.issue_date)}</span></p>
                         <p className={`text-sm font-serif`}>Total Amount: <span className="text-xs text-gray-500">{invoice.total_amount}</span></p>
@@ -119,7 +119,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                     <div className={`${style['summary-container']}`}>
                         <div className={`${style['summary-row']}`}>
                             <span className={`${style['summary-label']}`}>Subtotal:</span>
-                            <span className={`${style['summary-value']}`}>{numberFormatter(subTotal)}</span>
+                            <span className={`${style['summary-value']}`}>{numberFormatter(subTotal * (isRefund ? -1 : 1))}</span>
                         </div>
                         {tax > 0 && (
                             <div className={`${style['summary-row']}`}>
@@ -147,7 +147,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                         )}
                         <div className={`${style['summary-row']} ${style['summary-total']}`}>
                             <span>Remaining Credit Balance:</span>
-                            <span>{numberFormatter(parseFloat(invoice.total_amount) + credit - ownerData?.paid)}</span>
+                            <span>{numberFormatter(parseFloat(invoice.total_amount * (isRefund ? -1 : 1)) + credit - ownerData?.paid)}</span>
                         </div>
                         {/* <div className={`${style['summary-row summary-amount-due']}`}>
                             <span>Amount due</span>
