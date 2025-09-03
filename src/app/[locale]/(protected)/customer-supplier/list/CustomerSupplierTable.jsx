@@ -40,9 +40,7 @@ export default function CustomerSupplierTable({ CSs }) {
             `}
           >
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-              <Link className="text-blue-600 hover:underline" href={`/customer-supplier/view/${CS.id}`}>
                 {CS.name}
-              </Link>
             </th>
             <td className="px-6 py-4 max-w-xs overflow-x-auto">
                 <pre className="whitespace-pre-wrap">
@@ -50,6 +48,10 @@ export default function CustomerSupplierTable({ CSs }) {
                 </pre>
             </td>
             <td className="flex items-center px-6 py-4 justify-end">
+
+                <Link className="text-blue-600 hover:underline" href={`/customer-supplier/view/${CS.id}`}>
+                    view
+                </Link>
 
               <Link
                 href={`/customer-supplier/form/${CS.id}`}

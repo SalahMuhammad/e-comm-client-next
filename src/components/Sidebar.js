@@ -175,12 +175,22 @@ export default function Sidebar({username}) {
             links: [
                 { 
                     label: t('reports.subLabels.refilled'), 
-                    path: '/report/refilled-cylinders',
+                    path: '/reports/refilled-used-items',
                     icon: <ArrowPathIcon className="w-4 h-4" />
                 },
                 { 
                     label: t('reports.subLabels.payments'), 
-                    path: '/report/payments',
+                    path: '/reports/payments-in-period',
+                    icon: <CurrencyDollarIcon className="w-4 h-4" />
+                },
+                { 
+                    label: t('reports.subLabels.accountStatement'), 
+                    path: '/reports/owner-account-statement',
+                    icon: <CurrencyDollarIcon className="w-4 h-4" />
+                },
+                { 
+                    label: t('reports.subLabels.refillableItemsClientClientHas'), 
+                    path: '/reports/refillable-items-client-has',
                     icon: <CurrencyDollarIcon className="w-4 h-4" />
                 }
                 // ,
@@ -201,19 +211,24 @@ export default function Sidebar({username}) {
             links: [
                 { 
                     label: t('refilledCans.subLabels.refilled'), 
-                    path: '/refillable-sys/refilled-items',
+                    path: '/refillable-items/refilled/list',
                     icon: <BeakerIcon className="w-4 h-4" />
                 },
                 { 
-                    label: t('refilledCans.subLabels.cansWithClints'), 
-                    path: '/refillable-sys/cans-owners-has',
+                    label: t('refilledCans.subLabels.createRefilled'), 
+                    path: '/refillable-items/refilled/form',
+                    icon: <BeakerIcon className="w-4 h-4" />
+                },
+                { 
+                    label: t('refilledCans.subLabels.refund'), 
+                    path: '/refillable-items/refund/list',
                     icon: <UserGroupIcon className="w-4 h-4" />
                 },
                 { 
-                    label: t('refilledCans.subLabels.create'), 
-                    path: '/refillable-sys/refilled-form',
+                    label: t('refilledCans.subLabels.createRefund'), 
+                    path: '/refillable-items/refund/form',
                     icon: <WrenchScrewdriverIcon className="w-4 h-4" />
-                },
+                }
             ]
         }
     ];
@@ -332,8 +347,8 @@ export default function Sidebar({username}) {
                                     </svg>
                                 </button>
                                 <ul
-                                id={obj.head}
-                                className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${openSection === obj.head ? 'max-h-40' : 'max-h-0'} px-2`}
+                                    id={obj.head}
+                                    className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${openSection === obj.head ? 'max-h-70' : 'max-h-0'} px-2`}
                                 >
                                     {obj.links.map((link, j) => (
                                         <li key={j}>

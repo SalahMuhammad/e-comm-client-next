@@ -82,6 +82,7 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
         : isDarkMode ? '#1f2937' : '#fff',
       color: isDarkMode ? '#f9fafb' : '#111827',
     }),
+    menuPortal: base => ({ ...base, zIndex: 9999 }),
   };
 
 

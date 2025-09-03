@@ -5,7 +5,7 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 163, 175, 0.5) transparent;
   overflow: overlay;
-
+    box-shadow: 4px 16px 8px -5 rgba(0, 0, 0, .5);
 }
 
 /* #SidebarDiv ul {

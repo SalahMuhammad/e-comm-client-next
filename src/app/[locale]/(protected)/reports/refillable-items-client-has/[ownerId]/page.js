@@ -1,5 +1,18 @@
 import CompanyDetailsHead from "@/components/CompanyDetailsHead"
 import { getRefillableItemsClientHas } from "../../actions"
+import { formatDate } from "@/utils/dateFormatter"
+
+export async function generateMetadata({ params }) {
+    const ownerId = (await params).ownerId
+    const res = await getRefillableItemsClientHas(ownerId)
+    const data = res.data
+
+    return {
+        title: `Due DCD Cans Log From ${data?.owner_name} - ${formatDate(new Date())}`,
+        description: '...',
+    };
+}
+
 
 async function page({ params }) {
     const ownerId = (await params).ownerId
@@ -7,7 +20,7 @@ async function page({ params }) {
     const data = res?.data
 
     return (
-        <div id="printarea" className="w-full bg-white">
+        <div id="printarea" className="min-w-2xl bg-white">
             <div className="overflow-x-auto shadow-[8px_8px_8px_-5px_rgba(0,0,0,0.3)]">
                 <CompanyDetailsHead>
                     <div className="mx-auto text-base text-black">

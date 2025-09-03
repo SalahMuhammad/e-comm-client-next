@@ -8,18 +8,21 @@ async function page({ params }) {
     return (
         <div>
             <h1>"{res?.data?.owner_name}" - View</h1>
-            <hr className="pb-5" />
+            <hr className="m-5"/>
             <div>
                 <pre >{JSON.stringify(res?.data, null, 4)}</pre>
             </div>
 
-            <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>Sales invoices</Link>
-            <Link className="text-blue-600 hover:underline p-4" href={'/invoices/purchases/list/ownerid'}>Purchase invoices</Link>
-            <Link className="text-blue-600 hover:underline p-4" href={`/reports/owner-account-statement/${ownerId}`}>Customer Account Statemnet Report</Link>
-            <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>Payments</Link>
-            <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>expenses</Link>
+            <Link className="text-blue-600 hover:underline p-4" href={`/invoice/sales/list/?s=${res.data?.owner_name}`}>Sales invoices</Link>
+            <Link className="text-blue-600 hover:underline p-4" href={`/invoice/purchases/list/?s=${res.data?.owner_name}`}>Purchase invoices</Link>
+            <Link className="text-blue-600 hover:underline p-4" href={`/finance/payments/list?s=${res.data?.owner_name}`}>Payments</Link>
+            <Link className="text-blue-600 hover:underline p-4" href={`/finance/expenses/list?s=${res.data?.owner_name}`}>expenses</Link>
+            <Link className="text-blue-600 hover:underline p-4" href={`/invoice/sales/refund/list/?s=${res.data?.owner_name}`}>sales invoice refunds</Link>
             <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>refillable items refund</Link>
-            <Link className="text-blue-600 hover:underline p-4" href={'/invoices/sales/list/ownerid'}>sales innvoice refunds</Link>
+            <hr  className="m-5"/>
+            <h3>Reports</h3>
+            <Link className="text-blue-600 hover:underline p-4" href={`/reports/owner-account-statement/${ownerId}`}>Account Statemnet</Link>
+            <Link className="text-blue-600 hover:underline p-4" href={`/reports/refillable-items-client-has/${ownerId}`}>due dcd cans</Link>
         </div>
     )
 }

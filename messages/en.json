@@ -45,17 +45,20 @@
 		"reports": {
 			"headLabel": "Reports",
 			"subLabels": {
-				"refilled": "Refilled cylinders",
-				"payments": "Payments within a period",
+				"refilled": "Refilled cans and used big cans",
+				"payments": "Payments in period",
+                "accountStatement": "client-supplier Account statement",
                 "refillableItemsClientClientHas": "Refillable Items Client Has"
 			}
 		},
 		"refilledCans": {
-			"headLabel": "Refilled cans",
+			"headLabel": "Refilable Items",
 			"subLabels": {
-				"refilled": "Refilled cans",
-				"cansWithClints": "Cans with clints",
-				"create": "Create"
+				"refilled": "Refilled List",
+                "createRefilled": "Refilled Form",
+                "refund": "Refund List",
+                "createRefund": "Refund Form",
+                "cansWithClints": "Refillable items clints has"
 			}
 		},
 		"userDropDown": {
