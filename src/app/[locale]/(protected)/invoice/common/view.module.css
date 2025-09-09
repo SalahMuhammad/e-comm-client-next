@@ -48,7 +48,7 @@
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-bottom: 1rem;
+    margin-bottom: .5rem;
 }
 
 .invoice-table th {

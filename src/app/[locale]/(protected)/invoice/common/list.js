@@ -27,7 +27,7 @@ async function InvoiceList({ searchParams, type }) {
             <QueryParamSetterInput paramName={searchParamName} />
             
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <InvoiceListTable initialData={data.results} type={type} />
+                <InvoiceListTable initialData={data?.results} type={type} />
             </div>
             {data.count == 0 && 
                 <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md mt-3" />

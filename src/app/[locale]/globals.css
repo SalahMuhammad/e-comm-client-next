@@ -77,7 +77,8 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .p-4.sm\:ml-64.mt-14.min-h-screen.flex.flex-col {
-        /* padding: 0 !important; */
+        padding-top: 2px !important;
+        /* padding-left: 0; */
         margin: 0 !important;
         margin-left: 0 !important;
         margin-top: 0 !important;
