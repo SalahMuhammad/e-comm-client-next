@@ -7,6 +7,6 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "build"]
+RUN npm run build
 
-CMD ["npm", "start", "-H 0.0.0.0"]
+CMD ["npm", "start", "-H0.0.0.0", "-p3000"]
