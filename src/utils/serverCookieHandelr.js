@@ -13,8 +13,8 @@ export async function setServerCookie(name, value, options = {}) {
     
     cookieStore.set(name, value, {
         path: options.path || '/',
-        secure: options.secure !== undefined ? options.secure : isSecure,
-        sameSite: options.sameSite || 'None',
+        secure: flase,
+        sameSite: 'None',
         maxAge: options.maxAge || 60 * 60 * 24 * 1, // 1 week default
         ...options
     })
