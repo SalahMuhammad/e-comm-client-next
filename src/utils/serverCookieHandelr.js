@@ -1,14 +1,19 @@
 "use server"
 
 import { cookies } from 'next/headers'
+import { headers } from 'next/headers'
+
 
 
 export async function setServerCookie(name, value, options = {}) {
     const cookieStore = await cookies()
+     const headersList = headers()
+    const protocol = headersList.get('x-forwarded-proto') || 'http'
+    const isSecure = protocol === 'https'
     
     cookieStore.set(name, value, {
         path: options.path || '/',
-        secure: options.secure || process.env.NODE_ENV === 'production',
+        secure: options.secure !== undefined ? options.secure : isSecure,
         sameSite: options.sameSite || 'None',
         maxAge: options.maxAge || 60 * 60 * 24 * 1, // 1 week default
         ...options
