@@ -5,26 +5,22 @@ export default function TextInput({
   className = "",
   id = "",
   placeholder = "",
-  required = false,
   onChange = () => {},
   onBlur = () => {},
   error = "",
   icon = null,
-  textColor = "text-gray-900 dark:text-white",
-  borderColor = "border-gray-300 dark:border-gray-600",
-  focusColor = "focus:border-blue-600 dark:focus:border-blue-500",
-  labelColor = "text-gray-500 dark:text-gray-400",
-  focusLabelColor = "peer-focus:text-blue-600 peer-focus:dark:text-blue-500",
-  errorColor = "text-red-500 dark:text-red-400",
-
-  // name = "",
-  // defaultValue,
-  // value,
-  // required,
-  // onChange,
-
+  styling = {},
   ...props
 }) {
+  const {
+    textColor = "text-gray-900 dark:text-white",
+    borderColor = "border-gray-300 dark:border-gray-600",
+    focusColor = "focus:border-blue-600 dark:focus:border-blue-500",
+    labelColor = "text-gray-500 dark:text-gray-400",
+    focusLabelColor = "peer-focus:text-blue-600 peer-focus:dark:text-blue-500",
+    errorColor = "text-red-500 dark:text-red-400",
+  } = styling;
+
   const hasError = Boolean(error);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -44,7 +40,7 @@ export default function TextInput({
       <input
         id={id}
         placeholder=" "
-        onBlur={e => {
+        onBlur={(e) => {
           setIsFocused(false);
           onBlur(e);
         }}
@@ -52,18 +48,14 @@ export default function TextInput({
         className={`
           block w-full py-2.5 pr-12 pl-2 text-sm bg-transparent border-0 border-b-2
           ${textColor}
-          ${hasError 
-            ? `border-red-500 focus:border-red-500 dark:border-red-400 dark:focus:border-red-400`
-            : `${borderColor} ${focusColor}`
+          ${
+            hasError
+              ? `border-red-500 focus:border-red-500 dark:border-red-400 dark:focus:border-red-400`
+              : `${borderColor} ${focusColor}`
           }
           appearance-none focus:outline-none focus:ring-0 peer
         `}
 
-        // name={name}
-        // defaultValue={defaultValue}
-        // value={value}
-        // required={required}
-        // onChange={onChange}
         {...props}
       />
 
@@ -72,16 +64,18 @@ export default function TextInput({
         className={`
           absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
           peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6
-          ${hasError ? `peer-focus:${errorColor} ${errorColor}` : `${labelColor} ${focusLabelColor}`}
+          ${
+            hasError
+              ? `peer-focus:${errorColor} ${errorColor}`
+              : `${labelColor} ${focusLabelColor}`
+          }
         `}
       >
         {placeholder}
       </label>
 
       <div className="min-h-[1.25rem] mt-1">
-        {hasError && (
-          <p className={`text-sm ${errorColor}`}>{error}</p>
-        )}
+        {hasError && <p className={`text-sm ${errorColor}`}>{error}</p>}
       </div>
     </div>
   );

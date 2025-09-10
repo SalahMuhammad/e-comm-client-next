@@ -63,7 +63,7 @@ export default function TextArea({
   else if (isFocused) iconColorClass = focusColor;
 
   return (
-    <div className={`relative w-full mb-1 ${className}`}>
+    <div className={`relative w-full mb-1`}>
       {icon && (
         <div className={`absolute top-2.5 right-3 flex items-center pointer-events-none ${iconColorClass}`}>
           {icon}

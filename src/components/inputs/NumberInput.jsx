@@ -84,9 +84,9 @@ export default function NumberInput({
       <label
         htmlFor={id}
         className={`
-          absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+          absolute text-sm duration-300 transform -translate-y-6 translate-x-2 scale-75 top-3 z-10 origin-[0]
           peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-          peer-focus:scale-75 peer-focus:-translate-y-6 ${labelClass}
+          peer-focus:scale-75 peer-focus:-translate-y-8 ${labelClass}
           ${hasError ? `peer-focus:${errorColor} ${errorColor}` : `${labelColor} ${focusLabelColor}`}
         `}
       >
