@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { PencilIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
 
 export default function CustomerSupplierTable({ CSs }) {
@@ -48,10 +48,14 @@ export default function CustomerSupplierTable({ CSs }) {
                 </pre>
             </td>
             <td className="flex items-center px-6 py-4 justify-end">
-
-                <Link className="text-blue-600 hover:underline" href={`/customer-supplier/view/${CS.id}`}>
-                    view
-                </Link>
+              <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-500 dark:hover:text-blue-400" href={`/customer-supplier/view/${CS.id}`}>
+                <EyeIcon
+                  className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
+                />
+                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                  {t("table.view")}
+                </span>
+              </Link>
 
               <Link
                 href={`/customer-supplier/form/${CS.id}`}

@@ -79,9 +79,8 @@ const InvoiceForm = ({ type, initialData = null }) => {
     }
     
     useEffect(() => {
-        if (state?.ok === undefined) {
-            return
-        }
+        // Form Submit not working properly
+        if (state?.ok === undefined) return
         if (handleGenericErrors(state)) return
 
         if (state?.ok) {
@@ -359,15 +358,15 @@ const InvoiceForm = ({ type, initialData = null }) => {
                 <div className={styles.formActions}>
                     <FormButton
                         type="submit"
-                        variant="secondary"
+                        variant={initialData?.id ? "secondary" : "primary"}
                         size="md"
-                        bgColor="bg-neutral-200 dark:bg-neutral-700"
-                        hoverBgColor="bg-neutral-100 dark:bg-neutral-800"
-                        textColor="text-black dark:text-white"
+                        bgColor={initialData?.id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
+                        hoverBgColor={initialData?.id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
+                        textColor="text-white dark:text-gray-100"
                         className="w-full"
-                        isLoading={(isPending ) ? true : false}
+                        isLoading={isPending}
                     >
-                        {initialData?.id ? t("update") : t("create")}
+                        {initialData?.id ? t("global.form.edit") : t("global.form.submit")}
                     </FormButton>
                 </div>
             </Form>
