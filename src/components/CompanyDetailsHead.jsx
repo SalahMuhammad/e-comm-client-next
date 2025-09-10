@@ -8,7 +8,7 @@ async function CompanyDetailsHead({ children }) {
     return (
         <div className="grid grid-cols-3 items-center mb-2 pb-1 border-b border-gray-400 overflow-x-auto">
             <div>
-                <h1 className="text-2xl font-bold text-gray-700 font-mono">{companyDetails?.name}</h1>
+                <h1 className="text-xl font-bold text-gray-700 font-mono">{companyDetails?.name}</h1>
                 <p className="text-xs text-gray-500 font-serif">{companyDetails?.description}</p>
                 {companyDetails?.address && (
                     <div className="leading-tight text-xs text-gray-500 font-serif">
