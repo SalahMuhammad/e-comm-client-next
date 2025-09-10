@@ -14,7 +14,7 @@ export async function setServerCookie(name, value, options = {}) {
     cookieStore.set(name, value, {
         path: options.path || '/',
         secure: false,
-        sameSite: 'None',
+        sameSite: 'lax',
         maxAge: options.maxAge || 60 * 60 * 24 * 1, // 1 week default
         ...options
     })
