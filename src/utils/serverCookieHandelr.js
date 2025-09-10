@@ -9,7 +9,7 @@ export async function setServerCookie(name, value, options = {}) {
     cookieStore.set(name, value, {
         path: options.path || '/',
         secure: options.secure || process.env.NODE_ENV === 'production',
-        sameSite: options.sameSite || 'lax',
+        sameSite: options.sameSite || 'None',
         maxAge: options.maxAge || 60 * 60 * 24 * 1, // 1 week default
         ...options
     })
