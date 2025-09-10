@@ -15,6 +15,11 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
+    if (typeof document === 'undefined') return
+
+    // initialize from current document class (fixes default dark mode not applied)
+    setIsDarkMode(document.documentElement.classList.contains('dark'))
+
     const observer = new MutationObserver(() => {
       setIsDarkMode(document.documentElement.classList.contains('dark'));
     });
@@ -55,6 +60,7 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
       paddingLeft: '0.5rem',
       paddingRight: '0.5rem',
       color: isDarkMode ? '#fff' : '#111827',
+      minHeight: '2.5rem',
     }),
     singleValue: (provided) => ({
       ...provided,
@@ -66,34 +72,48 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
     }),
     placeholder: (provided) => ({
       ...provided,
-      color: '#9ca3af',
+      color: isDarkMode ? '#9ca3af' : '#6b7280',
     }),
     menu: (provided) => ({
       ...provided,
       zIndex: 9999,
-      backgroundColor: isDarkMode ? '#1e2939' : 'oklch(98.5% .002 247.839)',
+      backgroundColor: isDarkMode ? '#0f172a' : '#ffffff',
       color: isDarkMode ? '#f9fafb' : '#111827',
-      border: 'none',
+      boxShadow: isDarkMode ? '0 8px 24px rgba(2,6,23,0.6)' : '0 8px 24px rgba(16,24,40,0.08)',
+      borderRadius: '0.375rem',
+      border: '1px solid ' + (isDarkMode ? '#1f2937' : '#e5e7eb'),
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      backgroundColor: isDarkMode ? '#0f172a' : '#ffffff',
+      paddingTop: '0.25rem',
+      paddingBottom: '0.25rem',
     }),
     option: (provided, state) => ({
       ...provided,
       backgroundColor: state.isFocused
-        ? isDarkMode ? '#374151' : '#e0e7ff'
-        : isDarkMode ? '#1f2937' : '#fff',
+        ? isDarkMode ? '#1f2937' : '#eef2ff'
+        : 'transparent',
       color: isDarkMode ? '#f9fafb' : '#111827',
+      padding: '0.5rem 1rem',
+      cursor: 'pointer',
     }),
-    menuPortal: base => ({ ...base, zIndex: 9999 }),
+    menuPortal: base => ({ ...base, zIndex: 9999, backgroundColor: isDarkMode ? '#0f172a' : '#ffffff', color: isDarkMode ? '#f9fafb' : '#111827' }),
+    dropdownIndicator: (provided) => ({ ...provided, color: isDarkMode ? '#9ca3af' : '#6b7280' }),
+    indicatorSeparator: (provided) => ({ ...provided, backgroundColor: 'transparent' }),
+    noOptionsMessage: (provided) => ({ ...provided, color: isDarkMode ? '#9ca3af' : '#6b7280', padding: '0.5rem 1rem' }),
+    valueContainer: (provided) => ({ ...provided, padding: '0.25rem 0.5rem' }),
   };
 
 
   const NoOptionsMessage = () => (
-    <div className="text-gray-500 dark:text-gray-400 text-sm w-full text-center py-2 bg-gray-50 dark:bg-gray-800 h-full">
+    <div className="text-sm w-full text-center py-2 h-full" style={{ color: isDarkMode ? '#9ca3af' : '#6b7280' }}>
       {t('noOptions')}
     </div>
   );
 
   const LoadingMessage = () => (
-    <div className="text-gray-500 dark:text-gray-400 text-sm w-full text-center py-2 flex items-center justify-center gap-2 bg-gray-50 dark:bg-gray-800 w-full h-full">
+    <div className="text-sm w-full text-center py-2 flex items-center justify-center gap-2 h-full" style={{ color: isDarkMode ? '#9ca3af' : '#6b7280' }}>
       {t('loading')} {<PulsingDots size='sm' />}
     </div>
   );
@@ -101,7 +121,7 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
   return (
     <>
       <div 
-        className="relative z-0 w-full mb-5 group"
+        className="relative z-0 w-full mb-3 group"
         onClick={(e) => e.stopPropagation()}
     >
         <AsyncSelect
