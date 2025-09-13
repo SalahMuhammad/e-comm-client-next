@@ -22,7 +22,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
     const [items, setItems] = useState(initialData?.[typePrefix] || []);
     const handleGenericErrors = useGenericResponseHandler()
     const [state, formAction, isPending] = useActionState(createUpdateInv, { errors: {} });
-    const tGlobal = useTranslations('global.form');
+    const tGlobal = useTranslations();
     const t = useTranslations('invoice.form');
 
     const toggleItemExpanded = (itemId) => {
@@ -79,7 +79,6 @@ const InvoiceForm = ({ type, initialData = null }) => {
     }
     
     useEffect(() => {
-        // Form Submit not working properly
         if (state?.ok === undefined) return
         if (handleGenericErrors(state)) return
 
@@ -366,7 +365,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                         className="w-full"
                         isLoading={isPending}
                     >
-                        {initialData?.id ? t("global.form.edit") : t("global.form.submit")}
+                        {initialData?.id ? tGlobal("global.form.edit") : tGlobal("global.form.submit")}
                     </FormButton>
                 </div>
             </Form>
