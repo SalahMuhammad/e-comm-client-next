@@ -2,7 +2,7 @@
 import SearchableDropdown from "@/components/SearchableDropdown"
 import { getPP, createUpdateItem } from "../actions"
 import { useEffect, useRef, useState } from "react";
-import { TextInput, NumberInput, FileInput } from "@/components/inputs/index"
+import { TextInput, NumberInput, FileInput, DateInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { useTranslations } from "next-intl";
@@ -24,33 +24,16 @@ function ItemsForm({obj}) {
     const p2 = useRef()
     const p3 = useRef()
     const p4 = useRef()
+    const handleGenericErrors = useGenericResponseHandler(t)
 
     useEffect(() => {
-        if (!state?.success) {
-            return
-        }
+        if (state?.ok === undefined) return
+        if (handleGenericErrors(state)) return
         if (state?.success) {
             toast.success(t(obj?.id ? "successEdit" : "successCreate"));
             if (obj?.id) {
                 router.replace("/items/list/");
             }
-        }
-
-        const errorCode = state?.errors?.general.status;
-        switch (errorCode) {
-            case 400:
-                toast.error(state?.errors || t('errors.400'));
-                break;
-
-            default:
-                if (errorCode >= 500) {
-                    toast.error(state?.errors?.general.text || t("errors.500"));
-                } else if (errorCode) {
-                    toast.error(state?.errors?.general.text || t("errors.etc"));
-                }
-                //  else {
-                //     toast.error(t("errors.etc"));
-                // }
         }
     }, [state])
 

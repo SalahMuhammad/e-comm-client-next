@@ -48,7 +48,7 @@ export async function createUpdateItem(prevState, formData) {
         method: `${isUpdate ? 'PUT' : 'POST'}`,
         body: formData,
     });
-    console.log(response)
+
     if (!response?.ok) {
         if (response.status === 400) {
             const errorData = await response.data;
@@ -62,6 +62,7 @@ export async function createUpdateItem(prevState, formData) {
 
     return {
         success: true,
+        ...response
     }
 }
 

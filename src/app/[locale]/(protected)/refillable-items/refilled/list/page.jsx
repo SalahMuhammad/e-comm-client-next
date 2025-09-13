@@ -2,6 +2,7 @@ import ToolTip from "@/components/ToolTip"
 import { getRefilledItems } from "../../actions"
 import DeleteButton from "./DeleteButton"
 import PaginationControls from "@/components/PaginationControls"
+import ErrorLoading from "@/components/ErrorLoading";
 
 
 async function page({ searchParams }) {
@@ -84,6 +85,10 @@ async function page({ searchParams }) {
                     </tbody>
                 </table>
             </div>
+
+            {res.data?.results?.length == 0 &&
+                <ErrorLoading name="warehouse.repositories.table" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 mt-3 rounded" />
+            }
 
             <PaginationControls
                 resCount={res.data?.count}

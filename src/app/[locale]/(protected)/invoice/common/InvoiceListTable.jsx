@@ -46,7 +46,7 @@ export default function InvoiceListTable({ initialData, type }) {
                 </tr>
             </thead>
             <tbody>
-                {items?.map((inv) => {
+                {items.map((inv) => {
                     const isDeleting = deletingId === inv.id;
                     return (
                         <tr 
