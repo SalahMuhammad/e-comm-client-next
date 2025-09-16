@@ -1,13 +1,15 @@
 "use client"
-import React, { useEffect, useState, useRef, use } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Link from "next/link"
 import { getCSView } from "../../actions"
 import { useTranslations } from 'next-intl'
-import { EyeIcon, DocumentTextIcon, CurrencyDollarIcon, DocumentDuplicateIcon, ChartBarIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
+import { DocumentTextIcon, CurrencyDollarIcon, DocumentDuplicateIcon, ChartBarIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
+import { useParams } from 'next/navigation'
 
-export default function Page({ params }) {
-    const ownerId = params?.ownerid
+export default function Page() {
+    const params = useParams();
+    const { ownerid } = params
     const t = useTranslations('customer-supplier.view')
 
     const [res, setRes] = useState(null)
@@ -18,17 +20,18 @@ export default function Page({ params }) {
     const handleGenericErrors = useGenericResponseHandler(t)
 
     useEffect(() => {
-        if (!ownerId) return
+        if (!ownerid) return
         if (fetchedRef.current) return
         fetchedRef.current = true
         let mounted = true
         setLoading(true)
-        getCSView(ownerId)
+        getCSView(ownerid)
             .then(r => { if (mounted) setRes(r) })
             .catch(err => { if (mounted) setError(err) })
             .finally(() => { if (mounted) setLoading(false) })
+        setLoading(false)
         return () => { mounted = false }
-    }, [ownerId])
+    }, [ownerid])
 
     useEffect(() => {
         if (res?.ok === undefined) return
@@ -126,7 +129,7 @@ export default function Page({ params }) {
                                         {t('salesInvoiceRefunds')}
                                     </Link>
                                     <Link className="group inline-flex items-center justify-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200" 
-                                          href={'/invoices/sales/list/ownerid'}>
+                                          href={`/refillable-items/refund/list?s=${ownerid}`}>
                                         <DocumentDuplicateIcon className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400 transition-transform transform group-hover:scale-110" aria-hidden />
                                         {t('refillableItemsRefund')}
                                     </Link>
@@ -137,12 +140,12 @@ export default function Page({ params }) {
                                 <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">{t('reports')}</h3>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <Link className="group inline-flex items-center justify-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200" 
-                                          href={`/reports/owner-account-statement/${ownerId}`}>
+                                          href={`/reports/owner-account-statement/${ownerid}`}>
                                         <ChartBarIcon className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400 transition-transform transform group-hover:scale-110" aria-hidden />
                                         {t('accountStatement')}
                                     </Link>
                                     <Link className="group inline-flex items-center justify-center px-4 py-2 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200" 
-                                          href={`/reports/refillable-items-client-has/${ownerId}`}>
+                                          href={`/reports/refillable-items-client-has/${ownerid}`}>
                                         <DocumentDuplicateIcon className="h-5 w-5 mr-2 text-blue-600 dark:text-blue-400 transition-transform transform group-hover:scale-110" aria-hidden />
                                         {t('dueDcdCans')}
                                     </Link>
