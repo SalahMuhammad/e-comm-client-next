@@ -13,7 +13,7 @@ function Toggle({ obj, type }) {
     const t = useTranslations('finance')
     
     const toggleRepositoryStatus = async () => {
-        const res = await updateStatus(obj.id, type, obj.paid)
+        const res = await updateStatus(obj.hashed_id, type, obj.paid)
         if (handleResponse(res)) return;
 
         res.status === 200 &&

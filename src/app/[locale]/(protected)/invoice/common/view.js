@@ -58,7 +58,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                             </svg>
                             Edit Invoice
                         </Link>
-                        <Link href={`/invoice/${type}/refund/form/${invoice.id}`} className={`${style['edit-link']}`}>
+                        <Link href={`/invoice/${type}/refund/form/${invoice.hashed_id}`} className={`${style['edit-link']}`}>
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                             </svg>
@@ -75,7 +75,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                         <h1 className={`text-xl font-bold font-serif`}>{type.includes('sales') ? isRefund ? `REFUND SALES` : 'PROFORMA' : 'PURCHASE'} INVOICE</h1>
                         <p className={`text-sm font-serif wrap-break-word break-all whitespace-normal max-w-57`}>Billed To: <span className="text-xs text-gray-500">{invoice.owner_name}</span></p>
                         {ownerData?.address && <p className={`text-sm font-serif pl-1 wrap-break-word break-all whitespace-normal max-w-57`}><span className="text-xs text-gray-500">{ownerData?.addressDetails + ownerData?.address}</span></p>}
-                        <p className={`text-sm font-serif`}>{isRefund ? 'Refund': 'Order'} No: <span className="text-xs text-gray-500">#{invoice.id}</span></p>
+                        <p className={`text-sm font-serif`}>{isRefund ? 'Refund': 'Order'} No: <span className="text-xs text-gray-500">#{invoice.hashed_id}</span></p>
                         <p className={`text-sm font-serif none-printable`}>Created by: <span className="text-xs text-gray-500">{invoice.by_username}</span></p>
                         <p className={`text-sm font-serif`}>Issued: <span className="text-xs text-gray-500">{formatDate(invoice.issue_date)}</span></p>
                         <p className={`text-sm font-serif`}>Total Amount: <span className="text-xs text-gray-500">{invoice.total_amount}</span></p>

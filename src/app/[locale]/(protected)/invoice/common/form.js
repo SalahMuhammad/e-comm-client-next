@@ -85,7 +85,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
         if (state?.ok) {
             toast.success(t(initialData?.id ? "successEdit" : "successCreate"));
             if (state.data?.id) {
-                 redirect(`/invoice/${type}/view/${state.data?.id}`)
+                 redirect(`/invoice/${type}/view/${state.data?.hashed_id}`)
             }
         }
     }, [state])

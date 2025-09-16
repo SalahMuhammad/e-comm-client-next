@@ -50,7 +50,7 @@ function MyForm({ initialData, type }) {
             case 201:
                 toast.success(`${initialData?.id ? t('finance.success.updated') : t('finance.success.created')}...`);
                 res.data.id &&
-                    redirect(`/finance/${type}/view/${res.data.id}`);
+                    redirect(`/finance/${type}/view/${res.data.hashed_id}`);
         }
 
         setIsPending(false)
@@ -71,7 +71,7 @@ function MyForm({ initialData, type }) {
                         <NumberInput 
                             placeholder={'id'} 
                             id="id" 
-                            value={initialData.id} 
+                            value={initialData.hashed_id} 
                             borderColor="border-green-500 dark:border-green-400" 
                             labelColor="text-green-600 dark:text-green-400" 
                             focusColor="" 

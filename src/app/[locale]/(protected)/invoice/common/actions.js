@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export async function getInvs(type, queryStringParams) {
     'use server'
-    const res = await apiRequest(`/api/${type}/${queryStringParams ? queryStringParams : ''}`, {
+    const res = await apiRequest(`/api/${type == 'sales/refund' ? 'sales/s/refund' : type}/${queryStringParams ? queryStringParams : ''}`, {
         method: "GET",
         cache: "no-store",
     })
@@ -16,7 +16,7 @@ export async function getInvs(type, queryStringParams) {
 
 export async function getInv(type, id) {
     'use server'
-    const res = await apiRequest(`/api/${type}/${id}/`, {
+    const res = await apiRequest(`/api/${type == 'sales/refund' ? 'sales/s/refund' : type}/${id}/`, {
         method: "GET",
     })
 
@@ -53,7 +53,7 @@ export async function createUpdateInv(_, actualFormData) {
     // Add transformed items
     transformedData[typePrefix] = items.filter(item => item); // Remove empty slots
 
-    const res = await apiRequest(`/api/${type}/${(isUpdate && ! actualFormData.get('original_invoice')) ? actualFormData.get('id') + '/' : ''}`, {
+    const res = await apiRequest(`/api/${type == 'sales/refund' ? 'sales/s/refund' : type}/${(isUpdate && ! actualFormData.get('original_invoice')) ? actualFormData.get('id') + '/' : ''}`, {
         method: `${(isUpdate && ! actualFormData.get('original_invoice')) ? 'PATCH' : 'POST'}`,
         body: JSON.stringify(transformedData),
         headers: {

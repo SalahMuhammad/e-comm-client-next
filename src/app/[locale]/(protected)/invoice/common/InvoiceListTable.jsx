@@ -84,7 +84,7 @@ export default function InvoiceListTable({ initialData, type }) {
                                 </td>
                             )}
                             <td className="flex items-center px-6 py-4 dark:text-gray-300">
-                                <Link href={`/invoice/${type}/view/${inv.id}`} className="text-blue-600 hover:underline">
+                                <Link href={`/invoice/${type}/view/${inv.hashed_id}`} className="text-blue-600 hover:underline">
                                     view
                                 </Link>
                                 {!isRefund && (
