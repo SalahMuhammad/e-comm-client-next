@@ -14,8 +14,6 @@ import {
     UsersIcon, UserPlusIcon,
 // Finance icons
     CreditCardIcon, BanknotesIcon, ReceiptPercentIcon, ExclamationTriangleIcon, ScaleIcon,
-// Reports icons
-    ArrowPathIcon, CurrencyDollarIcon,
 // Refilled Cans icons
     BeakerIcon, UserGroupIcon, WrenchScrewdriverIcon,
 // Others
@@ -163,42 +161,6 @@ export default function Sidebar({username}) {
                     path: '/finance/credit-owners-list',
                     icon: <ScaleIcon className="w-4 h-4" />
                 },
-            ]
-        },
-        {
-            head: t('reports.headLabel')+'fd',
-            icon: (
-                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M3 3h14a1 1 0 011 1v12a1 1 0 01-1 1H3a1 1 0 01-1-1V4a1 1 0 011-1zm1 2v10h12V5H4zm2 2h2v6H6V7zm4 2h2v4h-2V9z"/>
-                </svg>
-            ),
-            links: [
-                { 
-                    label: t('reports.subLabels.refilled'), 
-                    path: '/reports/refilled-used-items',
-                    icon: <ArrowPathIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('reports.subLabels.payments'), 
-                    path: '/reports/payments-in-period',
-                    icon: <CurrencyDollarIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('reports.subLabels.accountStatement'), 
-                    path: '/reports/owner-account-statement',
-                    icon: <CurrencyDollarIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('reports.subLabels.refillableItemsClientClientHas'), 
-                    path: '/reports/refillable-items-client-has',
-                    icon: <CurrencyDollarIcon className="w-4 h-4" />
-                }
-                // ,
-                // { 
-                //     label: t('reports.subLabels.refillableItemsClientClientHas'), 
-                //     path: '/reports/refillable-items-client-has',
-                //     icon: <CurrencyDollarIcon className="w-4 h-4" />
-                // },
             ]
         },
         {
