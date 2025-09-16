@@ -23,6 +23,9 @@ async function Items({ searchParams }) {
         <>
             <QueryParamSetterInput
                 paramName={searchParamName}
+                paramOptions={[
+                    { label: 'Item Name', value: 's' },
+                ]}
             />    
             {data.err || data?.count == 0 ? 
                 data.err &&  

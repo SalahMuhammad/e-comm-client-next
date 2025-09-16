@@ -13,18 +13,24 @@ async function InvoiceList({ searchParams, type }) {
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
     const search = params[searchParamName] ?? '';
+    const orderNo = params['no'] ?? '';
     const t = await getTranslations("invoice");
     const isRefund = type.split('/')[1] || false;
 
 
-    const res = (await getInvs(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}`));
+    const res = (await getInvs(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${orderNo ? `&no=${orderNo}` : ''}`));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
             redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
 
     return (
         <>
-            <QueryParamSetterInput paramName={searchParamName} />
+            <QueryParamSetterInput 
+                paramOptions={[
+                    { label: 'Owner Name', value: 's' },
+                    { label: 'order no', value: 'no' }
+                ]}
+            />
             
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <InvoiceListTable initialData={data.results} type={type} />

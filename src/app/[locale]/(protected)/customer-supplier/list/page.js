@@ -30,6 +30,7 @@ async function Page({ searchParams }) {
                 <>
                 <QueryParamSetterInput 
                     paramName={searchParamName}
+                    paramOptions={[{ label: 'Owner Name', value: 's' }]}
                 />
 
                 <div className="relative overflow-x-auto shadow-md rounded-md">
