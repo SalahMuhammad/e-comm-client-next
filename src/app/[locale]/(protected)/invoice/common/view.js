@@ -73,7 +73,9 @@ const InvoicePrintableView = async ({ id, type }) => {
                 <CompanyDetailsHead>
                     <div className="mx-auto text-base text-black">
                         <h1 className={`text-xl font-bold font-serif`}>{type.includes('sales') ? isRefund ? `REFUND SALES` : 'PROFORMA' : 'PURCHASE'} INVOICE</h1>
-                        <p className={`text-sm font-serif wrap-break-word break-all whitespace-normal max-w-57`}>Billed To: <span className="text-xs text-gray-500">{invoice.owner_name}</span></p>
+                        <Link href={`/customer-supplier/view/${invoice.owner}`}>
+                            <p className={`text-sm font-serif wrap-break-word break-all whitespace-normal max-w-57`}>Billed To: <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300 text-xs">{invoice.owner_name}</span></p>
+                        </Link>
                         {ownerData?.address && <p className={`text-sm font-serif pl-1 wrap-break-word break-all whitespace-normal max-w-57`}><span className="text-xs text-gray-500">{ownerData?.addressDetails + ownerData?.address}</span></p>}
                         <p className={`text-sm font-serif`}>{isRefund ? 'Refund': 'Order'} No: <span className="text-xs text-gray-500">#{invoice.hashed_id}</span></p>
                         <p className={`text-sm font-serif none-printable`}>Created by: <span className="text-xs text-gray-500">{invoice.by_username}</span></p>

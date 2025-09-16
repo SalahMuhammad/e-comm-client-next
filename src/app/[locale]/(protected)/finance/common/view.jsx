@@ -44,7 +44,9 @@ async function TransactionView({ id, type }) {
                 <div className={styles["receipt-details"]}>
                     <div className={styles["detail-row"]}>
                         <span className={styles["label"]}>{type === 'payments' ? 'Received From' : 'Sent To'}</span>
-                        <div className={`${styles["value-field"]}`}>{transaction.owner_name}</div>
+                        <Link className={`${styles["value-field"]}`} href={`/customer-supplier/view/${transaction.owner}`}>
+                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300 text-xs">{transaction.owner_name}</span>
+                        </Link>
                     </div>
 
                     <div className={styles["detail-row"]}>
