@@ -17,10 +17,11 @@ async function List({ searchParams, type }) {
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
     const search = params[searchParamName] ?? '';
+    const paymen_no = params['no'] ?? '';
     const t = await getTranslations("finance");
 
 
-    const res = (await getList(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}`));
+    const res = (await getList(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${paymen_no ? `&no=${paymen_no}` : ''}`));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
         redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
@@ -29,6 +30,10 @@ async function List({ searchParams, type }) {
         <>
             <QueryParamSetterInput
                 paramName={searchParamName}
+                paramOptions={[
+                    { label: 'Owner Name', value: 's' },
+                    { label: 'Payment No', value: 'no' }
+                ]}
             />
 
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -90,11 +95,11 @@ async function List({ searchParams, type }) {
 
                                 <td className="flex items-center px-6 py-4">
                                     <>
-                                        <Link className="text-blue-600 hover:underline" href={`/finance/${type}/view/${payment.id}`}>
+                                        <Link className="text-blue-600 hover:underline" href={`/finance/${type}/view/${payment.hashed_id}`}>
                                             view
                                         </Link>
-                                        <DeleteButton type={type} id={payment.id} />
-                                        <Link href={`/finance/${type}/form/${payment.id}`} className="ml-2 text-blue-600 hover:underline">
+                                        <DeleteButton type={type} id={payment.hashed_id} />
+                                        <Link href={`/finance/${type}/form/${payment.hashed_id}`} className="ml-2 text-blue-600 hover:underline">
                                             Edit
                                         </Link>
                                     </>
