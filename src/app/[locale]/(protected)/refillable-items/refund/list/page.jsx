@@ -10,7 +10,8 @@ async function page({ searchParams }) {
     const params = await searchParams;
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
-    const res = await getRefundedItems(`?limit=${limit}&offset=${offset}`)
+    const ownerId = params['s'] ?? '';
+    const res = await getRefundedItems(`?limit=${limit}&offset=${offset}&ownerid=${ownerId}`)
 
     return (
         <>
