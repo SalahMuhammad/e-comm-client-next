@@ -32,6 +32,7 @@ function page() {
                     url={'/api/repositories/?s='}
                     name={'repository_id'}
                     placeholder={'Repository'}
+                    isDisabled={true}
                 />
                 <div className="flex flex-col">
                     <label htmlFor="start_date" className="text-sm font-medium text-gray-600 mb-1.5">Start Date</label>

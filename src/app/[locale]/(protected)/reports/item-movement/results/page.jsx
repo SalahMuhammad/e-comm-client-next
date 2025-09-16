@@ -1,16 +1,12 @@
 import CompanyDetailsHead from "@/components/CompanyDetailsHead"
-import numberFormatter from "@/utils/NumberFormatter"
 import { getItemMovement } from "./actions"
 import Link from "next/link"
 
-export async function generateMetadata({ searchParams }) {
-    const params = (await searchParams).data
-    // const [fromDate, toDate] = dates.split('%20%20%20')
-
-    // return {
-    //     title: `Payments from ${fromDate} to ${toDate}`,
-    //     description: '...',
-    // };
+export async function generateMetadata({  }) {
+    return {
+        title: `Item movement`,
+        description: '...',
+    };
 }
 
 async function page({ searchParams }) {
@@ -20,10 +16,10 @@ async function page({ searchParams }) {
 
     return (
         <div id="printarea" className="min-w-2xl bg-white">
-            <div className="overflow-x-auto shadow-[8px_8px_8px_-5px_rgba(0,0,0,0.3)]">
+            <div className="overflow-x-auto shadow-[8px_8px_8px_-10px_rgba(0,0,0,0.3)]">
                 <CompanyDetailsHead>
                     <div className="mx-auto text-base text-black">
-                        <h1 className={`text-xl font-bold font-serif`}>Payments from {start_date} to {end_date}</h1>
+                        <h1 className={`text-xl font-bold font-serif`}>Item movement {start_date && `from ${start_date}`} {end_date && `to ${end_date}`}</h1>
                     </div>
                 </CompanyDetailsHead>
                 <table className="w-full border-collapse">
