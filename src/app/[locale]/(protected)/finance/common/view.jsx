@@ -35,9 +35,9 @@ async function TransactionView({ id, type }) {
             <div className='pr-4 pb-4 w-full shadow-[8px_8px_8px_-10px_rgba(0,0,0,0.3)]'>
                 <CompanyDetailsHead>
                     <div className="mx-auto text-base text-black">
-                        <p className="text-2xl">Receipt</p>
-                        <p>Date: <span className="text-xs text-gray-500">{transaction.date}</span></p>
-                        <p>No: <span className="text-xs text-gray-500">#{transaction.id}</span></p>
+                        <p className="text-2xl font-serif">Receipt</p>
+                        <p className='font-serif'>Date: <span className="text-xs text-gray-500">{transaction.date}</span></p>
+                        <p className='font-serif'>No: <span className="text-xs text-gray-500">#{transaction.id}</span></p>
                     </div>
                 </CompanyDetailsHead>
                 {/* <!-- Receipt Details --> */}
