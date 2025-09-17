@@ -398,7 +398,7 @@
 		"transactionSummary": "Transaction Summary",
 		"table": {
 			"type": "Type",
-			"countAmount": "Count/Amount",
+			"count": "Count",
 			"amount": "Amount"
 		},
 		"types": {
@@ -410,12 +410,24 @@
 		"creditTotals": {
 			"title": "Credit Totals",
 			"items": {
-				"opening_balance": "Opening Balance",
-				"closing_balance": "Closing Balance",
-				"total_credit": "Total Credit",
-				"total_debit": "Total Debit"
+				"InitialCreditBalance": "Due from last year",
+				"SalesInvoices": "Sales Invoices",
+				"ReturnSalesInvoices": "Sales Invoices Refund",
+				"payments": "Payments",
+                "ReversPayments": "Revers Payments",
+                "PurchaseInvoices": "Purchase Invoices"
 			}
 		},
+        "transactions": {
+            "title": "Transactions",
+            "fields": {
+                "ref": "Ref ID",
+                "type": "Type",
+                "date": "Date",
+                "amount": "Transaction Amount",
+                "remaining": "Remaining Credit Balance"
+            }
+        },
 		"noData": "No data available"
 	}
 }
