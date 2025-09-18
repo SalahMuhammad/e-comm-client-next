@@ -4,12 +4,12 @@ import ItemsForm from "../page"
 
 async function page({ params }) {
   const { id } = await params
-  const item = await getItem(id)
+  const res = await getItem(id)
 
   return (
       <div>
-          {item?.id ? (
-              <ItemsForm obj={item} />
+          {res.data?.id ? (
+              <ItemsForm obj={res.data} />
           ) : (
               <ErrorLoading name={"warehouse.items.form"} />
           ) }

@@ -11,17 +11,7 @@ export async function getItem(id) {
         method: "Get",
     })
 
-    switch (res.status) {
-        case 200:
-            console.log(res)
-            return await res.data
-        case 404:
-            return {err: t("errors.404")}
-        default:
-            // an unexpected error occurred
-            console.log('An unexpected error occurred:', res.statusText);
-            return {err: t("errors.etc")}
-    }
+    return res
 }
 
 export async function createUpdateItem(prevState, formData) {
