@@ -49,7 +49,7 @@ const InvoicePrintableView = async ({ id, type }) => {
     return (
         <div id="printarea" className={`p-4 ${style['invoice-container']}`}>
             {/* Controls - Only visible on screen */}
-            <div className={`pr-4 pb-4 shadow-[8px_8px_8px_-10px_rgba(0,0,0,0.3)]`}>
+            <div className={`pr-4 pb-4 shadow-[8px_8px_8px_-5px_rgba(0,0,0,0.3)] print-no-shadow`}>
                 {! isRefund && (
                     <div className={`${style['invoice-controls']} none-printable`}>
                         <Link href={`/invoice/${type}/form/${invoice.id}`} className={`${style['edit-link']}`}>
