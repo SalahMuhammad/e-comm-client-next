@@ -23,7 +23,7 @@ export default function Page() {
   }
 
   function handleErrors(data) {
-    if (! state.status || data.success) return;
+    if (!data.status || data.status === 200) return;
 
     const errorCode = data?.status;
     switch (errorCode) {
@@ -32,6 +32,9 @@ export default function Page() {
 
       case 404:
         return t('errors.404');
+
+      case 0:
+        return t('errors.500');
 
       default:
         if (errorCode >= 500) {
@@ -42,8 +45,6 @@ export default function Page() {
           return t("errors.etc");
         }
     }
-
-    return false;
   }
 
   return (

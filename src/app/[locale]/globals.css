@@ -117,3 +117,9 @@ input[type="number"]::-webkit-outer-spin-button {
         /* overflow: visible !important; */
     }
 }
+
+@media print {
+  .print-no-shadow {
+    box-shadow: none !important;
+  }
+}
