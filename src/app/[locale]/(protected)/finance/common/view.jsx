@@ -32,7 +32,7 @@ async function TransactionView({ id, type }) {
 
             </div>
 
-            <div className='pr-4 pb-4 w-full shadow-[8px_8px_8px_-10px_rgba(0,0,0,0.3)]'>
+            <div className='pr-4 pb-4 w-full shadow-[8px_8px_8px_-5px_rgba(0,0,0,0.3)] print-no-shadow'>
                 <CompanyDetailsHead>
                     <div className="mx-auto text-base text-black">
                         <p className="text-2xl font-serif">Receipt</p>

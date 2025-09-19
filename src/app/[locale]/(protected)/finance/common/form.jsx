@@ -104,7 +104,7 @@ function MyForm({ initialData, type }) {
                         <FieldError error={errors?.owner} />
                     </div>
 
-                    <div className={styles.formGroup}>
+                    <div className={`mt-8 ${styles.formGroup}`}>
                         <SearchableDropdown
                             url={'/api/payment/methods/?s='}
                             label={t('finance.fields.paymentMethod')}
@@ -140,7 +140,7 @@ function MyForm({ initialData, type }) {
                     <input type="hidden" name="paid" value="false" />
 
                     <div className={styles.formGroup}>
-                        <div className="relative flex items-start py-4">
+                        <div className="relative flex items-start">
                             <div className="min-w-0 flex-1 text-sm leading-6">
                                 <label htmlFor="isPaid" className="font-medium text-gray-900 dark:text-gray-100 select-none">
                                     {t('finance.status.paid')}:
