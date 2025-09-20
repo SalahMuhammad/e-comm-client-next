@@ -202,7 +202,6 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
 
             {imageList && (
                 <Gallery images={imageList} />
-                // <img className="p-8 rounded-t-lg" src={imgSrc} alt="product image" />
             )}
             {/* </div> */}
             <Link href={`/items/view/${id}`} className="block transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2">
