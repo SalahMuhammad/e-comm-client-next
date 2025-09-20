@@ -168,7 +168,13 @@ const InvoiceForm = ({ type, initialData = null }) => {
 
                     <div className={styles.itemsList}>
                         {items.map((item, index) => (
-                            <div key={item.id} className={styles.itemCard}>
+                            <div
+                            key={item.id}
+                            className={`${styles.itemCard} ${
+                                state?.data?.[typePrefix]?.[index]?.item &&
+                                "border-2 border-red-500 dark:border-red-400 rounded transition-colors duration-300 ease-in-out"
+                            }`}
+                            >
                                 <div
                                     className={styles.itemHeader}
                                     onClick={() => toggleItemExpanded(item.id)}

@@ -40,7 +40,7 @@ function RefilledForm({ initialData }) {
         <div className={styles.formContainer}>
             <Form action={formAction} className={styles.formWrapper}>
                 <div className={styles.formHeader}>
-                    <h2>{initialData?.id ? t("title.form.editRefilled") : t("title.form.createRefilled")}</h2>
+                    <h2>{initialData?.id ? t("form.title.editRefilled") : t("form.title.createRefilled")}</h2>
                 </div>
 
                 <div className={styles.formBody}>

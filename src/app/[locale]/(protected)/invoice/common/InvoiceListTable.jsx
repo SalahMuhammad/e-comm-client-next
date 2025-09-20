@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { PencilIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, PencilIcon } from '@heroicons/react/24/outline';
 import DeleteButton from './DeleteButton';
 import ToolTip from "@/components/ToolTip";
 import RepositoryPermitButton from "./RepositoryPermitButton";
@@ -78,14 +78,19 @@ export default function InvoiceListTable({ initialData, type }) {
                             </td>
                             {isRefund && (
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    #<Link href={`/invoice/${type.split('/')[0]}/view/${inv.original_invoice}`} className="text-blue-600 hover:underline">
+                                    <Link href={`/invoice/${type.split('/')[0]}/view/${inv.original_invoice}`} className="text-blue-600 hover:underline">
                                         {inv.original_invoice}
                                     </Link>
                                 </td>
                             )}
                             <td className="flex items-center px-6 py-4 dark:text-gray-300">
                                 <Link href={`/invoice/${type}/view/${inv.hashed_id}`} className="text-blue-600 hover:underline">
-                                    view
+                                    <EyeIcon
+                                    className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
+                                    />
+                                    <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                    {t("table.view")}
+                                    </span>
                                 </Link>
                                 {!isRefund && (
                                     <>
