@@ -218,6 +218,7 @@
 	},
 	"invoice": { 
 		"table": {
+			"view": "View",
 			"head": {
 				"owner": "Owner",
 				"issueDate": "Issue Date",
@@ -429,5 +430,13 @@
             }
         },
 		"noData": "No data available"
+	},
+
+	"Error": {
+		"title": "Oops! Something went wrong",
+		"message": "We encountered an unexpected error. Don't worry, it's not your fault.",
+		"errorDetails": "Error Details",
+		"retry": "Try Again",
+		"home": "Go Home"
 	}
 }

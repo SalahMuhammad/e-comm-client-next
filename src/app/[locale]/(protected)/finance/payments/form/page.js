@@ -1,4 +1,3 @@
-import React from 'react'
 import MyForm from '../../common/form'
 
 function page() {

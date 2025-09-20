@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
     "@heroicons/react": "^2.2.0",
     "autoprefixer": "^10.4.21",
     "flowbite": "^3.1.2",
@@ -20,6 +22,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-select": "^5.10.1",
+    "recharts": "^3.2.1",
     "sonner": "^2.0.6"
   },
   "devDependencies": {
