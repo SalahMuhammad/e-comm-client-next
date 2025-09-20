@@ -8,6 +8,7 @@ import { FillText } from "@/components/loaders";
 import { deleteItem } from "./actions";
 import { toast } from "sonner";
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
+import Gallery from "./Gallery";
 
 function handleDelete(t, id, onDelete, funs) {
     const handleGenericErrors = useGenericResponseHandler(t)
@@ -118,7 +119,7 @@ function TableRow({ id, name, origin, place, p4, imgSrc, isDeleting = false, fun
 }
 
 // Gallery Card Component (your existing card)
-function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc, isDeleting = false, funs}) {
+function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: imageList, isDeleting = false, funs}) {
     useEffect(() => {
         initFlowbite();
     }, []);
@@ -187,7 +188,6 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc, i
                                 {t("items.card.delete")}
                             </button>
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -197,18 +197,23 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc, i
                 <span>{origin && `${t("items.card.origin")}: ${origin}`}</span>
                 <span>{place && `${t("items.card.place")}: ${place}`}</span>
             </div>
-
-            {imgSrc && (
-                <img className="p-8 rounded-t-lg" src={imgSrc} alt="product image" />
-            )}
             
-            <div className="px-5 pb-5">
-                <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h5>
-                <div className="flex items-center justify-between">
-                    <span className="text-3xl font-bold text-gray-900 dark:text-white">${p4}</span>
-                    {/* <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a> */}
+            {/* <div className="max-w-[5rem] max-h-[5rem]"> */}
+
+            {imageList && (
+                <Gallery images={imageList} />
+                // <img className="p-8 rounded-t-lg" src={imgSrc} alt="product image" />
+            )}
+            {/* </div> */}
+            <Link href={`/items/view/${id}`} className="block transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2">
+                <div className="px-5 pb-5">
+                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h5>
+                    <div className="flex items-center justify-between">
+                        <span className="text-3xl font-bold text-gray-900 dark:text-white">${p4}</span>
+                        {/* <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a> */}
+                    </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 }
@@ -334,7 +339,7 @@ export function GalleryView({ items, setItems }) {
                         origin={item.origin}
                         place={item.place}
                         p4={item.price4}
-                        imgSrc={item.images[0]}
+                        imgSrc={item.images}
                         isDeleting={deletingId === item.id}
                         funs={{
                             setItems,
