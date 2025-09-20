@@ -108,7 +108,10 @@ const InvoiceForm = ({ type, initialData = null }) => {
 
                 <div className={styles.invoiceDetails}>
                     {initialData?.id && (
-                        <NumberInput placeholder={tGlobal("id")} id="id" value={state?.data?.id || initialData.id} borderColor="border-green-500 dark:border-green-400 mt-2 mb-2" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly labelClass='z-20' />
+                        <>
+                            <NumberInput placeholder={tGlobal("id")} id="id" value={state?.data?.id || initialData.id} borderColor="border-green-500 dark:border-green-400 mt-2 mb-2" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly labelClass='z-20' />
+                            <input type='hidden' name='hashed_id' value={initialData.hashed_id} />
+                        </>
                     )}  
                     <div className={styles.formRow}>
                         <div className={styles.formGroup}>

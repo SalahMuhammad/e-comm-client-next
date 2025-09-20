@@ -53,7 +53,7 @@ export async function createUpdateInv(_, actualFormData) {
     // Add transformed items
     transformedData[typePrefix] = items.filter(item => item); // Remove empty slots
 
-    const res = await apiRequest(`/api/${type == 'sales/refund' ? 'sales/s/refund' : type}/${(isUpdate && ! actualFormData.get('original_invoice')) ? actualFormData.get('id') + '/' : ''}`, {
+    const res = await apiRequest(`/api/${type == 'sales/refund' ? 'sales/s/refund' : type}/${(isUpdate && ! actualFormData.get('original_invoice')) ? actualFormData.get('hashed_id') + '/' : ''}`, {
         method: `${(isUpdate && ! actualFormData.get('original_invoice')) ? 'PATCH' : 'POST'}`,
         body: JSON.stringify(transformedData),
         headers: {
