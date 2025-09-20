@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import { updateStatus } from "./actions";
 import { useTranslations } from "next-intl";

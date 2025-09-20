@@ -18,7 +18,7 @@ import {
     BeakerIcon, UserGroupIcon, WrenchScrewdriverIcon,
 // Others
     Cog6ToothIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 // import logout from './logout';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from './LanguageToggle';
