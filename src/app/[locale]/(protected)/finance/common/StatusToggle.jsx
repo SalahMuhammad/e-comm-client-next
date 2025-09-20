@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
-import { updateStatus } from './actions';
-import { useTranslations } from 'next-intl';
-import { CheckIcon } from '@heroicons/react/24/solid';
-import { ClockIcon } from '@heroicons/react/24/outline';
+import React, { useState } from "react";
+import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
+import { updateStatus } from "./actions";
+import { useTranslations } from "next-intl";
+import { CheckIcon } from "@heroicons/react/24/solid";
+import { ClockIcon } from "@heroicons/react/24/outline";
 
-export default function Toggle({ obj, type, className = '' }) {
-  const t = useTranslations('finance');
+export default function Toggle({ obj, type, className = "" }) {
+  const t = useTranslations("finance");
   const handleResponse = useGenericResponseHandler();
   const [status, setStatus] = useState(Boolean(obj.paid));
   const [isChanging, setIsChanging] = useState(false);
@@ -22,9 +22,9 @@ export default function Toggle({ obj, type, className = '' }) {
     setStatus(optimistic);
 
     try {
-      const res = await updateStatus(obj.hashed_id, type, obj.paid)
+      const res = await updateStatus(obj.hashed_id, type, obj.paid);
       if (handleResponse(res)) {
-        setStatus(prev => !prev);
+        setStatus((prev) => !prev);
         setIsChanging(false);
         return;
       }
@@ -33,11 +33,11 @@ export default function Toggle({ obj, type, className = '' }) {
         // success; keep optimistic state
       } else {
         // revert on non-200
-        setStatus(prev => !prev);
+        setStatus((prev) => !prev);
       }
     } catch (err) {
       // network / unexpected error -> revert
-      setStatus(prev => !prev);
+      setStatus((prev) => !prev);
     } finally {
       // give a little time for the transition/animation to finish
       setTimeout(() => setIsChanging(false), 280);
@@ -57,16 +57,19 @@ export default function Toggle({ obj, type, className = '' }) {
         base +
         ` ` +
         (status
-          ? `bg-green-600 text-white border border-green-700 hover:bg-green-700 hover:shadow-md transform ${isChanging ? 'opacity-60 scale-95' : 'opacity-100 scale-100'}`
-          : `bg-yellow-50 dark:bg-transparent text-amber-600 border border-amber-200 dark:border-amber-600 hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-amber-500 ${isChanging ? 'opacity-70 scale-95' : 'opacity-100 scale-100'}`)
+          ? `bg-green-600 text-white border border-green-700 hover:bg-green-700 hover:shadow-md transform ${
+              isChanging ? "opacity-60 scale-95" : "opacity-100 scale-100"
+            }`
+          : `bg-yellow-50 dark:bg-transparent text-amber-600 border border-amber-200 dark:border-amber-600 hover:bg-amber-100 dark:hover:bg-amber-900 hover:text-amber-500 ${
+              isChanging ? "opacity-70 scale-95" : "opacity-100 scale-100"
+            }`)
       }
     >
       {/* Icon: animates on hover and while changing */}
       <span
         className={`flex items-center mr-2 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-110 ${
-          isChanging ? 'animate-spin-slow' : ''
-        }`
-      }
+          isChanging ? "animate-spin-slow" : ""
+        }`}
       >
         {status ? (
           <CheckIcon className={`h-4 w-4`} aria-hidden="true" />
@@ -76,7 +79,9 @@ export default function Toggle({ obj, type, className = '' }) {
       </span>
 
       {/* Label: fades in/out smoothly */}
-      <span className={`transition-opacity duration-300 ease-in-out`}>{status ? t('status.paid') : t('status.onHold')}</span>
+      <span className={`transition-opacity duration-300 ease-in-out`}>
+        {status ? t("status.paid") : t("status.onHold")}
+      </span>
 
       {/* subtle micro interaction: small dot that appears while changing */}
       {isChanging && (
@@ -86,8 +91,12 @@ export default function Toggle({ obj, type, className = '' }) {
       <style jsx>{`
         /* small custom animation for a slower spin that's less harsh than default animate-spin */
         @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
         }
         .animate-spin-slow {
           animation: spin-slow 0.9s linear infinite;
