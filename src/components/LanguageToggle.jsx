@@ -2,6 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import { useLocale } from 'next-intl';
+import { routing } from '@/i18n/routing';
 
 export default function LanguageToggle() {
   const router = useRouter();
@@ -9,13 +10,14 @@ export default function LanguageToggle() {
   const locale = useLocale();
 
   const toggleLanguage = () => {
-    const newLocale = locale === 'en' ? 'ar' : 'en';
+    const locales = routing.locales;
 
-    // Remove the current locale from the pathname
-    const newPath = pathname.replace(/^\/(en|ar)/, '');
+    const currentIndex = locales.indexOf(locale);
+    const nextLocale = locales[(currentIndex + 1) % locales.length];
 
-    // Navigate to the same path under the new locale
-    router.replace(`/${newLocale}${newPath}`);
+    const newPath = pathname.replace(new RegExp(`^/(${locales.join('|')})`), '');
+
+    router.replace(`/${nextLocale}${newPath}`);
   };
 
   return (
@@ -25,8 +27,10 @@ export default function LanguageToggle() {
       aria-label="Toggle Language"
       id="languageToggle"
     >
-      <span   className="text-sm font-bold uppercase text-gray-800 dark:text-gray-100">
-        {locale === 'en' ? 'AR' : 'EN'}
+      <span className="text-sm font-bold uppercase text-gray-800 dark:text-gray-100">
+        {locale.toUpperCase() === routing.locales[0].toUpperCase()
+          ? routing.locales[1].toUpperCase()
+          : routing.locales[0].toUpperCase()}
       </span>
     </button>
   );
