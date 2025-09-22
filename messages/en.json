@@ -432,11 +432,71 @@
 		"noData": "No data available"
 	},
 
+	"reports": {
+		"title": "Reports Dashboard",
+		"reportSections": {
+			"warehouse": {
+				"title": "Warehouse",
+				"links": {
+					"itemMovement":{ 
+						"label": "Item Movement", 
+						"description": "Track inventory movements and transfers" 
+					}
+				}
+			},
+			"finance": {
+				"title": "Finance",
+				"links": {
+					"paymentsInPeriod": { 
+						"label": "Payments in Period", 
+						"description": "Financial transactions and payments" 
+					}
+				}
+			},
+			"refillableItems": {
+				"title": "Refillable Items",
+				"links": {
+					"refilledItems": {
+						"label": "Refilled & Used Items", 
+						"description": "Items refilled and used in period"
+					},
+					"refillableItemsClient": {
+						"label": "Client Refillable Items",
+						"description": "Refillable items client currently has"
+					}
+				}
+			},
+			"clientsSuppliers": {
+				"title": "Client & Supplier",
+				"links": {
+					"accountStatement": {
+						"label": "Account Statement",
+						"description": "Detailed account statements"
+					}
+				}
+			}
+		},
+		"generate": "Generate"
+	},
+
 	"Error": {
 		"title": "Oops! Something went wrong",
 		"message": "We encountered an unexpected error. Don't worry, it's not your fault.",
 		"errorDetails": "Error Details",
 		"retry": "Try Again",
 		"home": "Go Home"
+	},
+	"NotFound": {
+		"title": "Page Not Found",
+		"message": "Sorry, we couldn't find the page you're looking for. It might have been moved or deleted.",
+		"home": "Go Home",
+		"back": "Go Back",
+		"url": "Reqquested URL"
+	},
+	"EventNotFound": {
+		"title": "{name} Not Found",
+		"message": "The {name} you're looking for doesn't exist or may have been removed.",
+		"back": "Go Back",
+		"eventId": "{name} ID"
 	}
 }
