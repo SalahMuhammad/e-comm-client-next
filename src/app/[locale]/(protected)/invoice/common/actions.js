@@ -68,9 +68,9 @@ export async function createUpdateInv(_, actualFormData) {
     }
 }
 
-export async function deleteInv(type, id, isDeleteFromView) {
+export async function deleteInv(type, hashed_id, isDeleteFromView) {
     'use server'
-    const res = await apiRequest(`/api/${type}/${id}/`, {
+    const res = await apiRequest(`/api/${type}/${hashed_id}/`, {
         method: "DELETE",
     })
     

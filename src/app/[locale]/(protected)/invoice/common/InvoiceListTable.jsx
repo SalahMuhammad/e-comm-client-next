@@ -94,9 +94,9 @@ export default function InvoiceListTable({ initialData, type }) {
                                 </Link>
                                 {!isRefund && (
                                     <>
-                                        <DeleteButton type={type} id={inv.id} onDelete={() => handleDelete(inv.id)} />
+                                        <DeleteButton type={type} hashed_id={inv.hashed_id} onDelete={() => handleDelete(inv.id)} />
                                         <Link 
-                                            href={`/invoice/${type}/form/${inv.id}`}
+                                            href={`/invoice/${type}/form/${inv.hashed_id}`}
                                             className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300"
                                         >
                                             <PencilIcon className="h-4 w-4 mr-1 text-blue-500 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />

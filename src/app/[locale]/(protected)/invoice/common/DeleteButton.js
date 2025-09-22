@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { TrashIcon } from '@heroicons/react/24/outline';
 
-function DeleteButton({ type, id, onDelete, isDeleteFromView = false }) {
+function DeleteButton({ type, hashed_id, onDelete, isDeleteFromView = false }) {
     const genericErrorHandler = useGenericResponseHandler()
     const t = useTranslations('invoice.table.remove');
 
@@ -17,7 +17,7 @@ function DeleteButton({ type, id, onDelete, isDeleteFromView = false }) {
             action: {
                 label: t('yes'),
                 onClick: async () => {
-                    const res = await deleteInv(type, id, isDeleteFromView);
+                    const res = await deleteInv(type, hashed_id, isDeleteFromView);
                     if (genericErrorHandler(res)) return;
 
                     isDeleteFromView &&

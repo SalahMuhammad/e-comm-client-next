@@ -52,7 +52,7 @@ const InvoicePrintableView = async ({ id, type }) => {
             <div className={`pr-4 pb-4 shadow-[8px_8px_8px_-5px_rgba(0,0,0,0.3)] print-custom-shadow`}>
                 {! isRefund && (
                     <div className={`${style['invoice-controls']} none-printable`}>
-                        <Link href={`/invoice/${type}/form/${invoice.id}`} className={`${style['edit-link']}`}>
+                        <Link href={`/invoice/${type}/form/${invoice.hashed_id}`} className={`${style['edit-link']}`}>
                             <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                             </svg>
@@ -66,7 +66,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                         </Link>
                 
                         <RepositoryPermitButton id={invoice.id} type={type} permitValue={invoice.repository_permit} />
-                        <DeleteButton type={type} id={invoice.id} isDeleteFromView={true} />
+                        <DeleteButton type={type} hashed_id={invoice.hashed_id} isDeleteFromView={true} />
                     </div>
                 )}
                 {/* Header */}
@@ -159,7 +159,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                 </div>
                 {invoice.notes && (
                     <div className={`${style['notes-section']}`}>
-                        <h3 className={`${style['notes-title']}`}>Notes</h3>
+                        <h3 className={`${style['notes-title']}`}>Notes:</h3>
                         <pre className={`${style['notes-content']}`}>{invoice.notes}</pre>
                     </div>
                 )}
