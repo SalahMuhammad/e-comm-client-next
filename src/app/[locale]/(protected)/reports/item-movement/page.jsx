@@ -5,10 +5,11 @@ import SearchableDropdown from '@/components/SearchableDropdown'
 import { formatDateManual } from '@/utils/dateFormatter'
 import Form from 'next/form'
 import { redirect, RedirectType } from 'next/navigation'
-
+import styles from '@/styles/reports/main.module.css'
+import { useTranslations } from 'next-intl'
 
 function page() {
-
+    const t = useTranslations("reports")
     const handleSubmit = async (e) => {
         e.preventDefault()
         const formData = new FormData(e.target);
@@ -21,7 +22,8 @@ function page() {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className={styles.form}>
+            <h1 className='text-2xl font-bold mb-2'>{t("reportSections.warehouse.links.itemMovement.label")}</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
                 <SearchableDropdown
                     url={'/api/items/?s='}
@@ -58,12 +60,12 @@ function page() {
                 type="submit"
                 variant="secondary"
                 size="md"
-                bgColor="bg-neutral-200 dark:bg-neutral-700"
-                hoverBgColor="bg-neutral-100 dark:bg-neutral-800"
-                textColor="text-black dark:text-white"
+                bgColor="bg-blue-500 dark:bg-blue-600"
+                hoverBgColor="bg-blue-700 dark:bg-blue-800"
+                textColor="text-white dark:text-gray-100"
                 className="w-full z-0 mt-4"
             >
-                Generate
+                {t("generate")}
             </FormButton>
         </Form>
     )

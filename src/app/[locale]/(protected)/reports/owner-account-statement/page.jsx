@@ -4,9 +4,11 @@ import FormButton from '@/components/FormButton'
 import SearchableDropdown from '@/components/SearchableDropdown'
 import Form from 'next/form'
 import { redirect, RedirectType } from 'next/navigation'
+import styles from '@/styles/reports/main.module.css'
+import { useTranslations } from 'next-intl'
 
 function page() {
-
+    const t = useTranslations("reports")
     const handleSubmit = (e) => {
         e.preventDefault()
 
@@ -17,7 +19,8 @@ function page() {
 
     return (
         <div>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} className={styles.form}>
+                <h1 className='text-2xl font-bold mb-2'>{t("reportSections.clientsSuppliers.links.accountStatement.label")}</h1>
                 <SearchableDropdown
                     url={'/api/buyer-supplier-party/?s='}
                     name={`owner`}
@@ -28,12 +31,12 @@ function page() {
                     type="submit"
                     variant="secondary"
                     size="md"
-                    bgColor="bg-neutral-200 dark:bg-neutral-700"
-                    hoverBgColor="bg-neutral-100 dark:bg-neutral-800"
-                    textColor="text-black dark:text-white"
-                    className="w-full z-0"
+                    bgColor="bg-blue-500 dark:bg-blue-600"
+                    hoverBgColor="bg-blue-700 dark:bg-blue-800"
+                    textColor="text-white dark:text-gray-100"
+                    className="w-full z-0 mt-4"
                 >
-                    Generate
+                    {t("generate")}
                 </FormButton>
             </Form>
         </div>
