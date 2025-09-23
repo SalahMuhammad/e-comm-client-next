@@ -115,7 +115,7 @@
 				"edit":"Edit Item",
 				"successCreate": "Item created successfully",
 				"successEdit": "Item updated successfully",
-				"error": "page not found",
+				"error": "Item",
 				"errors": {
 					"400": "Invalid data. Please check your input.",
 					"500": "Server error. Please try again later.",
@@ -144,7 +144,7 @@
 					"500": "Server error. Please try again later.",
 					"etc": "An unexpected error occurred. Please try again."
 				},
-				"error": "page not found",
+				"error": "Repositories",
 				"successCreate": "Repository created successfully",
 				"successEdit": "Repository updated successfully"
 			},
@@ -193,7 +193,8 @@
 		"form": {
 			"id": "ID",
 			"name": "Name",
-			"detail": "Detail"
+			"detail": "Detail",
+			"error": "Customer/Supplier"
 		},
 		"view": {
 			"title": "Customer/Supplier Details",
