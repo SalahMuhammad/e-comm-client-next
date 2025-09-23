@@ -1,9 +1,12 @@
 @reference "../../app/[locale]/globals.css";
 
 .form {
-    @apply p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md mt-5 dark:bg-gray-800;
-    transform: translateY(20px);
+    @apply p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md mt-5;
     animation: slideUp 0.5s ease-out;
+}
+
+:global(html.dark) .form {
+    @apply bg-gray-800;
 }
 
 @keyframes slideUp {

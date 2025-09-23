@@ -128,6 +128,7 @@ async function page({ params }) {
                                             <Link
                                                 key={linkIndex}
                                                 href={link.href}
+                                                scroll={true}
                                                 className="group/link block p-4 rounded-2xl border border-gray-100 dark:border-gray-600 hover:border-gray-200 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
                                             >
                                                 <div className="flex items-center justify-between">
