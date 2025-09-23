@@ -73,19 +73,22 @@ export default function EventNotFound({ eventId, customButton, name = 'Event', m
               onClick={handleCustomButton}
               className="group inline-flex items-center justify-center px-8 py-4 text-base font-semibold rounded-xl text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 dark:from-indigo-500 dark:to-purple-500 dark:hover:from-indigo-600 dark:hover:to-purple-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 dark:focus:ring-indigo-400 transition-all duration-200 shadow-lg hover:shadow-xl dark:shadow-indigo-500/25 transform hover:scale-105"
             >
-              <svg
-                className="mr-3 h-5 w-5 group-hover:translate-x-[-2px] transition-transform duration-300"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4h3a1 1 0 011 1v8a1 1 0 01-1 1H5a1 1 0 01-1-1V8a1 1 0 011-1h3z"
-                />
-              </svg>
+              {!customButton?.icon ?
+                <svg
+                  className="mr-3 h-5 w-5 group-hover:translate-x-[-2px] transition-transform duration-300"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4h3a1 1 0 011 1v8a1 1 0 01-1 1H5a1 1 0 01-1-1V8a1 1 0 011-1h3z"
+                  />
+                </svg>
+                : <div className='mr-3 h-5 w-5 items-center justify-center flex group-hover:translate-x-[-2px] transition-transform duration-300'>{customButton.icon}</div>
+              }
               {customButton.label}
             </button>
           )}
