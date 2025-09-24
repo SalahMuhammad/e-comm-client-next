@@ -1,0 +1,28 @@
+@reference "../../app/[locale]/globals.css";
+
+.form {
+    @apply p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md mt-5;
+    animation: slideUp 0.5s ease-out;
+}
+
+:global(html.dark) .form {
+    @apply bg-gray-800;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .form {
+        @apply p-4;
+    }
+}

@@ -7,11 +7,14 @@ import {
     ChartBarIcon,
     ArrowTopRightOnSquareIcon,
 } from '@heroicons/react/24/outline';
+import { getTranslations } from 'next-intl/server';
 
 async function page({ params }) {
+    const t = await getTranslations('reports');
+
     const reportSections = [
         {
-            title: "Warehouse",
+            title: t("reportSections.warehouse.title"),
             icon: BuildingStorefrontIcon,
             color: "blue",
             gradient: "from-blue-500 to-blue-600",
@@ -19,14 +22,14 @@ async function page({ params }) {
             links: [
                 {
                     href: "/reports/item-movement",
-                    label: "Item Movement",
-                    description: "Track inventory movements and transfers",
+                    label: t("reportSections.warehouse.links.itemMovement.label"),
+                    description: t("reportSections.warehouse.links.itemMovement.description"),
                     icon: ChartBarIcon,
                 }
             ]
         },
         {
-            title: "Refillable Items",
+            title: t("reportSections.refillableItems.title"),
             icon: ArrowPathIcon,
             color: "emerald",
             gradient: "from-emerald-500 to-emerald-600",
@@ -34,20 +37,20 @@ async function page({ params }) {
             links: [
                 {
                     href: "/reports/refilled-used-items",
-                    label: "Refilled & Used Items",
-                    description: "Items refilled and used in period",
+                    label: t("reportSections.refillableItems.links.refilledItems.label"),
+                    description: t("reportSections.refillableItems.links.refilledItems.description"),
                     icon: ArrowPathIcon,
                 },
                 {
                     href: "/reports/refillable-items-client-has",
-                    label: "Client Refillable Items",
-                    description: "Refillable items client currently has",
+                    label: t("reportSections.refillableItems.links.refillableItemsClient.label"),
+                    description: t("reportSections.refillableItems.links.refillableItemsClient.description"),
                     icon: ArrowPathIcon,
                 }
             ]
         },
         {
-            title: "Finance",
+            title: t("reportSections.finance.title"),
             icon: CurrencyDollarIcon,
             color: "purple",
             gradient: "from-purple-500 to-purple-600",
@@ -55,14 +58,14 @@ async function page({ params }) {
             links: [
                 {
                     href: "/reports/payments-in-period",
-                    label: "Payments in Period",
-                    description: "Financial transactions and payments",
+                    label: t("reportSections.finance.links.paymentsInPeriod.label"),
+                    description: t("reportSections.finance.links.paymentsInPeriod.description"),
                     icon: CurrencyDollarIcon,
                 }
             ]
         },
         {
-            title: "Client & Supplier",
+            title: t("reportSections.clientsSuppliers.title"),
             icon: UserGroupIcon,
             color: "orange",
             gradient: "from-orange-500 to-orange-600",
@@ -70,8 +73,8 @@ async function page({ params }) {
             links: [
                 {
                     href: "/reports/owner-account-statement",
-                    label: "Account Statement",
-                    description: "Detailed account statements",
+                    label: t("reportSections.clientsSuppliers.links.accountStatement.label"),
+                    description: t("reportSections.clientsSuppliers.links.accountStatement.description"),
                     icon: CurrencyDollarIcon,
                 }
             ]
@@ -86,7 +89,7 @@ async function page({ params }) {
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
                             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 dark:from-white dark:via-gray-100 dark:to-gray-200 bg-clip-text text-transparent mb-3">
-                                Reports Dashboard
+                                {t("title")}
                             </h1>
                         </div>
                     </div>
@@ -125,6 +128,7 @@ async function page({ params }) {
                                             <Link
                                                 key={linkIndex}
                                                 href={link.href}
+                                                scroll={true}
                                                 className="group/link block p-4 rounded-2xl border border-gray-100 dark:border-gray-600 hover:border-gray-200 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
                                             >
                                                 <div className="flex items-center justify-between">

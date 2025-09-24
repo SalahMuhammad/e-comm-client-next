@@ -7,6 +7,7 @@ import Link from 'next/link';
 import DeleteButton from './DeleteButton';
 import { getCreditBalance } from '@/app/[locale]/(protected)/invoice/common/actions';
 import CompanyDetailsHead from '@/components/CompanyDetailsHead';
+import EventNotFound from '@/components/NotFound';
 
 
 async function TransactionView({ id, type }) {
@@ -15,7 +16,7 @@ async function TransactionView({ id, type }) {
     let credit = ownerData.credit || '00.00'
 
 
-    if (! transaction?.id) return 'not found'
+    if (! transaction?.id) return <EventNotFound eventId={id} />
 
 
     return (

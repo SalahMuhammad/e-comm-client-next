@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 export default function Error({ error, reset }) {
     const t = useTranslations('Error');
@@ -16,6 +17,10 @@ export default function Error({ error, reset }) {
     }, [error]);
 
     return (
+        <>
+        <Head>
+            <title>Error | MedPro Corp</title>
+        </Head>
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
             {/* Animated background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -46,10 +51,10 @@ export default function Error({ error, reset }) {
                 {/* Error Title with improved typography */}
                 <div className="space-y-4">
                     <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent leading-tight">
-                        Oops! Something went wrong
+                        {t("title")}
                     </h1>
                     <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
-                        We encountered an unexpected error. Don't worry, it's not your fault.
+                        {t("message")}
                     </p>
                 </div>
 
@@ -59,7 +64,7 @@ export default function Error({ error, reset }) {
                         <svg className="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">Error Details</h3>
+                        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">{t("errorDetails")}</h3>
                     </div>
                     <div className="bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-950/30 dark:to-orange-950/30 border border-red-200 dark:border-red-800/50 rounded-xl p-4 backdrop-blur-sm">
                         <p className="text-sm text-red-800 dark:text-red-300 font-mono break-words leading-relaxed">
@@ -87,7 +92,7 @@ export default function Error({ error, reset }) {
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                             />
                         </svg>
-                        Try Again
+                        {t("retry")}
                     </button>
 
                     <button
@@ -107,7 +112,7 @@ export default function Error({ error, reset }) {
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                             />
                         </svg>
-                        Go Home
+                        {t("home")}
                     </button>
                 </div>
 
@@ -131,5 +136,6 @@ export default function Error({ error, reset }) {
                 </div> */}
             </div>
         </div>
+        </>
     );
 }

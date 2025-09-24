@@ -6,6 +6,7 @@ import { formatDate } from "@/utils/dateFormatter";
 import RepositoryPermitButton from "./RepositoryPermitButton";
 import DeleteButton from "./DeleteButton";
 import CompanyDetailsHead from "@/components/CompanyDetailsHead";
+import EventNotFound from "@/components/NotFound";
 
 
 const InvoicePrintableView = async ({ id, type }) => {
@@ -15,7 +16,7 @@ const InvoicePrintableView = async ({ id, type }) => {
     const isRefund = type.split('/')[1] || false;
 
 
-    if (! invoice?.id) return 'not found'
+    if (! invoice?.id) return <EventNotFound eventId={id} />
 
 
     // Get status text

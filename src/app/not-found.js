@@ -5,9 +5,10 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import "./[locale]/globals.css";
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import Head from 'next/head';
 
 export default function NotFound() {
-    // const t = useTranslations('NotFound');
+    const t = useTranslations('NotFound');
     const [isVisible, setIsVisible] = useState(false);
     const router = useRouter();
 
@@ -25,6 +26,11 @@ export default function NotFound() {
     };
 
     return (
+        <>
+        <Head>
+            <title>404 Not Found | MedPro Corp</title>
+        </Head>
+        
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
             {/* Animated background elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -48,10 +54,10 @@ export default function NotFound() {
                 {/* 404 Title with improved typography */}
                 <div className="space-y-4">
                     <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent leading-tight">
-                        Page Not Found
+                        {t("title")}
                     </h1>
                     <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
-                        Sorry, we couldn't find the page you're looking for. It might have been moved or deleted.
+                        {t("message")}
                     </p>
                 </div>
 
@@ -61,7 +67,7 @@ export default function NotFound() {
                         <svg className="h-5 w-5 text-gray-500 dark:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                         </svg>
-                        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">Requested URL</h3>
+                        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">{t("url")}</h3>
                     </div>
                     <div className="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-950/30 dark:to-red-950/30 border border-orange-200 dark:border-orange-800/50 rounded-xl p-4 backdrop-blur-sm">
                         <p className="text-sm text-orange-800 dark:text-orange-300 font-mono break-words leading-relaxed">
@@ -89,7 +95,7 @@ export default function NotFound() {
                                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                             />
                         </svg>
-                        Go Home
+                        {t("home")}
                     </button>
 
                     <button
@@ -109,7 +115,7 @@ export default function NotFound() {
                                 d="M10 19l-7-7m0 0l7-7m-7 7h18"
                             />
                         </svg>
-                        Go Back
+                        {t("back")}
                     </button>
                 </div>
 
@@ -139,5 +145,6 @@ export default function NotFound() {
                 </div> */}
             </div>
         </div>
+        </>
     );
 }
