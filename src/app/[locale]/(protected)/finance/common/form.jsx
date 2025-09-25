@@ -55,7 +55,7 @@ function MyForm({ initialData, type }) {
         if (state?.ok) {
             toast.success(t(state.data?.id ? "successEdit" : "successCreate"));
             if (state.data?.id) {
-                router.replace(`/${type}/view/${state.data?.hashed_id}`);
+                router.replace(`/finance/${type}/view/${state.data?.hashed_id}`);
             }
         }
     }, [state])
