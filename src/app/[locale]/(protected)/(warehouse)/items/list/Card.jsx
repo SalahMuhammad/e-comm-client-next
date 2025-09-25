@@ -9,6 +9,7 @@ import { deleteItem } from "./actions";
 import { toast } from "sonner";
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import Gallery from "./Gallery";
+import ImageView from "@/components/ImageView";
 
 function handleDelete(t, id, onDelete, funs) {
     const handleGenericErrors = useGenericResponseHandler(t)
@@ -63,13 +64,17 @@ function TableRow({ id, name, origin, place, p4, imgSrc, isDeleting = false, fun
               bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600
             `}
         >
-            <td className="w-16 p-4">
-                {imgSrc && (
-                    <img src={imgSrc} alt={name} className="w-10 h-10 rounded object-cover" />
-                )}
+            <td className="w-16 p-4 cursor-pointer group" onClick={() => funs.viewImages(imgSrc)}>
+                {imgSrc[0]?.img ? (
+                    <img src={imgSrc[0]?.img} alt={name} className="w-10 h-10 rounded object-cover rounded border-2 border-transparent group-hover:border-blue-500 transition-all duration-300" />
+                ) : 
+                    <div className="w-10 h-10 rounded object-cover border rounded-sm"></div>
+                }
             </td>
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {name}
+                <Link href={`/items/view/${id}`} className="block text-gray-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 hover:underline transition-all duration-200">
+                    {name}
+                </Link>
             </th>
             <td className="px-6 py-4 text-gray-900 dark:text-white">
                 {origin || '-'}
@@ -129,13 +134,13 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
     return (
     <div className={`
         w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700
-        transform transition-all duration-300 ease-in-out
+        transform transition-all duration-300 ease-in-out relative pt-6
         ${isDeleting ? 'opacity-0 scale-0 h-0 p-0 m-0 overflow-hidden' : ''}
     `}>
 
  
             {/* menu */}
-            <div className="flex justify-end px-4 pt-4">
+            <div className="flex justify-end absolute z-100 right-2 top-1">
                 <button id={`dropdownButton${id}`} data-dropdown-toggle={`dropdown${id}`} className="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
                     <span className="sr-only">Open dropdown</span>
                     <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
@@ -143,7 +148,7 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
                     </svg>
                 </button>
 
-                <div id={`dropdown${id}`} className="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                <div id={`dropdown${id}`} className="z-100 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
                     <ul className="py-2" aria-labelledby={`dropdownButton${id}`}>
                         <li>
                             <Link 
@@ -192,21 +197,22 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
                 </div>
             </div>
 
+            {imageList && (
+                <Gallery images={imageList} onClick={(index) => { funs.viewImages.setImages(imageList); funs.viewImages.setStartIndex(index); }} />
+            )}
+
             {/* origin and place */}
-            <div className="flex flex-row justify-around">
-                <span>{origin && `${t("items.card.origin")}: ${origin}`}</span>
+            <div className="flex flex-row justify-between pl-5 pr-5">
                 <span>{place && `${t("items.card.place")}: ${place}`}</span>
+                <span>{origin && `${t("items.card.origin")}: ${origin}`}</span>
             </div>
             
             {/* <div className="max-w-[5rem] max-h-[5rem]"> */}
 
-            {imageList && (
-                <Gallery images={imageList} />
-            )}
             {/* </div> */}
-            <Link href={`/items/view/${id}`} className="block transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:-translate-y-2">
+            <Link href={`/items/view/${id}`} className="block hover:text-blue-500 dark:hover:text-blue-400">
                 <div className="px-5 pb-5">
-                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{name}</h5>
+                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 hover:underline transition-all duration-200">{name}</h5>
                     <div className="flex items-center justify-between">
                         <span className="text-3xl font-bold text-gray-900 dark:text-white">${p4}</span>
                         {/* <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add to cart</a> */}
@@ -280,7 +286,7 @@ export function useViewMode() {
 }
 
 // Table View Component
-export function TableView({ items, setItems }) {
+export function TableView({ items, setItems, viewImages }) {
     const t = useTranslations("warehouse");
     // const [items, setItems] = useState(rawItems);
     const [deletingId, setDeletingId] = useState(null);
@@ -308,11 +314,12 @@ export function TableView({ items, setItems }) {
                                 origin={item.origin}
                                 place={item.place}
                                 p4={item.price4}
-                                imgSrc={item.images[0]}
+                                imgSrc={item.images}
                                 isDeleting={deletingId === item.id}
                                 funs={{
                                     setItems: setItems,
-                                    setDeletingId: setDeletingId
+                                    setDeletingId: setDeletingId,
+                                    viewImages
                                 }}
                             />)
                     })}
@@ -323,7 +330,7 @@ export function TableView({ items, setItems }) {
 }
 
 // Gallery View Component (your existing masonry layout)
-export function GalleryView({ items, setItems }) {
+export function GalleryView({ items, setItems, viewImages }) {
     const [deletingId, setDeletingId] = useState(null);
 
     return (
@@ -342,7 +349,8 @@ export function GalleryView({ items, setItems }) {
                         isDeleting={deletingId === item.id}
                         funs={{
                             setItems,
-                            setDeletingId
+                            setDeletingId,
+                            viewImages
                         }}
                     />
                 </div>
@@ -356,6 +364,13 @@ export function GalleryView({ items, setItems }) {
 export function ItemsView({ items: rawItems = [] }) {
     const { viewMode, setViewMode, isClient } = useViewMode();
     const [items, setItems] = useState(rawItems);
+    const [images, setImages] = useState([])
+    const [startIndex, setStartIndex] = useState(0)
+
+    function onImageViewClose() {
+        setImages([])
+        setStartIndex(0)
+    }
 
     useEffect(() => {
         setItems(rawItems);
@@ -374,10 +389,12 @@ export function ItemsView({ items: rawItems = [] }) {
             <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
             
             {viewMode === 'gallery' ? (
-                <GalleryView items={items} setItems={setItems} />
+                <GalleryView items={items} setItems={setItems} viewImages={{setImages, setStartIndex}} />
             ) : (
-                <TableView items={items} setItems={setItems} />
+                <TableView items={items} setItems={setItems} viewImages={setImages} />
             )}
+
+            <ImageView images={images} onClose={onImageViewClose} startIndex={startIndex} />
         </>
     );
 }
