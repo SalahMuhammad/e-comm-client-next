@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react"
+import { useActionState, useEffect } from "react"
 import { useTranslations } from "next-intl";
 import { createUpdateTransaction } from "./actions"
 import Form from "next/form";
-import { NumberInput } from "@/components/inputs/index"
+import { TextInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
 import { toast } from 'sonner'
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import styles from '@/app/[locale]/(protected)/invoice/common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
@@ -17,11 +17,9 @@ import StaticSelect from "@/components/ReactStaticSelect";
 
 
 function MyForm({ initialData, type }) {
-    const [isPending, setIsPending] = useState(false)
-    const [errors, setErrors] = useState()
-    const [formData, setFormData] = useState()
     const t = useTranslations()
     const handleGenericErrors = useGenericResponseHandler()
+    const [state, formAction, isPending] = useActionState(createUpdateTransaction, {})
     const router = useRouter();
     const options = type === 'payments' ? [
         { value: 'invoice_payment', label: 'invoice_payment' },
@@ -31,55 +29,63 @@ function MyForm({ initialData, type }) {
         { value: 'refund', label: 'refund' },
         { value: 'expense', label: 'expense' },
     ]
+    const defaultDate = state.formData?.date || initialData?.date || formatDateManual(new Date())
+    const defaultOwner = state.formData?.owner || initialData?.owner ? { 
+        value: state.formData?.owner      || initialData?.owner, 
+        label: state.formData?.owner_name || initialData?.owner_name
+    } : undefined
+    const defaultPaymenType = state.formData?.payment_type || initialData?.payment_type ? { 
+        value: state.formData?.payment_type   || initialData?.payment_type, 
+        label: state.formData?.payment_type   || initialData?.payment_type 
+    } : options[0]
+    const defaultPaymentMethod = state.formData?.payment_method || initialData?.payment_method ? { 
+        value: state.formData?.payment_method         || initialData?.payment_method, 
+        label: state.formData?.payment_method_name    || initialData?.payment_method_name 
+    } : undefined
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        setIsPending(true)
-
-        const res = await createUpdateTransaction(new FormData(e.currentTarget), type)
+    useEffect(() => {
+        if (state?.ok === undefined) {
+            return
+        }
+        const res = { ...state }
+        delete res['formData']
         if (handleGenericErrors(res)) return
 
-        switch (res.status) {
-            case 400:
-                setErrors(res.data);
-                setFormData(res.formData);
-                setIsPending(false);
-                break;
-            case 200:
-            case 201:
-                toast.success(`${initialData?.id ? t('finance.success.updated') : t('finance.success.created')}...`);
-                res.data.id &&
-                    redirect(`/finance/${type}/view/${res.data.hashed_id}`);
+        if (state?.ok) {
+            toast.success(t(state.data?.id ? "successEdit" : "successCreate"));
+            if (state.data?.id) {
+                router.replace(`/finance/${type}/view/${state.data?.hashed_id}`);
+            }
         }
-
-        setIsPending(false)
-    }
+    }, [state])
 
     return (
         <div className={styles.invoiceContainer}>
             <Form
-                onSubmit={handleSubmit}
+                action={formAction}
                 className={styles.invoiceForm}
             >
                 <div className={styles.invoiceHeader}>
-                    <h2>{t("finance.fields.transaction")}</h2>
+                    <h2>{initialData?.id ? t("finance.fields.update") : t("finance.fields.transaction")} #{initialData?.hashed_id}</h2>
                 </div>
 
                 <div className={styles.invoiceDetails}>
-                    {initialData?.id && (
-                        <NumberInput 
+                    {initialData?.hashed_id && (
+                        <TextInput 
                             placeholder={'id'} 
-                            id="id" 
-                            value={initialData.hashed_id} 
-                            borderColor="border-green-500 dark:border-green-400" 
-                            labelColor="text-green-600 dark:text-green-400" 
-                            focusColor="" 
-                            focusLabelColor="" 
-                            name="id" 
+                            id="hashed_id" 
+                            value={initialData?.hashed_id} 
+                            bordercolor="border-green-500 dark:border-green-400" 
+                            labelcolor="text-green-600 dark:text-green-400" 
+                            focuscolor="" 
+                            focuslabelcolor="" 
+                            name="hashed_id" 
                             readOnly 
                         />
                     )}
+
+                    <input type="hidden" name="type" value={type} />
 
                     <div className={styles.formGroup}>
                         <label htmlFor="date">{t('finance.fields.date')}</label>
@@ -87,10 +93,10 @@ function MyForm({ initialData, type }) {
                             type="date"
                             id="date"
                             name="date"
-                            defaultValue={formData?.date || initialData?.date || formatDateManual(new Date())}
+                            defaultValue={defaultDate}
                             required
                         />
-                        <FieldError error={errors?.date} />
+                        <FieldError error={state.data?.date} />
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
@@ -98,10 +104,10 @@ function MyForm({ initialData, type }) {
                             url={'/api/buyer-supplier-party/?s='}
                             label={'Owner'}
                             name="owner"
-                            defaultValue={initialData?.owner ? { value: initialData?.owner, label: initialData?.owner_name } : ''}
+                            defaultValue={defaultOwner}
                             required
                         />
-                        <FieldError error={errors?.owner} />
+                        <FieldError error={state.data?.owner} />
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
@@ -109,9 +115,9 @@ function MyForm({ initialData, type }) {
                             url={'/api/payment/methods/?s='}
                             label={t('finance.fields.paymentMethod')}
                             name={'payment_method'}
-                            defaultValue={initialData?.payment_method ? { value: initialData?.payment_method, label: initialData?.payment_method_name } : ''}
+                            defaultValue={defaultPaymentMethod}
                         />
-                        <FieldError error={errors?.payment_method} />
+                        <FieldError error={state.data?.payment_method} />
                     </div>
 
                     <div className={styles.detailsRow}>
@@ -121,19 +127,19 @@ function MyForm({ initialData, type }) {
                                 type="number"
                                 name="amount"
                                 step={'.01'}
-                                defaultValue={formData?.amount || initialData?.amount || ''}
+                                defaultValue={state.formData?.amount || initialData?.amount || ''}
                                 placeholder="0.00"
                             />
-                            <FieldError error={errors?.amount} />
+                            <FieldError error={state.data?.amount} />
                         </div>
                         <div className={styles.formGroup}>
                             <StaticSelect 
                                 options={options}
                                 name={'payment_type'}
                                 label={t('finance.fields.type')}
-                                defaultValue={initialData?.payment_type ? { value: initialData?.payment_type, label: initialData?.payment_type } : 0}
+                                defaultValue={defaultPaymenType}
                             />
-                            <FieldError error={errors?.payment_type} />
+                            <FieldError error={state.data?.payment_type} />
                         </div>
                     </div>
 
@@ -151,7 +157,7 @@ function MyForm({ initialData, type }) {
                                     id="isPaid"
                                     name="paid"
                                     type="checkbox"
-                                    defaultChecked={formData?.paid || initialData?.paid}
+                                    defaultChecked={state.formData?.paid || initialData?.paid}
                                     className="h-5 w-5 rounded border-gray-300 text-primary-600 
                                     focus:ring-primary-600 focus:ring-offset-2 
                                     dark:border-gray-600 dark:bg-gray-700 
@@ -171,10 +177,10 @@ function MyForm({ initialData, type }) {
                             id="note"
                             name="note"
                             rows="3"
-                            defaultValue={formData?.note || initialData?.note || ''}
+                            defaultValue={state.formData?.note || initialData?.note || ''}
                             placeholder="Additional notes..."
                         />
-                        <FieldError error={errors?.note} />
+                        <FieldError error={state.data?.note} />
                     </div>
                 </div>
 

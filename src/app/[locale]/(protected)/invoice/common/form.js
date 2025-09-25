@@ -9,11 +9,11 @@ import { useTranslations } from 'next-intl';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import { getCookie } from '@/utils/cookieHandler';
 import FieldError from '@/components/FieldError';
-import { redirect } from 'next/navigation';
 import { toast } from 'sonner';
 import Form from 'next/form';
 import FormButton from "@/components/FormButton"
 import { NumberInput } from '@/components/inputs';
+import { useRouter } from "next/navigation";
 
 const InvoiceForm = ({ type, initialData = null }) => {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -24,6 +24,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
     const [state, formAction, isPending] = useActionState(createUpdateInv, { errors: {} });
     const tGlobal = useTranslations();
     const t = useTranslations('invoice.form');
+    const router = useRouter();
 
     const toggleItemExpanded = (itemId) => {
         const newExpanded = new Set(expandedItems);
@@ -85,7 +86,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
         if (state?.ok) {
             toast.success(t(initialData?.id ? "successEdit" : "successCreate"));
             if (state.data?.id) {
-                 redirect(`/invoice/${type}/view/${state.data?.hashed_id}`)
+                router.replace(`/invoice/${type}/view/${state.data?.hashed_id}`)
             }
         }
     }, [state])

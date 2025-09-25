@@ -23,11 +23,13 @@ export async function getPayment(id, type) {
     return res
 }
 
-export async function createUpdateTransaction(formData, type) {
+export async function createUpdateTransaction(prevState, formData) {
     'use server'
-    const isUpdate = formData.get('id') ? true : false
+    const type = formData.get('type')
+    const hashedID = formData.get('hashed_id')
+    const isUpdate = hashedID ? true : false
     const formDataObj = Object.fromEntries(formData.entries());
-    const res = await apiRequest(`/api/payment/${type}/${isUpdate ? formData.get('id') + '/' : ''}`, {
+    const res = await apiRequest(`/api/payment/${type}/${isUpdate ? hashedID + '/' : ''}`, {
         method: `${isUpdate ? 'PATCH' : 'POST'}`,
         body: JSON.stringify(formDataObj),
         headers: {
