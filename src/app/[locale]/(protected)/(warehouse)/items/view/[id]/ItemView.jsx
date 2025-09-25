@@ -10,8 +10,8 @@ async function ItemView({ id }) {
     const item = (await getItem(id))?.data
     const itemFluctuation = await getItemFluctuationDuringlast60Dayes(id)
     const itemFluctuationData = itemFluctuation.data
-    const value = itemFluctuationData.current - itemFluctuationData.previous
-    const percentage = value * 100 / itemFluctuationData.previous
+    const value = itemFluctuationData.last_30_dayes - itemFluctuationData.from_60_to_30_dayes
+    const percentage = value * 100 / itemFluctuationData.from_60_to_30_dayes
 
     if (! item?.id) throw new Response('Not Found', {status: 404})
     
@@ -74,8 +74,8 @@ async function ItemView({ id }) {
               
                                 <p>
                                     Absolute values: <br />
-                                    Previous: {itemFluctuationData.previous} unit<br />
-                                    Current: {itemFluctuationData.current} unit
+                                    Previous: {itemFluctuationData.from_60_to_30_dayes} unit<br />
+                                    Current: {itemFluctuationData.last_30_dayes} unit
                                 </p>
                             </div>
                         )}
