@@ -1,4 +1,4 @@
-import List from "../../common/list";
+import List from "../../_common/list";
 
 
 async function Page({ searchParams }) {

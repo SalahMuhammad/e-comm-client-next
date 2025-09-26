@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { getInv } from "../../../common/actions"
+import { getInv } from "../../../_common/actions"
 import SalesForm from "../page"
 
 

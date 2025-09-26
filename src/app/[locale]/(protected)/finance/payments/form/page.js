@@ -1,4 +1,4 @@
-import MyForm from '../../common/form'
+import MyForm from '../../_common/form'
 
 function page() {
   return (

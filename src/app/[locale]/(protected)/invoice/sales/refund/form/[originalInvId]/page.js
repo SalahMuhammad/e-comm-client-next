@@ -1,6 +1,6 @@
 
-import InvoiceForm from "../../../../common/form"
-import { getInv } from "@/app/[locale]/(protected)/invoice/common/actions"
+import InvoiceForm from "../../../../_common/form"
+import { getInv } from "@/app/[locale]/(protected)/invoice/_common/actions"
 
 
 async function page({ params }) {

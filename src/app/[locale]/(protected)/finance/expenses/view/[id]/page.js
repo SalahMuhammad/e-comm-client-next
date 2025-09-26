@@ -1,4 +1,4 @@
-import TransactionView from '../../../common/view'
+import TransactionView from '../../../_common/view'
 
 
 async function page({ params }) {

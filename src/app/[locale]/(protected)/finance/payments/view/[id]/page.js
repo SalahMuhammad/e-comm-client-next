@@ -1,5 +1,5 @@
-import { getPayment } from '../../../common/actions';
-import TransactionView from '../../../common/view'
+import { getPayment } from '../../../_common/actions';
+import TransactionView from '../../../_common/view'
 
 export async function generateMetadata({ params }) {
     const id = (await params).id
