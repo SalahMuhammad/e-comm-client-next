@@ -84,6 +84,7 @@
 				"table": "Table",
 				"delete": "Delete",
 				"Edit": "Edit",
+				"noImg": "No images available", 
 				"remove": {
 					"label": "Remove",
 					"confirm": "Are you sure you want to remove this item?",

@@ -102,6 +102,7 @@ const CustomTooltip = ({ active, payload }) => {
         </div>
         <div>
           ↗ <span className="font-semibold" style={{ color: d.color }}>Used</span>: {d.used}
+          {d.used_name && <span className="ml-1 text-gray-500">({d.used_name})</span>}
         </div>
         <div className="text-xs text-gray-500 dark:text-gray-400">
           Rate: {d.refilled > 0 ? ((d.used / d.refilled) * 100).toFixed(1) + "%" : "—"}
@@ -112,6 +113,11 @@ const CustomTooltip = ({ active, payload }) => {
             {ratio >= 1 ? "Good" : "Low refill"}
           </span>
         </div>
+        {d.notes && d.notes.length > 0 && (
+          <div className="text-xs text-gray-500 dark:text-gray-400 italic">
+            📝 {d.notes}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -142,6 +148,7 @@ const ScatterChartView = ({
   className = "",
   compact = false,
   initialCollapsed = true,
+  viewLast = 20
 }) => {
   // timeline state as percentages over date range
   const [timeStart, setTimeStart] = useState(0);
@@ -152,7 +159,12 @@ const ScatterChartView = ({
 
   // sorted by date ascending
   const sortedData = useMemo(
-    () => [...data].sort((a, b) => a.date.getTime() - b.date.getTime()),
+    () => {
+      if(data.length === 0) {
+        return [];
+      }
+      return [...data].sort((a, b) => a.date.getTime() - b.date.getTime());
+    },
     [data]
   );
 
@@ -164,7 +176,7 @@ const ScatterChartView = ({
 
   // on mount (or when data changes) set default to last 20 points
   useEffect(() => {
-    const N = 20;
+    const N = viewLast;
     if (!sortedData.length || dateRange.max === dateRange.min) {
       setTimeStart(0);
       setTimeWindowSize(100);
@@ -221,6 +233,8 @@ const ScatterChartView = ({
           z: markerRadiusFromUsed(item.used),
           used: item.used,
           name: item.name,
+          used_name: item.used_name,
+          notes: item.notes,
           color,
           date: item.date,
           refilled: item.refilled,
