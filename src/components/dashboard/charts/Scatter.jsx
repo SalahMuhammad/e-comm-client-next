@@ -403,7 +403,7 @@ const ScatterChartView = ({
 
             <div className="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm border border-gray-100 dark:border-gray-700">
               <div className="text-xs text-gray-500 mb-1">Used</div>
-              <div className="text-xl md:text-2xl font-bold text-red-600">{totalUsed}</div>
+              <div className="text-xl md:text-2xl font-bold text-red-600">{totalUsed.toFixed(2)}</div>
             </div>
 
             <div className="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm border border-gray-100 dark:border-gray-700">

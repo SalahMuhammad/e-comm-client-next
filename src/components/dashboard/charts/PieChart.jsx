@@ -2,14 +2,8 @@
 import { useState, useEffect } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
-const AnimatedPieChart = ({ data = [0, 100], className = "w-full"}) => {
+const AnimatedPieChart = ({ chartData, className = "w-full"}) => {
     const [mounted, setMounted] = useState(false);
-
-    // Transform simple array to recharts format
-    const chartData = [
-        { name: 'Category A', value: data[0] },
-        { name: 'Category B', value: data[1] }
-    ];
 
     // Enhanced color schemes for light and dark modes
     const colors = {
