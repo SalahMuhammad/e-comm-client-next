@@ -1,27 +1,31 @@
 "use client";
-import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
-import { useState, useEffect } from 'react';
+import {
+  XMarkIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+} from "@heroicons/react/24/outline";
+import { useState, useEffect } from "react";
 
 export default function ImageView({ images, onClose, startIndex = 0 }) {
-  const [modalImageIndex, setModalImageIndex] = useState(startIndex)
+  const [modalImageIndex, setModalImageIndex] = useState(startIndex);
   useEffect(() => {
-    setModalImageIndex(startIndex)
-  }, [startIndex])
+    setModalImageIndex(startIndex);
+  }, [startIndex]);
   const modalPrevious = () => {
-    setModalImageIndex((prev) => (prev - 1 + images.length) % images.length)
-  }
-  
+    setModalImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
   const modalNext = () => {
-    setModalImageIndex((prev) => (prev + 1) % images.length)
-  }
-  
+    setModalImageIndex((prev) => (prev + 1) % images.length);
+  };
+
   const closeModal = () => {
     if (onClose) {
       onClose();
     }
-  }
-  
-  if(images.length == 0) return
+  };
+
+  if (images.length == 0) return;
 
   return (
     <div className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-md">
@@ -37,7 +41,7 @@ export default function ImageView({ images, onClose, startIndex = 0 }) {
         >
           <XMarkIcon className="w-6 h-6" />
         </button>
-        
+
         {/* Modal Content */}
         <div
           className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center group"
@@ -49,7 +53,7 @@ export default function ImageView({ images, onClose, startIndex = 0 }) {
             alt={`Gallery image ${modalImageIndex + 1}`}
             className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
           />
-          
+
           {/* Modal Navigation */}
           {images.length > 1 && (
             <>
@@ -69,7 +73,7 @@ export default function ImageView({ images, onClose, startIndex = 0 }) {
               </button>
             </>
           )}
-          
+
           {/* Modal Counter */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/70 backdrop-blur-sm text-white text-sm font-medium transition-opacity duration-300 group-hover:opacity-0">
             {modalImageIndex + 1} / {images.length}
@@ -77,5 +81,5 @@ export default function ImageView({ images, onClose, startIndex = 0 }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
