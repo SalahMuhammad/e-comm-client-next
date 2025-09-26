@@ -1,9 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react'
 
-import { XMarkIcon, ChevronLeftIcon, ChevronRightIcon, PlayIcon, PauseIcon } from '@heroicons/react/24/outline'
+import { ChevronLeftIcon, ChevronRightIcon, PlayIcon, PauseIcon } from '@heroicons/react/24/outline'
 
-function Gallery({ images, autoplay = false, autoplayInterval = 5000, onClick = () => {} }) {
+function Gallery({className = "w-full max-w-4xl mx-auto", images, autoplay = false, autoplayInterval = 5000, onClick = () => {} }) {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isAutoPlay, setIsAutoPlay] = useState(autoplay)
@@ -57,9 +57,9 @@ function Gallery({ images, autoplay = false, autoplayInterval = 5000, onClick = 
     return (
         <>
             {/* Main Gallery */}
-            <div className="relative w-[95%] max-w-4xl mx-auto py-4">
+            <div className={`relative ${className}`}>
                 {/* Carousel Container */}
-                <div className="relative h-64 md:h-96 lg:h-[12rem] overflow-hidden rounded-2xl bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-2xl">
+                <div className="relative h-64 md:h-96 lg:h-[12rem] overflow-hidden rounded-sm bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-2xl">
                     <div className="absolute top-2 right-3 z-20 px-3 py-1 rounded-sm bg-black/50 dark:bg-white/20 backdrop-blur-sm text-white text-sm font-medium">
                         {currentIndex + 1} / {images.length}
                     </div>
@@ -75,7 +75,7 @@ function Gallery({ images, autoplay = false, autoplayInterval = 5000, onClick = 
                             <img
                                 src={src.img}
                                 alt={`Gallery image ${index + 1}`}
-                                className="w-full h-full object-cover rounded-md cursor-pointer hover:scale-105 transition-transform duration-300"
+                                className="w-full h-full object-cover rounded-sm cursor-pointer hover:scale-105 transition-transform duration-300"
                                 loading="lazy"
                             />
                             {/* Gradient overlay for better button visibility */}
