@@ -9,6 +9,7 @@ import ToolTip from "@/components/ToolTip";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Toggle from "./StatusToggle";
+import { EyeIcon, PencilIcon } from "@heroicons/react/24/outline";
 
 
 async function List({ searchParams, type }) {
@@ -67,8 +68,8 @@ async function List({ searchParams, type }) {
                     <tbody>
                         {data?.results?.map((payment) => (
                             <tr key={payment.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <th scope="row" className="px-6 py-4 w-[12rem] max-w-[12rem] font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <Link href={`/customer-supplier/view/${payment.owner}`} className="text-blue-600 hover:underline">
+                                <th scope="row" className="px-6 py-4 w-[12rem] max-w-[16rem] font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <Link href={`/customer-supplier/view/${payment.owner}`} className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200">
                                         {payment.owner_name}
                                     </Link>
                                 </th>
@@ -87,7 +88,7 @@ async function List({ searchParams, type }) {
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                     {payment.date}
                                 </td>
-                                <td className="px-6 py-4 w-[12rem] max-w-[12rem]">
+                                <td className="px-6 py-4 w-[10rem] max-w-[10rem] overflow-auto">
                                     <pre>
                                         {payment.note}
                                     </pre>
@@ -95,12 +96,23 @@ async function List({ searchParams, type }) {
 
                                 <td className="flex items-center px-6 py-4">
                                     <>
-                                        <Link className="text-blue-600 hover:underline" href={`/finance/${type}/view/${payment.hashed_id}`}>
-                                            view
+                                        <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/finance/${type}/view/${payment.hashed_id}`}>
+                                            <EyeIcon
+                                                className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
+                                            />
+                                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                            {t("table.view")}
+                                            </span>
                                         </Link>
                                         <DeleteButton type={type} id={payment.hashed_id} />
-                                        <Link href={`/finance/${type}/form/${payment.hashed_id}`} className="ml-2 text-blue-600 hover:underline">
-                                            Edit
+                                        <Link 
+                                            href={`/finance/${type}/form/${payment.hashed_id}`}
+                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
+                                        >
+                                            <PencilIcon className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />
+                                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                                {t("table.edit")}
+                                            </span>
                                         </Link>
                                     </>
                                     <ToolTip obj={payment} />

@@ -18,6 +18,7 @@ export default function LanguageToggle() {
     const newPath = pathname.replace(new RegExp(`^/(${locales.join('|')})`), '');
 
     router.replace(`/${nextLocale}${newPath}`);
+    router.refresh()
   };
 
   return (

@@ -4,6 +4,7 @@ import DeleteButton from "./DeleteButton"
 import PaginationControls from "@/components/PaginationControls"
 import Link from "next/link";
 import ErrorLoading from "@/components/ErrorLoading";
+import { getTranslations } from "next-intl/server";
 
 
 async function page({ searchParams }) {
@@ -12,6 +13,7 @@ async function page({ searchParams }) {
     const offset = params['offset'] ?? 0;
     const ownerId = params['s'] ?? '';
     const res = await getRefundedItems(`?limit=${limit}&offset=${offset}&ownerid=${ownerId}`)
+    const t = await getTranslations("refillableItems.refund.list")
 
     return (
         <>
@@ -24,22 +26,22 @@ async function page({ searchParams }) {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
-                                Client
+                                {t("client")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Date
+                                {t("date")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Refunded
+                                {t("refunded")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Quantity
+                                {t("quantity")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Repository
+                                {t("repo")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Notes
+                                {t("notes")}
                             </th>
                             <th scope="col" className="px-6 py-3"></th>
                         </tr>
@@ -49,7 +51,7 @@ async function page({ searchParams }) {
                             res.data?.results?.map((transaction) => (
                                 <tr key={transaction.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <Link className="text-blue-600 hover:underline" href={`/customer-supplier/view/${transaction.owner}`}>
+                                        <Link className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200" href={`/customer-supplier/view/${transaction.owner}`}>
                                             {transaction.owner_name}
                                         </Link>
                                     </th>

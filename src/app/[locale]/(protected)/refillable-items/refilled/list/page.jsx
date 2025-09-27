@@ -3,9 +3,11 @@ import { getRefilledItems } from "../../actions"
 import DeleteButton from "./DeleteButton"
 import PaginationControls from "@/components/PaginationControls"
 import ErrorLoading from "@/components/ErrorLoading";
+import { getTranslations } from "next-intl/server";
 
 
 async function page({ searchParams }) {
+    const t = await getTranslations("refillableItems.refilled.list")
     const params = await searchParams;
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
@@ -18,28 +20,28 @@ async function page({ searchParams }) {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
-                                Refilled Item
+                                {t("refilledItem")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Quantity
+                                {t("quantity")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Used Item
+                                {t("usedItem")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Quantity
+                                {t("quantity")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Date
+                                {t("date")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Repository
+                                {t("repo")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Employee
+                                {t("employee")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Notes
+                                {t("notes")}
                             </th>
                             <th scope="col" className="px-6 py-3"></th>
                         </tr>

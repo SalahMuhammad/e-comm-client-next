@@ -5,12 +5,14 @@ import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import { changeRepositoryPermit } from './actions';
+import { useTranslations } from 'next-intl';
 
 function RepositoryPermitButton({ id, type, permitValue, width='120px' }) {
     const handleResponse = useGenericResponseHandler()
     const [permit, setpermit] = useState(permitValue);
     const [isLoading, setIsLoading] = useState(false);
-    
+    const t = useTranslations("permitButton")
+
     const toggleRepositoryPermit = async () => {
         setIsLoading(true);
         const res = await changeRepositoryPermit(id, type)
@@ -25,7 +27,7 @@ function RepositoryPermitButton({ id, type, permitValue, width='120px' }) {
             onClick={toggleRepositoryPermit}
             disabled={isLoading}
             aria-pressed={permit}
-            title={permit ? 'Delivered' : 'Not Delivered'}
+            title={permit ? t("delivered") : t("notDelivered")}
             style={{ width }}
             className={`
                 relative group flex items-center justify-center
@@ -70,7 +72,7 @@ function RepositoryPermitButton({ id, type, permitValue, width='120px' }) {
                         )}
                     </span>
                     <span className="text-sm font-medium">
-                        {permit ? 'Delivered' : 'Not Delivered'}
+                        {permit ? t('delivered') : t("notDelivered")}
                     </span>
                 </span>
             )}

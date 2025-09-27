@@ -372,7 +372,7 @@ export default function Sidebar({username}) {
                         <li>
                             <Link href={'/reports'} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <WrenchScrewdriverIcon className="w-4 h-4" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">Reports</span>
+                                <span className="flex-1 ms-3 whitespace-nowrap">{t("reports.headLabel")}</span>
                             </Link>
                         </li>
                         <li>

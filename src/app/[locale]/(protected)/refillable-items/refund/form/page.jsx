@@ -40,7 +40,7 @@ function RefilledForm({ initialData }) {
         <div className={styles.formContainer}>
             <Form action={formAction} className={styles.formWrapper}>
                 <div className={styles.formHeader}>
-                    <h2>{initialData?.id ? t("title.editRefund") : t("title.createRefund")}</h2>
+                    <h2>{initialData?.id ? t("form.title.editRefund") : t("form.title.createRefund")}</h2>
                 </div>
 
                 <div className={styles.formBody}>
@@ -61,7 +61,7 @@ function RefilledForm({ initialData }) {
                     )}
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="date">Date</label>
+                        <label htmlFor="date">{t("form.date")}</label>
                         <input
                             type="date"
                             id="date"

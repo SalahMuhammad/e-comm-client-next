@@ -9,7 +9,7 @@ import FormButton from "@/components/FormButton"
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
-import styles from '@/app/[locale]/(protected)/invoice/common/form.module.css'
+import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
 import SearchableDropdown from "@/components/SearchableDropdown";
@@ -67,7 +67,7 @@ function MyForm({ initialData, type }) {
                 className={styles.invoiceForm}
             >
                 <div className={styles.invoiceHeader}>
-                    <h2>{initialData?.id ? t("finance.fields.update") : t("finance.fields.transaction")} #{initialData?.hashed_id}</h2>
+                    <h2>{initialData?.id ? t("finance.fields.update") : t("finance.fields.transaction")} {initialData?.hashed_id && "#"} {initialData?.hashed_id}</h2>
                 </div>
 
                 <div className={styles.invoiceDetails}>
@@ -102,7 +102,7 @@ function MyForm({ initialData, type }) {
                     <div className={`mt-8 ${styles.formGroup}`}>
                         <SearchableDropdown
                             url={'/api/buyer-supplier-party/?s='}
-                            label={'Owner'}
+                            label={t('finance.fields.owner')}
                             name="owner"
                             defaultValue={defaultOwner}
                             required
@@ -172,13 +172,13 @@ function MyForm({ initialData, type }) {
 
                 <div className={styles.invoiceSummary}>
                     <div className={styles.formGroup}>
-                        <label htmlFor="note">Note</label>
+                        <label htmlFor="note">{t('finance.fields.note')}</label>
                         <textarea
                             id="note"
                             name="note"
                             rows="3"
                             defaultValue={state.formData?.note || initialData?.note || ''}
-                            placeholder="Additional notes..."
+                            placeholder={t('finance.fields.moreNotes')}
                         />
                         <FieldError error={state.data?.note} />
                     </div>

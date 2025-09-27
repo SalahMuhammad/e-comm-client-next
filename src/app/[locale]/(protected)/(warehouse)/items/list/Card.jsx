@@ -89,10 +89,10 @@ function TableRow({ id, name, origin, place, p4, imgSrc, isDeleting = false, fun
                 <div className="flex items-center space-x-2">
                     <Link
                         href={`/items/form/${id}`}
-                        className="ml-2 flex items-center text-blue-600 group transition duration-300 dark:text-blue-500 dark:hover:text-blue-400"
+                        className="ml-2 flex items-center text-blue-600 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
                     >
                         <PencilIcon
-                            className="h-4 w-4 mr-1 text-blue-500
+                            className="h-4 w-4 mr-1
                             transition-all duration-300 ease-in-out
                             group-hover:rotate-[8deg]
                             group-hover:-translate-y-0.5
@@ -325,12 +325,12 @@ export function TableView({ items, setItems, viewImages }) {
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" className="px-6 py-3">Image</th>
-                        <th scope="col" className="px-6 py-3">Name</th>
-                        <th scope="col" className="px-6 py-3">Origin</th>
-                        <th scope="col" className="px-6 py-3">Place</th>
-                        <th scope="col" className="px-6 py-3">Price</th>
-                        <th scope="col" className="px-6 py-3">Actions</th>
+                        <th scope="col" className="px-6 py-3">{t("items.card.image")}</th>
+                        <th scope="col" className="px-6 py-3">{t("items.card.name")}</th>
+                        <th scope="col" className="px-6 py-3">{t("items.card.origin")}</th>
+                        <th scope="col" className="px-6 py-3">{t("items.card.place")}</th>
+                        <th scope="col" className="px-6 py-3">{t("items.card.price")}</th>
+                        <th scope="col" className="px-6 py-3">{t("items.card.actions")}</th>
                     </tr>
                 </thead>
                 <tbody>
