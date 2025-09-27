@@ -43,11 +43,7 @@ export default function FileUploadInput({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const fileInputRef = useRef(null);
   const hasError = Boolean(error);
-  
-  // useEffect(() => {
-  //   setFiles([])
-  // }, [state])
-
+  console.log('current input files: ', fileInputRef.current?.files)
   useEffect(() => {
     const handleDefaultValue = async () => {
       if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
@@ -62,12 +58,12 @@ export default function FileUploadInput({
 
       try {
         const fetchedFiles = await Promise.all(
-          defaultValue.map(async (url) => {
+          defaultValue.map(async (obj) => {
             try {
-              const response = await fetch(url);
+              const response = await fetch(obj.img); // obj.img image url
               if (!response.ok) throw new Error("Failed to fetch");
               const blob = await response.blob();
-              const fileName = url.split("/").pop();
+              const fileName = obj.img.split("/").pop();
               return new File([blob], fileName, { type: blob.type });
             } catch (err) {
               return null;
@@ -76,6 +72,7 @@ export default function FileUploadInput({
         );
 
         const validFiles = fetchedFiles.filter((file) => file !== null);
+        setInputFiles(validFiles, fileInputRef)
         setFiles(validFiles);
         onChange(validFiles);
       } catch (e) {
@@ -135,15 +132,6 @@ export default function FileUploadInput({
     return <DocumentIcon className="w-4 h-4" />;
   };
 
-  // Format file size
-  const formatFileSize = (bytes) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
-
   const handleFileChange = (selectedFiles) => {
     const fileList = Array.from(selectedFiles);
     const validFiles = fileList.filter(file => {
@@ -154,7 +142,10 @@ export default function FileUploadInput({
 
     if (multiple) {
       const uniqueFiles = validFiles.filter(file => !files.some(f => f.name === file.name));
-      setFiles(prev => [...prev, ...uniqueFiles]);
+      setFiles(prev => {
+        setInputFiles([...prev, ...uniqueFiles], fileInputRef)
+        return [...prev, ...uniqueFiles]
+      });
       onChange([...files, ...uniqueFiles]);
     } else {
       setFiles(validFiles);
@@ -184,6 +175,9 @@ export default function FileUploadInput({
   // Remove file
   const removeFile = (index) => {
     const newFiles = files.filter((_, i) => i !== index);
+
+    setInputFiles(newFiles, fileInputRef)
+
     setFiles(newFiles);
     onChange(newFiles);
   };
@@ -315,10 +309,12 @@ export default function FileUploadInput({
             const errorMessages = isErrorObject ? error[String(index)] : null;
 
             return (
-            <div className={`relative ${hasError && "pb-6"} transition-[padding] duration-[200ms]`}>
+            <div 
+                key={index}
+                className={`relative ${hasError && "pb-6"} transition-[padding] duration-[200ms]`}
+            >
 
             <div
-              key={index}
               className={`flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 
                           ${errorMessages && "border-red-500 dark:border-red-400"}`}
             >
@@ -342,14 +338,8 @@ export default function FileUploadInput({
                 </button>
              )}
 
-              <div className="flex-1 min-w-0">
-                <p className={`text-sm font-medium truncate ${errorMessages ? "text-red-500 dark:text-red-400" : "text-gray-900 dark:text-white"}`}>
-                  {file.name}
-                </p>
-                <p className={`text-xs text-gray-500 dark:text-gray-400`}>
-                  {formatFileSize(file.size)}
-                </p>
-              </div>
+             {/* file name & file size */}
+              <FileInfo file={file} errorMessages={errorMessages} />
               <button
                 type="button"
                 onClick={() => removeFile(index)}
@@ -386,40 +376,73 @@ export default function FileUploadInput({
         )}
       </div>
 
-      {previewFile && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadeIn"
-          onClick={() => setPreviewFile(null)} // close when clicking outside
-        >
-          <div
-            className="relative bg-white dark:bg-gray-900 p-4 rounded-xl shadow-2xl max-w-[90vw] max-h-[90vh] overflow-hidden"
-            onClick={(e) => e.stopPropagation()} // prevent modal from closing when clicking inside
-          >
-            {/* Image with filename overlay */}
-            <div className="relative z-0">
-              <img
-                src={URL.createObjectURL(previewFile)}
-                alt={previewFile.name}
-                className="max-w-full max-h-[75vh] rounded-lg object-contain"
-              />
-
-              <div className="absolute bottom-2 left-2 right-2 px-3 py-1 text-xs text-white bg-black/50 backdrop-blur-sm rounded shadow-inner text-center">
-                {previewFile.name}
-              </div>
-            </div>
-
-            {/* Close button */}
-            <button
-              onClick={() => setPreviewFile(null)}
-              className="absolute top-3 right-3 z-10 text-gray-400 hover:text-red-500 transition"
-              title="Close"
-            >
-              <XMarkIcon className="w-6 h-6" />
-            </button>
-          </div>
-        </div>
-      )}
+      <ImagePreview setPreviewFile={setPreviewFile} file={previewFile} />
       
     </div>
   );
+}
+
+
+const ImagePreview = ({ setPreviewFile, file }) => (
+    file && (
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadeIn"
+            onClick={() => setPreviewFile(null)} // close when clicking outside
+        >
+            <div
+                className="relative bg-white dark:bg-gray-900 p-4 rounded-xl shadow-2xl max-w-[90vw] max-h-[90vh] overflow-hidden"
+                onClick={(e) => e.stopPropagation()} // prevent modal from closing when clicking inside
+            >
+                {/* Image with filename overlay */}
+                <div className="relative z-0">
+                    <img
+                        src={URL.createObjectURL(file)}
+                        alt={file.name}
+                        className="max-w-full max-h-[75vh] rounded-lg object-contain"
+                    />
+
+                    <div className="absolute bottom-2 left-2 right-2 px-3 py-1 text-xs text-white bg-black/50 backdrop-blur-sm rounded shadow-inner text-center">
+                        {file.name}
+                    </div>
+                </div>
+
+                {/* Close button */}
+                <button
+                    onClick={() => setPreviewFile(null)}
+                    className="absolute top-3 right-3 z-10 text-gray-400 hover:text-red-500 transition"
+                    title="Close"
+                >
+                    <XMarkIcon className="w-6 h-6" />
+                </button>
+            </div>
+        </div>
+    )
+)
+
+const FileInfo = ({ file, errorMessages }) => {
+    // Format file size
+    const formatFileSize = (bytes) => {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    };
+
+    return (
+        <div className="flex-1 min-w-0">
+            <p className={`text-sm font-medium truncate ${errorMessages ? "text-red-500 dark:text-red-400" : "text-gray-900 dark:text-white"}`}>
+                {file.name}
+            </p>
+            <p className={`text-xs text-gray-500 dark:text-gray-400`}>
+                {formatFileSize(file.size)}
+            </p>
+        </div>
+    )
+}
+
+const setInputFiles = (files, fileInputRef) => {
+    const dataTransfer = new DataTransfer();
+    files.forEach(file => dataTransfer.items.add(file));
+    fileInputRef.current.files = dataTransfer.files;
 }
