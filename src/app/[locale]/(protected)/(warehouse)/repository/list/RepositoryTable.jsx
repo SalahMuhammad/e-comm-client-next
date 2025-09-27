@@ -48,11 +48,11 @@ export default function RepositoryTable({ repositories }) {
 
               <Link
                 href={`/repository/form/${repository.id}`}
-                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-500 dark:hover:text-blue-400"
+                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
               >
                 <PencilIcon
                   className="
-                    h-4 w-4 mr-1 text-blue-500
+                    h-4 w-4 mr-1
                     transition-all duration-300 ease-in-out
                     group-hover:rotate-[8deg]
                     group-hover:-translate-y-0.5

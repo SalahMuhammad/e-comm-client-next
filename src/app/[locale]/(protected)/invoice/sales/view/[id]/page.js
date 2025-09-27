@@ -1,5 +1,5 @@
-import InvoicePrintableView from "@/app/[locale]/(protected)/invoice/common/view"
-import { getInv } from "../../../common/actions";
+import InvoicePrintableView from "@/app/[locale]/(protected)/invoice/_common/view"
+import { getInv } from "../../../_common/actions";
 
 export async function generateMetadata({ params }) {
     const id = (await params).id

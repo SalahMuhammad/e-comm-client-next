@@ -5,7 +5,7 @@ import styles from './view.module.css'
 import s from '@/app/[locale]/(protected)/invoice/common/view.module.css'
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
-import { getCreditBalance } from '@/app/[locale]/(protected)/invoice/common/actions';
+import { getCreditBalance } from '@/app/[locale]/(protected)/invoice/_common/actions';
 import CompanyDetailsHead from '@/components/CompanyDetailsHead';
 import EventNotFound from '@/components/NotFound';
 

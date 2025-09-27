@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
-import { getPayment } from "../../../common/actions"
-import MyForm from "../../../common/form"
+import { getPayment } from "../../../_common/actions"
+import MyForm from "../../../_common/form"
 
 
 async function page({ params }) {

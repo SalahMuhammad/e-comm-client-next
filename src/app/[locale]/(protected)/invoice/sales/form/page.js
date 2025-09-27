@@ -1,4 +1,4 @@
-import InvoiceForm from "../../common/form";
+import InvoiceForm from "../../_common/form";
 
 
 async function SalesForm({ initialData }) {

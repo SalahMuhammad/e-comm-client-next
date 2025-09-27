@@ -1,5 +1,5 @@
 'use server'
-import InvoiceList from '@/app/[locale]/(protected)/invoice/common/list'
+import InvoiceList from '@/app/[locale]/(protected)/invoice/_common/list'
 
 async function page({ searchParams }) {
   return (

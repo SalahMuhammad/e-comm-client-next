@@ -58,8 +58,8 @@ export default function InvoiceListTable({ initialData, type }) {
                                 hover:bg-gray-50 dark:hover:bg-gray-700
                             `}
                         >
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                <Link className="text-blue-600 hover:underline" href={`/customer-supplier/view/${inv.owner}`}>
+                            <th scope="row" className="px-6 py-4 w-[12rem] max-w-[12rem] font-medium text-gray-900 whitespace-normal">
+                                <Link className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200" href={`/customer-supplier/view/${inv.owner}`}>
                                     {inv.owner_name}
                                 </Link>
                             </th>
@@ -78,15 +78,15 @@ export default function InvoiceListTable({ initialData, type }) {
                             </td>
                             {isRefund && (
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    <Link href={`/invoice/${type.split('/')[0]}/view/${inv.original_invoice}`} className="text-blue-600 hover:underline">
+                                    <Link href={`/invoice/${type.split('/')[0]}/view/${inv.original_invoice}`} className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200">
                                         {inv.original_invoice}
                                     </Link>
                                 </td>
                             )}
                             <td className="flex items-center px-6 py-4 dark:text-gray-300">
-                                <Link href={`/invoice/${type}/view/${inv.hashed_id}`} className="text-blue-600 hover:underline">
+                                <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/invoice/${type}/view/${inv.hashed_id}`}>
                                     <EyeIcon
-                                    className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
+                                        className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
                                     />
                                     <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
                                     {t("table.view")}
@@ -97,9 +97,9 @@ export default function InvoiceListTable({ initialData, type }) {
                                         <DeleteButton type={type} hashed_id={inv.hashed_id} onDelete={() => handleDelete(inv.id)} />
                                         <Link 
                                             href={`/invoice/${type}/form/${inv.hashed_id}`}
-                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300"
+                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
                                         >
-                                            <PencilIcon className="h-4 w-4 mr-1 text-blue-500 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />
+                                            <PencilIcon className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />
                                             <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
                                                 {t("table.edit")}
                                             </span>

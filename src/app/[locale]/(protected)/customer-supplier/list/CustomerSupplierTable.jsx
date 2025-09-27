@@ -48,7 +48,7 @@ export default function CustomerSupplierTable({ CSs }) {
                 </pre>
             </td>
             <td className="flex items-center px-6 py-4 justify-end">
-              <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-500 dark:hover:text-blue-400" href={`/customer-supplier/view/${CS.id}`}>
+              <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/customer-supplier/view/${CS.id}`}>
                 <EyeIcon
                   className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
                 />
@@ -59,11 +59,11 @@ export default function CustomerSupplierTable({ CSs }) {
 
               <Link
                 href={`/customer-supplier/form/${CS.id}`}
-                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-500 dark:hover:text-blue-400"
+                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
               >
                 <PencilIcon
                   className="
-                    h-4 w-4 mr-1 text-blue-500
+                    h-4 w-4 mr-1
                     transition-all duration-300 ease-in-out
                     group-hover:rotate-[8deg]
                     group-hover:-translate-y-0.5

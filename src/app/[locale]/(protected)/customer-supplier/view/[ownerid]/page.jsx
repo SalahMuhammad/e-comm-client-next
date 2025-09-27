@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl'
 import { DocumentTextIcon, CurrencyDollarIcon, DocumentDuplicateIcon, ChartBarIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import { useParams } from 'next/navigation'
+import { PulsingDots } from '@/components/loaders'
 
 export default function Page() {
     const params = useParams();
@@ -16,21 +17,33 @@ export default function Page() {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [showRaw, setShowRaw] = useState(false)
-    const fetchedRef = useRef(false)
+
+    const requestIdRef = useRef(0)
     const handleGenericErrors = useGenericResponseHandler(t)
 
     useEffect(() => {
-        if (!ownerid) return
-        if (fetchedRef.current) return
-        fetchedRef.current = true
-        let mounted = true
+        if (!ownerid) {
+            setLoading(false)
+            return
+        }
+
+        const thisRequestId = ++requestIdRef.current
+
         setLoading(true)
+        setError(null)
+        setRes(null)
+
         getCSView(ownerid)
-            .then(r => { if (mounted) setRes(r) })
-            .catch(err => { if (mounted) setError(err) })
-            .finally(() => { if (mounted) setLoading(false) })
-        setLoading(false)
-        return () => { mounted = false }
+            .then(r => {
+                if (requestIdRef.current === thisRequestId) setRes(r)
+            })
+            .catch(err => {
+                if (requestIdRef.current === thisRequestId) setError(err)
+            })
+            .finally(() => {
+                if (requestIdRef.current === thisRequestId) setLoading(false)
+            })
+
     }, [ownerid])
 
     useEffect(() => {
@@ -39,8 +52,8 @@ export default function Page() {
     }, [res])
 
     if (loading) return (
-        <div className="p-6 flex items-center justify-center">
-            <div className="text-gray-700 dark:text-gray-300">{t('loading') || 'Loading...'}</div>
+        <div className="h-[100vh] mt-[-60px] flex items-center justify-center">
+            <div className="text-gray-700 dark:text-gray-300">{t('loading') || 'Loading'} <PulsingDots className="mt-2" size="md" /> </div>
         </div>
     )
 
@@ -55,7 +68,7 @@ export default function Page() {
     const data = res?.data || {}
 
     return (
-        <div className="p-6 space-y-6 max-w-7xl mx-auto">
+        <div className="p-6 space-y-6 max-w-7xl mx-auto w-full">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <h1 className="flex items-center gap-3 text-2xl font-bold text-gray-900 dark:text-white">

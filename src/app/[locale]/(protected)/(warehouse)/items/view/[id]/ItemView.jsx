@@ -88,7 +88,7 @@ async function ItemView({ id }) {
                                                     />
                                                 </svg>
 
-                                                <div className="absolute invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full p-3 rounded-lg bg-gray-900 dark:bg-gray-700 text-white text-xs sm:text-sm whitespace-nowrap max-w-xs z-50 shadow-xl border border-gray-700">
+                                                <div className="absolute invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-200 -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full p-3 rounded-lg bg-gray-900 dark:bg-gray-700 text-white text-xs sm:text-sm whitespace-normal max-w-xs z-50 shadow-xl border border-gray-700">
                                                     <div className="text-center">
                                                         <p className="font-medium mb-1">Comparison Period</p>
                                                         <p className="text-gray-300">Last 30 days vs Previous 30 days</p>

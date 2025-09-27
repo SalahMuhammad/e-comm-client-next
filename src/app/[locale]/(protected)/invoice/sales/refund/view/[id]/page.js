@@ -1,4 +1,4 @@
-import InvoicePrintableView from "@/app/[locale]/(protected)/invoice/common/view"
+import InvoicePrintableView from "@/app/[locale]/(protected)/invoice/_common/view"
 
 
 async function page({ params }) {

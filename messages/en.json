@@ -77,6 +77,10 @@
 	"warehouse": {
 		"items": {
 			"card": {
+				"image": "Image",
+				"name": "Name",
+				"actions": "Actions",
+				"price": "Price",
 				"origin": "Origin",
 				"place": "Place",
 				"edit": "Edit",
@@ -199,7 +203,7 @@
 		},
 		"view": {
 			"title": "Customer/Supplier Details",
-			"loading": "Loading...",
+			"loading": "Loading",
 			"error": "Failed to load details.",
 			"creditBalance": "Credit Balance",
 			"details": "Details",
@@ -267,6 +271,10 @@
 		}
 	},
     "finance": {
+		"table": {
+			"view": "View",
+			"edit": "edit"
+		},
         "fields": {
 			"transaction": "Add Payment",
             "update": "Update Payment",
@@ -276,7 +284,8 @@
             "status": "Status",
             "type": "Type",
             "date": "Date",
-            "note": "Note"
+            "note": "Note",
+			"moreNotes": "Additional notes..."
         },
         "status": {
             "paid": "Paid",
@@ -308,7 +317,29 @@
 			"refilledItem": "Select Refilled Item",
 			"usedItem": "Select Used Item",
 			"usedQuantity": "Used Quantity",
-			"employee": "Employee"
+			"employee": "Employee",
+			"date": "Date"
+		},
+		"refilled": {
+			"list": {
+				"refilledItem": "Refilled Item",
+				"quantity": "Quantity",
+				"usedItem": "Used Item",
+				"date": "Date",
+				"repo": "Repository",
+				"employee": "Employee",
+				"notes": "Notes"
+			}
+		},
+		"refund": {
+			"list": {
+				"client": "Client",
+				"date": "Date",
+				"refunded": "Refunded",
+				"quantity": "Quantity",
+				"repo": "Repository",
+				"notes": "Notes"
+			}
 		}
 	},
 	"paginationControls": {
@@ -501,5 +532,9 @@
 		"message": "The {name} you're looking for doesn't exist or may have been removed.",
 		"back": "Go Back",
 		"eventId": "{name} ID"
+	},
+	"permitButton": {
+		"delivered": "Delivered",
+		"notDelivered": "Not Delivered"
 	}
 }
