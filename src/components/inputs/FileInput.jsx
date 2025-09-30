@@ -43,7 +43,16 @@ export default function FileUploadInput({
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const fileInputRef = useRef(null);
     const hasError = Boolean(error);
-    console.log('current input files: ', fileInputRef.current?.files)
+
+
+    useEffect(() => {
+        if (typeof DataTransfer !== 'undefined' && fileInputRef && fileInputRef.current) {
+            const dataTransfer = new DataTransfer();
+            files.forEach(file => dataTransfer.items.add(file));
+            fileInputRef.current.files = dataTransfer.files;
+        }
+    }, [files]);
+
     useEffect(() => {
         const handleDefaultValue = async () => {
             if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
@@ -66,13 +75,16 @@ export default function FileUploadInput({
                             const fileName = obj.img.split("/").pop();
                             return new File([blob], fileName, { type: blob.type });
                         } catch (err) {
-                            return null;
+                            try {
+                                return obj
+                            } catch (error) {
+                                
+                            }
                         }
                     })
                 );
 
-                const validFiles = fetchedFiles.filter((file) => file !== null);
-                setInputFiles(validFiles, fileInputRef)
+                const validFiles = fetchedFiles?.filter((file) => file !== null);
                 setFiles(validFiles);
                 onChange(validFiles);
             } catch (e) {
@@ -142,10 +154,7 @@ export default function FileUploadInput({
 
         if (multiple) {
             const uniqueFiles = validFiles.filter(file => !files.some(f => f.name === file.name));
-            setFiles(prev => {
-                setInputFiles([...prev, ...uniqueFiles], fileInputRef)
-                return [...prev, ...uniqueFiles]
-            });
+            setFiles(prev => [...prev, ...uniqueFiles]);
             onChange([...files, ...uniqueFiles]);
         } else {
             setFiles(validFiles);
@@ -175,9 +184,6 @@ export default function FileUploadInput({
     // Remove file
     const removeFile = (index) => {
         const newFiles = files.filter((_, i) => i !== index);
-
-        setInputFiles(newFiles, fileInputRef)
-
         setFiles(newFiles);
         onChange(newFiles);
     };
@@ -306,7 +312,7 @@ export default function FileUploadInput({
                 <div className="mt-3 space-y-2">
                     {files.map((file, index) => {
                         const isErrorObject = error && typeof error === "object"
-                        const errorMessages = isErrorObject ? error[String(index)] : null;
+                        const errorMessages = isErrorObject ? error[String(index)]?.['img'] : null;
 
                         return (
                             <div
