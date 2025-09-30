@@ -12,6 +12,8 @@ import { useActionState } from 'react';
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
+import BarcodeManager from './BarcodeManage';
+
 
 function ItemsForm({obj}) {
     const t = useTranslations("warehouse.items.form");
@@ -25,16 +27,19 @@ function ItemsForm({obj}) {
     const p3 = useRef()
     const p4 = useRef()
     const handleGenericErrors = useGenericResponseHandler(t)
+    const [barcodes, setBarcodes] = useState([])
 
     useEffect(() => {
         if (state?.ok === undefined) return
         if (handleGenericErrors(state)) return
-        if (state?.success) {
+        if (state?.ok) {
             toast.success(t(obj?.id ? "successEdit" : "successCreate"));
             if (obj?.id) {
                 router.replace("/items/list/");
             }
         }
+
+        window.location.reload();
     }, [state])
 
     useEffect(() => {
@@ -53,7 +58,7 @@ function ItemsForm({obj}) {
         <Form
             action={formAction}
             // method="POST"
-            className="max-w-md mx-auto"
+            className="w-xl max-w-2xl mx-auto"
             style={{ paddingTop: '3rem' }}
             // className="flex flex-col gap-4 p-4"
         >
@@ -67,11 +72,11 @@ function ItemsForm({obj}) {
                 url={'api/items/types/?s='}
                 label={t('type')}
                 name="type"
-                // defaultValue={obj.type ? {value: obj.type, label: obj.type}}
+                defaultValue={(state?.type || obj?.type) ? { value: state?.type || obj.type, label: obj.type_name}: {}}
                 // defaultValue={state?.type ? {value: state.type, label: state.type_name} : {value: obj.type, label: obj.type_name} }
             />
 
-            <TextInput name="name" id="name" placeholder={t("name")} defaultValue={state?.name || obj?.name} required error={state?.errors?.name || ""} />
+            <TextInput name="name" id="name" placeholder={t("name")} defaultValue={state?.name || obj?.name} required error={state?.data?.name || ""} />
 
             <Collapsible.Root open={open} onOpenChange={setOpen} className="mb-3">
                 <div className="flex items-center justify-between mb-3">
@@ -94,62 +99,47 @@ function ItemsForm({obj}) {
                     className="grid md:grid-cols-2 md:gap-2 mt-5 mb-1  transition-all duration-300 ease-in-out data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp"
                 >
                     <NumberInput  
-                        id="p1" 
-                        name="p1" 
+                        id="price1" 
+                        name="price1" 
+                        step={0.01}
                         placeholder={t("private")} 
                         onChange={(e) => { setP1(e.target.value) }} 
-                        error={state?.errors?.price1 ||  ""}
+                        error={state?.data?.price1 ||  ""}
                         // value={p1} 
-                        // defaultValue={state?.p1} 
-                        {...(p1 !== undefined && p1 !== null
-                            ? { value: p1 }
-                            : { defaultValue: state?.p1 || obj?.p1 })}
+                        defaultValue={state?.price1 || obj?.price1 || p1} 
+                        // {...(p1 !== undefined && p1 !== null
+                        //     ? { value: p1 }
+                        //     : { defaultValue: state?.price1 || obj?.price1 })}
 
                     />
-                    <NumberInput id="p2" name="p2" placeholder={t("wholesale")} defaultValue={state?.p2 || obj?.p2} ref={p2} error={state?.errors?.price2 || ""} />
-                    <NumberInput id="p3" name="p3" placeholder={t("piece")} defaultValue={state?.p3 || obj?.p3} ref={p3} error={state?.errors?.price3 || ""} />
-                    <NumberInput id="p4" name="p4" placeholder={t("collapsible.prices")} defaultValue={state?.p4 || obj?.p4} ref={p4} error={state?.errors?.price4 || ""} />
+                    <NumberInput id="price2" name="price2" step={0.01} placeholder={t("wholesale")} defaultValue={state?.price2 || obj?.price2} ref={p2} error={state?.data?.price2 || ""} />
+                    <NumberInput id="price3" name="price3" step={0.01} placeholder={t("piece")} defaultValue={state?.price3 || obj?.price3} ref={p3} error={state?.data?.price3 || ""} />
+                    <NumberInput id="price4" name="price4" step={0.01} placeholder={t("collapsible.prices")} defaultValue={state?.price4 || obj?.price4} ref={p4} error={state?.data?.price4 || ""} />
                 </Collapsible.Content>
             </Collapsible.Root>
 
-            <TextInput name="origin" id="origin" defaultValue={state?.origin || obj?.origin} placeholder={t("origin")} error={state?.errors?.origin || ""} />
+            {/* <input type="hidden" name="barcodes" value={state?.barcodes || obj?.barcodes || []} />
+            <BarcodeManager 
+                defaultBarcodes={state?.barcodes || obj?.barcodes || []}
+                onChange={(barcodes) => setBarcodes(barcodes)}
+            /> */}
 
-            <TextInput name="place" id="place" defaultValue={state?.place || obj?.place} placeholder={t("place")} error={state?.errors?.place || ""} />
+            <TextInput name="origin" id="origin" defaultValue={state?.origin || obj?.origin} placeholder={t("origin")} error={state?.data?.origin || ""} />
 
-            {/* <input type="text" className="hidden" name="images_upload_urls" value={obj?.images || state?.images_upload_urls} readOnly /> */}
-            <input
-                type="text"
-                className="hidden"
-                name="images_upload_urls"
-                value={
-                    Array.isArray(obj?.images)
-                    ? obj.images.join(",")
-                    : typeof obj?.images === "string"
-                    ? obj.images
-                    : state?.images_upload_urls || ""
-                }
-                readOnly
-            />
-
+            <TextInput name="place" id="place" defaultValue={state?.place || obj?.place} placeholder={t("place")} error={state?.data?.place || ""} />
 
             <FileInput
-                name="images_upload"
-                id="images_upload"
+                name="images"
+                id="images"
                 acceptedTypes="images"
                 multiple={true}
                 className="mt-3"
                 showPreview={true}
                 setLoadind={setFileLoading}
                 defaultValue={
-                    obj?.images ??
-                    (state?.images_upload_urls
-                        ? state.images_upload_urls.includes(',')
-                        ? state.images_upload_urls.split(',').map(url => url.trim())
-                        : [state.images_upload_urls.trim()]
-                        : null)
+                    state?.images || obj?.images || []
                 }
-
-                error={state?.errors?.images_upload || ""}
+                error={state?.data?.images || ""}
             />
 
             <FormButton
