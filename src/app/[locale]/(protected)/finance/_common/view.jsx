@@ -2,7 +2,7 @@ import numberFormatter from '@/utils/NumberFormatter';
 import { getPayment } from './actions'
 import ToWord from './ToWord';
 import styles from './view.module.css'
-import s from '@/app/[locale]/(protected)/invoice/common/view.module.css'
+import s from '@/app/[locale]/(protected)/invoice/_common/view.module.css'
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
 import { getCreditBalance } from '@/app/[locale]/(protected)/invoice/_common/actions';
