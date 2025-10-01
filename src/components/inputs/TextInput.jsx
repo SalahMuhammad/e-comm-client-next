@@ -5,7 +5,6 @@ export default function TextInput({
   className = "",
   id = "",
   placeholder = "",
-  onChange = () => {},
   onBlur = () => {},
   error = "",
   icon = null,
