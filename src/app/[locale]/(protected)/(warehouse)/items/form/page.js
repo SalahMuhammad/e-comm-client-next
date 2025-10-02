@@ -27,7 +27,7 @@ function ItemsForm({obj}) {
     const p3 = useRef()
     const p4 = useRef()
     const handleGenericErrors = useGenericResponseHandler(t)
-    const [barcodes, setBarcodes] = useState([])
+
 
     useEffect(() => {
         if (state?.ok === undefined) return
@@ -118,11 +118,9 @@ function ItemsForm({obj}) {
                 </Collapsible.Content>
             </Collapsible.Root>
 
-            {/* <input type="hidden" name="barcodes" value={state?.barcodes || obj?.barcodes || []} />
             <BarcodeManager 
                 defaultBarcodes={state?.barcodes || obj?.barcodes || []}
-                onChange={(barcodes) => setBarcodes(barcodes)}
-            /> */}
+            />
 
             <TextInput name="origin" id="origin" defaultValue={state?.origin || obj?.origin} placeholder={t("origin")} error={state?.data?.origin || ""} />
 
