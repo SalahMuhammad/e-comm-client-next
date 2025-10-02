@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-export default function EventNotFound({ eventId, customButton, name = 'Event', message }) {
+export default function EventNotFound({ eventId, customButton, name = 'Event', message, title }) {
   const t = useTranslations('EventNotFound');
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
@@ -44,7 +44,7 @@ export default function EventNotFound({ eventId, customButton, name = 'Event', m
 
         <div className="space-y-4">
           <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent leading-tight">
-            {t('title', { name })}
+            {!title ? t('title', { name }) : title}
           </h1>
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-md mx-auto leading-relaxed">
             {message || t('message', { name })}
