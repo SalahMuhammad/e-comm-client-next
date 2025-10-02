@@ -276,11 +276,36 @@ async function ItemView({ id }) {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* third row */}
+                            <div className="space-y-6">
+                                {/* barcodes */}
+                                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-emerald-100/50 dark:border-gray-600/30">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="p-2 bg-emerald-500/10 rounded-lg">
+                                            <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+                                            </svg>
+                                        </div>
+                                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">Barcodes</h2>
+                                    </div>
+
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {item.barcodes.map((obj, index) => (
+                                            <div key={index} className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-emerald-100/30 dark:border-gray-600/30">
+                                                <div className="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400">
+                                                    {obj.barcode}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

@@ -16,43 +16,17 @@ export async function getItem(id) {
 
 export async function createUpdateItem(prevState, formData) {
     'use server';
-    
     const formValues = Object.fromEntries(formData.entries());
-
-    formData.delete("type_input");
-    formData.delete("images_upload_urls");    
-
     const isUpdate = formData.get('id') ? true : false
 
-    const images = formData.getAll('images_upload');
-
-    if (images[0]?.size === 0) {
-        if (isUpdate) {
-            formData.set("images_upload", [])
-        } else {
-            formData.delete('images_upload');
-        }
-    }
-  
     const response = await apiRequest(`/api/items/${isUpdate ? formData.get('id') + '/' : ''}`, {
         method: `${isUpdate ? 'PUT' : 'POST'}`,
         body: formData,
     });
-
-    if (!response?.ok) {
-        if (response.status === 400) {
-            const errorData = await response.data;
-            return {
-                success: false,
-                errors: errorData || { general: '400' },
-                ...formValues,
-            }
-        }
-    }
-
+    
     return {
-        success: true,
-        ...response
+        ...response,
+        ...response?.ok ? {} : formValues
     }
 }
 
