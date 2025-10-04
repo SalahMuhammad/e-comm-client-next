@@ -72,7 +72,7 @@ function MyForm({ initialData, type }) {
 
                 <div className={styles.invoiceDetails}>
                     {initialData?.hashed_id && (
-                        <TextInput 
+                        <TextInput
                             placeholder={'id'} 
                             id="hashed_id" 
                             value={initialData?.hashed_id} 
@@ -81,7 +81,7 @@ function MyForm({ initialData, type }) {
                             focuscolor="" 
                             focuslabelcolor="" 
                             name="hashed_id" 
-                            readOnly 
+                            readOnly
                         />
                     )}
 

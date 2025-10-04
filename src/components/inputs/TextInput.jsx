@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 export default function TextInput({
-  className = "",
+  className = "mb-[1.25rem]",
   id = "",
   placeholder = "",
   onBlur = () => {},
@@ -61,7 +61,7 @@ export default function TextInput({
       <label
         htmlFor={id}
         className={`
-          absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0]
+          absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 origin-[0]
           peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6
           ${
             hasError
@@ -73,9 +73,9 @@ export default function TextInput({
         {placeholder}
       </label>
 
-      <div className="min-h-[1.25rem] mt-1">
-        {hasError && <p className={`text-sm ${errorColor}`}>{error}</p>}
-      </div>
+      {hasError && <div className="min-h-[1.25rem] mt-1">
+        <p className={`text-sm ${errorColor}`}>{error}</p>
+      </div>}
     </div>
   );
 }
