@@ -136,6 +136,33 @@
 			},
 			"list": {
 				"error": "Error loading items."
+			},
+			"view": {
+				"refillable": "Refillable",
+				"id" : "ID",
+				"comparisonPeriod": "Cancel Period",
+				"30vs30": "Last 30 days vs Previous 30 days",
+				"excludedItems": "Items with 0 price or false repository permit are excluded",
+				"previous": "Previous",
+				"current": "Current",
+				"units": "units",
+				"information": "Stock Information",
+				
+				"pricing": "Pricing",
+				"price": "Price",
+
+				"details": "Details",
+				"type": "Type",
+				"origin": "Origin",
+				"place": "Place",
+
+				"timeline": "Timeline",
+				"created": "Created",
+				"updated": "Updated",
+				"lastUpdated": "Last Updated",
+				"by": "by",
+
+				"barcodes": "Barcodes"
 			}
 		},
 		"repositories": {
@@ -273,7 +300,7 @@
     "finance": {
 		"table": {
 			"view": "View",
-			"edit": "edit"
+			"edit": "Edit"
 		},
         "fields": {
 			"transaction": "Add Payment",
