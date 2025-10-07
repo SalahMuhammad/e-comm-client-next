@@ -45,7 +45,7 @@ function DebtSettlementForm({ initialData }) {
         if (handleGenericErrors(res)) return
 
         if (state?.ok) {
-            toast.success(t(state.data?.id ? "successEdit" : "successCreate"));
+            toast.success(state.data?.id ? "successEdit" : "successCreate");
             // if (state.data?.id) {
                 router.replace(`/finance/debt-settlement/list`);
             // }
