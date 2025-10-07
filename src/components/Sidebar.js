@@ -158,6 +158,16 @@ export default function Sidebar({username}) {
                     icon: <ExclamationTriangleIcon className="w-4 h-4" />
                 },
                 { 
+                    label: t('finance.subLabels.debtSettlement'), 
+                    path: '/finance/debt-settlement/list',
+                    icon: <ExclamationTriangleIcon className="w-4 h-4" />
+                },
+                { 
+                    label: t('finance.subLabels.debtSettlementForm'), 
+                    path: '/finance/debt-settlement/form',
+                    icon: <ExclamationTriangleIcon className="w-4 h-4" />
+                },
+                { 
                     label: t('finance.subLabels.debts'), 
                     path: '/finance/credit-owners-list',
                     icon: <ScaleIcon className="w-4 h-4" />
@@ -312,7 +322,7 @@ export default function Sidebar({username}) {
                                 </button>
                                 <ul
                                     id={obj.head}
-                                    className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${openSection === obj.head ? 'max-h-70' : 'max-h-0'} px-2`}
+                                    className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${openSection === obj.head ? 'max-h-100' : 'max-h-0'} px-2`}
                                 >
                                     {obj.links.map((link, j) => (
                                         <li key={j}>

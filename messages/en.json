@@ -39,6 +39,8 @@
 				"addPayment": "Add Payment",
 				"expenses": "Expenses",
 				"addExpenses": "Add Expenses",
+                "debtSettlement": "Debt Settlement List",
+				"debtSettlementForm": "Debt Settlement Form",
 				"debts": "Debts"
 			}
 		},
@@ -298,6 +300,18 @@
         },
         "assert": {
             "message": "Are you sure you want to delete this transaction?"
+        },
+        "debtSettlement": {
+            "header": "Debt Settlement",
+            "status": {
+                "approved": "Approved",
+                "not_approved": "Not Approved"
+            }
+        },
+        "general": {
+            "t": "transaction",
+            "add": "Add",
+            "update": "Update"
         }
     },
 	"refillableItems": {
@@ -475,6 +489,10 @@
 					"itemMovement":{ 
 						"label": "Item Movement", 
 						"description": "Track inventory movements and transfers" 
+					},
+                    "itemsAsXLSX":{ 
+						"label": "Generate Items As XLSX", 
+						"description": "export items as xlsx" 
 					}
 				}
 			},
