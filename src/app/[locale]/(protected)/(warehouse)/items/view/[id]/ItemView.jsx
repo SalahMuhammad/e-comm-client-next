@@ -280,7 +280,7 @@ async function ItemView({ id }) {
                             </div>
 
                             {/* third row */}
-                            {(item?.barcodes?.legnth > 0) && <div className="space-y-6">
+                            {(item?.barcodes?.length > 0) && <div className="space-y-6">
                                 {/* barcodes */}
                                 <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-emerald-100/50 dark:border-gray-600/30">
                                     <div className="flex items-center gap-3 mb-4">
