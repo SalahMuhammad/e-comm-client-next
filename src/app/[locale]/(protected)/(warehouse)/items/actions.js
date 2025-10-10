@@ -16,7 +16,6 @@ export async function getItem(id) {
 
 export async function createUpdateItem(_, formData) {
     'use server';
-    const formValues = Object.fromEntries(formData.entries());
     const isUpdate = formData.get('id') ? true : false
 
     // Convert FormData to object
@@ -47,9 +46,10 @@ export async function createUpdateItem(_, formData) {
             return obj;
         });
 
-    console.log('cleanBarcodes', cleanBarcodes)
 
     formData.set('barcodes', JSON.stringify(cleanBarcodes));
+    const formValues = Object.fromEntries(formData.entries());
+    formValues.barcodes = cleanBarcodes
     
     const response = await apiRequest(`/api/items/${isUpdate ? formData.get('id') + '/' : ''}`, {
         method: `${isUpdate ? 'PUT' : 'POST'}`,
