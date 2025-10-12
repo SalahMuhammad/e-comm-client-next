@@ -48,7 +48,7 @@
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-bottom: 1rem;
+    margin-bottom: .2rem;
 }
 
 .invoice-table th {
@@ -111,7 +111,7 @@
 .summary-row {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
+    padding: 1px 0;
 }
 
 .summary-label {
@@ -124,8 +124,8 @@
 
 .summary-total {
     border-top: 1px solid #e5e7eb;
-    margin-top: 8px;
-    padding-top: 12px;
+    margin-top: 4px;
+    padding-top: 6px;
     font-weight: 600;
 }
 
@@ -144,8 +144,8 @@
 /* Notes section */
 .notes-section {
     border-top: 1px solid #e5e7eb;
-    padding-top: 24px;
-    margin-top: 24px;
+    padding-top: 12px;
+    margin-top: 12px;
 }
 
 .notes-title {
@@ -162,8 +162,8 @@
 /* Payment info section */
 .payment-info {
     border-top: 1px solid #e5e7eb;
-    padding-top: 24px;
-    margin-top: 24px;
+    padding-top: 4px;
+    margin-top: 4px;
     display: flex;
     align-items: center;
 }
@@ -176,7 +176,7 @@
 /* Footer */
 .invoice-footer {
     text-align: center;
-    margin-top: 48px;
+    margin-top: 12px;
     color: var(--footer-message);
     font-size: 13px;
 }

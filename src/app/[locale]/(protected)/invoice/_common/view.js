@@ -73,9 +73,9 @@ const InvoicePrintableView = async ({ id, type }) => {
                 {/* Header */}
                 <CompanyDetailsHead>
                     <div className="mx-auto text-base text-black">
-                        <h1 className={`text-xl font-bold font-serif`}>{type.includes('sales') ? isRefund ? `REFUND SALES` : 'PROFORMA' : 'PURCHASE'} INVOICE</h1>
+                        <h1 className={`text-xl font-bold font-serif`}>{type.includes('sales') ? isRefund ? `SALES REFUND INVOICE` : 'ORDER' : 'PURCHASE INVOICE'}</h1>
                         <Link href={`/customer-supplier/view/${invoice.owner}`}>
-                            <p className={`text-sm font-serif wrap-break-word break-all whitespace-normal max-w-57`}>Billed To: <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300 text-xs">{invoice.owner_name}</span></p>
+                            <p className={`text-sm font-serif wrap-break-word break-all whitespace-normal max-w-57`}>Receiver: <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300 text-xs">{invoice.owner_name}</span></p>
                         </Link>
                         {ownerData?.address && <p className={`text-sm font-serif pl-1 wrap-break-word break-all whitespace-normal max-w-57`}><span className="text-xs text-gray-500">{ownerData?.addressDetails + ownerData?.address}</span></p>}
                         <p className={`text-sm font-serif`}>{isRefund ? 'Refund': 'Order'} No: <span className="text-xs text-gray-500">#{invoice.hashed_id}</span></p>
@@ -169,12 +169,11 @@ const InvoicePrintableView = async ({ id, type }) => {
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    <span>Please pay within 14 days of receiving this invoice.</span>
-                
+                    <span className="font-serif">Please pay within 3 days of receiving this invoice.</span>
                 </div>
                 
                 {/* Footer */}
-                <div className={`${style['invoice-footer']}`}>
+                <div className={`${style['invoice-footer']} font-serif`}>
                     <p>Thank you for your business!</p>
                     <p>Generated on {new Date(invoice.created_at).toString().split(' GMT')[0]}</p>
                 </div>

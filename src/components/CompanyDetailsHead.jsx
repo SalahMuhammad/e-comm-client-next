@@ -12,7 +12,7 @@ async function CompanyDetailsHead({ children }) {
                 <p className="text-xs text-gray-500 font-serif">{companyDetails?.description}</p>
                 {companyDetails?.address && (
                     <div className="leading-tight text-xs text-gray-500 font-serif">
-                        <p>{companyDetails?.addressDetails+companyDetails?.address}</p>
+                        <p>{companyDetails?.addressDetails ? companyDetails?.addressDetails : ''  + companyDetails?.address}</p>
                     </div>
                 )}
                 {companyDetails?.website && (
