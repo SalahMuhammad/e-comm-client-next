@@ -1,5 +1,5 @@
 import CompanyDetailsHead from "@/components/CompanyDetailsHead"
-import { getItemMovement } from "./actions"
+import { getItemMovement } from "../../actions"
 import Link from "next/link"
 
 export async function generateMetadata({  }) {

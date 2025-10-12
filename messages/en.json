@@ -529,6 +529,10 @@
 					"paymentsInPeriod": { 
 						"label": "Payments in Period", 
 						"description": "Financial transactions and payments" 
+					},
+                    "debtList": { 
+						"label": "Owners's credit balance list", 
+						"description": "list of owners who has credit balance" 
 					}
 				}
 			},

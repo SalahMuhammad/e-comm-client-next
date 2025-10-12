@@ -61,6 +61,12 @@ async function page({ params }) {
                     label: t("reportSections.finance.links.paymentsInPeriod.label"),
                     description: t("reportSections.finance.links.paymentsInPeriod.description"),
                     icon: CurrencyDollarIcon,
+                },
+                {
+                    href: "/reports/owners-credit-balance-list",
+                    label: t("reportSections.finance.links.debtList.label"),
+                    description: t("reportSections.finance.links.debtList.description"),
+                    icon: CurrencyDollarIcon,
                 }
             ]
         },
