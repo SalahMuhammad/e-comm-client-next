@@ -148,13 +148,23 @@ export default function Sidebar({username}) {
                     icon: <BanknotesIcon className="w-4 h-4" />
                 },
                 { 
-                    label: t('finance.subLabels.expenses'), 
-                    path: '/finance/expenses/list',
+                    label: t('finance.subLabels.reversePayment'), 
+                    path: '/finance/reverse-payment/list',
                     icon: <ReceiptPercentIcon className="w-4 h-4" />
                 },
                 { 
+                    label: t('finance.subLabels.addReversePayment'), 
+                    path: '/finance/reverse-payment/form',
+                    icon: <ExclamationTriangleIcon className="w-4 h-4" />
+                },
+                { 
+                    label: t('finance.subLabels.expenses'), 
+                    path: '/finance/expense/list',
+                    icon: <ExclamationTriangleIcon className="w-4 h-4" />
+                },
+                { 
                     label: t('finance.subLabels.addExpenses'), 
-                    path: '/finance/expenses/form',
+                    path: '/finance/expense/form',
                     icon: <ExclamationTriangleIcon className="w-4 h-4" />
                 },
                 { 
@@ -166,11 +176,6 @@ export default function Sidebar({username}) {
                     label: t('finance.subLabels.debtSettlementForm'), 
                     path: '/finance/debt-settlement/form',
                     icon: <ExclamationTriangleIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('finance.subLabels.debts'), 
-                    path: '/finance/credit-owners-list',
-                    icon: <ScaleIcon className="w-4 h-4" />
                 },
             ]
         },

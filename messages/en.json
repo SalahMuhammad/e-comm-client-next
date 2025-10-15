@@ -37,10 +37,12 @@
 			"subLabels": {
 				"payments": "Payments",
 				"addPayment": "Add Payment",
-				"expenses": "Expenses",
-				"addExpenses": "Add Expenses",
+				"expenses": "Expense List",
+				"addExpenses": "Add Expense",
+                "reversePayment": "Reverse Payment List",
+				"addReversePayment": "Add Reverse Pyament",
                 "debtSettlement": "Debt Settlement List",
-				"debtSettlementForm": "Debt Settlement Form",
+				"debtSettlementForm": "Add Debt Settlement",
 				"debts": "Debts"
 			}
 		},
