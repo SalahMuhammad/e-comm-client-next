@@ -6,12 +6,12 @@ import MyForm from "../../../_common/form"
 async function page({ params }) {
     const t = await getTranslations("global.errors");
     const id = (await params).id
-    const transaction = (await getPayment(id, 'expenses')).data
+    const transaction = (await getPayment(id, 'reverse-payment')).data
 
 
     return (
         transaction?.id ? (
-            <MyForm initialData={transaction} type={'expenses'} />
+            <MyForm initialData={transaction} type={'reverse-payment'} />
         ) : (
             <div className="text-center text-red-500">{t('404')}</div>
         )

@@ -6,7 +6,7 @@ async function page({ params }) {
 
 
     return (
-        <TransactionView id={id} type={'expenses'} />
+        <TransactionView id={id} type={'reverse-payment'} />
     )
 }
 

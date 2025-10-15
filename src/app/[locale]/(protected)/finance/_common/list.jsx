@@ -20,9 +20,10 @@ async function List({ searchParams, type }) {
     const search = params[searchParamName] ?? '';
     const paymen_no = params['no'] ?? '';
     const t = await getTranslations("finance");
+    const restOfURL = type === 'reverse-payment' ? '/list' : ''
 
 
-    const res = (await getList(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${paymen_no ? `&no=${paymen_no}` : ''}`));
+    const res = (await getList(`${type + restOfURL}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${paymen_no ? `&no=${paymen_no}` : ''}`));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
         redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
