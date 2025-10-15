@@ -12,7 +12,7 @@ import StatusToggle from "./StatusToggle";
 import { formatDate } from "@/utils/dateFormatter";
 
 
-async function List({ searchParams, type }) {
+async function List({ searchParams }) {
     const searchParamName = 's';
     const params = await searchParams;
     const limit = params['limit'] ?? 12;
