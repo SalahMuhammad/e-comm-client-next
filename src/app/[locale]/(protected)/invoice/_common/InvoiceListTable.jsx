@@ -78,8 +78,8 @@ export default function InvoiceListTable({ initialData, type }) {
                             </td>
                             {isRefund && (
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    <Link href={`/invoice/${type.split('/')[0]}/view/${inv.original_invoice}`} className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200">
-                                        {inv.original_invoice}
+                                    <Link href={`/invoice/${type.split('/')[0]}/view/${inv.original_invoice_hashed_id}`} className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200">
+                                        #{inv.original_invoice_hashed_id}
                                     </Link>
                                 </td>
                             )}
