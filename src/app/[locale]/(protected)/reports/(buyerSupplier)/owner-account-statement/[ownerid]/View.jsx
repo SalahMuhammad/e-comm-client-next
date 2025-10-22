@@ -118,7 +118,7 @@ function PageView({ data }) {
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100" style={{color: amount == 0 ? 'black' : Number(amount) > 0 ? 'green' : 'red'}}>
                                             {numberFormatter(amount)}
                                         </td>
-                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100" style={{color: remainingCredit == 0 ? 'black' : Number(remainingCredit) > 0 ? 'green' : 'red'}}>
                                             {numberFormatter(remainingCredit)}
                                         </td>
                                     </tr>
@@ -151,6 +151,9 @@ const DynamicRefIdLink = ({ transaction }) => {
             break;
         case 'payment':
             url = `/finance/payments/view/${transaction.hashed_id}`
+            break;
+        case 'debt settlement':
+            url = `/finance/debt-settlement/list?s=${transaction.owner_name}`
             break;
     }
 
