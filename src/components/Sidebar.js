@@ -26,6 +26,11 @@ import LanguageToggle from './LanguageToggle';
 export default function Sidebar({username}) {
     const t = useTranslations('navLinks');
 
+    // client-side code (e.g., in a useEffect hook or a component that mounts)
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        // client-side code
+    document.cookie = `userTimeZone=${userTimeZone}; path=/; max-age=${60 * 60 * 24 * 30}`; // Set for 30 days
+
     useEffect(() => {
         // Initialize Flowbite when component mounts
         initFlowbite();
