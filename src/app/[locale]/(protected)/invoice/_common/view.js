@@ -92,9 +92,9 @@ const InvoicePrintableView = async ({ id, type }) => {
                 <table className={`${style['invoice-table']}`}>
                     <thead>
                         <tr>
-                            <th>Service</th>
-                            <th>Qty</th>
-                            <th>unit_price</th>
+                            <th>Service/Item</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
                             {/* <th>Tax<!--Rate--></th> */}
                             <th>Tax</th>
                             <th>Discount</th>
