@@ -20,12 +20,32 @@ export async function apiRequest(endpoint, options = {}) {
             // next: { revalidate: 3600 }, // revalidate every hour
             ...options,
         });
-    } catch (error) {}
-    const data = await response?.json().catch(() => ({}))
 
-    return {
-        status: response?.status || 0,
-        ok: response?.ok || false,
-        data
+        // If response is a blob, return a different structure
+        if (options.blob) {
+            const blob = await response.blob();
+            return {
+                status: response.status,
+                ok: response.ok,
+                blob,
+                headers: response.headers,
+            };
+        }
+
+        // Normal JSON response handling
+        const data = await response?.json().catch(() => ({}))
+        return {
+            status: response?.status || 0,
+            ok: response?.ok || false,
+            data
+        }
+    } catch (error) {
+        console.error('API Request failed: ', error);
+        return {
+            status: 0,
+            ok: false,
+            data: {},
+            error
+        }
     }
 }
