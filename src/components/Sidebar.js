@@ -25,7 +25,12 @@ import LanguageToggle from './LanguageToggle';
 
 export default function Sidebar({username}) {
     const t = useTranslations('navLinks');
-    
+
+
+    useEffect(() => {
+        // Initialize Flowbite when component mounts
+        initFlowbite();
+    }, []);
 
     const [openSection, setOpenSection] = useState(null);
 
@@ -384,6 +389,12 @@ export default function Sidebar({username}) {
                             <Link href={'/reports'} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <WrenchScrewdriverIcon className="w-4 h-4" />
                                 <span className="flex-1 ms-3 whitespace-nowrap">{t("reports.headLabel")}</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={'/settings'} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <WrenchScrewdriverIcon className="w-4 h-4" />
+                                <span className="flex-1 ms-3 whitespace-nowrap">{t("settings")}</span>
                             </Link>
                         </li>
                         <li>
