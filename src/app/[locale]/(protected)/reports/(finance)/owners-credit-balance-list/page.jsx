@@ -36,7 +36,7 @@ async function page() {
                                 <td className="p-4 w-[20rem] max-w-[20rem] text-sm w-sm w-sm text-gray-900">
                                     {ownerObject.name}
                                 </td>
-                                <td className="p-4 text-sm w-sm">
+                                <td className="p-4 text-sm w-sm" style={{color: Number(ownerObject.amount) > 0 ? 'green' : 'red'}}>
                                     {numberFormatter(ownerObject.amount)}
                                 </td>
                                 {/* <td className="p-4 text-sm w-sm text-gray-900">
