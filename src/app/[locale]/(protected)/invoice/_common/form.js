@@ -7,7 +7,6 @@ import { addDays, formatDateManual } from '@/utils/dateFormatter';
 import SearchableDropdown from '@/components/SearchableDropdown';
 import { useTranslations } from 'next-intl';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
-import { getCookie } from '@/utils/cookieHandler';
 import FieldError from '@/components/FieldError';
 import { toast } from 'sonner';
 import Form from 'next/form';
@@ -37,7 +36,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
     };
 
     const addItem = async (item) => {
-        const defaultRepo = await getDefaultRepository(getCookie('inv_d_repo'))
+        const defaultRepo = await getDefaultRepository('')
 
         const newItem = {
             id: Date.now(),

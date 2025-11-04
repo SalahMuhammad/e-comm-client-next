@@ -89,7 +89,7 @@ export async function getDefaultRepository(name) {
     })
 
     if (res.ok) {
-        return res?.data.results[0] || null
+        return res.data?.results[res.data?.results?.length - 1] || null
     }
 }
 
