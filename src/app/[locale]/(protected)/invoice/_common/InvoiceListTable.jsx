@@ -35,6 +35,8 @@ export default function InvoiceListTable({ initialData, type }) {
                     <th scope="col" className="px-6 py-3">{t('table.head.issueDate')}</th>
                     <th scope="col" className="px-6 py-3">{t('table.head.dueDate')}</th>
                     <th scope="col" className="px-6 py-3">{t('table.head.totalAmount')}</th>
+                    <th scope="col" className="px-6 py-3">{t('table.head.totalAmount')}</th>
+                    <th scope="col" className="px-6 py-3">{t('table.head.status')}</th>
                     {!isRefund && (
                         <th scope="col" className="px-6 py-3">{t('table.head.repositoryPremit')}</th>
                     )}
@@ -68,6 +70,10 @@ export default function InvoiceListTable({ initialData, type }) {
                             </td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{inv.due_date}</td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{numberFormatter(inv.total_amount)}</td>
+                            <td className="px-6 py-4 max-w-xs overflow-x-auto">{numberFormatter(inv.remaining_balance)}</td>
+                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                <StatusBadge status={inv.status} />
+                            </td>
                             {!isRefund && (
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                     <RepositoryPermitButton id={inv.id} type={type} permitValue={inv.repository_permit} width="170px"/>
@@ -115,3 +121,26 @@ export default function InvoiceListTable({ initialData, type }) {
         </table>
     );
 }
+
+
+const StatusBadge = ({ status }) => {
+    const getStatusConfig = (status) => {
+        const configs = {
+            3: { label: "Unpaid", classes: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300" },
+            4: { label: "Partially Paid", classes: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300" },
+            5: { label: "Paid", classes: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" },
+            6: { label: "Overpaid", classes: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300" },
+            default: { label: "Unknown", classes: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" }
+        };
+
+        return configs[status] || configs.default;
+    };
+
+    const { label, classes } = getStatusConfig(status);
+
+    return (
+        <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${classes}`}>
+            {label}
+        </span>
+    );
+};
