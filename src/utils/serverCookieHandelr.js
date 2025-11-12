@@ -28,7 +28,9 @@ export async function getServerAuthToken() {
     const cookieStore = await cookies()
     const auth0 = cookieStore.get('auth_0')?.value || ''
     const auth1 = cookieStore.get('auth_1')?.value || ''
-    return auth0 && auth1 ? `${auth0}${auth1}` : ''
+    const auth2 = cookieStore.get('auth_2')?.value || ''
+    const auth3 = cookieStore.get('auth_3')?.value || ''
+    return auth0 && auth1 ? `${auth0}${auth1}${auth2}${auth3}` : ''
 }
 
 export async function deleteServerCookie(name) {
