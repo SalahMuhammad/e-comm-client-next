@@ -73,6 +73,13 @@ async function page({ params }) {
                     label: t("reportSections.finance.links.debtList.label"),
                     description: t("reportSections.finance.links.debtList.description"),
                     icon: CurrencyDollarIcon,
+                },
+                ,
+                {
+                    href: "/reports/treasury-movement",
+                    label: 'financial movement',
+                    description: t("reportSections.finance.links.debtList.description"),
+                    icon: CurrencyDollarIcon,
                 }
             ]
         },
