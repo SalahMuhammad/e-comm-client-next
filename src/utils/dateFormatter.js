@@ -20,3 +20,16 @@ export const formatDate = (dateString) => {
         day: 'numeric'
     });
 };
+
+export const formatDateTime = (dateString, is12Hour) => {
+    const date = new Date(dateString);
+    return date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',      // Include hours
+        minute: '2-digit',    // Include minutes
+        second: '2-digit',    // Include seconds (optional)
+        hour12: is12Hour          // Use 12-hour clock (AM/PM)
+    });
+};

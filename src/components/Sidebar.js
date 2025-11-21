@@ -143,31 +143,31 @@ export default function Sidebar({username}) {
                     path: '/finance/management',
                     icon: <CreditCardIcon className="w-4 h-4" />
                 },
-                // { 
-                //     label: t('finance.subLabels.payments'), 
-                //     path: '/finance/payments/list',
-                //     icon: <CreditCardIcon className="w-4 h-4" />
-                // },
+                { 
+                    label: t('finance.subLabels.payments'), 
+                    path: '/finance/payments/list',
+                    icon: <CreditCardIcon className="w-4 h-4" />
+                },
                 // { 
                 //     label: t('finance.subLabels.addPayment'), 
                 //     path: '/finance/payments/form',
                 //     icon: <BanknotesIcon className="w-4 h-4" />
                 // },
-                // { 
-                //     label: t('finance.subLabels.reversePayment'), 
-                //     path: '/finance/reverse-payment/list',
-                //     icon: <ReceiptPercentIcon className="w-4 h-4" />
-                // },
+                {
+                    label: t('finance.subLabels.reversePayment'), 
+                    path: '/finance/reverse-payment/list',
+                    icon: <ReceiptPercentIcon className="w-4 h-4" />
+                },
                 // { 
                 //     label: t('finance.subLabels.addReversePayment'), 
                 //     path: '/finance/reverse-payment/form',
                 //     icon: <ExclamationTriangleIcon className="w-4 h-4" />
                 // },
-                // { 
-                //     label: t('finance.subLabels.expenses'), 
-                //     path: '/finance/expense/list',
-                //     icon: <ExclamationTriangleIcon className="w-4 h-4" />
-                // },
+                { 
+                    label: t('finance.subLabels.expenses'), 
+                    path: '/finance/expense/list',
+                    icon: <ExclamationTriangleIcon className="w-4 h-4" />
+                },
                 // { 
                 //     label: t('finance.subLabels.addExpenses'), 
                 //     path: '/finance/expense/form',

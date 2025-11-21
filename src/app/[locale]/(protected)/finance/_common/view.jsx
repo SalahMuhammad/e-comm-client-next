@@ -8,6 +8,7 @@ import DeleteButton from './DeleteButton';
 import { getCreditBalance } from '@/app/[locale]/(protected)/invoice/_common/actions';
 import CompanyDetailsHead from '@/components/CompanyDetailsHead';
 import EventNotFound from '@/components/NotFound';
+import ViewNoteValue from './viewNoteValue';
 
 
 async function TransactionView({ id, type }) {
@@ -44,16 +45,16 @@ async function TransactionView({ id, type }) {
                 {/* <!-- Receipt Details --> */}
                 <div className={styles["receipt-details"]}>
                     <div className={styles["detail-row"]}>
-                        <span className={styles["label"]}>{type === 'payments' ? 'Received From' : 'Sent To'}</span>
+                        <span className={styles["label"]}>{type === 'payment' ? 'From' : 'To'}</span>
                         <Link className={`${styles["value-field"]}`} href={`/customer-supplier/view/${transaction.owner}`}>
                             <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300 text-xs">{transaction.owner_name}</span>
                         </Link>
                     </div>
 
                     <div className={styles["detail-row"]}>
-                        <span className={styles["label"]}>Payment Method</span>
+                        <span className={styles["label"]}>Method</span>
                         <div className={`${styles["value-field"]}`}>
-                            <span>{transaction.payment_method_name}</span>
+                            <span>{transaction.payment_method_name}{transaction?.transaction_id ? ` #Ref ` : ''}<strong>{transaction?.transaction_id ? `${transaction.transaction_id}` : ''}</strong></span>
                         </div>
                     </div>
 
@@ -61,7 +62,8 @@ async function TransactionView({ id, type }) {
                         <span className={styles["label"]}>Sum Of</span>
                         <div className={`${styles["value-field"]} ${styles['q']} ${styles['upper']}`}><ToWord num={transaction.amount} /> EGP</div>
 
-                        <div className={`${styles["detail-row"]}`} style={{ textAlign: 'center' }}>
+                        <div className={`${styles["value-field"]} ${styles['q']} max-w-[8rem]`}>{numberFormatter(transaction.amount)} EGP</div>
+                        {/* <div className={`${styles["detail-row"]}`} style={{ textAlign: 'center' }}>
                             <div className={` ${styles["amount"]}`}>
                                 <span className={styles["label"]}>L.E</span>
                                 <div className={`${styles["value-field"]} ${styles['q']}`}>{numberFormatter(transaction.amount.split('.')[0])}</div>
@@ -70,13 +72,10 @@ async function TransactionView({ id, type }) {
                                 <span className={styles["label"]} >Kersh</span>
                                 <div className={`${styles["value-field"]} ${styles['q']}`}>{transaction.amount.split('.')[1]}</div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
-                    <div className={styles["detail-row"]}>
-                        <span className={styles["label"]}>Description</span>
-                        <div className={`${styles["value-field"]}`}>{transaction.note}</div>
-                    </div>
+                    <ViewNoteValue note={transaction.note} recieptAmount={transaction.amount} ref_order={transaction.ref} ref_order_total_amount={transaction?.ref_order_total_amount} />
                 </div>
 
                 {/* <!-- Footer Section --> */}
@@ -100,6 +99,10 @@ async function TransactionView({ id, type }) {
                         <p>Generated on {new Date(transaction.created_at).toString().split(' GMT')[0]}</p>
                     </div>
                 </div>
+            </div>
+
+            <div className={`none-printable pt-6`}>
+                <img src={transaction?.payment_proof} alt="" />
             </div>
         </div>
     )

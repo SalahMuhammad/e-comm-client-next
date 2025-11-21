@@ -2,10 +2,10 @@ import { getList } from "./actions";
 import PaginationControls from '@/components/PaginationControls';
 import QueryParamSetterInput from '@/components/QueryParamSetterInput';
 import { getTranslations } from "next-intl/server";
-import DeleteButton from "./DeleteButton";
+// import DeleteButton from "./DeleteButton";
 import Link from 'next/link';
 import numberFormatter from "@/utils/NumberFormatter";
-import ToolTip from "@/components/ToolTip";
+import ToolTip from "@/components/ToolTip2";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Toggle from "./StatusToggle";
@@ -20,10 +20,9 @@ async function List({ searchParams, type }) {
     const search = params[searchParamName] ?? '';
     const paymen_no = params['no'] ?? '';
     const t = await getTranslations("finance");
-    const restOfURL = type === 'reverse-payment' ? '/list' : ''
 
 
-    const res = (await getList(`${type + restOfURL}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${paymen_no ? `&no=${paymen_no}` : ''}`));
+    const res = (await getList(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${paymen_no ? `&no=${paymen_no}` : ''}`));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
         redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
@@ -55,7 +54,7 @@ async function List({ searchParams, type }) {
                                 {t('fields.status')}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t('fields.type')}
+                                {t('fields.ref')}
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 {t('fields.date')}
@@ -81,32 +80,41 @@ async function List({ searchParams, type }) {
                                     {numberFormatter(payment.amount)}
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    <Toggle obj={payment} type={type} />
+                                    <StatusBadge status={payment.status} />
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    {payment.payment_type}
+                                    {payment?.ref ? (
+                                        <Link className="
+                                            ml-2 flex items-center text-blue-700 
+                                            hover:text-blue-800 group transition 
+                                            duration-300 dark:text-blue-200 
+                                            dark:hover:text-white" href={`/invoice/${type == 'payment' ? 'sales' : 'purchases'}/view/${payment.ref}`}
+                                        >
+                                        #{payment.ref}
+                                    </Link>
+                                    ) : '-'}
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                     {payment.date}
                                 </td>
                                 <td className="px-6 py-4 w-[10rem] max-w-[10rem] overflow-auto">
                                     <pre>
-                                        {payment.note}
+                                        {payment.notes}
                                     </pre>
                                 </td>
 
                                 <td className="flex items-center px-6 py-4">
                                     <>
-                                        <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/finance/${type}/view/${payment.hashed_id}`}>
+                                        <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/finance/${type}${type == 'payment' ? 's' : ''}/view/${payment.hashed_id}`}>
                                             <EyeIcon
                                                 className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
                                             />
                                             <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                            {t("table.view")}
+                                                {t("table.view")}
                                             </span>
                                         </Link>
-                                        <DeleteButton type={type} id={payment.hashed_id} />
-                                        <Link 
+                                        {/* <DeleteButton type={type} id={payment.hashed_id} />
+                                        <Link
                                             href={`/finance/${type}/form/${payment.hashed_id}`}
                                             className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
                                         >
@@ -114,7 +122,7 @@ async function List({ searchParams, type }) {
                                             <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
                                                 {t("table.edit")}
                                             </span>
-                                        </Link>
+                                        </Link> */}
                                     </>
                                     <ToolTip obj={payment} />
                                 </td>
@@ -134,3 +142,79 @@ async function List({ searchParams, type }) {
 }
 
 export default List
+
+
+function StatusBadge({ status }) {
+    const statusConfig = {
+        '1': {
+            label: 'Pending',
+            bgColor: 'bg-yellow-100',
+            textColor: 'text-yellow-800',
+            dotColor: 'bg-yellow-500'
+        },
+        '2': {
+            label: 'Confirmed',
+            bgColor: 'bg-blue-100',
+            textColor: 'text-blue-800',
+            dotColor: 'bg-blue-500'
+        },
+        '3': {
+            label: 'Rejected',
+            bgColor: 'bg-red-100',
+            textColor: 'text-red-800',
+            dotColor: 'bg-red-500'
+        },
+        '4': {
+            label: 'Reimbursed',
+            bgColor: 'bg-green-100',
+            textColor: 'text-green-800',
+            dotColor: 'bg-green-500'
+        }
+    };
+
+    const config = statusConfig[status] || statusConfig['1'];
+
+    return (
+        <div className="flex flex-col items-center justify-center bg-gray-50">
+            <div className="space-y-8">
+                {/* <div>
+                    <h2 className="text-sm font-medium text-gray-600 mb-4">All Status Badges:</h2>
+                    <div className="flex flex-wrap gap-3">
+                        {Object.keys(statusConfig).map((key) => {
+                            const cfg = statusConfig[key];
+                            return (
+                                <span
+                                    key={key}
+                                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${cfg.bgColor} ${cfg.textColor}`}
+                                >
+                                    <span className={`w-2 h-2 rounded-full ${cfg.dotColor} mr-2`}></span>
+                                    {cfg.label}
+                                </span>
+                            );
+                        })}
+                    </div>
+                </div> */}
+
+                <div>
+                    {/* <h2 className="text-sm font-medium text-gray-600 mb-4">Selected Status:</h2> */}
+                    <span
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${config.bgColor} ${config.textColor}`}
+                    >
+                        <span className={`w-2 h-2 rounded-full ${config.dotColor} mr-2`}></span>
+                        {config.label}
+                    </span>
+                </div>
+
+                {/* <div className="mt-8 p-4 bg-white rounded-lg shadow-sm">
+                    <h3 className="text-sm font-semibold text-gray-700 mb-2">Usage Example:</h3>
+                    <pre className="text-xs text-gray-600 bg-gray-50 p-3 rounded overflow-x-auto">
+                        {`<StatusBadge status="1" /> // Pending
+<StatusBadge status="2" /> // Confirmed
+<StatusBadge status="3" /> // Rejected
+<StatusBadge status="4" /> // Reimbursed`}
+                    </pre>
+                </div> */}
+            </div>
+        </div>
+    );
+}

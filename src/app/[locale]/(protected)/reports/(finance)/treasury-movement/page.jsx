@@ -6,6 +6,31 @@ import getFinancialMovements from './actions';
 async function FinancialMovementsReport() {
 	const res = await getFinancialMovements()
     const data = res.data
+    const accounts = {}
+data?.movements?.forEach((acc) => {
+    if (acc.status == 2) {
+        const netAmount = Number(acc?.amount_in) - Number(acc?.amount_out);
+        
+        // Initialize or add
+        accounts[acc.account_name] = (accounts[acc.account_name] || 0) + netAmount;
+    }
+});
+
+// / Add this before the return statement, to calculate running balances
+const accountBalances = {};
+const movementsWithBalance = data?.movements?.map((transaction) => {
+    const netAmount = transaction.status == 2 ? Number(transaction.amount_in) - Number(transaction.amount_out) : 0;
+    accountBalances[transaction.account_name] = (accountBalances[transaction.account_name] || accounts[transaction.account_name] || 0) + netAmount;
+    return {
+        ...transaction,
+        runningBalance: accountBalances[transaction.account_name]
+    };
+}) || [];
+
+
+// The final result is in 'aa'
+    
+    console.log(accounts)
 
     const summary = data?.summary
 
@@ -68,8 +93,9 @@ async function FinancialMovementsReport() {
 								<th className="text-left py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Type</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Account</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Party</th>
-								<th className="text-right py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Amount In</th>
-								<th className="text-right py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Amount Out</th>
+								<th className="text-right py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Amount</th>
+                                <th className="text-right py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Remaining</th>
+								{/* <th className="text-right py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Amount Out</th> */}
 								<th className="text-left py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Status</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-700 text-sm uppercase tracking-wider">Notes</th>
 							</tr>
@@ -95,12 +121,22 @@ async function FinancialMovementsReport() {
 									<td className="p-4 w-[15rem] max-w-[15rem] text-sm text-gray-900">
 										{transaction.party}
 									</td>
-									<td className="p-4 text-sm text-right font-medium text-green-600">
+                                    {/* <td className='p-4 text-sm text-right font-medium text-green-600'>
 										{transaction.amount_in !== "0.00" ? numberFormatter(transaction.amount_in) : '-'}
+									</td> */}
+									<td className={`${transaction.amount_in !== "0.00" ? 'p-4 text-sm text-right font-medium text-green-600' : 'p-4 text-sm text-right font-medium text-red-600'}`}>
+										{transaction.amount_in !== "0.00" ? numberFormatter(transaction.amount_in) : numberFormatter(transaction.amount_out)}
 									</td>
-									<td className="p-4 text-sm text-right font-medium text-red-600">
+                                    <td className="p-4 text-sm text-right font-medium text-gray-900">
+                                        {/* {numberFormatter(
+                                            accounts[transaction.account_name] = (accounts[transaction.account_name] || 0) + (Number(transaction.amount_in) - Number(transaction.amount_out))
+                                        )} */}
+                                                {numberFormatter(transaction.runningBalance)}
+
+                                    </td>
+									{/* <td className="p-4 text-sm text-right font-medium text-red-600">
 										{transaction.amount_out !== "0.00" ? numberFormatter(transaction.amount_out) : '-'}
-									</td>
+									</td> */}
 									<td className="p-4 text-sm">
 										<span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusBadge(transaction.status)}`}>
 

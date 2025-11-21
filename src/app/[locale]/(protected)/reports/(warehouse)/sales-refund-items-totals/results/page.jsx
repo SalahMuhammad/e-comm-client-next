@@ -26,7 +26,7 @@ async function page({ searchParams }) {
             <div className="overflow-x-auto shadow-[8px_8px_8px_-10px_rgba(0,0,0,0.3)]">
                 <CompanyDetailsHead>
                     <div className="mx-auto text-base text-black">
-                        <h1 className={`text-xl font-bold font-serif`}>Item movement {fromdate && `from ${fromdate}`} {todate && `to ${todate}`}</h1>
+                        <h1 className={`text-xl font-bold font-serif`}>Items sale {fromdate && `from ${fromdate}`} {todate && `to ${todate}`}</h1>
                     </div>
                 </CompanyDetailsHead>
 

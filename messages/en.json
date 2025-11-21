@@ -76,7 +76,12 @@
     "toolTip": {
         "created": "Created",
         "lastUpdatedIn": "Last Updated IN",
-        "by": "By"
+        "by": "By",
+
+        "createdAt": "Created At",
+        "createdBy": "Created By",
+        "lastUpdatedAt": "Last Updated At",
+        "lastUpdatedBy": "Last Updated By"
     },
 
 	"warehouse": {
@@ -315,7 +320,7 @@
             "paymentMethod": "Payment Method",
             "amount": "Amount",
             "status": "Status",
-            "type": "Type",
+            "ref": "Referance",
             "date": "Date",
             "note": "Note",
 			"moreNotes": "Additional notes..."

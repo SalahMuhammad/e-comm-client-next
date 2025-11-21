@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 export async function getList(type, queryStringParams) {
     'use server'
-    const res = await apiRequest(`/api/payment/${type}/${queryStringParams ? queryStringParams : ''}`, {
+    const res = await apiRequest(`/api/finance/${type}/${queryStringParams ? queryStringParams : ''}`, {
         method: "GET",
         cashe: "no-store",
     })
@@ -16,7 +16,7 @@ export async function getList(type, queryStringParams) {
 
 export async function getPayment(id, type) {
     'use server'
-    const res = await apiRequest(`/api/payment/${type}/${id}/`, {
+    const res = await apiRequest(`/api/finance/${type}/${id}/`, {
         method: "Get",
     })
 
@@ -29,7 +29,7 @@ export async function createUpdateTransaction(prevState, formData) {
     const hashedID = formData.get('hashed_id')
     const isUpdate = hashedID ? true : false
     const formDataObj = Object.fromEntries(formData.entries());
-    const res = await apiRequest(`/api/payment/${type}/${isUpdate ? hashedID + '/' : ''}`, {
+    const res = await apiRequest(`/api/finance/${type}/${isUpdate ? hashedID + '/' : ''}`, {
         method: `${isUpdate ? 'PATCH' : 'POST'}`,
         body: JSON.stringify(formDataObj),
         headers: {
@@ -45,7 +45,7 @@ export async function createUpdateTransaction(prevState, formData) {
 
 export async function deletePayment(type, id, isDeleteFromView) {
     'use server'
-    const res = await apiRequest(`/api/payment/${type}/${id}/`, {
+    const res = await apiRequest(`/api/finance/${type}/${id}/`, {
         method: "DELETE",
     })
 
