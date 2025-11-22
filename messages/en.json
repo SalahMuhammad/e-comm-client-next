@@ -35,7 +35,7 @@
 		"finance": {
 			"headLabel": "Finance",
 			"subLabels": {
-				"payments": "Payments",
+				"payments": "Payment List",
 				"addPayment": "Add Payment",
 				"expenses": "Expense List",
 				"addExpenses": "Add Expense",
