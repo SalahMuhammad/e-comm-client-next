@@ -9,6 +9,7 @@ import { getCreditBalance } from '@/app/[locale]/(protected)/invoice/_common/act
 import CompanyDetailsHead from '@/components/CompanyDetailsHead';
 import EventNotFound from '@/components/NotFound';
 import ViewNoteValue from './viewNoteValue';
+import ViewReceivedBy from './ViewReceivedBy';
 
 
 async function TransactionView({ id, type }) {
@@ -80,10 +81,7 @@ async function TransactionView({ id, type }) {
 
                 {/* <!-- Footer Section --> */}
                 <div className={styles["footer-section"]}>
-                    <div className={`${styles['received-by']}`}>
-                        <span className={styles["label"]}>Received By</span>
-                        <div className={styles["value-field"]} style={{ borderBottom: 'none' }}></div>
-                    </div>
+                    <ViewReceivedBy recivedBy={transaction.received_by} />
 
                     {Number(credit) !== 0 && <div className={`${styles['remaining-credit']}`} style={{position: "relative"}}>
                         <span className={styles["label"]}>Remaining Credit Balance: </span>
