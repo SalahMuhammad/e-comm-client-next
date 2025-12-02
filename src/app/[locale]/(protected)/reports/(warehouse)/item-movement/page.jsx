@@ -26,7 +26,7 @@ function page() {
             <h1 className='text-2xl font-bold mb-2'>{t("reportSections.warehouse.links.itemMovement.label")}</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
                 <SearchableDropdown
-                    url={'/api/items/?s='}
+                    url={'/api/items/?name='}
                     name={'item'}
                     placeholder={'Item'}
                 />

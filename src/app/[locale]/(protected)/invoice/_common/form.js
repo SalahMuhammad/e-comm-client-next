@@ -159,7 +159,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                     </div>
 
                     <SearchableDropdown
-                        url={'/api/items/?s='}
+                        url={'/api/items/?name='}
                         label={t("addItem")}
                         customLoadOptions={itemsLoadOptions}
                         value={selectedItem}
