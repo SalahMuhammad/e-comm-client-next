@@ -14,11 +14,21 @@ async function InvoiceList({ searchParams, type }) {
     const offset = params['offset'] ?? 0;
     const search = params[searchParamName] ?? '';
     const orderNo = params['no'] ?? '';
+    const note = params['note'] ?? '';
+    const itemDesc = params['itemdesc'] ?? '';
+    const itemName = params['itemname'] ?? '';
     const t = await getTranslations("invoice");
     const isRefund = type.split('/')[1] || false;
 
 
-    const res = (await getInvs(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${orderNo ? `&no=${orderNo}` : ''}`));
+    const res = (await getInvs(`${type}`, `?limit=${limit}
+&offset=${offset}${search ? `&owner=${search}` : ''}
+${orderNo ? `&no=${orderNo}` : ''}
+${note ? `&note=${note}` : ''}
+${itemDesc ? `&itemdesc=${itemDesc}` : ''}
+${itemName ? `&itemname=${itemName}` : ''}
+`
+    ));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
             redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
@@ -28,7 +38,10 @@ async function InvoiceList({ searchParams, type }) {
             <QueryParamSetterInput 
                 paramOptions={[
                     { label: 'Owner Name', value: 's' },
-                    { label: 'order no', value: 'no' }
+                    { label: 'Order Nu', value: 'no' },
+                    { label: 'Note', value: 'note' },
+                    { label: 'Item Description', value: 'itemdesc' },
+                    { label: 'Item Name', value: 'itemname' },
                 ]}
             />
             

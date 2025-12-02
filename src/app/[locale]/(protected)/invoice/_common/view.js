@@ -78,7 +78,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                             <p className={`text-sm font-serif wrap-break-word break-all whitespace-normal max-w-57`}>Receiver: <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300 text-xs">{invoice.owner_name}</span></p>
                         </Link>
                         {ownerData?.address && <p className={`text-sm font-serif pl-1 wrap-break-word break-all whitespace-normal max-w-57`}><span className="text-xs text-gray-500">{(ownerData?.addressDetails ? ownerData?.addressDetails : '') + ownerData?.address}</span></p>}
-                        <p className={`text-sm font-serif`}>{isRefund ? 'Refund': 'Order'} No: <span className="text-xs text-gray-500">#{invoice.hashed_id}</span></p>
+                        <p className={`text-sm font-serif`}>Nu: <span className="text-xs text-gray-500">#{invoice.hashed_id}</span></p>
                         <p className={`text-sm font-serif none-printable`}>Created by: <span className="text-xs text-gray-500">{invoice.by_username}</span></p>
                         <p className={`text-sm font-serif`}>Issued: <span className="text-xs text-gray-500">{formatDate(invoice.issue_date)}</span></p>
                         <p className={`text-sm font-serif`}>Total Amount: <span className="text-xs text-gray-500">{invoice.total_amount}</span></p>
