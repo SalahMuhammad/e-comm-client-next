@@ -6,7 +6,7 @@ export async function generateMetadata({ params }) {
     const invoice = (await getInv('purchases', id)).data
 
     return {
-        title: invoice?.id ? `${invoice.owner_name} - ${invoice.issue_date} - order No#${invoice.hashed_id}` : 'Invoice Not Found',
+        title: invoice?.id ? `${invoice.owner_name} - ${invoice.issue_date} - order Nu#${invoice.hashed_id}` : 'Invoice Not Found',
         description: '...',
     };
 }

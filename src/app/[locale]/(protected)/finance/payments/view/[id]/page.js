@@ -6,7 +6,7 @@ export async function generateMetadata({ params }) {
     const transaction = (await getPayment(id, 'payment')).data
 
     return {
-        title: transaction?.id ? `${transaction.owner_name} - ${transaction.date} - Receipt No #${transaction.hashed_id}` : 'Not Found',
+        title: transaction?.id ? `${transaction.owner_name} - ${transaction.date} - Receipt Nu #${transaction.hashed_id}` : 'Not Found',
         description: '...',
     };
 }
