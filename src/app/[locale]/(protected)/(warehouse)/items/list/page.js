@@ -8,13 +8,26 @@ import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
 
 async function Items({ searchParams }) {
-    const searchParamName = 's'; // The query parameter name for search
     const params = await searchParams;
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
-    const search = params[searchParamName] ?? '';
+    const type = params['type'] ?? '';
+    const id = params['id'] ?? '';
+    const name = params['name'] ?? '';
+    const barcode = params['barcode'] ?? '';
+    const place = params['place'] ?? '';
+    const origin = params['origin'] ?? '';
 
-    const res = await getItems(`?limit=${limit}&offset=${offset}${search ? `&s=${search}` : ''}`);
+    const res = await getItems(`
+?limit=${limit}
+&offset=${offset}
+${type ? `&type=${type}` : ''}
+${id ? `&id=${id}` : ''}
+${name ? `&name=${name}` : ''}
+${barcode ? `&barcode=${barcode}` : ''}
+${place ? `&place=${place}` : ''}
+${origin ? `&origin=${origin}` : ''}
+`);
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
                 redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res?.data
@@ -22,9 +35,13 @@ async function Items({ searchParams }) {
     return (
         <>
             <QueryParamSetterInput
-                paramName={searchParamName}
                 paramOptions={[
-                    { label: 'Item Name', value: 's' },
+                    { label: 'Type', value: 'type' },
+                    { label: 'ID', value: 'id' },
+                    { label: 'Name', value: 'name' },
+                    { label: 'Barcode', value: 'barcode' },
+                    { label: 'Place', value: 'place' },
+                    { label: 'Origin', value: 'origin' },
                 ]}
             />    
             {data.err || data?.count == 0 ? 
