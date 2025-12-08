@@ -526,6 +526,10 @@
 						"label": "Item Movement", 
 						"description": "Track inventory movements and transfers" 
 					},
+                    "itemsSale":{ 
+						"label": "Items Sale", 
+						"description": "Track Items sale in period" 
+					},
                     "itemsAsXLSX":{ 
 						"label": "Generate Items As XLSX", 
 						"description": "export items as xlsx" 

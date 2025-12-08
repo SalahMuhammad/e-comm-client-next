@@ -28,8 +28,8 @@ async function page({ params }) {
                 },
                 {
                     href: "/reports/sales-refund-items-totals",
-                    label: t("reportSections.warehouse.links.itemMovement.label"),
-                    description: t("reportSections.warehouse.links.itemMovement.description"),
+                    label: t("reportSections.warehouse.links.itemsSale.label"),
+                    description: t("reportSections.warehouse.links.itemsSale.description"),
                     icon: ChartBarIcon,
                 }
             ]

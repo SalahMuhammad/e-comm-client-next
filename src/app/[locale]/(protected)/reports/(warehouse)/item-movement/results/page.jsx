@@ -54,7 +54,7 @@ async function page({ searchParams }) {
                                 <td className="p-4 text-sm w-sm text-gray-900">
                                     <RefranceIDElement transaction={transaction} />
                                 </td>
-                                <td className="p-4 text-sm w-sm font-medium text-gray-900">
+                                <td className={`p-4 text-sm w-sm font-medium ${transaction?.quantity > 0 ? 'text-green-600' : 'text-red-600'}`}>
                                     {transaction?.quantity || 'None'}
                                 </td>
                                 <td className="p-4 text-sm whitespace-pre font-medium text-gray-900">
