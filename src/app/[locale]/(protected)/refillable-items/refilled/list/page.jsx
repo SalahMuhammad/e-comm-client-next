@@ -4,6 +4,7 @@ import DeleteButton from "./DeleteButton"
 import PaginationControls from "@/components/PaginationControls"
 import ErrorLoading from "@/components/ErrorLoading";
 import { getTranslations } from "next-intl/server";
+import SearchInput from "@/components/QueryParamSetterInput";
 
 
 async function page({ searchParams }) {
@@ -11,10 +12,27 @@ async function page({ searchParams }) {
     const params = await searchParams;
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
-    const res = await getRefilledItems(`?limit=${limit}&offset=${offset}`)
+    const rItem = params['ritem'] ?? 0;
+    const uItem = params['uitem'] ?? 0;
+    const note = params['note'] ?? 0;
+    const res = await getRefilledItems(`
+?offset=${offset}
+${limit ? `&limit=${limit}` : ''}
+${rItem ? `&ritem=${rItem}` : ''}
+${uItem ? `&uitem=${uItem}` : ''}
+${note ? `&note=${note}` : ''}
+`)
 
     return (
         <div>
+            <SearchInput
+                paramOptions={[
+                    { label: 'Refilled Item', value: 'ritem' },
+                    { label: 'Used Item', value: 'uitem' },
+                    { label: 'Note', value: 'note' },
+                    { label: 'Limit', value: 'limit' },
+                ]}
+            />  
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
