@@ -46,7 +46,7 @@ async function page({ searchParams }) {
 
                     <tbody className="bg-white">
                         {Array.isArray(data) && data.length > 0 ? data.map((row) => (
-                            <tr key={row.item_id ?? `${row.item_repr}-${row.repository_id}`} className={`border-b border-gray-100 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700`}>
+                            <tr key={`${row.item_id}-${row.item_repr}-${row.repository_id}`} className={`border-b border-gray-100 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700`}>
                                 <td className="p-4 text-sm text-gray-900">
                                     <div className="max-w-[320px] truncate">{row.item_repr}</div>
                                     <div className="text-xs text-gray-500">#{row.item_id}</div>
