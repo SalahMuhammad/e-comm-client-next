@@ -2,28 +2,18 @@
 
 import { initFlowbite } from 'flowbite'
 import Link from 'next/link';
-import {useTranslations} from 'next-intl';
+import { useTranslations } from 'next-intl';
 import '@/styles/sidebar.css';
 import UserAvatar from './UserAvatar';
-import {
-// Warehouse icons
-    CubeIcon, PlusCircleIcon, BuildingStorefrontIcon, HomeModernIcon,
-// Sales icons
-    DocumentTextIcon, DocumentPlusIcon, ClockIcon,
-// Customers/Suppliers icons
-    UsersIcon, UserPlusIcon,
-// Finance icons
-    CreditCardIcon, BanknotesIcon, ReceiptPercentIcon, ExclamationTriangleIcon, ScaleIcon,
-// Refilled Cans icons
-    BeakerIcon, UserGroupIcon, WrenchScrewdriverIcon,
-// Others
-    Cog6ToothIcon, ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
+import { WrenchScrewdriverIcon, Cog6ToothIcon, ArrowRightOnRectangleIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { useEffect, useState } from 'react';
 // import logout from './logout';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from './LanguageToggle';
+import { getMenuItems } from '@/constants/navigation';
+import companyDetails from '@/constants/company';
 
-export default function Sidebar({username}) {
+export default function Sidebar({ username }) {
     const t = useTranslations('navLinks');
 
 
@@ -33,190 +23,7 @@ export default function Sidebar({username}) {
     }, []);
 
     const [openSection, setOpenSection] = useState(null);
-
-    const menuItems = [
-        {
-            head: t('invoice.sales.headLabel'),
-            icon: (
-                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-6a6 6 0 100 12A6 6 0 0010 4zm1 7V7a1 1 0 10-2 0v5a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414l-2.707-2.707z"/>
-                </svg>
-            ),
-            links: [
-                { 
-                    label: t('invoice.subLabels.invoiceManagement'), 
-                    path: '/invoice/sales/list',
-                    icon: <DocumentTextIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('invoice.subLabels.createInvoice'), 
-                    path: '/invoice/sales/form',
-                    icon: <DocumentPlusIcon className="w-4 h-4" />
-                },
-                {
-                    icon: <ClockIcon className="w-4 h-4"/>,
-                    label: t('invoice.subLabels.refund'), 
-                    path: '/invoice/sales/refund/list',
-                }
-            ]
-        },
-        {
-            head: t('invoice.purchase.headLabel'),
-            icon: (
-                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 10a8 8 0 1116 0A8 8 0 012 10zm8-6a6 6 0 100 12A6 6 0 0010 4zm1 7V7a1 1 0 10-2 0v5a1 1 0 00.293.707l3 3a1 1 0 001.414-1.414l-2.707-2.707z"/>
-                </svg>
-            ),
-            links: [
-                { 
-                    label: t('invoice.subLabels.invoiceManagement'), 
-                    path: '/invoice/purchases/list',
-                    icon: <DocumentTextIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('invoice.subLabels.createInvoice'), 
-                    path: '/invoice/purchases/form',
-                    icon: <DocumentPlusIcon className="w-4 h-4" />
-                },
-            ]
-        },
-        {
-            head: t('warehouse.headLabel'),
-            icon: (
-                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
-                    <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
-                </svg>
-            ),
-            links: [
-                { 
-                    label: t('warehouse.subLabels.items'), 
-                    path: '/items/list',
-                    icon: <CubeIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('warehouse.subLabels.createItem'), 
-                    path: '/items/form',
-                    icon: <PlusCircleIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('warehouse.subLabels.repositories'), 
-                    path: '/repository/list',
-                    icon: <BuildingStorefrontIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('warehouse.subLabels.createRepository'), 
-                    path: '/repository/form',
-                    icon: <HomeModernIcon className="w-4 h-4" />
-                },
-            ]
-        },
-        {
-            head: t('customersSuppliers.headLabel'),
-            icon: (
-                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 10a4 4 0 100-8 4 4 0 000 8zm-6 8a6 6 0 1112 0H4z"/>
-                </svg>
-            ),
-            links: [
-                { 
-                    label: t('customersSuppliers.subLabels.management'), 
-                    path: '/customer-supplier/list',
-                    icon: <UsersIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('customersSuppliers.subLabels.createInvoice'), 
-                    path: '/customer-supplier/form',
-                    icon: <UserPlusIcon className="w-4 h-4" />
-                },
-            ]
-        },
-        {
-            head: t('finance.headLabel'),
-            icon: (
-                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M2 4a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H4a2 2 0 01-2-2V4zm2 0v12h12V4H4zm2 2h8v2H6V6zm0 4h8v2H6v-2zm0 4h5v2H6v-2z"/>
-                </svg>
-            ),
-            links: [
-                { 
-                    label: 'management', 
-                    path: '/finance/management',
-                    icon: <CreditCardIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('finance.subLabels.payments'), 
-                    path: '/finance/payments/list',
-                    icon: <CreditCardIcon className="w-4 h-4" />
-                },
-                // { 
-                //     label: t('finance.subLabels.addPayment'), 
-                //     path: '/finance/payments/form',
-                //     icon: <BanknotesIcon className="w-4 h-4" />
-                // },
-                {
-                    label: t('finance.subLabels.reversePayment'), 
-                    path: '/finance/reverse-payment/list',
-                    icon: <ReceiptPercentIcon className="w-4 h-4" />
-                },
-                // { 
-                //     label: t('finance.subLabels.addReversePayment'), 
-                //     path: '/finance/reverse-payment/form',
-                //     icon: <ExclamationTriangleIcon className="w-4 h-4" />
-                // },
-                { 
-                    label: t('finance.subLabels.expenses'), 
-                    path: '/finance/expense/list',
-                    icon: <ExclamationTriangleIcon className="w-4 h-4" />
-                },
-                // { 
-                //     label: t('finance.subLabels.addExpenses'), 
-                //     path: '/finance/expense/form',
-                //     icon: <ExclamationTriangleIcon className="w-4 h-4" />
-                // },
-                { 
-                    label: t('finance.subLabels.debtSettlement'), 
-                    path: '/finance/debt-settlement/list',
-                    icon: <ExclamationTriangleIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('finance.subLabels.debtSettlementForm'), 
-                    path: '/finance/debt-settlement/form',
-                    icon: <ExclamationTriangleIcon className="w-4 h-4" />
-                },
-            ]
-        },
-
-        {
-            head: t('refilledCans.headLabel'),
-            icon: (
-                <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm0 2h12v10H4V5zm2 2v6h8V7H6zm2 2h4v2H8V9z"/>
-                </svg>
-            ),
-            links: [
-                { 
-                    label: t('refilledCans.subLabels.refilled'), 
-                    path: '/refillable-items/refilled/list',
-                    icon: <BeakerIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('refilledCans.subLabels.createRefilled'), 
-                    path: '/refillable-items/refilled/form',
-                    icon: <BeakerIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('refilledCans.subLabels.refund'), 
-                    path: '/refillable-items/refund/list',
-                    icon: <UserGroupIcon className="w-4 h-4" />
-                },
-                { 
-                    label: t('refilledCans.subLabels.createRefund'), 
-                    path: '/refillable-items/refund/form',
-                    icon: <WrenchScrewdriverIcon className="w-4 h-4" />
-                }
-            ]
-        }
-    ];
+    const menuItems = getMenuItems(t);
 
     return (
         <>
@@ -231,13 +38,13 @@ export default function Sidebar({username}) {
                                 </svg>
                             </button>
                             <Link href="/dashboard" className="flex ms-2 md:me-24">
-                                <img src="/assets/logo/fav2.png" className="h-8 me-3" alt="Med Pro Logo" />
+                                <img src={companyDetails.logo} className="h-8 me-3" alt="Med Pro Logo" />
                                 <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
-                                    MedPro
+                                    {companyDetails.name}
                                 </span>
                             </Link>
                         </div>
-                        
+
                         <div className="flex items-center">
 
                             <ThemeToggle />
@@ -252,8 +59,8 @@ export default function Sidebar({username}) {
                                     </button>
                                 </div>
                                 <div
-                                className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600 w-54 translate-x-[-7px]"
-                                id="dropdown-user"
+                                    className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600 w-54 translate-x-[-7px]"
+                                    id="dropdown-user"
                                 >
                                     <div className="px-4 py-3" role="none">
                                         <p className="text-sm text-gray-900 dark:text-white" role="none">
@@ -287,7 +94,7 @@ export default function Sidebar({username}) {
                                                 href="/auth/logout"
                                                 className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                                                 role="menuitem"
-                                                // onClick={logout}
+                                            // onClick={logout}
                                             >
                                                 <ArrowRightOnRectangleIcon className="h-4 w-4" />
                                                 {t('userDropDown.signOut')}
@@ -318,17 +125,17 @@ export default function Sidebar({username}) {
                         </li>
                         {menuItems.map((obj, i) => (
                             <li key={i}>
-                                <button 
-                                    type="button" 
-                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" 
+                                <button
+                                    type="button"
+                                    className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                                     // aria-controls={obj.head} 
                                     data-collapse-toggle={obj.head}
                                     onClick={() => setOpenSection(openSection === obj.head ? null : obj.head)}
->
+                                >
                                     {obj.icon}
                                     <span className="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{obj.head}</span>
                                     <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
+                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
                                     </svg>
                                 </button>
                                 <ul
@@ -336,11 +143,20 @@ export default function Sidebar({username}) {
                                     className={`overflow-hidden transition-[max-height] duration-300 ease-in-out ${openSection === obj.head ? 'max-h-100' : 'max-h-0'} px-2`}
                                 >
                                     {obj.links.map((link, j) => (
-                                        <li key={j}>
-                                            <Link href={link.path} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-4 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                        <li key={j} className="flex items-center relative group/item">
+                                            <Link href={link.path} className={`flex items-center w-full p-2 text-gray-900 transition-all duration-200 rounded-lg pl-3 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${link.addPath ? 'group-hover/item:pr-10' : ''}`}>
                                                 {link.icon}
-                                                <span className='ms-3'>{link.label}</span>
+                                                <span className='ms-3 flex-1 text-ellipsis overflow-hidden whitespace-nowrap'>{link.label}</span>
                                             </Link>
+                                            {link.addPath && (
+                                                <Link
+                                                    href={link.addPath}
+                                                    title={t('quickAdd')}
+                                                    className="absolute right-2 p-1.5 text-gray-500 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-md shadow-sm border border-gray-100 dark:border-gray-700 opacity-0 group-hover/item:opacity-100 hover:bg-gray-50 hover:text-blue-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-blue-400 transition-all duration-200 z-10"
+                                                >
+                                                    <PlusIcon className="w-4 h-4" />
+                                                </Link>
+                                            )}
                                         </li>
                                     ))}
                                 </ul>
