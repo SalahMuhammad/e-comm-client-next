@@ -3,16 +3,20 @@
 import { useEffect, useState } from 'react';
 import { getExpenses } from '../actions';
 import PaginationControls from '@/components/PaginationControls';
+import TableNote from '@/components/TableNote';
 import FilterButtons from './StatusFilters';
 import { formatDateTime, formatDate } from '@/utils/dateFormatter';
 import { formatCurrency } from '@/utils/CurrencyFormatter';
 import Gallery from '../../../(warehouse)/items/list/Gallery';
 import ImageView from '@/components/ImageView';
-import {  useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import SearchInput from '@/components/QueryParamSetterInput';
 
 
+import { useTranslations } from 'next-intl';
+
 export default function ExpenseList() {
+    const t = useTranslations('inputs.search');
     const [expandedId, setExpandedId] = useState(null);
     const [res, setRes] = useState([])
     const [image, setImage] = useState([])
@@ -22,7 +26,7 @@ export default function ExpenseList() {
     const statusParam = searchParams.get('status')
     const categoryParam = searchParams.get('category')
 
-    
+
     useEffect(() => {
         const fetchExpenses = async () => {
             const res = await getExpenses(`?offset=${offsetParam || 0}&limit=${limitParam || 12}&status=${statusParam || ''}&category=${categoryParam || ''}`)
@@ -49,10 +53,10 @@ export default function ExpenseList() {
                 </div>
 
                 <SearchInput paramOptions={[
-                    { label: 'Category', value: 'category' },
-                    { label: 'Limit', value: 'limit' },
-                    { label: 'Offset', value: 'offset' }
-                ]}/>
+                    { label: t('category'), value: 'category' },
+                    { label: t('limit'), value: 'limit' },
+                    { label: t('offset'), value: 'offset' }
+                ]} />
 
                 {/* Filter Buttons */}
                 <FilterButtons statusMap={statusMap} />
@@ -141,9 +145,9 @@ export default function ExpenseList() {
                                                     <label className="block text-sm font-medium text-gray-700 mb-1">
                                                         Notes
                                                     </label>
-                                                    <p className="text-gray-700 text-sm bg-white p-2 rounded border border-gray-200">
-                                                        {expense.notes}
-                                                    </p>
+                                                    <div className="bg-white p-2 rounded border border-gray-200">
+                                                        <TableNote note={expense.notes} />
+                                                    </div>
                                                 </div>
                                             )}
 

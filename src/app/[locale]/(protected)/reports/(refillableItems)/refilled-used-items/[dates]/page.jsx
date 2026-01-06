@@ -86,7 +86,7 @@ async function page({ params }) {
                                     {transaction.date}
                                 </td>
                                 <td className="p-4 text-sm whitespace-pre font-medium text-gray-900">
-                                    {transaction.notes}
+                                    <TableNote note={transaction.notes} />
                                 </td>
                             </tr>
                         ))}

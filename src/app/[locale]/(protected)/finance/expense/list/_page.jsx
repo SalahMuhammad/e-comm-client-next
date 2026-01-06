@@ -18,7 +18,7 @@ async function List({ searchParams }) {
     const offset = params['offset'] ?? 0;
     const transactionNumber = params[searchParamName] ?? null;
     const category = params['cat'] ?? null
-    const t = await getTranslations("finance");
+    const t = await getTranslations();
 
 
     const res = (await getExpenses(
@@ -51,7 +51,7 @@ async function List({ searchParams }) {
         {
             header: 'date',
             cell: (row) => formatDate(row.date)
-            
+
         },
         {
             header: 'status',
@@ -69,7 +69,7 @@ async function List({ searchParams }) {
                         href={`/finance/expense/form/${row.hashed_id}`}
                         className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     >
-                        {t('table.edit')}
+                        {t('finance.table.edit')}
                     </Link>
                     <DeleteTransaction id={row.hashed_id} />
                     <ToolTip obj={row} />
@@ -83,8 +83,8 @@ async function List({ searchParams }) {
             <QueryParamSetterInput
                 paramName={searchParamName}
                 paramOptions={[
-                    { label: 'transaction number', value: 'nu' },
-                    { label: 'category', value: 'cat' },
+                    { label: t('inputs.search.transactionNumber'), value: 'nu' },
+                    { label: t('inputs.search.category'), value: 'cat' },
                 ]}
             />
 
@@ -108,7 +108,7 @@ async function List({ searchParams }) {
                                         {column.cell(obj)}
                                     </td>
                                 ))}
-                         
+
                             </tr>
                         ))}
                     </tbody>

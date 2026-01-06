@@ -51,8 +51,8 @@ export default function InvoiceListTable({ initialData, type }) {
                 {items?.map((inv) => {
                     const isDeleting = deletingId === inv.id;
                     return (
-                        <tr 
-                            key={inv.id} 
+                        <tr
+                            key={inv.id}
                             className={`
                                 transition-all duration-300 ease-in-out
                                 ${isDeleting ? 'opacity-0 -translate-x-5 pointer-events-none' : ''}
@@ -76,11 +76,11 @@ export default function InvoiceListTable({ initialData, type }) {
                             </td>
                             {!isRefund && (
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    <RepositoryPermitButton id={inv.id} type={type} permitValue={inv.repository_permit} width="170px"/>
+                                    <RepositoryPermitButton id={inv.id} type={type} permitValue={inv.repository_permit} width="170px" />
                                 </td>
                             )}
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                <pre className="whitespace-pre-wrap">{inv.notes}</pre>
+                                <TableNote note={inv.notes} />
                             </td>
                             {isRefund && (
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
@@ -95,13 +95,13 @@ export default function InvoiceListTable({ initialData, type }) {
                                         className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
                                     />
                                     <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                    {t("table.view")}
+                                        {t("table.view")}
                                     </span>
                                 </Link>
                                 {!isRefund && (
                                     <>
                                         <DeleteButton type={type} hashed_id={inv.hashed_id} onDelete={() => handleDelete(inv.id)} />
-                                        <Link 
+                                        <Link
                                             href={`/invoice/${type}/form/${inv.hashed_id}`}
                                             className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
                                         >

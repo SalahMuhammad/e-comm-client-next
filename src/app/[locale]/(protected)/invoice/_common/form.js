@@ -77,7 +77,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
         }));
         callback(options);
     }
-    
+
     useEffect(() => {
         if (state?.ok === undefined) return
         if (handleGenericErrors(state)) return
@@ -112,7 +112,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                             <NumberInput placeholder={tGlobal("id")} id="id" value={state?.data?.id || initialData.id} borderColor="border-green-500 dark:border-green-400 mt-2 mb-2" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly labelClass='z-20' />
                             <input type='hidden' name='hashed_id' value={initialData.hashed_id} />
                         </>
-                    )}  
+                    )}
                     <div className={styles.formRow}>
                         <div className={styles.formGroup}>
                             <label htmlFor="issue_date">{t("issueDate")}</label>
@@ -123,7 +123,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                 defaultValue={state?.formData?.issue_date || initialData?.issue_date || formatDateManual(new Date())}
                                 required
                             />
-                            <FieldError error={state?.data?.issue_date} />
+                            <FieldError error={!state?.ok ? state?.data?.issue_date : null} />
                         </div>
                         <div className={styles.formGroup}>
                             <label htmlFor="due_date">{t("dueDate")}</label>
@@ -134,7 +134,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                 defaultValue={state?.formData?.due_date || initialData?.due_date || formatDateManual(addDays(14))}
                                 required
                             />
-                            <FieldError error={state?.data?.due_date} />
+                            <FieldError error={!state?.ok ? state?.data?.due_date : null} />
                         </div>
                     </div>
 
@@ -143,18 +143,18 @@ const InvoiceForm = ({ type, initialData = null }) => {
                             url={'/api/buyer-supplier-party/?s='}
                             label={t('owner')}
                             name="owner"
-                            defaultValue={initialData?.owner ? { value: initialData?.owner, label: initialData?.owner_name } :  ''}
-                            // required
+                            defaultValue={initialData?.owner ? { value: initialData?.owner, label: initialData?.owner_name } : ''}
+                        // required
                         />
-                        <FieldError error={state?.data?.owner} />
+                        <FieldError error={!state?.ok ? state?.data?.owner : null} />
                     </div>
                 </div>
 
                 <div className={styles.itemsSection}>
                     <div className={styles.itemsHeader}>
                         <h3>{t("items")}</h3>
-                        {typeof state?.[typePrefix]?.[0] === 'string' && 
-                            <FieldError error={state?.data?.[typePrefix]} />
+                        {typeof state?.[typePrefix]?.[0] === 'string' &&
+                            <FieldError error={!state?.ok ? state?.data?.[typePrefix] : null} />
                         }
                     </div>
 
@@ -169,11 +169,10 @@ const InvoiceForm = ({ type, initialData = null }) => {
                     <div className={styles.itemsList}>
                         {items.map((item, index) => (
                             <div
-                            key={item.id}
-                            className={`${styles.itemCard} ${
-                                state?.data?.[typePrefix]?.[index]?.item &&
-                                "border-2 border-red-500 dark:border-red-400 rounded transition-colors duration-300 ease-in-out"
-                            }`}
+                                key={item.id}
+                                className={`${styles.itemCard} ${state?.data?.[typePrefix]?.[index]?.item &&
+                                    "border-2 border-red-500 dark:border-red-400 rounded transition-colors duration-300 ease-in-out"
+                                    }`}
                             >
                                 <div
                                     className={styles.itemHeader}
@@ -204,7 +203,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                         <div className={styles.itemMeta}>
                                             <span className={styles.itemId}>{t("itemId")} {item.item || t("notSet")}</span>
                                         </div>
-                                        <FieldError error={state?.data?.[typePrefix]?.[index]?.item} />
+                                        <FieldError error={!state?.ok ? state?.data?.[typePrefix]?.[index]?.item : null} />
                                     </div>
 
                                     <div className={styles.itemQuantity}>
@@ -228,7 +227,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                             className={styles.qtyInput}
                                             onClick={(e) => e.stopPropagation()}
                                         />
-                                        <FieldError error={state?.data?.items?.[index]?.quantity} />
+                                        <FieldError error={!state?.ok ? state?.data?.items?.[index]?.quantity : null} />
                                         <button
                                             type="button"
                                             onClick={(e) => {
@@ -266,7 +265,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                                     onChange={(e) => updateItem(item.id, 'unit_price', e.target.value)}
                                                     placeholder="0.00"
                                                 />
-                                                <FieldError error={state?.data?.[typePrefix]?.[index]?.unit_price} />
+                                                <FieldError error={!state?.ok ? state?.data?.[typePrefix]?.[index]?.unit_price : null} />
                                             </div>
                                             <div className={styles.formGroup}>
                                                 <label>{t("discount")}</label>
@@ -278,7 +277,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                                     onChange={(e) => updateItem(item.id, 'discount', e.target.value)}
                                                     placeholder="0.00"
                                                 />
-                                                <FieldError error={state?.data?.[typePrefix]?.[index]?.discount} />
+                                                <FieldError error={!state?.ok ? state?.data?.[typePrefix]?.[index]?.discount : null} />
                                             </div>
                                         </div>
                                         <div className={styles.detailsRow}>
@@ -293,7 +292,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                                     onChange={(e) => updateItem(item.id, 'tax_rate', e.target.value)}
                                                     placeholder="0.00"
                                                 />
-                                                <FieldError error={state?.data?.[typePrefix]?.[index]?.tax_rate} />
+                                                <FieldError error={!state?.ok ? state?.data?.[typePrefix]?.[index]?.tax_rate : null} />
                                             </div>
                                             <div className={styles.formGroup}>
                                                 <label>{t("description")}</label>
@@ -303,24 +302,25 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                                     value={item.description}
                                                     onChange={(e) => updateItem(item.id, 'description', e.target.value)}
                                                 />
-                                                <FieldError error={state?.data?.[typePrefix]?.[index]?.description} />
+                                                <FieldError error={!state?.ok ? state?.data?.[typePrefix]?.[index]?.description : null} />
                                             </div>
                                         </div>
                                         <div className={styles.detailsRow}>
                                             <div className={styles.formGroup}>
-                                            <label>{t("repository")}</label>
-                                            <SearchableDropdown
-                                                url={'/api/repositories/?s='}
-                                                name={`items[${index}][repository]`}
-                                                value={{value: item.repository, label: item.repository_name}}
-                                                onChange={(repo) => {
-                                                    setItems(items.map(iitem =>
-                                                        iitem.id === item.id ? { ...iitem, repository_name: repo?.label || '', repository: repo?.value || '' } : iitem
-                                                    ));}
-                                                }
-                                                placeholder={t("selectRepository")}
-                                            />
-                                            <FieldError error={state?.data?.[typePrefix]?.[index]?.repository} />
+                                                <label>{t("repository")}</label>
+                                                <SearchableDropdown
+                                                    url={'/api/repositories/?s='}
+                                                    name={`items[${index}][repository]`}
+                                                    value={{ value: item.repository, label: item.repository_name }}
+                                                    onChange={(repo) => {
+                                                        setItems(items.map(iitem =>
+                                                            iitem.id === item.id ? { ...iitem, repository_name: repo?.label || '', repository: repo?.value || '' } : iitem
+                                                        ));
+                                                    }
+                                                    }
+                                                    placeholder={t("selectRepository")}
+                                                />
+                                                <FieldError error={!state?.ok ? state?.data?.[typePrefix]?.[index]?.repository : null} />
                                             </div>
                                         </div>
                                     </div>
@@ -350,7 +350,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                             defaultValue={initialData?.notes || ''}
                             placeholder={t("additionalNotes")}
                         />
-                        <FieldError error={state?.data?.notes} />
+                        <FieldError error={!state?.ok ? state?.data?.notes : null} />
                     </div>
 
                     <div className={styles.totalSection}>

@@ -30,17 +30,17 @@ function MyForm({ initialData, type }) {
         { value: 'expense', label: 'expense' },
     ]
     const defaultDate = state.formData?.date || initialData?.date || formatDateManual(new Date())
-    const defaultOwner = state.formData?.owner || initialData?.owner ? { 
-        value: state.formData?.owner      || initialData?.owner, 
+    const defaultOwner = state.formData?.owner || initialData?.owner ? {
+        value: state.formData?.owner || initialData?.owner,
         label: state.formData?.owner_name || initialData?.owner_name
     } : undefined
-    const defaultPaymenType = state.formData?.payment_type || initialData?.payment_type ? { 
-        value: state.formData?.payment_type   || initialData?.payment_type, 
-        label: state.formData?.payment_type   || initialData?.payment_type 
+    const defaultPaymenType = state.formData?.payment_type || initialData?.payment_type ? {
+        value: state.formData?.payment_type || initialData?.payment_type,
+        label: state.formData?.payment_type || initialData?.payment_type
     } : options[0]
-    const defaultPaymentMethod = state.formData?.payment_method || initialData?.payment_method ? { 
-        value: state.formData?.payment_method         || initialData?.payment_method, 
-        label: state.formData?.payment_method_name    || initialData?.payment_method_name 
+    const defaultPaymentMethod = state.formData?.payment_method || initialData?.payment_method ? {
+        value: state.formData?.payment_method || initialData?.payment_method,
+        label: state.formData?.payment_method_name || initialData?.payment_method_name
     } : undefined
 
 
@@ -73,14 +73,14 @@ function MyForm({ initialData, type }) {
                 <div className={styles.invoiceDetails}>
                     {initialData?.hashed_id && (
                         <TextInput
-                            placeholder={'id'} 
-                            id="hashed_id" 
-                            value={initialData?.hashed_id} 
-                            bordercolor="border-green-500 dark:border-green-400" 
-                            labelcolor="text-green-600 dark:text-green-400" 
-                            focuscolor="" 
-                            focuslabelcolor="" 
-                            name="hashed_id" 
+                            placeholder={'id'}
+                            id="hashed_id"
+                            value={initialData?.hashed_id}
+                            bordercolor="border-green-500 dark:border-green-400"
+                            labelcolor="text-green-600 dark:text-green-400"
+                            focuscolor=""
+                            focuslabelcolor=""
+                            name="hashed_id"
                             readOnly
                         />
                     )}
@@ -96,7 +96,7 @@ function MyForm({ initialData, type }) {
                             defaultValue={defaultDate}
                             required
                         />
-                        <FieldError error={state.data?.date} />
+                        <FieldError error={!state?.ok ? state.data?.date : null} />
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
@@ -107,7 +107,7 @@ function MyForm({ initialData, type }) {
                             defaultValue={defaultOwner}
                             required
                         />
-                        <FieldError error={state.data?.owner} />
+                        <FieldError error={!state?.ok ? state.data?.owner : null} />
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
@@ -117,7 +117,7 @@ function MyForm({ initialData, type }) {
                             name={'payment_method'}
                             defaultValue={defaultPaymentMethod}
                         />
-                        <FieldError error={state.data?.payment_method} />
+                        <FieldError error={!state?.ok ? state.data?.payment_method : null} />
                     </div>
 
                     <div className={styles.detailsRow}>
@@ -130,16 +130,16 @@ function MyForm({ initialData, type }) {
                                 defaultValue={state.formData?.amount || initialData?.amount || ''}
                                 placeholder="0.00"
                             />
-                            <FieldError error={state.data?.amount} />
+                            <FieldError error={!state?.ok ? state.data?.amount : null} />
                         </div>
                         <div className={styles.formGroup}>
-                            <StaticSelect 
+                            <StaticSelect
                                 options={options}
                                 name={'payment_type'}
                                 label={t('finance.fields.type')}
                                 defaultValue={defaultPaymenType}
                             />
-                            <FieldError error={state.data?.payment_type} />
+                            <FieldError error={!state?.ok ? state.data?.payment_type : null} />
                         </div>
                     </div>
 
@@ -180,7 +180,7 @@ function MyForm({ initialData, type }) {
                             defaultValue={state.formData?.note || initialData?.note || ''}
                             placeholder={t('finance.fields.moreNotes')}
                         />
-                        <FieldError error={state.data?.note} />
+                        <FieldError error={!state?.ok ? state.data?.note : null} />
                     </div>
                 </div>
 

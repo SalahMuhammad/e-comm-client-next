@@ -7,7 +7,6 @@ async function page({ params }) {
     const t = await getTranslations("global.errors");
     const id = (await params).id
     const inv = await (await getInv('purchases', id)).data
-    console.log(inv)
 
     return (
         <div>

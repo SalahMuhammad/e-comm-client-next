@@ -46,16 +46,16 @@ function RefilledForm({ initialData }) {
                 <div className={styles.formBody}>
                     {initialData?.id && (
                         <div className={styles.formGroup}>
-                            <NumberInput 
-                                placeholder={'ID'} 
-                                id="id" 
-                                value={state?.id || initialData.id} 
-                                borderColor="border-green-500 dark:border-green-400" 
-                                labelColor="text-green-600 dark:text-green-400" 
-                                focusColor="" 
-                                focusLabelColor="" 
-                                name="id" 
-                                readOnly 
+                            <NumberInput
+                                placeholder={'ID'}
+                                id="id"
+                                value={state?.id || initialData.id}
+                                borderColor="border-green-500 dark:border-green-400"
+                                labelColor="text-green-600 dark:text-green-400"
+                                focusColor=""
+                                focusLabelColor=""
+                                name="id"
+                                readOnly
                             />
                         </div>
                     )}
@@ -69,7 +69,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={state?.formData?.date || initialData?.date || formatDateManual(new Date())}
                             required
                         />
-                        <FieldError error={state?.data?.date} />
+                        <FieldError error={!state?.ok ? state?.data?.date : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -81,7 +81,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={initialData?.id ? { value: initialData?.refilled_item, label: initialData?.refilled_item_name } : null}
                             placeholder={t("form.refilledItem")}
                         />
-                        <FieldError error={state.data?.refilled_item} />
+                        <FieldError error={!state?.ok ? state.data?.refilled_item : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -89,7 +89,7 @@ function RefilledForm({ initialData }) {
                             id="refilled_quantity"
                             name="refilled_quantity"
                             placeholder={t("form.quantity")}
-                            error={state.data?.refilled_quantity || ""}
+                            error={!state?.ok ? state.data?.refilled_quantity : ""}
                             defaultValue={initialData?.id ? initialData?.refilled_quantity : state?.formData?.refilled_quantity || ''}
                         />
                     </div>
@@ -103,7 +103,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={initialData?.id ? { value: initialData?.used_item, label: initialData?.used_item_name } : null}
                             placeholder={t("form.usedItem")}
                         />
-                        <FieldError error={state.data?.used_item} />
+                        <FieldError error={!state?.ok ? state.data?.used_item : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -112,7 +112,7 @@ function RefilledForm({ initialData }) {
                             name="used_quantity"
                             step={'0.01'}
                             placeholder={t("form.usedQuantity")}
-                            error={state.data?.used_quantity || ""}
+                            error={!state?.ok ? state.data?.used_quantity : ""}
                             defaultValue={initialData?.id ? initialData?.used_quantity : state?.formData?.used_quantity || ''}
                         />
                     </div>
@@ -124,7 +124,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={initialData?.id ? { value: initialData.repository, label: initialData.repository_name } : { value: 10000, label: 'الرئيسي' }}
                             placeholder={t("form.repository")}
                         />
-                        <FieldError error={state?.data?.repository} />
+                        <FieldError error={!state?.ok ? state?.data?.repository : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -132,10 +132,10 @@ function RefilledForm({ initialData }) {
                             url={'/api/employees/?s='}
                             customLoadOptions={handleLoadEmployees}
                             name={`employee`}
-                            defaultValue={state.formData?.id ? { value: state.formData?.employee, label: state.formData?.employee_name } : initialData?.id ? { value: initialData?.employee, label: initialData?.employee_name } : null }
+                            defaultValue={state.formData?.id ? { value: state.formData?.employee, label: state.formData?.employee_name } : initialData?.id ? { value: initialData?.employee, label: initialData?.employee_name } : null}
                             placeholder={t("form.employee")}
                         />
-                        <FieldError error={state?.data?.employee} />
+                        <FieldError error={!state?.ok ? state?.data?.employee : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -147,7 +147,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={state?.formData?.notes ? state?.formData?.notes : initialData?.notes || ''}
                             placeholder={t("form.moreNotes")}
                         />
-                        <FieldError error={state?.data?.notes} />
+                        <FieldError error={!state?.ok ? state?.data?.notes : null} />
                     </div>
                 </div>
 

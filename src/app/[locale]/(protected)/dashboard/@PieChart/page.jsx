@@ -8,7 +8,6 @@ export default async function PieChart() {
     const defferd = (sales > payments) ? (sales - payments) : 0
     const defferdPresentage = (defferd / sales) * 100
     const cashPresentage = 100 - defferdPresentage
-    console.log(defferdPresentage, cashPresentage)
 
     const transformed = [
         { name: 'Defferd', value: defferdPresentage },

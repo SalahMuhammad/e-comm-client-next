@@ -26,13 +26,13 @@ function DebtSettlementForm({ initialData }) {
         { value: 'not_approved', label: 'not_approved' },
     ]
     const defaultDate = state.formData?.date || initialData?.date || formatDateManual(new Date())
-    const defaultOwner = state.formData?.owner || initialData?.owner ? { 
-        value: state.formData?.owner      || initialData?.owner, 
+    const defaultOwner = state.formData?.owner || initialData?.owner ? {
+        value: state.formData?.owner || initialData?.owner,
         label: state.formData?.owner_name || initialData?.owner_name
     } : undefined
-    const defaultStatus = state.formData?.status || initialData?.status ? { 
-        value: state.formData?.status   || initialData?.status, 
-        label: state.formData?.status   || initialData?.status 
+    const defaultStatus = state.formData?.status || initialData?.status ? {
+        value: state.formData?.status || initialData?.status,
+        label: state.formData?.status || initialData?.status
     } : options[0]
 
 
@@ -47,7 +47,7 @@ function DebtSettlementForm({ initialData }) {
         if (state?.ok) {
             toast.success(state.data?.id ? "successEdit" : "successCreate");
             // if (state.data?.id) {
-                router.replace(`/finance/debt-settlement/list`);
+            router.replace(`/finance/debt-settlement/list`);
             // }
         }
     }, [state])
@@ -64,16 +64,16 @@ function DebtSettlementForm({ initialData }) {
 
                 <div className={styles.invoiceDetails}>
                     {initialData?.hashed_id && (
-                        <TextInput 
-                            placeholder={'id'} 
-                            id="hashed_id" 
-                            value={initialData?.hashed_id} 
-                            bordercolor="border-green-500 dark:border-green-400" 
-                            labelcolor="text-green-600 dark:text-green-400" 
-                            focuscolor="" 
-                            focuslabelcolor="" 
-                            name="hashed_id" 
-                            readOnly 
+                        <TextInput
+                            placeholder={'id'}
+                            id="hashed_id"
+                            value={initialData?.hashed_id}
+                            bordercolor="border-green-500 dark:border-green-400"
+                            labelcolor="text-green-600 dark:text-green-400"
+                            focuscolor=""
+                            focuslabelcolor=""
+                            name="hashed_id"
+                            readOnly
                         />
                     )}
 
@@ -86,7 +86,7 @@ function DebtSettlementForm({ initialData }) {
                             defaultValue={defaultDate}
                             required
                         />
-                        <FieldError error={state.data?.date} />
+                        <FieldError error={!state?.ok ? state.data?.date : null} />
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
@@ -97,29 +97,29 @@ function DebtSettlementForm({ initialData }) {
                             defaultValue={defaultOwner}
                             required
                         />
-                        <FieldError error={state.data?.owner} />
+                        <FieldError error={!state?.ok ? state.data?.owner : null} />
                     </div>
 
                     <div className={styles.detailsRow}>
                         <div className={styles.formGroup}>
-                            <NumberInput  
-                                id="amount" 
-                                name="amount" 
+                            <NumberInput
+                                id="amount"
+                                name="amount"
                                 step={0.01}
-                                placeholder={t("finance.fields.amount")} 
-                                error={state?.data?.amount ||  ""}
+                                placeholder={t("finance.fields.amount")}
+                                error={!state?.ok ? state?.data?.amount : ""}
                                 defaultValue={state.formData?.amount || initialData?.amount || ''}
                             />
                         </div>
 
                         <div className={styles.formGroup}>
-                            <StaticSelect 
+                            <StaticSelect
                                 options={options}
                                 name={'status'}
                                 label={t('finance.fields.status')}
                                 defaultValue={defaultStatus}
                             />
-                            <FieldError error={state.data?.status} />
+                            <FieldError error={!state?.ok ? state.data?.status : null} />
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,7 @@ function DebtSettlementForm({ initialData }) {
                             defaultValue={state.formData?.note || initialData?.note || ''}
                             placeholder={t('finance.fields.moreNotes')}
                         />
-                        <FieldError error={state.data?.note} />
+                        <FieldError error={!state?.ok ? state.data?.note : null} />
                     </div>
                 </div>
 

@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { initFlowbite } from 'flowbite'
-import { TrashIcon, PencilIcon, MapPinIcon, HomeIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, PencilIcon, MapPinIcon, HomeIcon, PhotoIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { FillText } from "@/components/loaders";
 import { deleteItem } from "./actions";
 import { toast } from "sonner";
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import Gallery from "./Gallery";
 import ImageView from "@/components/ImageView";
+import companyDetails from "@/constants/company";
+import * as Dialog from '@radix-ui/react-dialog';
+import ItemsForm from "../form/page";
 
 function handleDelete(t, id, onDelete, funs) {
     const handleGenericErrors = useGenericResponseHandler(t)
@@ -138,8 +141,8 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
             transform transition-all duration-300 ease-in-out relative
             ${isDeleting ? 'opacity-0 scale-0 h-0 p-0 m-0 overflow-hidden' : ''}
         `}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
 
 
@@ -254,18 +257,62 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
     );
 }
 
+// Create Item Button Component
+function CreateItemButton({ onItemCreated }) {
+    const t = useTranslations("warehouse");
+    const [isOpen, setIsOpen] = useState(false);
+    const [formKey, setFormKey] = useState(0);
+
+    const handleSuccess = (newItemData) => {
+        setIsOpen(false);
+        setFormKey(prev => prev + 1); // Reset form
+        if (onItemCreated && newItemData) {
+            onItemCreated(newItemData);
+        }
+    };
+
+    return (
+        <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+            <Dialog.Trigger asChild>
+                <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 dark:bg-gray-600 dark:hover:bg-gray-700 text-white shadow-sm transition-colors">
+                    <PlusIcon className="w-4 h-4" />
+                    <span>{t("items.card.create")}</span>
+                </button>
+            </Dialog.Trigger>
+            <Dialog.Portal>
+                <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
+                <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto z-50 p-6">
+                    <Dialog.Title className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                        {t("items.card.createTitle")}
+                    </Dialog.Title>
+                    <Dialog.Description className="sr-only">
+                        {t("items.card.createDescription")}
+                    </Dialog.Description>
+                    <CreateItemFormModal key={formKey} onSuccess={handleSuccess} onCancel={() => setIsOpen(false)} isModal={true} />
+                </Dialog.Content>
+            </Dialog.Portal>
+        </Dialog.Root>
+    );
+}
+
+// Modal Form Wrapper
+function CreateItemFormModal({ onSuccess, onCancel, isModal }) {
+    return <ItemsForm obj={{}} onSuccess={onSuccess} onCancel={onCancel} isModal={isModal} />;
+}
+
 // View Toggle Switch Component
-function ViewToggle({ viewMode, setViewMode }) {
+function ViewToggle({ viewMode, setViewMode, onItemCreated }) {
     const t = useTranslations("warehouse");
 
     return (
-        <div className="flex items-center space-x-4 mb-4  flex justify-end">
+        <div className="flex items-center justify-between space-x-4 mb-4">
+            <CreateItemButton onItemCreated={onItemCreated} />
             <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
                 <button
                     onClick={() => setViewMode('gallery')}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${viewMode === 'gallery'
-                            ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                            : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                        ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                         }`}
                 >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -276,8 +323,8 @@ function ViewToggle({ viewMode, setViewMode }) {
                 <button
                     onClick={() => setViewMode('table')}
                     className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${viewMode === 'table'
-                            ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
-                            : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
+                        ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-white shadow-sm'
+                        : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
                         }`}
                 >
                     <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -401,6 +448,13 @@ export function ItemsView({ items: rawItems = [] }) {
         setStartIndex(0)
     }
 
+    const handleItemCreated = (newItemData) => {
+        // Add the new item to the beginning of the items list
+        if (newItemData) {
+            setItems(prev => [newItemData, ...prev]);
+        }
+    };
+
     useEffect(() => {
         setItems(rawItems);
     }, [rawItems]);
@@ -408,14 +462,14 @@ export function ItemsView({ items: rawItems = [] }) {
 
     if (!isClient) {
         return (<div className="flex flex-row min-h-screen justify-center items-center">
-            <FillText text="MedPro" />
+            <FillText text={companyDetails.name} />
         </div>)
         // return null;
     }
 
     return (
         <>
-            <ViewToggle viewMode={viewMode} setViewMode={setViewMode} />
+            <ViewToggle viewMode={viewMode} setViewMode={setViewMode} onItemCreated={handleItemCreated} />
 
             {viewMode === 'gallery' ? (
                 <GalleryView items={items} setItems={setItems} viewImages={{ setImages, setStartIndex }} />

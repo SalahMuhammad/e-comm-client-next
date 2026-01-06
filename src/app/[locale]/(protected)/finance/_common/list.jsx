@@ -19,7 +19,7 @@ async function List({ searchParams, type }) {
     const offset = params['offset'] ?? 0;
     const search = params[searchParamName] ?? '';
     const paymen_no = params['no'] ?? '';
-    const t = await getTranslations("finance");
+    const t = await getTranslations();
 
 
     const res = (await getList(`${type}`, `?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${paymen_no ? `&no=${paymen_no}` : ''}`));
@@ -32,8 +32,8 @@ async function List({ searchParams, type }) {
             <QueryParamSetterInput
                 paramName={searchParamName}
                 paramOptions={[
-                    { label: 'Owner Name', value: 's' },
-                    { label: 'Payment No', value: 'no' }
+                    { label: t('inputs.search.ownerName'), value: 's' },
+                    { label: t('inputs.search.paymentNumber'), value: 'no' }
                 ]}
             />
 
@@ -42,25 +42,25 @@ async function List({ searchParams, type }) {
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
-                                {t('fields.owner')}
+                                {t('finance.fields.owner')}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t('fields.paymentMethod')}
+                                {t('finance.fields.paymentMethod')}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t('fields.amount')}
+                                {t('finance.fields.amount')}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t('fields.status')}
+                                {t('finance.fields.status')}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t('fields.ref')}
+                                {t('finance.fields.ref')}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t('fields.date')}
+                                {t('finance.fields.date')}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t('fields.note')}
+                                {t('finance.fields.note')}
                             </th>
                             <th></th>
                         </tr>
@@ -90,8 +90,8 @@ async function List({ searchParams, type }) {
                                             duration-300 dark:text-blue-200 
                                             dark:hover:text-white" href={`/invoice/${type == 'payment' ? 'sales' : 'purchases'}/view/${payment.ref}`}
                                         >
-                                        #{payment.ref}
-                                    </Link>
+                                            #{payment.ref}
+                                        </Link>
                                     ) : '-'}
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
@@ -110,7 +110,7 @@ async function List({ searchParams, type }) {
                                                 className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
                                             />
                                             <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                                {t("table.view")}
+                                                {t("finance.table.view")}
                                             </span>
                                         </Link>
                                         {/* <DeleteButton type={type} id={payment.hashed_id} />

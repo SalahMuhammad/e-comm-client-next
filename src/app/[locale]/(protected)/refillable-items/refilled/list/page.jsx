@@ -1,4 +1,5 @@
 import ToolTip from "@/components/ToolTip"
+import TableNote from "@/components/TableNote";
 import { getRefilledItems } from "../../actions"
 import DeleteButton from "./DeleteButton"
 import PaginationControls from "@/components/PaginationControls"
@@ -8,7 +9,7 @@ import SearchInput from "@/components/QueryParamSetterInput";
 
 
 async function page({ searchParams }) {
-    const t = await getTranslations("refillableItems.refilled.list")
+    const t = await getTranslations()
     const params = await searchParams;
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
@@ -27,39 +28,39 @@ ${note ? `&note=${note}` : ''}
         <div>
             <SearchInput
                 paramOptions={[
-                    { label: 'Refilled Item', value: 'ritem' },
-                    { label: 'Used Item', value: 'uitem' },
-                    { label: 'Note', value: 'note' },
-                    { label: 'Limit', value: 'limit' },
+                    { label: t('inputs.search.refilledItem'), value: 'ritem' },
+                    { label: t('inputs.search.usedItem'), value: 'uitem' },
+                    { label: t('inputs.search.notes'), value: 'note' },
+                    { label: t('inputs.search.limit'), value: 'limit' },
                 ]}
-            />  
+            />
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
-                                {t("refilledItem")}
+                                {t("refillableItems.refilled.list.refilledItem")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t("quantity")}
+                                {t("refillableItems.refilled.list.quantity")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t("usedItem")}
+                                {t("refillableItems.refilled.list.usedItem")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t("quantity")}
+                                {t("refillableItems.refilled.list.quantity")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t("date")}
+                                {t("refillableItems.refilled.list.date")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t("repo")}
+                                {t("refillableItems.refilled.list.repo")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t("employee")}
+                                {t("refillableItems.refilled.list.employee")}
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                {t("notes")}
+                                {t("refillableItems.refilled.list.notes")}
                             </th>
                             <th scope="col" className="px-6 py-3"></th>
                         </tr>
@@ -90,9 +91,7 @@ ${note ? `&note=${note}` : ''}
                                         {transaction.employee_name}
                                     </td>
                                     <td className="px-6 py-4">
-                                        <pre className="whitespace-pre-wrap">
-                                            {transaction.notes}
-                                        </pre>
+                                        <TableNote note={transaction.notes} />
                                     </td>
                                     <td className="flex items-center px-6 py-4 dark:text-gray-300">
                                         <DeleteButton id={transaction.id} />
