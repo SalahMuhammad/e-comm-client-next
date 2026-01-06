@@ -7,13 +7,21 @@ export default function DateInput({
   id = "",
   label = "Select date",
   required = false,
-  onChange = () => {},
-  onBlur = () => {},
+  onChange = () => { },
+  onBlur = () => { },
   error = "",
   value = undefined, // controlled ISO string (yyyy-mm-dd)
   defaultValue = "", // uncontrolled initial ISO
   ...props
 }) {
+  // Helper to parse ISO date string in local timezone (prevents off-by-one errors)
+  const parseISOLocal = (isoString) => {
+    if (!isoString) return null;
+    const [year, month, day] = isoString.split('-').map(Number);
+    if (!year || !month || !day) return null;
+    return new Date(year, month - 1, day);
+  };
+
   const isControlled = value !== undefined;
   const [internalISO, setInternalISO] = useState(isControlled ? (value || "") : (defaultValue || ""));
   const [text, setText] = useState(""); // visible text in input
@@ -28,8 +36,8 @@ export default function DateInput({
   // update visible text when internalISO changes
   useEffect(() => {
     if (internalISO) {
-      const d = new Date(internalISO);
-      if (!isNaN(d.getTime())) {
+      const d = parseISOLocal(internalISO);
+      if (d && !isNaN(d.getTime())) {
         setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
         return;
       }
@@ -51,9 +59,14 @@ export default function DateInput({
       return `${yyyy}-${mm}-${dd}`;
     }
 
+    // Try parsing as a date string and convert to local date
     const parsed = Date.parse(s);
     if (!isNaN(parsed)) {
-      return new Date(parsed).toISOString().split("T")[0];
+      const d = new Date(parsed);
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
     }
     return null;
   };
@@ -65,8 +78,8 @@ export default function DateInput({
 
   const formatISOToInput = (iso) => {
     if (!iso) return "";
-    const d = new Date(iso);
-    if (isNaN(d.getTime())) return "";
+    const d = parseISOLocal(iso);
+    if (!d || isNaN(d.getTime())) return "";
     const mm = d.getMonth() + 1; // no leading zero to allow '5/12/2020'
     const dd = d.getDate();
     const yyyy = d.getFullYear();
@@ -79,8 +92,10 @@ export default function DateInput({
     if (iso) {
       if (!isControlled) setInternalISO(iso);
       emitChange(iso);
-      const d = new Date(iso);
-      setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+      const d = parseISOLocal(iso);
+      if (d) {
+        setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+      }
     } else if (cleaned === "") {
       if (!isControlled) setInternalISO("");
       emitChange("");
@@ -88,8 +103,10 @@ export default function DateInput({
     } else {
       // invalid: revert text to internal value
       if (internalISO) {
-        const d = new Date(internalISO);
-        setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+        const d = parseISOLocal(internalISO);
+        if (d) {
+          setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+        }
       } else {
         setText("");
       }
@@ -97,16 +114,9 @@ export default function DateInput({
   };
 
   const handleInputChange = (e) => {
+    // Just update the text while typing - validation happens on blur
     const val = e.target.value.replace(/,/g, '/'); // enforce forward slashes while typing
     setText(val);
-    const iso = parseToISO(val);
-    if (iso) {
-      if (!isControlled) setInternalISO(iso);
-      emitChange(iso);
-    } else if (val === "") {
-      if (!isControlled) setInternalISO("");
-      emitChange("");
-    }
   };
 
   const handleBlur = (e) => {
@@ -130,8 +140,10 @@ export default function DateInput({
       e.currentTarget.blur();
     } else if (e.key === "Escape") {
       if (internalISO) {
-        const d = new Date(internalISO);
-        setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+        const d = parseISOLocal(internalISO);
+        if (d) {
+          setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+        }
       } else {
         setText("");
       }
@@ -166,6 +178,9 @@ export default function DateInput({
   return (
     <div className={`relative w-full ${className}`} ref={rootRef}>
       <div className="relative">
+        {/* Hidden input to submit the actual ISO value */}
+        <input type="hidden" name={props.name} value={internalISO} />
+
         <div className={`relative rounded-lg border bg-white dark:bg-gray-900 ${error ? 'border-red-500/50 dark:border-red-400/50' : isFocused ? 'border-blue-500/50 dark:border-blue-400/50' : 'border-gray-200 dark:border-gray-700'} transition-all duration-200 hover:border-blue-500/30 dark:hover:border-blue-400/30`}>
           <input
             id={id}
@@ -181,6 +196,7 @@ export default function DateInput({
             aria-invalid={error ? true : false}
             aria-describedby={error ? `${id}-error` : undefined}
             {...props}
+            name={undefined} // Maintain other props but ensure name is not on this input
           />
 
           <label htmlFor={id} className={`absolute left-4 top-2 text-xs font-medium transition-all duration-200 ${error ? 'text-red-500 dark:text-red-400' : isFocused ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'}`}>
