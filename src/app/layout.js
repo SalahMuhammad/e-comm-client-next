@@ -1,36 +1,67 @@
-// import { Geist, Geist_Mono } from "next/font/google";
-import { NextIntlClientProvider, hasLocale } from 'next-intl';
-// import { notFound } from 'next/navigation';
-// import { routing } from '@/i18n/routing';
+import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { NextIntlClientProvider } from "next-intl";
 import "./[locale]/globals.css";
+import {getLocale} from 'next-intl/server';
 import 'flowbite'
 import { getServerCookie } from "@/utils/serverCookieHandelr";
+import companyDetails from "@/constants/company";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const ibmPlexArabic = localFont({
+  src: [
+    {
+      path: "../fonts/IBMPlexSansArabic-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../fonts/IBMPlexSansArabic-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../fonts/IBMPlexSansArabic-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-arabic",
+  display: "swap",
+});
 
 export const metadata = {
   title: {
-    template: "%s | MedPro Corp",
+    template: `%s | ${companyDetails.name}`,
   },
-  description: "MedPro Corp Application",
   icons: {
-    icon: '/assets/logo/fav2.svg',
+    icon: companyDetails.logo,
   },
 };
 
+function getDirection(locale) {
+  // Force Arabic to RTL
+  if (locale === "ar") {
+    return "rtl";
+  }  
+  // Default for other languages
+  return "ltr";
+}
 
 export default async function RootLayout({ children, params }) {
-  const theme = await getServerCookie('theme') || 'light'
-  const { locale } = await params;
+  const locale = await getLocale();
+  const lang = locale ?? 'en';
 
+  const theme = await getServerCookie('theme') || 'light'
   // if (!hasLocale(routing.locales, locale)) {
   //   notFound();
   // }
@@ -44,21 +75,18 @@ export default async function RootLayout({ children, params }) {
   } else if(theme == "dark") {
     themeClass = "dark"
   }
+
   return (
     <html 
-      lang={locale}
+      lang={lang}
+      // dir={getDirection(lang)} 
       className={`${themeClass}`}
     >
       <head>
         {/* <script type="module" src="/theme-init.js" /> */}
       </head>
-      <body
-      // ${geistSans.variable} ${geistMono.variable}
-        className={`antialiased`}
-      >
-        <NextIntlClientProvider>
-          {children}
-        </NextIntlClientProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexArabic.variable} antialiased`}>
+        <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>
   );
