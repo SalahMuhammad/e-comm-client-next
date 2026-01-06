@@ -31,8 +31,6 @@ async function FinancialMovementsReport() {
 
 	// The final result is in 'aa'
 
-	console.log(accounts)
-
 	const summary = data?.summary
 
 	const numberFormatter = (num) => {

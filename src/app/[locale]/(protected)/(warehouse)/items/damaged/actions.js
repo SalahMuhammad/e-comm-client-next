@@ -10,7 +10,6 @@ export async function getDamagedItems(queryStringParams) {
         },
         cashe: "no-store",
     })
-    console.log(res.data.results[0])
     return res
 }
 
