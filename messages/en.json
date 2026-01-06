@@ -9,7 +9,8 @@
 				"items": "Item List",
 				"createItem": "Create Item",
 				"repositories": "Repository List",
-				"createRepository": "Create Repository"
+				"createRepository": "Create Repository",
+				"damagedItems": "Damaged Items"
 			}
 		},
 		"invoice": {
@@ -22,7 +23,7 @@
 			"subLabels": {
 				"invoiceManagement": "Invoice management",
 				"createInvoice": "Create invoice",
-                "refund": "Refund"
+				"refund": "Refund"
 			}
 		},
 		"customersSuppliers": {
@@ -39,9 +40,9 @@
 				"addPayment": "Add Payment",
 				"expenses": "Expense List",
 				"addExpenses": "Add Expense",
-                "reversePayment": "Reverse Payment List",
+				"reversePayment": "Reverse Payment List",
 				"addReversePayment": "Add Reverse Pyament",
-                "debtSettlement": "Debt Settlement List",
+				"debtSettlement": "Debt Settlement List",
 				"debtSettlementForm": "Add Debt Settlement",
 				"debts": "Debts"
 			}
@@ -51,39 +52,37 @@
 			"subLabels": {
 				"refilled": "Refilled cans and used big cans",
 				"payments": "Payments in period",
-                "accountStatement": "client-supplier Account statement",
-                "refillableItemsClientClientHas": "Refillable Items Client Has"
+				"accountStatement": "client-supplier Account statement",
+				"refillableItemsClientClientHas": "Refillable Items Client Has"
 			}
 		},
 		"refilledCans": {
 			"headLabel": "Refilable Items",
 			"subLabels": {
 				"refilled": "Refilled List",
-                "createRefilled": "Refilled Form",
-                "refund": "Refund List",
-                "createRefund": "Refund Form",
-                "cansWithClints": "Refillable items clints has"
+				"createRefilled": "Refilled Form",
+				"refund": "Refund List",
+				"createRefund": "Refund Form",
+				"cansWithClints": "Refillable items clints has"
 			}
 		},
 		"userDropDown": {
 			"settings": "Settings",
 			"signOut": "Sign out"
 		},
-        "settings": "Settings",
-		"signUp": "Sign Up"
+		"settings": "Settings",
+		"signUp": "Sign Up",
+		"quickAdd": "Quick Add"
 	},
-
-    "toolTip": {
-        "created": "Created",
-        "lastUpdatedIn": "Last Updated IN",
-        "by": "By",
-
-        "createdAt": "Created At",
-        "createdBy": "Created By",
-        "lastUpdatedAt": "Last Updated At",
-        "lastUpdatedBy": "Last Updated By"
-    },
-
+	"toolTip": {
+		"created": "Created",
+		"lastUpdatedIn": "Last Updated IN",
+		"by": "By",
+		"createdAt": "Created At",
+		"createdBy": "Created By",
+		"lastUpdatedAt": "Last Updated At",
+		"lastUpdatedBy": "Last Updated By"
+	},
 	"warehouse": {
 		"items": {
 			"card": {
@@ -98,11 +97,14 @@
 				"table": "Table",
 				"delete": "Delete",
 				"Edit": "Edit",
-				"noImg": "No images available", 
+				"create": "Create Item",
+				"createTitle": "Create New Item",
+				"createDescription": "Fill in the form to create a new item",
+				"noImg": "No images available",
 				"remove": {
 					"label": "Remove",
 					"confirm": "Are you sure you want to remove this item?",
-					"description":"This action cannot be undone.",
+					"description": "This action cannot be undone.",
 					"yes": "Delete",
 					"no": "Cancel",
 					"success": "Item deleted",
@@ -114,7 +116,7 @@
 				"id": "ID",
 				"type": "Type",
 				"name": "Name",
-                "itemName": "Item Name",
+				"itemName": "Item Name",
 				"private": "Private",
 				"wholesale": "Wholesale",
 				"piece": "Piece",
@@ -127,7 +129,7 @@
 				"origin": "Origin",
 				"place": "Place",
 				"submit": "Submit",
-				"edit":"Edit Item",
+				"edit": "Edit Item",
 				"successCreate": "Item created successfully",
 				"successEdit": "Item updated successfully",
 				"error": "Item",
@@ -135,7 +137,6 @@
 					"400": "Invalid data. Please check your input.",
 					"500": "Server error. Please try again later.",
 					"etc": "An unexpected error occurred. Please try again.",
-
 					"inputs": {
 						"name": "Name is invalid",
 						"images_upload": "Images are invalid",
@@ -149,7 +150,7 @@
 			},
 			"view": {
 				"refillable": "Refillable",
-				"id" : "ID",
+				"id": "ID",
 				"comparisonPeriod": "Cancel Period",
 				"30vs30": "Last 30 days vs Previous 30 days",
 				"excludedItems": "Items with 0 price or false repository permit are excluded",
@@ -157,21 +158,17 @@
 				"current": "Current",
 				"units": "units",
 				"information": "Stock Information",
-				
 				"pricing": "Pricing",
 				"price": "Price",
-
 				"details": "Details",
 				"type": "Type",
 				"origin": "Origin",
 				"place": "Place",
-
 				"timeline": "Timeline",
 				"created": "Created",
 				"updated": "Updated",
 				"lastUpdated": "Last Updated",
 				"by": "by",
-
 				"barcodes": "Barcodes"
 			}
 		},
@@ -197,10 +194,13 @@
 				},
 				"place": "Place",
 				"edit": "Edit",
+				"create": "Create Repository",
+				"createTitle": "Create New Repository",
+				"createDescription": "Fill in the form to create a new repository",
 				"remove": {
 					"label": "Remove",
 					"confirm": "Are you sure you want to remove this repository?",
-					"description":"This action cannot be undone.",
+					"description": "This action cannot be undone.",
 					"yes": "Delete",
 					"no": "Cancel",
 					"success": "Repository deleted",
@@ -209,6 +209,46 @@
 				},
 				"error": "Error loading repositories.",
 				"nothing": "Nothing here to show"
+			},
+			"damagedItems": {
+				"table": {
+					"create": "Register Damaged Item",
+					"createTitle": "Register New Damaged Item",
+					"createDescription": "Fill in the form to register a new damaged item",
+					"item": "Item",
+					"owner": "Owner",
+					"repository": "Repository",
+					"quantity": "Quantity",
+					"unitPrice": "Unit Price",
+					"date": "Date",
+					"notes": "Notes",
+					"actions": "Actions",
+					"remove": {
+						"label": "Remove",
+						"confirm": "Are you sure you want to remove this damaged item?",
+						"description": "This action cannot be undone.",
+						"yes": "Delete",
+						"no": "Cancel",
+						"success": "Damaged Item deleted",
+						"canceled": "Deletion canceled",
+						"error": "Error Deleting Damaged Item"
+					},
+					"edit": "Edit"
+				},
+				"form": {
+					"id": "ID",
+					"item": "Item",
+					"repository": "Repository",
+					"quantity": "Quantity",
+					"unitPrice": "Unit Price",
+					"date": "Date",
+					"notes": "Notes",
+					"edit": "Edit Damaged Item",
+					"submit": "Submit",
+					"successCreate": "Damaged Item created successfully",
+					"successEdit": "Damaged Item updated successfully",
+					"error": "Error loading damaged item"
+				}
 			}
 		}
 	},
@@ -222,14 +262,14 @@
 			"edit": "Edit",
 			"view": "View",
 			"remove": {
-					"label": "Remove",
-					"confirm": "Are you sure you want to remove this Customer/Supplier?",
-					"description":"This action cannot be undone.",
-					"yes": "Delete",
-					"no": "Cancel",
-					"success": "Customer/Supplier deleted",
-					"canceled": "Deletion canceled",
-					"error": "Error Deleting Customer/Supplier"
+				"label": "Remove",
+				"confirm": "Are you sure you want to remove this Customer/Supplier?",
+				"description": "This action cannot be undone.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "Customer/Supplier deleted",
+				"canceled": "Deletion canceled",
+				"error": "Error Deleting Customer/Supplier"
 			}
 		},
 		"form": {
@@ -259,7 +299,7 @@
 			"showUI": "Show UI"
 		}
 	},
-	"invoice": { 
+	"invoice": {
 		"table": {
 			"view": "View",
 			"head": {
@@ -268,15 +308,15 @@
 				"dueDate": "Due Date",
 				"totalAmount": "Total Amount",
 				"repositoryPremit": "Repository Permit",
-                "originalInvoice": "Original Invoice",
+				"originalInvoice": "Original Invoice",
 				"notes": "Notes",
 				"actions": "Actions",
-                "status": "Status"
+				"status": "Status"
 			},
 			"remove": {
 				"label": "Remove",
 				"confirm": "Are you sure you want to delete this item?",
-				"description":"This action cannot be undone.",
+				"description": "This action cannot be undone.",
 				"yes": "Delete",
 				"no": "Cancel",
 				"success": "Item deleted",
@@ -287,7 +327,7 @@
 		"form": {
 			"invoice": "Invoice",
 			"issueDate": "Issue Date",
-			"dueDate":"Due Date",
+			"dueDate": "Due Date",
 			"owner": "Owner",
 			"items": "Invoice Items",
 			"addItem": "Add Item",
@@ -308,48 +348,48 @@
 			"description": "Description"
 		}
 	},
-    "finance": {
+	"finance": {
 		"table": {
 			"view": "View",
 			"edit": "Edit"
 		},
-        "fields": {
+		"fields": {
 			"transaction": "Add Payment",
-            "update": "Update Payment",
-            "owner": "Owner",
-            "paymentMethod": "Payment Method",
-            "amount": "Amount",
-            "status": "Status",
-            "ref": "Referance",
-            "date": "Date",
-            "note": "Note",
+			"update": "Update Payment",
+			"owner": "Owner",
+			"paymentMethod": "Payment Method",
+			"amount": "Amount",
+			"status": "Status",
+			"ref": "Referance",
+			"date": "Date",
+			"note": "Note",
 			"moreNotes": "Additional notes..."
-        },
-        "status": {
-            "paid": "Paid",
-            "onHold": "ON HOLD"
-        },
-        "success": {
-            "created": "Transaction Created Successfully",
-            "updated": "Transaction Updated Successfully",
-            "delete": "Transaction Deleted Successfully"
-        },
-        "assert": {
-            "message": "Are you sure you want to delete this transaction?"
-        },
-        "debtSettlement": {
-            "header": "Debt Settlement",
-            "status": {
-                "approved": "Approved",
-                "not_approved": "Not Approved"
-            }
-        },
-        "general": {
-            "t": "transaction",
-            "add": "Add",
-            "update": "Update"
-        }
-    },
+		},
+		"status": {
+			"paid": "Paid",
+			"onHold": "ON HOLD"
+		},
+		"success": {
+			"created": "Transaction Created Successfully",
+			"updated": "Transaction Updated Successfully",
+			"delete": "Transaction Deleted Successfully"
+		},
+		"assert": {
+			"message": "Are you sure you want to delete this transaction?"
+		},
+		"debtSettlement": {
+			"header": "Debt Settlement",
+			"status": {
+				"approved": "Approved",
+				"not_approved": "Not Approved"
+			}
+		},
+		"general": {
+			"t": "transaction",
+			"add": "Add",
+			"update": "Update"
+		}
+	},
 	"refillableItems": {
 		"form": {
 			"title": {
@@ -448,37 +488,60 @@
 			"loading": "Loading",
 			"placeholder": "Select an option",
 			"searchPlaceholder": "Select..."
+		},
+		"search": {
+			"itemName": "Item Name",
+			"ownerName": "Owner Name",
+			"repository": "Repository",
+			"notes": "Notes",
+			"category": "Category",
+			"limit": "Limit",
+			"offset": "Offset",
+			"fromDate": "From Date",
+			"toDate": "To Date",
+			"refilledItem": "Refilled Item",
+			"usedItem": "Used Item",
+			"orderNumber": "Order Number",
+			"itemDescription": "Item Description",
+			"paymentNumber": "Payment No",
+			"transactionNumber": "Transaction Number",
+			"type": "Type",
+			"id": "ID",
+			"name": "Name",
+			"barcode": "Barcode",
+			"place": "Place",
+			"origin": "Origin",
+			"repositoryName": "Repository Name"
 		}
 	},
 	"global": {
 		"form": {
 			"submit": "Submit",
-            "edit": "Edit",
+			"edit": "Edit",
 			"editSuccess": "Edit successful",
 			"createSuccess": "Create successful",
 			"id": "ID"
 		},
 		"errors": {
 			"400": "Bad Request",
-            "403": "Access denied.",
+			"403": "Access denied.",
 			"404": "Not Found",
 			"500": "Internal Server Error",
-            "503": "Service unavailable. Please try again later.",
+			"503": "Service unavailable. Please try again later.",
 			"etc": "An unexpected error occurred. Please try again.",
-            "pageNotFound": "page not found",
+			"pageNotFound": "page not found",
 			"nothing": "Nothing here to show"
 		},
-        "delete": {
-            "label": "Remove",
-            "actionLabel": "Delete",
-            "cancelLabel": "Cancel",
-            "assert": {
-                "description": "This action cannot be undone.",
-                "canceled": "Canceled"
-            }
-        }
+		"delete": {
+			"label": "Remove",
+			"actionLabel": "Delete",
+			"cancelLabel": "Cancel",
+			"assert": {
+				"description": "This action cannot be undone.",
+				"canceled": "Canceled"
+			}
+		}
 	},
-
 	"ownerAccountStatement": {
 		"transactionSummary": "Transaction Summary",
 		"table": {
@@ -499,53 +562,52 @@
 				"SalesInvoices": "Sales Invoices",
 				"ReturnSalesInvoices": "Sales Invoices Refund",
 				"payments": "Payments",
-                "ReversPayments": "Revers Payments",
-                "PurchaseInvoices": "Purchase Invoices"
+				"ReversPayments": "Revers Payments",
+				"PurchaseInvoices": "Purchase Invoices"
 			}
 		},
-        "transactions": {
-            "title": "Transactions",
-            "fields": {
-                "ref": "Ref ID",
-                "type": "Type",
-                "date": "Date",
-                "amount": "Transaction Amount",
-                "remaining": "Remaining Credit Balance"
-            }
-        },
+		"transactions": {
+			"title": "Transactions",
+			"fields": {
+				"ref": "Ref ID",
+				"type": "Type",
+				"date": "Date",
+				"amount": "Transaction Amount",
+				"remaining": "Remaining Credit Balance"
+			}
+		},
 		"noData": "No data available"
 	},
-
 	"reports": {
 		"title": "Reports Dashboard",
 		"reportSections": {
 			"warehouse": {
 				"title": "Warehouse",
 				"links": {
-					"itemMovement":{ 
-						"label": "Item Movement", 
-						"description": "Track inventory movements and transfers" 
+					"itemMovement": {
+						"label": "Item Movement",
+						"description": "Track inventory movements and transfers"
 					},
-                    "itemsSale":{ 
-						"label": "Items Sale", 
-						"description": "Track Items sale in period" 
+					"itemsSale": {
+						"label": "Items Sale",
+						"description": "Track Items sale in period"
 					},
-                    "itemsAsXLSX":{ 
-						"label": "Generate Items As XLSX", 
-						"description": "export items as xlsx" 
+					"itemsAsXLSX": {
+						"label": "Generate Items As XLSX",
+						"description": "export items as xlsx"
 					}
 				}
 			},
 			"finance": {
 				"title": "Finance",
 				"links": {
-					"paymentsInPeriod": { 
-						"label": "Payments in Period", 
-						"description": "Financial transactions and payments" 
+					"paymentsInPeriod": {
+						"label": "Payments in Period",
+						"description": "Financial transactions and payments"
 					},
-                    "debtList": { 
-						"label": "Owners's credit balance list", 
-						"description": "list of owners who has credit balance" 
+					"debtList": {
+						"label": "Owners's credit balance list",
+						"description": "list of owners who has credit balance"
 					}
 				}
 			},
@@ -553,7 +615,7 @@
 				"title": "Refillable Items",
 				"links": {
 					"refilledItems": {
-						"label": "Refilled & Used Items", 
+						"label": "Refilled & Used Items",
 						"description": "Items refilled and used in period"
 					},
 					"refillableItemsClient": {
@@ -574,7 +636,6 @@
 		},
 		"generate": "Generate"
 	},
-
 	"Error": {
 		"title": "Oops! Something went wrong",
 		"message": "We encountered an unexpected error. Don't worry, it's not your fault.",
