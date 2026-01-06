@@ -15,7 +15,7 @@ import useGenericResponseHandler from "@/components/custom hooks/useGenericRespo
 import BarcodeManager from './BarcodeManage';
 
 
-function ItemsForm({ obj }) {
+function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
     const t = useTranslations("warehouse.items.form");
     const [open, setOpen] = useState(false);
     const [FileLoading, setFileLoading] = useState(true);
@@ -34,13 +34,23 @@ function ItemsForm({ obj }) {
         if (handleGenericErrors(state)) return
         if (state?.ok) {
             toast.success(t(obj?.id ? "successEdit" : "successCreate"));
+
+            // If we have onSuccess callback (modal mode), call it instead of reloading
+            if (isModal && onSuccess) {
+                onSuccess(state.data);
+                return;
+            }
+
             if (obj?.id) {
                 router.replace("/items/list/");
             }
-        }
 
-        window.location.reload();
-    }, [state])
+            // Only reload if not in modal mode
+            if (!isModal) {
+                window.location.reload();
+            }
+        }
+    }, [state, isModal, onSuccess])
 
     useEffect(() => {
         getPP().then(a => setPP(a)).catch(console.error);
@@ -144,9 +154,9 @@ function ItemsForm({ obj }) {
                 type="submit"
                 variant="secondary"
                 size="md"
-                bgColor="bg-neutral-100 dark:bg-neutral-800"
-                hoverBgColor="bg-neutral-200 dark:bg-neutral-700"
-                textColor="text-black dark:text-white"
+                bgColor={obj?.id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
+                hoverBgColor={obj?.id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
+                textColor="text-white dark:text-gray-100"
                 className="w-full"
                 isLoading={(FileLoading || isPending) ? true : false}
             >
