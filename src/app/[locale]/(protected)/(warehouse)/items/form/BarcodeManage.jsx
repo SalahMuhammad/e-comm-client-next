@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { TextInput } from '@/components/inputs';

@@ -1,6 +1,7 @@
 import CompanyDetailsHead from "@/components/CompanyDetailsHead"
 import { getdOreItemsList, getdRefillableItems } from "../../actions"
 import { getRefilledItems } from "@/app/[locale]/(protected)/refillable-items/actions"
+import TableNote from "@/components/TableNote"
 
 export async function generateMetadata({ params }) {
     const dates = (await params).dates
