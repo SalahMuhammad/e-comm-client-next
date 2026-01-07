@@ -12,6 +12,7 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
   const t = useTranslations("inputs.searchableDropdown");
   const selectId = useId();
   const [isFocused, setIsFocused] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   useEffect(() => {
@@ -40,11 +41,11 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
     }
 
     callback(
-        res?.data.results.map((obj) => ({
-          value: obj.id,
-          label: obj.name,
-        }))
-      )
+      res?.data.results.map((obj) => ({
+        value: obj.id,
+        label: obj.name,
+      }))
+    )
   };
 
   const customStyles = {
@@ -98,7 +99,6 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
       padding: '0.5rem 1rem',
       cursor: 'pointer',
     }),
-    menuPortal: base => ({ ...base, zIndex: 9999, backgroundColor: isDarkMode ? '#0f172a' : '#ffffff', color: isDarkMode ? '#f9fafb' : '#111827' }),
     dropdownIndicator: (provided) => ({ ...provided, color: isDarkMode ? '#9ca3af' : '#6b7280' }),
     indicatorSeparator: (provided) => ({ ...provided, backgroundColor: 'transparent' }),
     noOptionsMessage: (provided) => ({ ...provided, color: isDarkMode ? '#9ca3af' : '#6b7280', padding: '0.5rem 1rem' }),
@@ -120,17 +120,16 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
 
   return (
     <>
-      <div 
-        className="relative z-0 w-full mb-3 group"
+      <div
+        className={`relative w-full mb-3 group ${isMenuOpen ? 'z-50' : 'z-0'}`}
         onClick={(e) => e.stopPropagation()}
-    >
+      >
         <AsyncSelect
           instanceId={selectId}
           id={url}
           className="basic-single peer"
           isLoading={false}
           classNamePrefix="select"
-          menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
           isDisabled={false}
           isClearable={true}
           isSearchable={true}
@@ -138,6 +137,8 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
           styles={customStyles}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
+          onMenuOpen={() => setIsMenuOpen(true)}
+          onMenuClose={() => setIsMenuOpen(false)}
           components={{ NoOptionsMessage }}
           loadingMessage={LoadingMessage}
           placeholder={t("searchPlaceholder")}

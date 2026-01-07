@@ -6,14 +6,11 @@ import DeleteButton from './DeleteButton';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
 
-export default function RepositoryTable({ repositories }) {
+export default function RepositoryTable({ repositories, setRepositories }) {
   const t = useTranslations("warehouse.repositories")
-  const [items, setItems] = useState(repositories);
   const [deletingId, setDeletingId] = useState(null);
 
-  useEffect(() => {
-    setItems(repositories);
-  }, [repositories]);
+  const items = repositories;
 
   const handleDelete = (id) => {
     // trigger fade-out
@@ -21,12 +18,14 @@ export default function RepositoryTable({ repositories }) {
 
     // wait for animation before removing
     setTimeout(() => {
-      setItems(prev => prev.filter(repo => repo.id !== id));
+      if (setRepositories) {
+        setRepositories(prev => prev.filter(repo => repo.id !== id));
+      }
       setDeletingId(null);
     }, 300); // match the transition duration
   };
 
-  
+
 
   return (
     <tbody>

@@ -60,7 +60,7 @@ function Gallery({className = "w-full max-w-4xl mx-auto", images, autoplay = fal
             <div className={`relative ${className}`}>
                 {/* Carousel Container */}
                 <div className="relative h-64 md:h-96 lg:h-[12rem] overflow-hidden rounded-sm bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-2xl">
-                    <div className="absolute top-2 right-3 z-20 px-3 py-1 rounded-sm bg-black/50 dark:bg-white/20 backdrop-blur-sm text-white text-sm font-medium">
+                    <div className="absolute top-2 right-3 z-10 px-3 py-1 rounded-sm bg-black/50 dark:bg-white/20 backdrop-blur-sm text-white text-sm font-medium">
                         {currentIndex + 1} / {images.length}
                     </div>
                     {/* Images */}
@@ -105,7 +105,7 @@ function Gallery({className = "w-full max-w-4xl mx-auto", images, autoplay = fal
                     <>
                         <button
                             onClick={goToPrevious}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110 group"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-12 h-12 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110 group"
                             aria-label="Previous image"
                         >
                             <ChevronLeftIcon className="w-6 h-6 text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" />
@@ -113,7 +113,7 @@ function Gallery({className = "w-full max-w-4xl mx-auto", images, autoplay = fal
 
                         <button
                             onClick={goToNext}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-12 h-12 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110 group"
+                            className="absolute right-4 top-1/2 -translate-y-1/2 z-10 flex items-center justify-center w-12 h-12 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110 group"
                             aria-label="Next image"
                         >
                             <ChevronRightIcon className="w-6 h-6 text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" />

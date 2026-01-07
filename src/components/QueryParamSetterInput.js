@@ -73,11 +73,11 @@ function SearchInput({ paramOptions, placeholder = 'Search ...' }) {
                         <button
                             type="button"
                             onClick={() => setIsOpen(!isOpen)}
-                            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-r-xl transition-all duration-200 min-w-[80px] sm:min-w-[120px]"
+                            className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-r-xl transition-all duration-200 min-w-[80px] sm:min-w-[120px] relative"
                         >
-                            <span className="truncate max-w-[60px] sm:max-w-none">{selectedOption?.label}</span>
+                            <span className="truncate max-w-[60px] sm:max-w-none w-[80%]">{selectedOption?.label}</span>
                             <svg
-                                className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`}
+                                className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''} absolute right-3 top-1/2 -translate-y-1/2 `}
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"

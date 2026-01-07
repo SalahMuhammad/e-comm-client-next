@@ -15,7 +15,7 @@ import useGenericResponseHandler from "@/components/custom hooks/useGenericRespo
 import BarcodeManager from './BarcodeManage';
 
 
-function ItemsForm({obj}) {
+function ItemsForm({ obj }) {
     const t = useTranslations("warehouse.items.form");
     const [open, setOpen] = useState(false);
     const [FileLoading, setFileLoading] = useState(true);
@@ -60,7 +60,7 @@ function ItemsForm({obj}) {
             // method="POST"
             className="w-xl max-w-2xl mx-auto"
             style={{ paddingTop: '3rem' }}
-            // className="flex flex-col gap-4 p-4"
+        // className="flex flex-col gap-4 p-4"
         >
             {obj?.id && (
                 <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
@@ -72,11 +72,11 @@ function ItemsForm({obj}) {
                 url={'api/items/types/?s='}
                 label={t('type')}
                 name="type"
-                defaultValue={(state?.type || obj?.type) ? { value: state?.type || obj.type, label: obj.type_name}: {}}
-                // defaultValue={state?.type ? {value: state.type, label: state.type_name} : {value: obj.type, label: obj.type_name} }
+                defaultValue={(state?.type || obj?.type) ? { value: state?.type || obj.type, label: obj.type_name } : {}}
+            // defaultValue={state?.type ? {value: state.type, label: state.type_name} : {value: obj.type, label: obj.type_name} }
             />
 
-            <TextInput name="name" id="name" placeholder={t("name")} defaultValue={state?.name || obj?.name} required error={state?.data?.name || ""} />
+            <TextInput name="name" id="name" placeholder={t("name")} defaultValue={state?.name || obj?.name} required error={!state?.ok ? state?.data?.name : ""} />
 
             <Collapsible.Root open={open} onOpenChange={setOpen} className="mb-3">
                 <div className="flex items-center justify-between mb-3">
@@ -98,33 +98,33 @@ function ItemsForm({obj}) {
                 <Collapsible.Content
                     className="grid md:grid-cols-2 md:gap-2 mt-5 mb-1  transition-all duration-300 ease-in-out data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp"
                 >
-                    <NumberInput  
-                        id="price1" 
-                        name="price1" 
+                    <NumberInput
+                        id="price1"
+                        name="price1"
                         step={0.01}
-                        placeholder={t("private")} 
-                        onChange={(e) => { setP1(e.target.value) }} 
-                        error={state?.data?.price1 ||  ""}
+                        placeholder={t("private")}
+                        onChange={(e) => { setP1(e.target.value) }}
+                        error={!state?.ok ? state?.data?.price1 : ""}
                         // value={p1} 
-                        defaultValue={state?.price1 || obj?.price1 || p1} 
-                        // {...(p1 !== undefined && p1 !== null
-                        //     ? { value: p1 }
-                        //     : { defaultValue: state?.price1 || obj?.price1 })}
+                        defaultValue={state?.price1 || obj?.price1 || p1}
+                    // {...(p1 !== undefined && p1 !== null
+                    //     ? { value: p1 }
+                    //     : { defaultValue: state?.price1 || obj?.price1 })}
 
                     />
-                    <NumberInput id="price2" name="price2" step={0.01} placeholder={t("wholesale")} defaultValue={state?.price2 || obj?.price2} ref={p2} error={state?.data?.price2 || ""} />
-                    <NumberInput id="price3" name="price3" step={0.01} placeholder={t("piece")} defaultValue={state?.price3 || obj?.price3} ref={p3} error={state?.data?.price3 || ""} />
-                    <NumberInput id="price4" name="price4" step={0.01} placeholder={t("collapsible.prices")} defaultValue={state?.price4 || obj?.price4} ref={p4} error={state?.data?.price4 || ""} />
+                    <NumberInput id="price2" name="price2" step={0.01} placeholder={t("wholesale")} defaultValue={state?.price2 || obj?.price2} ref={p2} error={!state?.ok ? state?.data?.price2 : ""} />
+                    <NumberInput id="price3" name="price3" step={0.01} placeholder={t("piece")} defaultValue={state?.price3 || obj?.price3} ref={p3} error={!state?.ok ? state?.data?.price3 : ""} />
+                    <NumberInput id="price4" name="price4" step={0.01} placeholder={t("collapsible.prices")} defaultValue={state?.price4 || obj?.price4} ref={p4} error={!state?.ok ? state?.data?.price4 : ""} />
                 </Collapsible.Content>
             </Collapsible.Root>
 
-            <BarcodeManager 
+            <BarcodeManager
                 defaultBarcodes={state?.barcodes || obj?.barcodes || []}
             />
 
-            <TextInput name="origin" id="origin" defaultValue={state?.origin || obj?.origin} placeholder={t("origin")} error={state?.data?.origin || ""} />
+            <TextInput name="origin" id="origin" defaultValue={state?.origin || obj?.origin} placeholder={t("origin")} error={!state?.ok ? state?.data?.origin : ""} />
 
-            <TextInput name="place" id="place" defaultValue={state?.place || obj?.place} placeholder={t("place")} error={state?.data?.place || ""} />
+            <TextInput name="place" id="place" defaultValue={state?.place || obj?.place} placeholder={t("place")} error={!state?.ok ? state?.data?.place : ""} />
 
             <FileInput
                 name="images"
@@ -137,7 +137,7 @@ function ItemsForm({obj}) {
                 defaultValue={
                     state?.images || obj?.images || []
                 }
-                error={state?.data?.images || ""}
+                error={!state?.ok ? state?.data?.images : ""}
             />
 
             <FormButton
@@ -148,7 +148,7 @@ function ItemsForm({obj}) {
                 hoverBgColor="bg-neutral-200 dark:bg-neutral-700"
                 textColor="text-black dark:text-white"
                 className="w-full"
-                isLoading={(FileLoading || isPending ) ? true : false}
+                isLoading={(FileLoading || isPending) ? true : false}
             >
                 {obj?.id ? t("edit") : t("submit")}
             </FormButton>

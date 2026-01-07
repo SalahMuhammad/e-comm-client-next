@@ -18,7 +18,7 @@ async function List({ searchParams }) {
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
     const search = params[searchParamName] ?? '';
-    const t = await getTranslations("finance");
+    const t = await getTranslations();
 
 
     const res = (await getDebtSettlements(`?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}`));
@@ -28,7 +28,7 @@ async function List({ searchParams }) {
 
     const columns = [
         {
-            header: t('fields.owner'),
+            header: t('finance.fields.owner'),
             cell: (row) => (
                 <Link href={`/customer-supplier/view/${row.owner}`} className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200">
                     {row.owner_name}
@@ -36,20 +36,20 @@ async function List({ searchParams }) {
             )
         },
         {
-            header: t('fields.date'),
+            header: t('finance.fields.date'),
             cell: (row) => formatDate(row.date)
         },
         {
-            header: 'settlement ' + t('fields.amount'),
+            header: 'settlement ' + t('finance.fields.amount'),
             cell: (row) => numberFormatter(row.amount)
         },
         {
-            header: t('fields.status'),
+            header: t('finance.fields.status'),
             cell: (row) => (<StatusToggle obj={row} />)
-            
+
         },
         {
-            header: t('fields.note'),
+            header: t('finance.fields.note'),
             cell: (row) => row.note
         },
         {
@@ -60,7 +60,7 @@ async function List({ searchParams }) {
                         href={`/finance/debt-settlement/form/${row.hashed_id}`}
                         className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                     >
-                        {t('table.edit')}
+                        {t('finance.table.edit')}
                     </Link>
                     <DeleteTransaction id={row.hashed_id} />
                     <ToolTip obj={row} />
@@ -74,7 +74,7 @@ async function List({ searchParams }) {
             <QueryParamSetterInput
                 paramName={searchParamName}
                 paramOptions={[
-                    { label: 'Owner Name', value: 's' },
+                    { label: t('inputs.search.ownerName'), value: 's' },
                 ]}
             />
 
@@ -98,7 +98,7 @@ async function List({ searchParams }) {
                                         {column.cell(obj)}
                                     </td>
                                 ))}
-                         
+
                             </tr>
                         ))}
                     </tbody>

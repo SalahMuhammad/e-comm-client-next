@@ -2,13 +2,21 @@
 import { useState, useEffect } from 'react';
 
 export default function DatePicker({ value, onChange, onClose }) {
-  const [currentDate, setCurrentDate] = useState(value ? new Date(value) : new Date());
-  const [selectedDate, setSelectedDate] = useState(value ? new Date(value) : null);
+  // Helper to parse ISO date string in local timezone (prevents off-by-one errors)
+  const parseISOLocal = (isoString) => {
+    if (!isoString) return null;
+    const [year, month, day] = isoString.split('-').map(Number);
+    if (!year || !month || !day) return null;
+    return new Date(year, month - 1, day);
+  };
+
+  const [currentDate, setCurrentDate] = useState(value ? (parseISOLocal(value) || new Date()) : new Date());
+  const [selectedDate, setSelectedDate] = useState(value ? parseISOLocal(value) : null);
 
   useEffect(() => {
     if (value) {
-      const d = new Date(value);
-      if (!isNaN(d.getTime())) {
+      const d = parseISOLocal(value);
+      if (d && !isNaN(d.getTime())) {
         setSelectedDate(d);
         setCurrentDate(new Date(d.getFullYear(), d.getMonth(), 1));
       }
@@ -43,29 +51,33 @@ export default function DatePicker({ value, onChange, onClose }) {
   const handleDateSelect = (day) => {
     const newDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
     setSelectedDate(newDate);
-    const formattedDate = newDate.toISOString().split('T')[0];
+    // Format to ISO string using local date components (not UTC)
+    const yyyy = newDate.getFullYear();
+    const mm = String(newDate.getMonth() + 1).padStart(2, '0');
+    const dd = String(newDate.getDate()).padStart(2, '0');
+    const formattedDate = `${yyyy}-${mm}-${dd}`;
     onChange(formattedDate);
     onClose();
   };
 
   const isCurrentMonth = (date) => {
     const now = new Date();
-    return date.getMonth() === now.getMonth() && 
-           date.getFullYear() === now.getFullYear();
+    return date.getMonth() === now.getMonth() &&
+      date.getFullYear() === now.getFullYear();
   };
 
   const isSelected = (day) => {
     if (!selectedDate) return false;
-    return selectedDate.getDate() === day && 
-           selectedDate.getMonth() === currentDate.getMonth() &&
-           selectedDate.getFullYear() === currentDate.getFullYear();
+    return selectedDate.getDate() === day &&
+      selectedDate.getMonth() === currentDate.getMonth() &&
+      selectedDate.getFullYear() === currentDate.getFullYear();
   };
 
   const isToday = (day) => {
     const today = new Date();
-    return day === today.getDate() && 
-           currentDate.getMonth() === today.getMonth() &&
-           currentDate.getFullYear() === today.getFullYear();
+    return day === today.getDate() &&
+      currentDate.getMonth() === today.getMonth() &&
+      currentDate.getFullYear() === today.getFullYear();
   };
 
   const renderDays = () => {
@@ -88,8 +100,8 @@ export default function DatePicker({ value, onChange, onClose }) {
             transition-all duration-200
             ${!isValidDay ? 'text-gray-300 dark:text-gray-600 cursor-default' :
               isSelected(dayNumber) ? 'bg-blue-600 text-white hover:bg-blue-700' :
-              isToday(dayNumber) ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800' :
-              'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                isToday(dayNumber) ? 'bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800' :
+                  'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
             }
           `}
         >
@@ -150,7 +162,11 @@ export default function DatePicker({ value, onChange, onClose }) {
             const today = new Date();
             setSelectedDate(today);
             setCurrentDate(new Date(today.getFullYear(), today.getMonth(), 1));
-            const iso = today.toISOString().split('T')[0];
+            // Format to ISO string using local date components (not UTC)
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const iso = `${yyyy}-${mm}-${dd}`;
             onChange(iso);
             onClose();
           }}

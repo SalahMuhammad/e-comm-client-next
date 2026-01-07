@@ -46,16 +46,16 @@ function RefilledForm({ initialData }) {
                 <div className={styles.formBody}>
                     {initialData?.id && (
                         <div className={styles.formGroup}>
-                            <NumberInput 
-                                placeholder={'ID'} 
-                                id="id" 
-                                value={state?.id || initialData.id} 
-                                borderColor="border-green-500 dark:border-green-400" 
-                                labelColor="text-green-600 dark:text-green-400" 
-                                focusColor="" 
-                                focusLabelColor="" 
-                                name="id" 
-                                readOnly 
+                            <NumberInput
+                                placeholder={'ID'}
+                                id="id"
+                                value={state?.id || initialData.id}
+                                borderColor="border-green-500 dark:border-green-400"
+                                labelColor="text-green-600 dark:text-green-400"
+                                focusColor=""
+                                focusLabelColor=""
+                                name="id"
+                                readOnly
                             />
                         </div>
                     )}
@@ -69,7 +69,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={state?.formData?.date || initialData?.date || formatDateManual(new Date())}
                             required
                         />
-                        <FieldError error={state?.data?.date} />
+                        <FieldError error={!state?.ok ? state?.data?.date : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -77,10 +77,10 @@ function RefilledForm({ initialData }) {
                             label={t("form.owner")}
                             url={'/api/buyer-supplier-party/?s='}
                             name={`owner`}
-                            defaultValue={state.formData?.id ? { value: state.formData?.owner, label: state.formData?.owner_name } : initialData?.id ? { value: initialData?.owner, label: initialData?.owner_name } : null }
+                            defaultValue={state.formData?.id ? { value: state.formData?.owner, label: state.formData?.owner_name } : initialData?.id ? { value: initialData?.owner, label: initialData?.owner_name } : null}
                             placeholder={t("form.owner")}
                         />
-                        <FieldError error={state?.data?.owner} />
+                        <FieldError error={!state?.ok ? state?.data?.owner : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -93,7 +93,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={initialData?.id ? { value: initialData?.item, label: initialData?.item_name } : null}
                             placeholder={t("form.item")}
                         />
-                        <FieldError error={state.data?.item} />
+                        <FieldError error={!state?.ok ? state.data?.item : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -101,7 +101,7 @@ function RefilledForm({ initialData }) {
                             id="quantity"
                             name="quantity"
                             placeholder={t("form.quantity")}
-                            error={state.data?.quantity || ""}
+                            error={!state?.ok ? state.data?.quantity : ""}
                             defaultValue={initialData?.id ? initialData?.quantity : state?.formData?.quantity || ''}
                         />
                     </div>
@@ -114,7 +114,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={initialData?.id ? { value: initialData.repository, label: initialData.repository_name } : { value: 10000, label: 'الرئيسي' }}
                             placeholder={t("form.repository")}
                         />
-                        <FieldError error={state?.data?.repository} />
+                        <FieldError error={!state?.ok ? state?.data?.repository : null} />
                     </div>
 
                     <div className={styles.formGroup}>
@@ -126,7 +126,7 @@ function RefilledForm({ initialData }) {
                             defaultValue={state?.formData?.notes ? state?.formData?.notes : initialData?.notes || ''}
                             placeholder={t("form.moreNotes")}
                         />
-                        <FieldError error={state?.data?.notes} />
+                        <FieldError error={!state?.ok ? state?.data?.notes : null} />
                     </div>
                 </div>
 

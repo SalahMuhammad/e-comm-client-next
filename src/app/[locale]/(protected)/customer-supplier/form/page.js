@@ -54,9 +54,9 @@ function CSForm({ obj }) {
                 type="submit"
                 variant={obj?.id ? "secondary" : "danger"}
                 size="md"
-                bgColor="bg-neutral-100 dark:bg-neutral-800"
-                hoverBgColor="bg-neutral-200 dark:bg-neutral-700"
-                textColor="text-black dark:text-white"
+                bgColor={obj?.id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
+                hoverBgColor={obj?.id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
+                textColor="text-white dark:text-gray-100"
                 className="w-full mt-3"
                 isLoading={isPending}
             >

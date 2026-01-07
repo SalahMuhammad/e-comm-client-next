@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import companyDetails from '@/constants/company';
 
 export default function Error({ error, reset }) {
     const t = useTranslations('Error');
@@ -19,7 +20,7 @@ export default function Error({ error, reset }) {
     return (
         <>
         <Head>
-            <title>Error | MedPro Corp</title>
+            <title>Error | {companyDetails.name}</title>
         </Head>
         <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden">
             {/* Animated background elements */}

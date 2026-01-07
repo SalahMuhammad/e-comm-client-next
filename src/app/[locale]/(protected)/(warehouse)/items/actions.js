@@ -29,7 +29,6 @@ export async function createUpdateItem(_, formData) {
         const match = key.match(barcodePattern);
         if (match) {
             const [_, index, field] = match;
-            console.log(index, field)
             if (!barcodes[index]) {
                 barcodes[index] = {};
             }

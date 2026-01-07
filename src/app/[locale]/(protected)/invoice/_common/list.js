@@ -17,7 +17,7 @@ async function InvoiceList({ searchParams, type }) {
     const note = params['note'] ?? '';
     const itemDesc = params['itemdesc'] ?? '';
     const itemName = params['itemname'] ?? '';
-    const t = await getTranslations("invoice");
+    const t = await getTranslations();
     const isRefund = type.split('/')[1] || false;
 
 
@@ -30,28 +30,28 @@ ${itemName ? `&itemname=${itemName}` : ''}
 `
     ));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
-            redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
+        redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
 
     return (
         <>
-            <QueryParamSetterInput 
+            <QueryParamSetterInput
                 paramOptions={[
-                    { label: 'Owner Name', value: 's' },
-                    { label: 'Order Nu', value: 'no' },
-                    { label: 'Note', value: 'note' },
-                    { label: 'Item Description', value: 'itemdesc' },
-                    { label: 'Item Name', value: 'itemname' },
+                    { label: t('inputs.search.ownerName'), value: 's' },
+                    { label: t('inputs.search.orderNumber'), value: 'no' },
+                    { label: t('inputs.search.notes'), value: 'note' },
+                    { label: t('inputs.search.itemDescription'), value: 'itemdesc' },
+                    { label: t('inputs.search.itemName'), value: 'itemname' },
                 ]}
             />
-            
+
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <InvoiceListTable initialData={data.results} type={type} />
             </div>
-            {data.count == 0 && 
+            {data.count == 0 &&
                 <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md mt-3" />
             }
-            <PaginationControls 
+            <PaginationControls
                 resCount={data.count}
                 hasNext={data.next}
                 hasPrev={data.previous}
