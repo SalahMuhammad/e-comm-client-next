@@ -39,7 +39,7 @@ function RepositoryForm({ obj, onSuccess, onCancel, isModal = false }) {
 
             // Only reload if not in modal mode
             if (!isModal) {
-                window.location.reload();
+                // window.location.reload();
             }
         }
     }, [state, isModal, onSuccess])
