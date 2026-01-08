@@ -8,6 +8,7 @@ import ToolTip from "@/components/ToolTip";
 import RepositoryPermitButton from "./RepositoryPermitButton";
 import numberFormatter from "@/utils/NumberFormatter";
 import { useTranslations } from "next-intl";
+import TableNote from '@/components/TableNote';
 
 export default function InvoiceListTable({ initialData, type }) {
     const t = useTranslations("invoice");
@@ -79,7 +80,7 @@ export default function InvoiceListTable({ initialData, type }) {
                                     <RepositoryPermitButton id={inv.id} type={type} permitValue={inv.repository_permit} width="170px" />
                                 </td>
                             )}
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                            <td className="px-6 py-4 max-w-xs">
                                 <TableNote note={inv.notes} />
                             </td>
                             {isRefund && (

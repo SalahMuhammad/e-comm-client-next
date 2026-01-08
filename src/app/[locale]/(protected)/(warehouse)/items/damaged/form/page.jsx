@@ -36,9 +36,7 @@ function DamagedItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
             }
 
             if (!isModal) {
-                // simple reload workaround if not in modal, though usually router.refresh() 
-                // or router.replace is better in Next.js, but matching existing pattern
-                window.location.reload();
+            //     window.location.reload();
             }
         }
     }, [state, isModal, onSuccess])
@@ -69,21 +67,21 @@ function DamagedItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
             style={{ paddingTop: '3rem' }}
         >
             {obj?.id && (
-                <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
+                <NumberInput placeholder={t("id")} id="id" value={state?.id || obj?.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
             )}
 
             <SearchableDropdown
                 url={'/api/items/?name='}
                 label={t('item')}
                 name="item"
-                defaultValue={(state?.item || obj?.item) ? { value: state?.item || obj.item, label: obj?.item_name || state?.item_name || obj.item } : {}}
+                defaultValue={(state?.item || obj?.item) ? { value: state?.item || obj.item, label: obj?.item_name || state?.item_name || obj?.item } : {}}
             />
 
             <SearchableDropdown
                 url={'/api/repositories/?s='}
                 label={t('repository')}
                 name="repository"
-                defaultValue={(state?.repository || obj?.repository) ? { value: state?.repository || obj.repository, label: obj?.repository_name || state?.repository_name || obj.repository } : {}}
+                defaultValue={(state?.repository || obj?.repository) ? { value: state?.repository || obj.repository, label: obj?.repository_name || state?.repository_name || obj?.repository } : {}}
             />
 
             <NumberInput
