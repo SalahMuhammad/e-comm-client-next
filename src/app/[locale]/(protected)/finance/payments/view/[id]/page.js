@@ -16,7 +16,7 @@ async function page({ params }) {
 
 
     return (
-        <TransactionView id={id} type={'payment'} />
+        <TransactionView id={id} type={'payments'} />
     )
 }
 

@@ -10,6 +10,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Toggle from "./StatusToggle";
 import { EyeIcon, PencilIcon } from "@heroicons/react/24/outline";
+import ErrorLoading from "@/components/ErrorLoading";
 
 
 async function List({ searchParams, type }) {
@@ -80,7 +81,7 @@ async function List({ searchParams, type }) {
                                     {numberFormatter(payment.amount)}
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    <StatusBadge status={payment.status} />
+                                    <StatusBadge status={payment.status} t={t} />
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                     {payment?.ref ? (
@@ -132,6 +133,10 @@ async function List({ searchParams, type }) {
                 </table>
             </div>
 
+            {data.count == 0 &&
+                <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5" />
+            }
+
             <PaginationControls
                 resCount={data.count}
                 hasNext={data.next}
@@ -144,28 +149,28 @@ async function List({ searchParams, type }) {
 export default List
 
 
-function StatusBadge({ status }) {
+function StatusBadge({ status, t }) {
     const statusConfig = {
         '1': {
-            label: 'Pending',
+            label: t('finance.statusOptions.pending'),
             bgColor: 'bg-yellow-100',
             textColor: 'text-yellow-800',
             dotColor: 'bg-yellow-500'
         },
         '2': {
-            label: 'Confirmed',
+            label: t('finance.statusOptions.confirmed'),
             bgColor: 'bg-blue-100',
             textColor: 'text-blue-800',
             dotColor: 'bg-blue-500'
         },
         '3': {
-            label: 'Rejected',
+            label: t('finance.statusOptions.rejected'),
             bgColor: 'bg-red-100',
             textColor: 'text-red-800',
             dotColor: 'bg-red-500'
         },
         '4': {
-            label: 'Reimbursed',
+            label: t('finance.statusOptions.reimbursed'),
             bgColor: 'bg-green-100',
             textColor: 'text-green-800',
             dotColor: 'bg-green-500'
@@ -175,7 +180,7 @@ function StatusBadge({ status }) {
     const config = statusConfig[status] || statusConfig['1'];
 
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center justify-center">
             <div className="space-y-8">
                 {/* <div>
                     <h2 className="text-sm font-medium text-gray-600 mb-4">All Status Badges:</h2>
@@ -198,7 +203,7 @@ function StatusBadge({ status }) {
                 <div>
                     {/* <h2 className="text-sm font-medium text-gray-600 mb-4">Selected Status:</h2> */}
                     <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${config.bgColor} ${config.textColor}`}
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${config.bgColor} ${config.textColor}`}
                     >
                         <span className={`w-2 h-2 rounded-full ${config.dotColor} mr-2`}></span>
                         {config.label}

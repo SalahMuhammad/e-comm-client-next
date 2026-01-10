@@ -16,8 +16,12 @@ export async function getList(type, queryStringParams) {
 
 export async function getPayment(id, type) {
     'use server'
+    if (type === 'payments') {
+        type = 'payment'
+    }
+
     const res = await apiRequest(`/api/finance/${type}/${id}/`, {
-        method: "Get",
+        method: "GET",
     })
 
     return res
@@ -25,21 +29,50 @@ export async function getPayment(id, type) {
 
 export async function createUpdateTransaction(prevState, formData) {
     'use server'
-    const type = formData.get('type')
+    let type = formData.get('type')
+    if (type === 'payments') {
+        type = 'payment'
+    }
+
     const hashedID = formData.get('hashed_id')
     const isUpdate = hashedID ? true : false
-    const formDataObj = Object.fromEntries(formData.entries());
+
+    // Check if there are any file uploads (and they're not empty)
+    const paymentProof = formData.get('payment_proof')
+    const image = formData.get('image')
+    const proof = formData.get('proof')
+
+    // Remove empty file fields from FormData
+    if (paymentProof && paymentProof.size === 0) formData.delete('payment_proof')
+    if (image && image.size === 0) formData.delete('image')
+    if (proof && proof.size === 0) formData.delete('proof')
+
+    const hasFiles = (paymentProof && paymentProof.size > 0) || (image && image.size > 0) || (proof && proof.size > 0)
+
+    let body, headers
+
+    if (hasFiles) {
+        // Use FormData for file uploads (multipart/form-data)
+        body = formData
+        headers = {} // Let browser set Content-Type with boundary
+    } else {
+        // Use JSON for regular data
+        const formDataObj = Object.fromEntries(formData.entries());
+        body = JSON.stringify(formDataObj)
+        headers = {
+            'Content-Type': 'application/json',
+        }
+    }
+
     const res = await apiRequest(`/api/finance/${type}/${isUpdate ? hashedID + '/' : ''}`, {
         method: `${isUpdate ? 'PATCH' : 'POST'}`,
-        body: JSON.stringify(formDataObj),
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        body: body,
+        headers: headers,
     })
 
     return {
         ...res,
-        formData: ! res.ok && formDataObj,
+        formData: !res.ok && Object.fromEntries(formData.entries()),
     }
 }
 
@@ -49,7 +82,7 @@ export async function deletePayment(type, id, isDeleteFromView) {
         method: "DELETE",
     })
 
-    if (res.ok && ! isDeleteFromView) revalidatePath('/finance/payments/list');
+    if (res.ok && !isDeleteFromView) revalidatePath('/finance/payments/list');
 
     return res
 }
@@ -61,7 +94,7 @@ export async function updateStatus(id, type, paid) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ paid: ! paid })
+        body: JSON.stringify({ paid: !paid })
     })
 
     return res
