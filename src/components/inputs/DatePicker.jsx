@@ -1,7 +1,9 @@
 "use client";
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 
 export default function DatePicker({ value, onChange, onClose }) {
+  const t = useTranslations();
   // Helper to parse ISO date string in local timezone (prevents off-by-one errors)
   const parseISOLocal = (isoString) => {
     if (!isoString) return null;
@@ -35,10 +37,7 @@ export default function DatePicker({ value, onChange, onClose }) {
     1
   ).getDay();
 
-  const monthNames = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
+  const monthNames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(index => t(`datePicker.months.${index}`));
 
   const handlePrevMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
@@ -140,11 +139,10 @@ export default function DatePicker({ value, onChange, onClose }) {
         </button>
       </div>
 
-      {/* Weekdays */}
       <div className="grid grid-cols-7 mb-2">
-        {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(day => (
-          <div key={day} className="text-xs font-medium text-gray-500 dark:text-gray-400 text-center">
-            {day}
+        {[0, 1, 2, 3, 4, 5, 6].map(i => (
+          <div key={i} className="text-xs font-medium text-gray-500 dark:text-gray-400 text-center">
+            {t(`datePicker.weekdays.${i}`)}
           </div>
         ))}
       </div>
@@ -172,7 +170,7 @@ export default function DatePicker({ value, onChange, onClose }) {
           }}
           className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
         >
-          Today
+          {t('datePicker.controls.today')}
         </button>
         <div className="space-x-2">
           <button
@@ -184,14 +182,14 @@ export default function DatePicker({ value, onChange, onClose }) {
             }}
             className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           >
-            Clear
+            {t('datePicker.controls.clear')}
           </button>
           <button
             type="button"
             onClick={onClose}
             className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium"
           >
-            Done
+            {t('datePicker.controls.done')}
           </button>
         </div>
       </div>

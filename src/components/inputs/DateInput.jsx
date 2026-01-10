@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import DatePicker from "./DatePicker";
 
 export default function DateInput({
@@ -14,6 +15,14 @@ export default function DateInput({
   defaultValue = "", // uncontrolled initial ISO
   ...props
 }) {
+  const t = useTranslations();
+  const locale = useLocale();
+  // Ensure locale is just the language code (e.g. 'en', 'ar') to avoid issues
+  const currentLocale = locale === 'ar' ? 'ar-EG' : 'en-US';
+
+  const defaultLabel = t('datePicker.controls.selectDate');
+  const actualLabel = label === "Select date" ? defaultLabel : label;
+
   // Helper to parse ISO date string in local timezone (prevents off-by-one errors)
   const parseISOLocal = (isoString) => {
     if (!isoString) return null;
@@ -38,7 +47,7 @@ export default function DateInput({
     if (internalISO) {
       const d = parseISOLocal(internalISO);
       if (d && !isNaN(d.getTime())) {
-        setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+        setText(d.toLocaleDateString(currentLocale, { year: "numeric", month: "long", day: "numeric" }));
         return;
       }
     }
@@ -94,7 +103,7 @@ export default function DateInput({
       emitChange(iso);
       const d = parseISOLocal(iso);
       if (d) {
-        setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+        setText(d.toLocaleDateString(currentLocale, { year: "numeric", month: "long", day: "numeric" }));
       }
     } else if (cleaned === "") {
       if (!isControlled) setInternalISO("");
@@ -105,7 +114,7 @@ export default function DateInput({
       if (internalISO) {
         const d = parseISOLocal(internalISO);
         if (d) {
-          setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+          setText(d.toLocaleDateString(currentLocale, { year: "numeric", month: "long", day: "numeric" }));
         }
       } else {
         setText("");
@@ -142,7 +151,7 @@ export default function DateInput({
       if (internalISO) {
         const d = parseISOLocal(internalISO);
         if (d) {
-          setText(d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" }));
+          setText(d.toLocaleDateString(currentLocale, { year: "numeric", month: "long", day: "numeric" }));
         }
       } else {
         setText("");
@@ -186,7 +195,7 @@ export default function DateInput({
             id={id}
             type="text"
             value={text}
-            placeholder={label}
+            placeholder={actualLabel}
             onChange={handleInputChange}
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -200,7 +209,7 @@ export default function DateInput({
           />
 
           <label htmlFor={id} className={`absolute left-4 top-2 text-xs font-medium transition-all duration-200 ${error ? 'text-red-500 dark:text-red-400' : isFocused ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'}`}>
-            {label}{required && <span className="text-red-500 ml-1">*</span>}
+            {actualLabel}{required && <span className="text-red-500 ml-1">*</span>}
           </label>
 
           <button type="button" onClick={() => setShowPicker((s) => !s)} className={`absolute right-2 top-1/2 -translate-y-1/2 p-2 rounded-lg transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 ${error ? 'text-red-500 dark:text-red-400' : isFocused ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400'}`} aria-label="Toggle calendar">
