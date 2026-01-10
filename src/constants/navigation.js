@@ -168,8 +168,14 @@ export const getMenuItems = (t) => {
                 {
                     label: t('finance.subLabels.debtSettlement'),
                     path: '/finance/debt-settlement/list',
-                    icon: <ExclamationTriangleIcon className="w-4 h-4" />,
+                    icon: <ScaleIcon className="w-4 h-4" />,
                     addPath: '/finance/debt-settlement/form'
+                },
+                {
+                    label: t('finance.subLabels.internalTransfer'),
+                    path: '/finance/internal-money-transfer/list',
+                    icon: <BanknotesIcon className="w-4 h-4" />,
+                    addPath: '/finance/internal-money-transfer/form'
                 },
                 // {
                 //     label: t('finance.subLabels.debtSettlementForm'),
