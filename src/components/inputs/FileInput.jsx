@@ -37,61 +37,117 @@ export default function FileUploadInput({
         placeholder = t("upload");
     }
 
-    const [files, setFiles] = useState([]);
+    const [newFiles, setNewFiles] = useState([]); // New files to upload
+    const [existingImages, setExistingImages] = useState([]); // Existing images from server (display only)
+    const [existingImageIds, setExistingImageIds] = useState([]); // Track existing image IDs
     const [isDragging, setIsDragging] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const fileInputRef = useRef(null);
+    const hasInitialized = useRef(false); // Track if we've loaded defaultValue
     const hasError = Boolean(error);
+
+    // Combined files for display (existing + new)
+    const allFiles = [...existingImages, ...newFiles];
 
 
     useEffect(() => {
-        if (typeof DataTransfer !== 'undefined' && fileInputRef && fileInputRef.current) {
+        if (fileInputRef.current) {
             const dataTransfer = new DataTransfer();
-            files.forEach(file => dataTransfer.items.add(file));
+            // Only add NEW files to the input, not existing images
+            newFiles.forEach(file => dataTransfer.items.add(file));
             fileInputRef.current.files = dataTransfer.files;
         }
-    }, [files]);
+    }, [newFiles]);
+
+    // Monitor the file input and reset state if it gets cleared (e.g., on form reload)
+    useEffect(() => {
+        const checkFileInput = () => {
+            if (fileInputRef.current) {
+                const currentFiles = fileInputRef.current.files;
+                // If the file input is empty but we have newFiles, it means the form reloaded
+                // and the browser cleared the file input - we need to reset our state
+                if (currentFiles.length === 0 && newFiles.length > 0) {
+                    setNewFiles([]);
+                    onChange([], existingImageIds);
+                }
+            }
+        };
+
+        // Check periodically and on visibility change
+        const interval = setInterval(checkFileInput, 500);
+        document.addEventListener('visibilitychange', checkFileInput);
+
+        return () => {
+            clearInterval(interval);
+            document.removeEventListener('visibilitychange', checkFileInput);
+        };
+    }, [newFiles, existingImageIds]);
 
     useEffect(() => {
         const handleDefaultValue = async () => {
-            if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
-                setFiles([]);
-                onChange([]);
-                setLoadind(false);
+            // Only process defaultValue on first mount or if we haven't initialized yet
+            if (hasInitialized.current) {
                 return;
             }
 
-            setFiles([]);
+            if (!Array.isArray(defaultValue) || defaultValue.length === 0) {
+                setExistingImages([]);
+                setExistingImageIds([]);
+                setNewFiles([]);
+                setLoadind(false);
+                hasInitialized.current = true;
+                return;
+            }
+
+            setExistingImages([]);
+            setExistingImageIds([]);
+            setNewFiles([]);
             setLoadind(true);
 
             try {
-                const fetchedFiles = await Promise.all(
+                const fetchedImages = [];
+                const extractedIds = [];
+
+                await Promise.all(
                     defaultValue.map(async (obj) => {
                         try {
-                            const response = await fetch(obj.img); // obj.img image url
+                            const response = await fetch(obj.img);
                             if (!response.ok) throw new Error("Failed to fetch");
                             const blob = await response.blob();
                             const fileName = obj.img.split("/").pop();
-                            return new File([blob], fileName, { type: blob.type });
-                        } catch (err) {
-                            try {
-                                return obj
-                            } catch (error) {
-                                
+                            const file = new File([blob], fileName, { type: blob.type });
+
+                            fetchedImages.push(file);
+
+                            // Extract ID from object or URL
+                            if (obj.id) {
+                                extractedIds.push(obj.id);
+                            } else {
+                                const urlParts = obj.img.split('/');
+                                const numericId = urlParts.find(part => /^\d+$/.test(part));
+                                extractedIds.push(numericId ? parseInt(numericId) : null);
                             }
+                        } catch (err) {
+                            // Skip failed fetches
                         }
                     })
                 );
 
-                const validFiles = fetchedFiles?.filter((file) => file !== null);
-                setFiles(validFiles);
-                onChange(validFiles);
+                const validImages = fetchedImages.filter(Boolean);
+                const validIds = extractedIds.filter(id => id !== null);
+
+                setExistingImages(validImages);
+                setExistingImageIds(validIds);
+                // Initialize with existing IDs as the kept IDs
+                onChange([], validIds); // Empty new files, but pass existing IDs
             } catch (e) {
-                setFiles([]);
-                onChange([]);
+                setExistingImages([]);
+                setExistingImageIds([]);
+                onChange([], []);
             } finally {
                 setLoadind(false);
+                hasInitialized.current = true; // Mark as initialized
             }
         };
 
@@ -153,12 +209,20 @@ export default function FileUploadInput({
         });
 
         if (multiple) {
-            const uniqueFiles = validFiles.filter(file => !files.some(f => f.name === file.name));
-            setFiles(prev => [...prev, ...uniqueFiles]);
-            onChange([...files, ...uniqueFiles]);
+            const uniqueFiles = validFiles.filter(file =>
+                !newFiles.some(f => f.name === file.name) &&
+                !existingImages.some(f => f.name === file.name)
+            );
+            const updatedNewFiles = [...newFiles, ...uniqueFiles];
+            setNewFiles(updatedNewFiles);
+            // Pass new files and existing image IDs
+            onChange(updatedNewFiles, existingImageIds);
         } else {
-            setFiles(validFiles);
-            onChange(validFiles);
+            // For single file mode, replace everything
+            setNewFiles(validFiles);
+            setExistingImages([]);  // Clear existing images
+            setExistingImageIds([]); // Clear existing image IDs
+            onChange(validFiles, []);
         }
     };
 
@@ -181,11 +245,24 @@ export default function FileUploadInput({
         handleFileChange(droppedFiles);
     };
 
-    // Remove file
+    // Remove file (works for both existing images and new files)
     const removeFile = (index) => {
-        const newFiles = files.filter((_, i) => i !== index);
-        setFiles(newFiles);
-        onChange(newFiles);
+        const totalExisting = existingImages.length;
+
+        if (index < totalExisting) {
+            // Removing an existing image - remove from existingImages and existingImageIds
+            const newExistingImages = existingImages.filter((_, i) => i !== index);
+            const newExistingIds = existingImageIds.filter((_, i) => i !== index);
+            setExistingImages(newExistingImages);
+            setExistingImageIds(newExistingIds);
+            onChange(newFiles, newExistingIds);
+        } else {
+            // Removing a new file - adjust index and remove from newFiles
+            const newFileIndex = index - totalExisting;
+            const updatedNewFiles = newFiles.filter((_, i) => i !== newFileIndex);
+            setNewFiles(updatedNewFiles);
+            onChange(updatedNewFiles, existingImageIds);
+        }
     };
 
     // Handle file type selection
@@ -308,9 +385,9 @@ export default function FileUploadInput({
             </div>
 
             {/* Selected Files */}
-            {files.length > 0 && (
+            {allFiles.length > 0 && (
                 <div className="mt-3 space-y-2">
-                    {files.map((file, index) => {
+                    {allFiles.map((file, index) => {
                         const isErrorObject = error && typeof error === "object"
                         const errorMessages = isErrorObject ? error[String(index)]?.['img'] : null;
 
@@ -369,7 +446,7 @@ export default function FileUploadInput({
                 htmlFor={id}
                 className={`
           absolute text-xs font-medium duration-300 transform -translate-y-8 scale-75 top-2 -z-10 origin-[0]
-          ${files.length > 0 || isFocused ? 'opacity-100' : 'opacity-0'}
+          ${allFiles.length > 0 || isFocused ? 'opacity-100' : 'opacity-0'}
           ${labelColorClass}
         `}
             >
