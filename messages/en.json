@@ -46,6 +46,8 @@
 				"debtSettlementForm": "Add Debt Settlement",
 				"internalTransfer": "Internal Money Transfer",
 				"addInternalTransfer": "Add Internal Transfer",
+				"accountVault": "Business Accounts",
+				"accountTypes": "Account Types",
 				"debts": "Debts"
 			}
 		},
@@ -360,7 +362,8 @@
 	"finance": {
 		"table": {
 			"view": "View",
-			"edit": "Edit"
+			"edit": "Edit",
+			"delete": "Delete"
 		},
 		"fields": {
 			"transaction": "Add Payment",
@@ -434,6 +437,42 @@
 			"senderName": "For bank transfers",
 			"bankName": "For bank transfers",
 			"receivedBy": "Who physically received cash"
+		}
+	},
+	"accountVault": {
+		"title": "Account Vault",
+		"businessAccounts": "Business Accounts",
+		"accountTypes": "Account Types",
+		"fields": {
+			"accountName": "Account Name",
+			"accountType": "Account Type",
+			"accountNumber": "Account Number",
+			"phoneNumber": "Phone Number",
+			"bankName": "Bank Name",
+			"currentBalance": "Current Balance",
+			"isActive": "Active Status",
+			"typeName": "Type Name"
+		},
+		"placeholders": {
+			"searchAccountName": "Search by account name",
+			"searchAccountType": "Filter by account type",
+			"accountNumber": "Enter account number",
+			"phoneNumber": "Enter phone number (for mobile wallets)",
+			"bankName": "Enter bank name",
+			"typeName": "Enter account type name (e.g., Cash, Bank Account)"
+		},
+		"actions": {
+			"createAccount": "Create Business Account",
+			"createType": "Create Account Type",
+			"editAccount": "Edit Business Account",
+			"editType": "Edit Account Type"
+		},
+		"status": {
+			"active": "Active",
+			"inactive": "Inactive"
+		},
+		"table": {
+			"delete": "Delete"
 		}
 	},
 	"refillableItems": {
@@ -561,6 +600,9 @@
 		}
 	},
 	"global": {
+		"backToList": "Back to List",
+		"createdAt": "Created At",
+		"updatedAt": "Updated At",
 		"form": {
 			"submit": "Submit",
 			"edit": "Edit",
@@ -576,12 +618,16 @@
 			"503": "Service unavailable. Please try again later.",
 			"etc": "An unexpected error occurred. Please try again.",
 			"pageNotFound": "page not found",
-			"nothing": "Nothing here to show"
+			"nothing": "Nothing here to show",
+			"loadError": "Failed to load data",
+			"deleteError": "Failed to delete item"
 		},
 		"delete": {
 			"label": "Remove",
 			"actionLabel": "Delete",
 			"cancelLabel": "Cancel",
+			"confirmMessage": "Are you sure you want to delete this item?",
+			"deleting": "Deleting...",
 			"assert": {
 				"description": "This action cannot be undone.",
 				"canceled": "Canceled"

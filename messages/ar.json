@@ -44,6 +44,10 @@
 				"addReversePayment": "إضافة دفعة معكوسة",
 				"debtSettlement": "قائمة تسوية الديون",
 				"debtSettlementForm": "إضافة تسوية دين",
+				"internalTransfer": "التحويلات الداخلية",
+				"addInternalTransfer": "إضافة تحويل داخلي",
+				"accountVault": "الحسابات التجارية",
+				"accountTypes": "أنواع الحسابات",
 				"debts": "الديون"
 			}
 		},
@@ -358,7 +362,8 @@
 	"finance": {
 		"table": {
 			"view": "عرض",
-			"edit": "تعديل"
+			"edit": "تعديل",
+			"delete": "حذف"
 		},
 		"fields": {
 			"transaction": "إضافة دفعة",
@@ -424,6 +429,42 @@
 			"senderName": "للتحويلات البنكية",
 			"bankName": "للتحويلات البنكية",
 			"receivedBy": "من استلم النقود فعلياً"
+		}
+	},
+	"accountVault": {
+		"title": "خزينة الحسابات",
+		"businessAccounts": "الحسابات التجارية",
+		"accountTypes": "أنواع الحسابات",
+		"fields": {
+			"accountName": "اسم الحساب",
+			"accountType": "نوع الحساب",
+			"accountNumber": "رقم الحساب",
+			"phoneNumber": "رقم الهاتف",
+			"bankName": "اسم البنك",
+			"currentBalance": "الرصيد الحالي",
+			"isActive": "حالة النشاط",
+			"typeName": "اسم النوع"
+		},
+		"placeholders": {
+			"searchAccountName": "بحث باسم الحساب",
+			"searchAccountType": "تصفية حسب نوع الحساب",
+			"accountNumber": "أدخل رقم الحساب",
+			"phoneNumber": "أدخل رقم الهاتف (للمحافظ الإلكترونية)",
+			"bankName": "أدخل اسم البنك",
+			"typeName": "أدخل اسم نوع الحساب (مثال: نقدي، حساب بنكي)"
+		},
+		"actions": {
+			"createAccount": "إنشاء حساب تجاري",
+			"createType": "إنشاء نوع حساب",
+			"editAccount": "تعديل الحساب التجاري",
+			"editType": "تعديل نوع الحساب"
+		},
+		"status": {
+			"active": "نشط",
+			"inactive": "غير نشط"
+		},
+		"table": {
+			"delete": "حذف"
 		}
 	},
 	"refillableItems": {
@@ -551,6 +592,9 @@
 		}
 	},
 	"global": {
+		"backToList": "العودة إلى القائمة",
+		"createdAt": "تاريخ الإنشاء",
+		"updatedAt": "تاريخ التحديث",
 		"form": {
 			"submit": "إرسال",
 			"edit": "تعديل",
@@ -566,12 +610,16 @@
 			"503": "الخدمة غير متاحة. يرجى المحاولة مرة أخرى لاحقًا.",
 			"etc": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
 			"pageNotFound": "الصفحة غير موجودة",
-			"nothing": "لا يوجد شيء لعرضه هنا"
+			"nothing": "لا يوجد شيء لعرضه هنا",
+			"loadError": "فشل في تحميل البيانات",
+			"deleteError": "فشل في حذف العنصر"
 		},
 		"delete": {
 			"label": "إزالة",
 			"actionLabel": "حذف",
 			"cancelLabel": "إلغاء",
+			"confirmMessage": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+			"deleting": "جارٍ الحذف...",
 			"assert": {
 				"description": "لا يمكن التراجع عن هذا الإجراء.",
 				"canceled": "تم الإلغاء"
