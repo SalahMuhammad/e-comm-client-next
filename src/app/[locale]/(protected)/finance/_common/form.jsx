@@ -201,7 +201,7 @@ function MyForm({ initialData, type }) {
 
                     <div className={`mt-8 ${styles.formGroup}`}>
                         <SearchableDropdown
-                            url={'/api/finance/account-vault/?account_name='}
+                            url={'/api/finance/account-vault/?is_active=true&account_name='}
                             label={t('finance.fields.paymentMethod')}
                             customLoadOptions={handleAccountTransformer}
                             name={'business_account'}
