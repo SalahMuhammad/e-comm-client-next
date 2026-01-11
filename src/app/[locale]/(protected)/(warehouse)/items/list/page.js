@@ -38,9 +38,9 @@ ${origin ? `&origin=${origin}` : ''}
         <>
             <QueryParamSetterInput
                 paramOptions={[
+                    { label: t('inputs.search.name'), value: 'name' },
                     { label: t('inputs.search.type'), value: 'type' },
                     { label: t('inputs.search.id'), value: 'id' },
-                    { label: t('inputs.search.name'), value: 'name' },
                     { label: t('inputs.search.barcode'), value: 'barcode' },
                     { label: t('inputs.search.place'), value: 'place' },
                     { label: t('inputs.search.origin'), value: 'origin' },
