@@ -6,7 +6,7 @@ import {
     // Customers/Suppliers icons
     UsersIcon, UserPlusIcon,
     // Finance icons
-    CreditCardIcon, BanknotesIcon, ReceiptPercentIcon, ExclamationTriangleIcon, ScaleIcon,
+    CreditCardIcon, BanknotesIcon, ReceiptPercentIcon, ExclamationTriangleIcon, ScaleIcon, BuildingLibraryIcon,
     // Refilled Cans icons
     BeakerIcon, UserGroupIcon, WrenchScrewdriverIcon,
 } from '@heroicons/react/24/outline';
@@ -176,6 +176,18 @@ export const getMenuItems = (t) => {
                     path: '/finance/internal-money-transfer/list',
                     icon: <BanknotesIcon className="w-4 h-4" />,
                     addPath: '/finance/internal-money-transfer/form'
+                },
+                {
+                    label: t('finance.subLabels.accountVault'),
+                    path: '/finance/account-vault/list',
+                    icon: <BuildingLibraryIcon className="w-4 h-4" />,
+                    addPath: '/finance/account-vault/form'
+                },
+                {
+                    label: t('finance.subLabels.accountTypes'),
+                    path: '/finance/account-vault/type/list',
+                    icon: <ScaleIcon className="w-4 h-4" />,
+                    addPath: '/finance/account-vault/type/form'
                 },
                 // {
                 //     label: t('finance.subLabels.debtSettlementForm'),
