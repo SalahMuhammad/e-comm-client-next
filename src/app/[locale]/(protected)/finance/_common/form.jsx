@@ -62,7 +62,7 @@ function MyForm({ initialData, type }) {
         if (handleGenericErrors(res)) return
 
         if (state?.ok) {
-            toast.success(t(state.data?.id ? "successEdit" : "successCreate"));
+            toast.success(t(initialData?.id ? "successEdit" : "successCreate"));
             if (state.data?.id) {
                 router.replace(`/finance/${type}/view/${state.data?.hashed_id}`);
             }
@@ -184,7 +184,7 @@ function MyForm({ initialData, type }) {
                     </div>
 
                     {/* Sales Invoice Dropdown - Filtered by Owner */}
-                    {(type === 'payment' || type === 'payments') && (
+                    {(type === 'payment' || type === 'payments' || type === 'reverse-payment') && (
                         <div className={`mt-8 ${styles.formGroup}`}>
                             <SearchableDropdown
                                 url={selectedOwner ? `/api/sales/?owner=${selectedOwner}&status=3,4&no=` : '/api/sales/?no='}

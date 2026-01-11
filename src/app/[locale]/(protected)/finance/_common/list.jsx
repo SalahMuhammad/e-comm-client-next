@@ -2,7 +2,7 @@ import { getList } from "./actions";
 import PaginationControls from '@/components/PaginationControls';
 import QueryParamSetterInput from '@/components/QueryParamSetterInput';
 import { getTranslations } from "next-intl/server";
-// import DeleteButton from "./DeleteButton";
+import DeleteButton from "./DeleteButton";
 import Link from 'next/link';
 import numberFormatter from "@/utils/NumberFormatter";
 import ToolTip from "@/components/ToolTip2";
@@ -74,7 +74,7 @@ async function List({ searchParams, type }) {
                                         {payment.owner_name}
                                     </Link>
                                 </th>
-                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                <td className="px-6 py-4 w-56 min-w-[14rem]">
                                     {payment.payment_method_name}
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
@@ -95,7 +95,7 @@ async function List({ searchParams, type }) {
                                         </Link>
                                     ) : '-'}
                                 </td>
-                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                <td className="px-6 py-4 w-48 min-w-[12rem] whitespace-nowrap">
                                     {payment.date}
                                 </td>
                                 <td className="px-6 py-4 w-[10rem] max-w-[10rem] overflow-auto">
@@ -104,8 +104,8 @@ async function List({ searchParams, type }) {
                                     </pre>
                                 </td>
 
-                                <td className="flex items-center px-6 py-4">
-                                    <>
+                                <td className="px-6 py-4 align-middle">
+                                    <div className="flex items-center">
                                         <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/finance/${type}${type == 'payment' ? 's' : ''}/view/${payment.hashed_id}`}>
                                             <EyeIcon
                                                 className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
@@ -114,18 +114,29 @@ async function List({ searchParams, type }) {
                                                 {t("finance.table.view")}
                                             </span>
                                         </Link>
-                                        {/* <DeleteButton type={type} id={payment.hashed_id} />
+
                                         <Link
-                                            href={`/finance/${type}/form/${payment.hashed_id}`}
-                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
+                                            href={`/finance/${type}${type == 'payment' ? 's' : ''}/form/${payment.hashed_id}`}
+                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
                                         >
-                                            <PencilIcon className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />
+                                            <PencilIcon
+                                                className="
+                                                    h-4 w-4 mr-1
+                                                    transition-all duration-300 ease-in-out
+                                                    group-hover:rotate-[8deg]
+                                                    group-hover:-translate-y-0.5
+                                                    group-hover:scale-110
+                                                    group-hover:drop-shadow-sm
+                                                "
+                                            />
                                             <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                                {t("table.edit")}
+                                                {t("finance.table.edit")}
                                             </span>
-                                        </Link> */}
-                                    </>
-                                    <ToolTip obj={payment} />
+                                        </Link>
+
+                                        <DeleteButton type={type} id={payment.hashed_id} />
+                                        <ToolTip obj={payment} />
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -134,7 +145,7 @@ async function List({ searchParams, type }) {
             </div>
 
             {data.count == 0 &&
-                <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5" />
+                <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md mt-3" />
             }
 
             <PaginationControls
