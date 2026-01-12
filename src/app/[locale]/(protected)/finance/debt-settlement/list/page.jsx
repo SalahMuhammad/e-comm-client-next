@@ -9,7 +9,10 @@ import ToolTip from "@/components/ToolTip";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import StatusToggle from "./StatusToggle";
-import { formatDate } from "@/utils/dateFormatter";
+import ErrorLoading from "@/components/ErrorLoading";
+import { EyeIcon, PencilIcon } from "@heroicons/react/24/outline";
+import TableNote from "@/components/TableNote";
+import LocalizedDate from "@/components/LocalizedDate";
 
 
 async function List({ searchParams }) {
@@ -37,7 +40,7 @@ async function List({ searchParams }) {
         },
         {
             header: t('finance.fields.date'),
-            cell: (row) => formatDate(row.date)
+            cell: (row) => <LocalizedDate date={row.date} />
         },
         {
             header: 'settlement ' + t('finance.fields.amount'),
@@ -50,17 +53,33 @@ async function List({ searchParams }) {
         },
         {
             header: t('finance.fields.note'),
-            cell: (row) => row.note
+            cell: (row) => <TableNote note={row.note} />
         },
         {
             header: '',
             cell: (row) => (
-                <div className="flex gap-2">
+                <div className="flex items-center gap-2">
+                    <Link
+                        className="flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                        href={`/finance/debt-settlement/view/${row.hashed_id}`}
+                    >
+                        <EyeIcon
+                            className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
+                        />
+                        <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                            {t('finance.table.view')}
+                        </span>
+                    </Link>
                     <Link
                         href={`/finance/debt-settlement/form/${row.hashed_id}`}
-                        className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                        className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
                     >
-                        {t('finance.table.edit')}
+                        <PencilIcon
+                            className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm"
+                        />
+                        <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                            {t('finance.table.edit')}
+                        </span>
                     </Link>
                     <DeleteTransaction id={row.hashed_id} />
                     <ToolTip obj={row} />
@@ -94,7 +113,7 @@ async function List({ searchParams }) {
                             <tr key={obj.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                                 {columns?.map((column, i) => (
-                                    <td key={i} scope="col" className="px-6 py-3">
+                                    <td key={i} scope="col" className={`px-6 py-3 ${i === 0 || i === 1 ? 'whitespace-nowrap' : ''} ${i === 3 ? 'text-center' : ''}`}>
                                         {column.cell(obj)}
                                     </td>
                                 ))}
@@ -104,6 +123,10 @@ async function List({ searchParams }) {
                     </tbody>
                 </table>
             </div>
+
+            {data?.count == 0 &&
+                <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md mt-3" />
+            }
 
             <PaginationControls
                 resCount={data.count}
