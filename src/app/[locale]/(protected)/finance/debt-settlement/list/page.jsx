@@ -59,7 +59,7 @@ async function List({ searchParams }) {
             header: '',
             cell: (row) => (
                 <div className="flex items-center gap-2">
-                    <Link
+                    {/* <Link
                         className="flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
                         href={`/finance/debt-settlement/view/${row.hashed_id}`}
                     >
@@ -69,7 +69,7 @@ async function List({ searchParams }) {
                         <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
                             {t('finance.table.view')}
                         </span>
-                    </Link>
+                    </Link> */}
                     <Link
                         href={`/finance/debt-settlement/form/${row.hashed_id}`}
                         className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
