@@ -407,7 +407,9 @@
 		},
 		"debtSettlement": {
 			"header": "Debt Settlement",
+			"settlementAmount": "Settlement Amount",
 			"status": {
+				"label": "Status",
 				"approved": "Approved",
 				"not_approved": "Not Approved"
 			}

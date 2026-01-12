@@ -399,7 +399,9 @@
 		},
 		"debtSettlement": {
 			"header": "تسوية الديون",
+			"settlementAmount": "مبلغ التسوية",
 			"status": {
+				"label": "الحالة",
 				"approved": "معتمد",
 				"not_approved": "غير معتمد"
 			}
