@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useTranslations } from "use-intl"
+import LocalizedDate from "./LocalizedDate"
 
 
-function ToolTip2({ obj, className=""}) {
+function ToolTip2({ obj, className = "" }) {
     const t = useTranslations('toolTip');
     const [mounted, setMounted] = useState(false);
     const [show, setShow] = useState(false);
@@ -35,11 +36,11 @@ function ToolTip2({ obj, className=""}) {
                 >
                     {obj.created_at == undefined ? null : (
                         <>
-                            <span>{t('createdAt')}: <strong>{new Date(obj.created_at).toString().split(' GMT')[0]}</strong></span>
+                            <span>{t('createdAt')}: <strong><LocalizedDate date={obj.created_at} format="long" /></strong></span>
                             <hr />
                             <span>{t('createdBy')}: <strong>{obj.created_by}</strong></span>
                             <hr />
-                            <span>{t('lastUpdatedAt')}: <strong>{new Date(obj.last_updated_at).toString().split(' GMT')[0]}</strong></span>
+                            <span>{t('lastUpdatedAt')}: <strong><LocalizedDate date={obj.last_updated_at} format="long" /></strong></span>
                             <hr />
                             <span>{t('lastUpdatedBy')}: <strong>{obj.last_updated_by}</strong></span>
                         </>
