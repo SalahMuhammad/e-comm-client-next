@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect } from "react"
 import { useTranslations } from "next-intl";
-import { createUpdateDebtSettlementTransaction } from "../actions"
+import { createUpdateExpense } from "../actions"
 import Form from "next/form";
 import { NumberInput, TextInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
@@ -19,7 +19,7 @@ import StaticSelect from "@/components/ReactStaticSelect";
 function ExpenseForm({ initialData }) {
     const t = useTranslations()
     const handleGenericErrors = useGenericResponseHandler()
-    const [state, formAction, isPending] = useActionState(createUpdateDebtSettlementTransaction, {})
+    const [state, formAction, isPending] = useActionState(createUpdateExpense, {})
     const router = useRouter();
     const options = [
         { '1': 'Pending' },

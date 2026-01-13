@@ -73,7 +73,7 @@ export default function InvoiceListTable({ initialData, type }) {
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{numberFormatter(inv.total_amount)}</td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{numberFormatter(inv.remaining_balance)}</td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                <StatusBadge status={inv.status} />
+                                <StatusBadge status={inv.status} t={t} />
                             </td>
                             {!isRefund && (
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
@@ -101,7 +101,6 @@ export default function InvoiceListTable({ initialData, type }) {
                                 </Link>
                                 {!isRefund && (
                                     <>
-                                        <DeleteButton type={type} hashed_id={inv.hashed_id} onDelete={() => handleDelete(inv.id)} />
                                         <Link
                                             href={`/invoice/${type}/form/${inv.hashed_id}`}
                                             className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
@@ -111,6 +110,7 @@ export default function InvoiceListTable({ initialData, type }) {
                                                 {t("table.edit")}
                                             </span>
                                         </Link>
+                                        <DeleteButton type={type} hashed_id={inv.hashed_id} onDelete={() => handleDelete(inv.id)} />
                                     </>
                                 )}
                                 <ToolTip obj={inv} className="ml-3" />
@@ -124,14 +124,14 @@ export default function InvoiceListTable({ initialData, type }) {
 }
 
 
-const StatusBadge = ({ status }) => {
+const StatusBadge = ({ status, t }) => {
     const getStatusConfig = (status) => {
         const configs = {
-            3: { label: "Unpaid", classes: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300" },
-            4: { label: "Partially Paid", classes: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300" },
-            5: { label: "Paid", classes: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" },
-            6: { label: "Overpaid", classes: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300" },
-            default: { label: "Unknown", classes: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" }
+            3: { label: t('form.statusOptions.3'), classes: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300" },
+            4: { label: t('form.statusOptions.4'), classes: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300" },
+            5: { label: t('form.statusOptions.5'), classes: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300" },
+            6: { label: t('form.statusOptions.6'), classes: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300" },
+            default: { label: t('form.statusOptions.default'), classes: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300" }
         };
 
         return configs[status] || configs.default;
@@ -140,7 +140,7 @@ const StatusBadge = ({ status }) => {
     const { label, classes } = getStatusConfig(status);
 
     return (
-        <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${classes}`}>
+        <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${classes}`}>
             {label}
         </span>
     );

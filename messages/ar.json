@@ -44,6 +44,10 @@
 				"addReversePayment": "إضافة دفعة معكوسة",
 				"debtSettlement": "قائمة تسوية الديون",
 				"debtSettlementForm": "إضافة تسوية دين",
+				"internalTransfer": "التحويلات الداخلية",
+				"addInternalTransfer": "إضافة تحويل داخلي",
+				"accountVault": "الحسابات التجارية",
+				"accountTypes": "أنواع الحسابات",
 				"debts": "الديون"
 			}
 		},
@@ -345,13 +349,21 @@
 			"successEdit": "تم تحديث الفاتورة بنجاح",
 			"itemId": "معرّف العنصر:",
 			"notSet": "غير محدد",
-			"description": "الوصف"
+			"description": "الوصف",
+			"statusOptions": {
+				"3": "غير مدفوع",
+				"4": "مدفوع جزئياً",
+				"5": "مدفوع",
+				"6": "مدفوع بالزيادة",
+				"default": "غير معروف"
+			}
 		}
 	},
 	"finance": {
 		"table": {
 			"view": "عرض",
-			"edit": "تعديل"
+			"edit": "تعديل",
+			"delete": "حذف"
 		},
 		"fields": {
 			"transaction": "إضافة دفعة",
@@ -363,7 +375,15 @@
 			"ref": "المرجع",
 			"date": "التاريخ",
 			"note": "ملاحظة",
-			"moreNotes": "ملاحظات إضافية..."
+			"moreNotes": "ملاحظات إضافية...",
+			"optionalFields": "حقول اختيارية",
+			"paymentRef": "مرجع الدفع",
+			"paymentRefHelper": "رقم مرجعي فريد لهذه الدفعة",
+			"transactionId": "رقم المعاملة",
+			"senderPhone": "رقم هاتف المرسل",
+			"senderName": "اسم المرسل",
+			"bankName": "اسم البنك",
+			"receivedBy": "استلمت بواسطة"
 		},
 		"status": {
 			"paid": "مدفوع",
@@ -379,7 +399,9 @@
 		},
 		"debtSettlement": {
 			"header": "تسوية الديون",
+			"settlementAmount": "مبلغ التسوية",
 			"status": {
+				"label": "الحالة",
 				"approved": "معتمد",
 				"not_approved": "غير معتمد"
 			}
@@ -388,6 +410,63 @@
 			"t": "معاملة",
 			"add": "إضافة",
 			"update": "تحديث"
+		},
+		"statusOptions": {
+			"confirmed": "تم التأكيد",
+			"pending": "قيد الانتظار",
+			"rejected": "مرفوض",
+			"reimbursed": "تم التعويض"
+		},
+		"placeholders": {
+			"paymentRef": "PAY-20240110-ABC12345",
+			"transactionId": "TXN123456789",
+			"senderPhone": "01234567890",
+			"senderName": "الاسم الثلاثي",
+			"bankName": "البنك الأهلي المصري",
+			"receivedBy": "اسم الموظف"
+		},
+		"helpers": {
+			"transactionId": "لإنستا باي / التحويل البنكي",
+			"senderPhone": "لمدفوعات المحافظ الإلكترونية",
+			"senderName": "للتحويلات البنكية",
+			"bankName": "للتحويلات البنكية",
+			"receivedBy": "من استلم النقود فعلياً"
+		}
+	},
+	"accountVault": {
+		"title": "خزينة الحسابات",
+		"businessAccounts": "الحسابات التجارية",
+		"accountTypes": "أنواع الحسابات",
+		"fields": {
+			"accountName": "اسم الحساب",
+			"accountType": "نوع الحساب",
+			"accountNumber": "رقم الحساب",
+			"phoneNumber": "رقم الهاتف",
+			"bankName": "اسم البنك",
+			"currentBalance": "الرصيد الحالي",
+			"isActive": "حالة النشاط",
+			"typeName": "اسم النوع"
+		},
+		"placeholders": {
+			"searchAccountName": "بحث باسم الحساب",
+			"searchAccountType": "تصفية حسب نوع الحساب",
+			"accountNumber": "أدخل رقم الحساب",
+			"phoneNumber": "أدخل رقم الهاتف (للمحافظ الإلكترونية)",
+			"bankName": "أدخل اسم البنك",
+			"typeName": "أدخل اسم نوع الحساب (مثال: نقدي، حساب بنكي)"
+		},
+		"actions": {
+			"createAccount": "إنشاء حساب تجاري",
+			"createType": "إنشاء نوع حساب",
+			"editAccount": "تعديل الحساب التجاري",
+			"editType": "تعديل نوع الحساب"
+		},
+		"status": {
+			"active": "نشط",
+			"inactive": "غير نشط"
+		},
+		"table": {
+			"delete": "حذف"
 		}
 	},
 	"refillableItems": {
@@ -515,6 +594,9 @@
 		}
 	},
 	"global": {
+		"backToList": "العودة إلى القائمة",
+		"createdAt": "تاريخ الإنشاء",
+		"updatedAt": "تاريخ التحديث",
 		"form": {
 			"submit": "إرسال",
 			"edit": "تعديل",
@@ -530,12 +612,16 @@
 			"503": "الخدمة غير متاحة. يرجى المحاولة مرة أخرى لاحقًا.",
 			"etc": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
 			"pageNotFound": "الصفحة غير موجودة",
-			"nothing": "لا يوجد شيء لعرضه هنا"
+			"nothing": "لا يوجد شيء لعرضه هنا",
+			"loadError": "فشل في تحميل البيانات",
+			"deleteError": "فشل في حذف العنصر"
 		},
 		"delete": {
 			"label": "إزالة",
 			"actionLabel": "حذف",
 			"cancelLabel": "إلغاء",
+			"confirmMessage": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+			"deleting": "جارٍ الحذف...",
 			"assert": {
 				"description": "لا يمكن التراجع عن هذا الإجراء.",
 				"canceled": "تم الإلغاء"
@@ -659,5 +745,81 @@
 	"permitButton": {
 		"delivered": "تم التسليم",
 		"notDelivered": "لم يتم التسليم"
+	},
+	"successCreate": "تم الإنشاء بنجاح",
+	"successEdit": "تم التحديث بنجاح",
+	"datePicker": {
+		"months": {
+			"0": "يناير",
+			"1": "فبراير",
+			"2": "مارس",
+			"3": "أبريل",
+			"4": "مايو",
+			"5": "يونيو",
+			"6": "يوليو",
+			"7": "أغسطس",
+			"8": "سبتمبر",
+			"9": "أكتوبر",
+			"10": "نوفمبر",
+			"11": "ديسمبر"
+		},
+		"weekdays": [
+			"أحد",
+			"إثن",
+			"ثلا",
+			"أرب",
+			"خمي",
+			"جمع",
+			"سبت"
+		],
+		"controls": {
+			"today": "اليوم",
+			"clear": "مسح",
+			"done": "تم",
+			"selectDate": "اختر التاريخ"
+		}
+	},
+	"settings": {
+		"database": {
+			"title": "إدارة قاعدة البيانات",
+			"createBackup": "إنشاء نسخة احتياطية لقاعدة البيانات",
+			"createBackupDataOnly": "إنشاء نسخة احتياطية لقاعدة البيانات (البيانات فقط)",
+			"processing": "جارِ المعالجة..."
+		},
+		"warehouse": {
+			"title": "إدارة المستودع",
+			"createItemsXlsx": "إنشاء قائمة العناصر كملف xlsx"
+		},
+		"browse": {
+			"title": "تصفح",
+			"media": "الوسائط"
+		},
+		"media": {
+			"title": "متصفح ملفات الوسائط",
+			"subtitle": "تصفح وترشيح ملف الوسائط الخاصة بك",
+			"stats": {
+				"totalFiles": "إجمالي الملفات",
+				"filteredResults": "النتائج المُرشَّحة",
+				"totalSize": "الحجم الإجمالي"
+			},
+			"search": "بحث عن الملفات...",
+			"category": "الفئة",
+			"allCategories": "جميع الفئات",
+			"sortBy": "ترتيب حسب",
+			"fileName": "اسم الملف",
+			"fileSize": "حجم الملف",
+			"table": {
+				"file": "الملف",
+				"category": "الفئة",
+				"size": "الحجم",
+				"actions": "الإجراءات",
+				"view": "عرض",
+				"download": "تحميل"
+			},
+			"noFiles": "لم يتم العثور على ملفات تطابق معاييرك",
+			"showing": "عرض",
+			"of": "من",
+			"files": "ملفات"
+		}
 	}
 }

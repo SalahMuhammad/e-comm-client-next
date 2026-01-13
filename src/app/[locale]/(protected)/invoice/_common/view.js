@@ -164,7 +164,7 @@ const InvoicePrintableView = async ({ id, type }) => {
                     </div>
                 </div>
                 {invoice.notes && (
-                    <div className={`${style['notes-section']}`}>
+                    <div className={`${style['notes-section']}`}> 
                         <h3 className={`${style['notes-title']}`}>Notes:</h3>
                         <pre className={`${style['notes-content']}`}>{invoice.notes}</pre>
                     </div>

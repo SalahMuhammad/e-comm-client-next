@@ -35,14 +35,14 @@ export async function apiRequest(endpoint, options = {}) {
         // Normal JSON response handling
         const data = await response?.json().catch(() => ({}))
         return {
-            status: response?.status || 0,
+            status: response?.status || 500,
             ok: response?.ok || false,
             data
         }
     } catch (error) {
         console.error('API Request failed: ', error);
         return {
-            status: 0,
+            status: 500,
             ok: false,
             data: {},
             error

@@ -4,7 +4,7 @@ import { useActionState, useEffect } from "react"
 import { useTranslations } from "next-intl";
 import { createUpdateDebtSettlementTransaction } from "../actions"
 import Form from "next/form";
-import { NumberInput, TextInput } from "@/components/inputs/index"
+import { DateInput, NumberInput, TextInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
@@ -22,8 +22,8 @@ function DebtSettlementForm({ initialData }) {
     const [state, formAction, isPending] = useActionState(createUpdateDebtSettlementTransaction, {})
     const router = useRouter();
     const options = [
-        { value: 'approved', label: 'approved' },
-        { value: 'not_approved', label: 'not_approved' },
+        { value: 'approved', label: t('finance.debtSettlement.status.approved') },
+        { value: 'not_approved', label: t('finance.debtSettlement.status.not_approved') },
     ]
     const defaultDate = state.formData?.date || initialData?.date || formatDateManual(new Date())
     const defaultOwner = state.formData?.owner || initialData?.owner ? {
@@ -32,7 +32,7 @@ function DebtSettlementForm({ initialData }) {
     } : undefined
     const defaultStatus = state.formData?.status || initialData?.status ? {
         value: state.formData?.status || initialData?.status,
-        label: state.formData?.status || initialData?.status
+        label: t(`finance.debtSettlement.status.${state.formData?.status || initialData?.status}`)
     } : options[0]
 
 
@@ -77,16 +77,15 @@ function DebtSettlementForm({ initialData }) {
                         />
                     )}
 
-                    <div className={styles.formGroup}>
-                        <label htmlFor="date">{t('finance.fields.date')}</label>
-                        <input
-                            type="date"
+                    <div className={`${initialData?.hashed_id ? 'mt-3' : ''}`}>
+                        <DateInput
                             id="date"
                             name="date"
+                            placeholder={t('finance.fields.date')}
                             defaultValue={defaultDate}
+                            error={!state?.ok ? state?.data?.date : ""}
                             required
                         />
-                        <FieldError error={!state?.ok ? state.data?.date : null} />
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
@@ -100,16 +99,17 @@ function DebtSettlementForm({ initialData }) {
                         <FieldError error={!state?.ok ? state.data?.owner : null} />
                     </div>
 
-                    <div className={styles.detailsRow}>
+                    <div className={`${styles.detailsRow} mt-2`}>
                         <div className={styles.formGroup}>
-                            <NumberInput
-                                id="amount"
+                            <label>{t('finance.fields.amount')}</label>
+                            <input
+                                type="number"
                                 name="amount"
-                                step={0.01}
-                                placeholder={t("finance.fields.amount")}
-                                error={!state?.ok ? state?.data?.amount : ""}
+                                step={'.01'}
                                 defaultValue={state.formData?.amount || initialData?.amount || ''}
+                                placeholder="0.00"
                             />
+                            <FieldError error={!state?.ok ? state.data?.amount : null} />
                         </div>
 
                         <div className={styles.formGroup}>

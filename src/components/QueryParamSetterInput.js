@@ -10,9 +10,30 @@ function SearchInput({ paramOptions, placeholder = 'Search ...' }) {
     const [isOpen, setIsOpen] = useState(false)
 
     const handleParamChange = (value) => {
+        // Clear all other search parameters when switching
+        const params = new URLSearchParams(Array.from(searchParams.entries()))
+
+        // Remove all search-related parameters
+        paramOptions.forEach(option => {
+            if (option.value !== value) {
+                params.delete(option.value)
+            }
+        })
+
+        // Get the new value from URL if it exists
+        const newQuery = searchParams.get(value) || ''
+        setQuery(newQuery)
+
+        // If the new parameter has a value, keep it, otherwise remove offset
+        if (!newQuery) {
+            params.delete('offset')
+        }
+
         setSelectedParam(value)
-        setQuery(searchParams.get(value) || '')
         setIsOpen(false)
+
+        // Update URL immediately to clear other search params
+        router.replace(`?${params.toString()}`, { scroll: false })
     }
 
     const handleQueryChange = (e) => {
@@ -101,8 +122,8 @@ function SearchInput({ paramOptions, placeholder = 'Search ...' }) {
                                                 type="button"
                                                 onClick={() => handleParamChange(option.value)}
                                                 className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-all duration-200 ${selectedParam === option.value
-                                                        ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium'
-                                                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                                                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium'
+                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
                                                     }`}
                                             >
                                                 <div className="flex items-center justify-between">

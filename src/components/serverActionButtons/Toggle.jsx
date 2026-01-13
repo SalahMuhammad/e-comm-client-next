@@ -17,22 +17,22 @@ export default function Toggle({ value, toggleAction, toggleValues, className = 
         setIsChanging(true);
 
         // optimistic UI: toggle visually immediately for snappy feel
-        const optimistic = ! status;
+        const optimistic = !status;
         setStatus(optimistic);
 
         try {
             const res = await toggleAction(status)
             if (handleResponse(res)) {
-                setStatus((prev) => ! prev);
+                setStatus((prev) => !prev);
                 setIsChanging(false);
                 return;
             }
 
             // revert on non-200
-            if (! res.ok) setStatus((prev) => ! prev);
+            if (!res.ok) setStatus((prev) => !prev);
         } catch (err) {
             // network / unexpected error -> revert
-            setStatus((prev) => ! prev);
+            setStatus((prev) => !prev);
         } finally {
             // give a little time for the transition/animation to finish
             setTimeout(() => setIsChanging(false), 280);
@@ -40,7 +40,7 @@ export default function Toggle({ value, toggleAction, toggleValues, className = 
     };
 
     // Shared visual classes to match InvoiceListTable feel
-    const base = `group inline-flex items-center px-3 py-1.5 rounded-lg font-medium text-sm transition-all duration-300 ease-in-out select-none shadow-sm ${className}`;
+    const base = `group inline-flex items-center justify-center px-3 py-1.5 rounded-lg font-medium text-sm transition-all duration-300 ease-in-out select-none shadow-sm min-w-[140px] ${className}`;
 
     return (
         <button

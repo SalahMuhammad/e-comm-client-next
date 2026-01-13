@@ -1,7 +1,7 @@
 "use client";
 import SearchableDropdown from "@/components/SearchableDropdown"
 import { getPP, createUpdateItem } from "../actions"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { TextInput, NumberInput, FileInput, DateInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
 import * as Collapsible from "@radix-ui/react-collapsible";
@@ -19,6 +19,7 @@ function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
     const t = useTranslations("warehouse.items.form");
     const [open, setOpen] = useState(false);
     const [FileLoading, setFileLoading] = useState(true);
+    const [keepImageIds, setKeepImageIds] = useState([]); // Track image IDs to keep
     const [state, formAction, isPending] = useActionState(createUpdateItem, { errors: {} });
     const router = useRouter();
     const [p1, setP1] = useState(1);
@@ -27,6 +28,11 @@ function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
     const p3 = useRef()
     const p4 = useRef()
     const handleGenericErrors = useGenericResponseHandler(t)
+
+    // Memoize the onChange callback to prevent infinite renders
+    const handleImageChange = useCallback((files, imageIds) => {
+        setKeepImageIds(imageIds || []);
+    }, []);
 
 
     useEffect(() => {
@@ -136,6 +142,9 @@ function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
 
             <TextInput name="place" id="place" defaultValue={state?.place || obj?.place} placeholder={t("place")} error={!state?.ok ? state?.data?.place : ""} />
 
+            {/* Hidden input to track which image IDs to keep */}
+            <input type="hidden" name="keep_images" value={keepImageIds.join(',')} />
+
             <FileInput
                 name="images"
                 id="images"
@@ -147,6 +156,7 @@ function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
                 defaultValue={
                     state?.images || obj?.images || []
                 }
+                onChange={handleImageChange}
                 error={!state?.ok ? state?.data?.images : ""}
             />
 

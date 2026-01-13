@@ -18,13 +18,16 @@ async function TransactionView({ id, type }) {
     let credit = ownerData.credit || '00.00'
 
 
-    if (! transaction?.id) return <EventNotFound eventId={id} />
+    if (!transaction?.id) return <EventNotFound eventId={id} />
 
 
     return (
         <div id='printarea' className={`p-4 ${styles["receipt-container"]}`}>
             <div className={`${s['invoice-controls']} none-printable`}>
-                <Link href={`/finance/${type}/form/${id}`}>
+                <Link
+                    href={`/finance/${type}/form/${id}`}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm font-medium shadow-sm hover:shadow-md"
+                >
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                     </svg>
@@ -35,12 +38,13 @@ async function TransactionView({ id, type }) {
 
             </div>
 
+
             <div className='pr-4 pb-4 w-full shadow-[8px_8px_8px_-5px_rgba(0,0,0,0.3)] print-custom-shadow'>
                 <CompanyDetailsHead>
                     <div className="mx-auto text-base text-black">
-                        <p className="text-2xl font-serif">Receipt</p>
-                        <p className='font-serif'>Date: <span className="text-xs text-gray-500">{transaction.date}</span></p>
-                        <p className='font-serif'>Nu: <span className="text-xs text-gray-500">#{transaction.hashed_id}</span></p>
+                        <p className="text-2xl font-serif font-bold">Receipt</p>
+                        <p className='font-serif'>Date: <span className="text-sm text-gray-700 print:text-black">{transaction.date}</span></p>
+                        <p className='font-serif'>Nu: <span className="text-sm text-gray-700 print:text-black">#{transaction.hashed_id}</span></p>
                     </div>
                 </CompanyDetailsHead>
                 {/* <!-- Receipt Details --> */}
@@ -48,7 +52,7 @@ async function TransactionView({ id, type }) {
                     <div className={styles["detail-row"]}>
                         <span className={styles["label"]}>{type === 'payment' ? 'From' : 'To'}</span>
                         <Link className={`${styles["value-field"]}`} href={`/customer-supplier/view/${transaction.owner}`}>
-                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-400 dark:hover:text-blue-300 text-xs">{transaction.owner_name}</span>
+                            <span className="text-sm text-gray-900 hover:text-gray-700 transition-colors print:text-black">{transaction.owner_name}</span>
                         </Link>
                     </div>
 
@@ -83,12 +87,12 @@ async function TransactionView({ id, type }) {
                 <div className={styles["footer-section"]}>
                     <ViewReceivedBy recivedBy={transaction.received_by} />
 
-                    {Number(credit) !== 0 && <div className={`${styles['remaining-credit']}`} style={{position: "relative"}}>
-                        <span className={styles["label"]}>Remaining Credit Balance: </span>
-                        <div className={styles["valfue-fieldf"]} style={{ borderBottom: 'none' }}>{numberFormatter(credit)}</div>
+                    {Number(credit) !== 0 && <div className={`${styles['remaining-credit']}`} style={{ position: "relative" }}>
+                        <span className={`${styles["label"]} text-gray-900 print:text-black`}>Remaining Credit Balance: </span>
+                        <div className={`${styles["valfue-fieldf"]} text-gray-900 print:text-black`} style={{ borderBottom: 'none' }}>{numberFormatter(credit)}</div>
                     </div>}
 
-                    
+
 
                     <div className={styles["thank-you"]}>
                         <p>Thank you for your business</p>

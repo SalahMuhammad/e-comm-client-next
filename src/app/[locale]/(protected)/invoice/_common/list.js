@@ -8,11 +8,10 @@ import InvoiceListTable from './InvoiceListTable';
 import ErrorLoading from "@/components/ErrorLoading";
 
 async function InvoiceList({ searchParams, type }) {
-    const searchParamName = 's';
     const params = await searchParams;
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
-    const search = params[searchParamName] ?? '';
+    const ownerName = params['owner__name'] ?? '';
     const orderNo = params['no'] ?? '';
     const note = params['note'] ?? '';
     const itemDesc = params['itemdesc'] ?? '';
@@ -22,7 +21,7 @@ async function InvoiceList({ searchParams, type }) {
 
 
     const res = (await getInvs(`${type}`, `?limit=${limit}
-&offset=${offset}${search ? `&owner=${search}` : ''}
+&offset=${offset}${ownerName ? `&owner__name=${ownerName}` : ''}
 ${orderNo ? `&no=${orderNo}` : ''}
 ${note ? `&note=${note}` : ''}
 ${itemDesc ? `&itemdesc=${itemDesc}` : ''}
@@ -37,7 +36,7 @@ ${itemName ? `&itemname=${itemName}` : ''}
         <>
             <QueryParamSetterInput
                 paramOptions={[
-                    { label: t('inputs.search.ownerName'), value: 's' },
+                    { label: t('inputs.search.ownerName'), value: 'owner__name' },
                     { label: t('inputs.search.orderNumber'), value: 'no' },
                     { label: t('inputs.search.notes'), value: 'note' },
                     { label: t('inputs.search.itemDescription'), value: 'itemdesc' },
@@ -48,7 +47,7 @@ ${itemName ? `&itemname=${itemName}` : ''}
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <InvoiceListTable initialData={data.results} type={type} />
             </div>
-            {data.count == 0 &&
+            {(data.count === 0 || !data.results || data.results.length === 0) &&
                 <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md mt-3" />
             }
             <PaginationControls

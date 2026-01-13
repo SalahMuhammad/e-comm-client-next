@@ -2,7 +2,7 @@ import { getList } from "./actions";
 import PaginationControls from '@/components/PaginationControls';
 import QueryParamSetterInput from '@/components/QueryParamSetterInput';
 import { getTranslations } from "next-intl/server";
-// import DeleteButton from "./DeleteButton";
+import DeleteButton from "./DeleteButton";
 import Link from 'next/link';
 import numberFormatter from "@/utils/NumberFormatter";
 import ToolTip from "@/components/ToolTip2";
@@ -10,6 +10,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Toggle from "./StatusToggle";
 import { EyeIcon, PencilIcon } from "@heroicons/react/24/outline";
+import ErrorLoading from "@/components/ErrorLoading";
 
 
 async function List({ searchParams, type }) {
@@ -73,14 +74,14 @@ async function List({ searchParams, type }) {
                                         {payment.owner_name}
                                     </Link>
                                 </th>
-                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                <td className="px-6 py-4 w-56 min-w-[14rem]">
                                     {payment.payment_method_name}
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                     {numberFormatter(payment.amount)}
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    <StatusBadge status={payment.status} />
+                                    <StatusBadge status={payment.status} t={t} />
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
                                     {payment?.ref ? (
@@ -94,7 +95,7 @@ async function List({ searchParams, type }) {
                                         </Link>
                                     ) : '-'}
                                 </td>
-                                <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                                <td className="px-6 py-4 w-48 min-w-[12rem] whitespace-nowrap">
                                     {payment.date}
                                 </td>
                                 <td className="px-6 py-4 w-[10rem] max-w-[10rem] overflow-auto">
@@ -103,8 +104,8 @@ async function List({ searchParams, type }) {
                                     </pre>
                                 </td>
 
-                                <td className="flex items-center px-6 py-4">
-                                    <>
+                                <td className="px-6 py-4 align-middle">
+                                    <div className="flex items-center">
                                         <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/finance/${type}${type == 'payment' ? 's' : ''}/view/${payment.hashed_id}`}>
                                             <EyeIcon
                                                 className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
@@ -113,24 +114,39 @@ async function List({ searchParams, type }) {
                                                 {t("finance.table.view")}
                                             </span>
                                         </Link>
-                                        {/* <DeleteButton type={type} id={payment.hashed_id} />
+
                                         <Link
-                                            href={`/finance/${type}/form/${payment.hashed_id}`}
-                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
+                                            href={`/finance/${type}${type == 'payment' ? 's' : ''}/form/${payment.hashed_id}`}
+                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
                                         >
-                                            <PencilIcon className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />
+                                            <PencilIcon
+                                                className="
+                                                    h-4 w-4 mr-1
+                                                    transition-all duration-300 ease-in-out
+                                                    group-hover:rotate-[8deg]
+                                                    group-hover:-translate-y-0.5
+                                                    group-hover:scale-110
+                                                    group-hover:drop-shadow-sm
+                                                "
+                                            />
                                             <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                                {t("table.edit")}
+                                                {t("finance.table.edit")}
                                             </span>
-                                        </Link> */}
-                                    </>
-                                    <ToolTip obj={payment} />
+                                        </Link>
+
+                                        <DeleteButton type={type} id={payment.hashed_id} />
+                                        <ToolTip obj={payment} />
+                                    </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+            {data.count == 0 &&
+                <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md mt-3" />
+            }
 
             <PaginationControls
                 resCount={data.count}
@@ -144,28 +160,28 @@ async function List({ searchParams, type }) {
 export default List
 
 
-function StatusBadge({ status }) {
+function StatusBadge({ status, t }) {
     const statusConfig = {
         '1': {
-            label: 'Pending',
+            label: t('finance.statusOptions.pending'),
             bgColor: 'bg-yellow-100',
             textColor: 'text-yellow-800',
             dotColor: 'bg-yellow-500'
         },
         '2': {
-            label: 'Confirmed',
+            label: t('finance.statusOptions.confirmed'),
             bgColor: 'bg-blue-100',
             textColor: 'text-blue-800',
             dotColor: 'bg-blue-500'
         },
         '3': {
-            label: 'Rejected',
+            label: t('finance.statusOptions.rejected'),
             bgColor: 'bg-red-100',
             textColor: 'text-red-800',
             dotColor: 'bg-red-500'
         },
         '4': {
-            label: 'Reimbursed',
+            label: t('finance.statusOptions.reimbursed'),
             bgColor: 'bg-green-100',
             textColor: 'text-green-800',
             dotColor: 'bg-green-500'
@@ -175,7 +191,7 @@ function StatusBadge({ status }) {
     const config = statusConfig[status] || statusConfig['1'];
 
     return (
-        <div className="flex flex-col items-center justify-center bg-gray-50">
+        <div className="flex flex-col items-center justify-center">
             <div className="space-y-8">
                 {/* <div>
                     <h2 className="text-sm font-medium text-gray-600 mb-4">All Status Badges:</h2>
@@ -198,7 +214,7 @@ function StatusBadge({ status }) {
                 <div>
                     {/* <h2 className="text-sm font-medium text-gray-600 mb-4">Selected Status:</h2> */}
                     <span
-                        className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${config.bgColor} ${config.textColor}`}
+                        className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap ${config.bgColor} ${config.textColor}`}
                     >
                         <span className={`w-2 h-2 rounded-full ${config.dotColor} mr-2`}></span>
                         {config.label}

@@ -2,7 +2,7 @@ import MyForm from '../../_common/form'
 
 function page() {
   return (
-    <MyForm type={'expenses'} />
+    <MyForm type={'reverse-payment'} />
   )
 }
 
