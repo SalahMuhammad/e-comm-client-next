@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getExpenses } from '../actions';
 import PaginationControls from '@/components/PaginationControls';
-import TableNote from '@/components/TableNote';
+// import TableNote from '@/components/TableNote';
 import FilterButtons from './StatusFilters';
 import { formatDateTime, formatDate } from '@/utils/dateFormatter';
 import { formatCurrency } from '@/utils/CurrencyFormatter';
@@ -11,32 +11,66 @@ import Gallery from '../../../(warehouse)/items/list/Gallery';
 import ImageView from '@/components/ImageView';
 import { useSearchParams } from 'next/navigation';
 import SearchInput from '@/components/QueryParamSetterInput';
-
-
+import Link from 'next/link';
+import { PencilIcon, TrashIcon, ChevronDownIcon, PhotoIcon, ExclamationCircleIcon, CheckCircleIcon, ClockIcon, XCircleIcon } from '@heroicons/react/24/outline';
+import { toast } from 'sonner';
+import { deleteExpense } from '../actions';
 import { useTranslations } from 'next-intl';
 
 export default function ExpenseList() {
     const t = useTranslations('inputs.search');
+    const tExpense = useTranslations('finance.expense.list');
+    const tGlobal = useTranslations('global');
+    const tStatus = useTranslations('finance.statusOptions');
+
+    const statusMap = {
+        '1': { label: tStatus('pending'), color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200', icon: ClockIcon },
+        '2': { label: tStatus('confirmed'), color: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200', icon: CheckCircleIcon },
+        '3': { label: tStatus('rejected'), color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200', icon: XCircleIcon },
+        '4': { label: tStatus('reimbursed'), color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200', icon: CheckCircleIcon },
+    };
+
     const [expandedId, setExpandedId] = useState(null);
     const [res, setRes] = useState([])
     const [image, setImage] = useState([])
     const searchParams = useSearchParams();
-    const offsetParam = searchParams.get('offset')
-    const limitParam = searchParams.get('limit')
-    const statusParam = searchParams.get('status')
-    const categoryParam = searchParams.get('category')
-
 
     useEffect(() => {
         const fetchExpenses = async () => {
-            const res = await getExpenses(`?offset=${offsetParam || 0}&limit=${limitParam || 12}&status=${statusParam || ''}&category=${categoryParam || ''}`)
+            const res = await getExpenses(`?${searchParams.toString()}`)
             setRes(res)
         }
         fetchExpenses()
-    }, [offsetParam, limitParam, statusParam, categoryParam])
+    }, [searchParams])
 
     const toggleExpand = (id) => {
         setExpandedId(expandedId === id ? null : id);
+    };
+
+    const handleDelete = async (hashedId) => {
+        toast(tGlobal('delete.confirmMessage'), {
+            action: {
+                label: tGlobal('delete.actionLabel'),
+                onClick: async () => {
+                    const deleteRes = await deleteExpense(hashedId);
+                    if (deleteRes.ok) {
+                        toast.success(tGlobal('delete.success'));
+                        // Refresh the list
+                        const res = await getExpenses(`?${searchParams.toString()}`);
+                        setRes(res);
+                    } else {
+                        toast.error(deleteRes.data?.detail || tGlobal('errors.deleteError'));
+                    }
+                },
+            },
+            cancel: {
+                label: tGlobal('delete.cancelLabel'),
+                onClick: () => {
+                    toast.info(tGlobal('delete.assert.canceled'));
+                },
+            },
+            duration: 10000,
+        });
     };
 
     function onImageViewClose() {
@@ -44,29 +78,41 @@ export default function ExpenseList() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 p-6">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Expenses</h1>
-                    <p className="text-gray-600">Manage and track your business expenses</p>
-                </div>
+                {/* <div className="mb-8">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Expenses</h1>
+                    <p className="text-gray-600 dark:text-gray-400">Manage and track your business expenses</p>
+                </div> */}
 
                 <SearchInput paramOptions={[
-                    { label: t('category'), value: 'category' },
-                    { label: t('limit'), value: 'limit' },
-                    { label: t('offset'), value: 'offset' }
+                    { label: t('categoryName'), value: 'category__name' },
+                    { label: t('accountName'), value: 'business_account__account_name' },
+                    { label: t('notes'), value: 'notes' },
+                    { label: t('date'), value: 'date', inputType: 'date' },
+                    // { label: t('fromDate'), value: 'date_range_after', inputType: 'date' },
+                    // { label: t('toDate'), value: 'date_range_before', inputType: 'date' }
                 ]} />
 
                 {/* Filter Buttons */}
-                <FilterButtons statusMap={statusMap} />
+                <FilterButtons
+                    statusMap={statusMap}
+                    allLabel={tGlobal('all')}
+                    createLink={{
+                        href: '/finance/expense/form',
+                        label: tExpense('createTitle')
+                    }}
+                />
 
                 {/* Expenses List */}
                 <div className="space-y-3">
                     {res.data?.results?.length === 0 ? (
-                        <div className="bg-white rounded-lg p-8 text-center">
-                            <AlertCircle className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                            <p className="text-gray-600">No expenses found</p>
+                        <div className="bg-white dark:bg-gray-800 rounded-lg p-8 border border-gray-200 dark:border-gray-700">
+                            <div className="flex flex-col items-center justify-center">
+                                <ExclamationCircleIcon className="w-12 h-12 text-gray-400 dark:text-gray-500 mb-3" />
+                                <p className="text-gray-600 dark:text-gray-400">{tExpense('noExpenses')}</p>
+                            </div>
                         </div>
                     ) : (
                         res.data?.results?.map(expense => {
@@ -76,95 +122,261 @@ export default function ExpenseList() {
                             return (
                                 <div
                                     key={expense.hashed_id}
-                                    className="bg-white rounded-lg border border-gray-200 transition-all hover:shadow-md"
+                                    className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 transition-all hover:shadow-md"
                                 >
                                     {/* Collapsed View */}
-                                    <button
-                                        onClick={() => toggleExpand(expense.hashed_id)}
-                                        className="w-full p-4 flex items-center gap-4 hover:bg-gray-50 transition-colors"
-                                    >
-                                        <div className="flex-1 flex items-center gap-4">
-                                            <div className={`p-2 rounded-lg ${statusMap[expense.status].color}`}>
-                                                <StatusIcon className="w-5 h-5" />
-                                            </div>
-
-                                            <div className="flex-1 text-left">
-                                                <div className="flex items-center gap-2 mb-1">
-                                                    <h3 className="font-semibold text-gray-900">{expense.category_name}</h3>
-                                                    <span className={`px-2 py-1 rounded text-xs font-medium ${statusMap[expense.status].color}`}>
-                                                        {statusMap[expense.status].label}
-                                                    </span>
+                                    {/* Mobile View (Card Layout) */}
+                                    <div className="lg:hidden">
+                                        <div className="w-full p-4">
+                                            {/* Action Buttons - Top Right (Mobile Only) */}
+                                            <div className="flex items-start justify-between mb-3">
+                                                <div className={`p-2 rounded-lg ${statusMap[expense.status].color}`}>
+                                                    <StatusIcon className="w-5 h-5" />
                                                 </div>
-                                                <p className="text-sm text-gray-600">{expense.payment_method_name}</p>
+                                                <div className="flex items-center gap-2">
+                                                    <Link
+                                                        href={`/finance/expense/form/${expense.hashed_id}`}
+                                                        className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white p-2 cursor-pointer"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        <PencilIcon
+                                                            className="
+                                                                h-5 w-5
+                                                                transition-all duration-300 ease-in-out
+                                                                group-hover:rotate-[8deg]
+                                                                group-hover:-translate-y-0.5
+                                                                group-hover:scale-110
+                                                                group-hover:drop-shadow-sm
+                                                            "
+                                                        />
+                                                    </Link>
+
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDelete(expense.hashed_id);
+                                                        }}
+                                                        className="flex items-center text-red-600 hover:text-red-800 group transition duration-300 dark:text-red-400 dark:hover:text-red-300 p-2 cursor-pointer"
+                                                    >
+                                                        <TrashIcon
+                                                            className="
+                                                                h-5 w-5
+                                                                transition-all duration-300 ease-in-out
+                                                                group-hover:scale-110
+                                                                group-hover:-translate-y-0.5
+                                                                group-hover:drop-shadow-sm
+                                                            "
+                                                        />
+                                                    </button>
+                                                </div>
                                             </div>
 
-                                            <div className="text-right">
-                                                <p className="font-bold text-gray-900 text-lg">{formatCurrency(expense.amount)}</p>
-                                                <p className="text-sm text-gray-600">{formatDate(expense.date)}</p>
+                                            <button
+                                                onClick={() => toggleExpand(expense.hashed_id)}
+                                                className="w-full text-left hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-lg p-2 -mx-2"
+                                            >
+                                                <div className="space-y-3">
+                                                    {/* Title and Status */}
+                                                    <div>
+                                                        <h3 className="font-semibold text-gray-900 dark:text-white mb-1 inline mr-2">{expense.category_name}</h3>
+                                                        <span className={`inline px-2 py-1 rounded text-xs font-medium ${statusMap[expense.status].color}`}>
+                                                            {statusMap[expense.status].label}
+                                                        </span>
+                                                    </div>
+
+                                                    {/* Payment Method */}
+                                                    <Link
+                                                        href={`/finance/account-vault/view/${expense.business_account_hashed_id}`}
+                                                        className="block text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline transition-colors cursor-pointer"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        {expense.payment_method_name}
+                                                    </Link>
+
+                                                    {/* Amount and Date */}
+                                                    <div>
+                                                        <p className="font-bold text-gray-900 dark:text-white text-lg mb-1">{formatCurrency(expense.amount)}</p>
+                                                        <p className="text-sm text-gray-600 dark:text-gray-400">{formatDate(expense.date)}</p>
+                                                    </div>
+
+                                                    {/* Expand Icon */}
+                                                    <div className="flex justify-center pt-2">
+                                                        <ChevronDownIcon
+                                                            className={`w-4 h-4 text-gray-400 dark:text-gray-500 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    {/* Desktop View (Original Layout) */}
+                                    <div className="hidden lg:block w-full p-4">
+                                        <div className="flex items-center gap-4">
+                                            <button
+                                                onClick={() => toggleExpand(expense.hashed_id)}
+                                                className="flex-1 flex items-center gap-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors rounded-lg p-2 -m-2"
+                                            >
+                                                <div className="flex-1 flex items-center gap-4">
+                                                    <div className={`p-2 rounded-lg ${statusMap[expense.status].color}`}>
+                                                        <StatusIcon className="w-5 h-5" />
+                                                    </div>
+
+                                                    <div className="flex-1 text-left">
+                                                        <div className="flex items-center gap-2 mb-1">
+                                                            <h3 className="font-semibold text-gray-900 dark:text-white">{expense.category_name}</h3>
+                                                            <span className={`px-2 py-1 rounded text-xs font-medium ${statusMap[expense.status].color}`}>
+                                                                {statusMap[expense.status].label}
+                                                            </span>
+                                                        </div>
+                                                        <Link
+                                                            href={`/finance/account-vault/view/${expense.business_account_hashed_id}`}
+                                                            className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline transition-colors cursor-pointer"
+                                                            onClick={(e) => e.stopPropagation()}
+                                                        >
+                                                            {expense.payment_method_name}
+                                                        </Link>
+                                                    </div>
+
+                                                    <div className="text-right">
+                                                        <p className="font-bold text-gray-900 dark:text-white text-lg">{formatCurrency(expense.amount)}</p>
+                                                        <p className="text-sm text-gray-600 dark:text-gray-400">{formatDate(expense.date)}</p>
+                                                    </div>
+                                                </div>
+
+                                                <ChevronDownIcon
+                                                    className={`w-4 h-4 text-gray-400 dark:text-gray-500 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                                                />
+                                            </button>
+
+                                            {/* Action Buttons (Desktop Only) */}
+                                            <div className="flex items-center gap-2">
+                                                <Link
+                                                    href={`/finance/expense/form/${expense.hashed_id}`}
+                                                    className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white p-2 cursor-pointer"
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    <PencilIcon
+                                                        className="
+                                                            h-5 w-5
+                                                            transition-all duration-300 ease-in-out
+                                                            group-hover:rotate-[8deg]
+                                                            group-hover:-translate-y-0.5
+                                                            group-hover:scale-110
+                                                            group-hover:drop-shadow-sm
+                                                        "
+                                                    />
+                                                </Link>
+
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleDelete(expense.hashed_id);
+                                                    }}
+                                                    className="flex items-center text-red-600 hover:text-red-800 group transition duration-300 dark:text-red-400 dark:hover:text-red-300 p-2 cursor-pointer"
+                                                >
+                                                    <TrashIcon
+                                                        className="
+                                                            h-5 w-5
+                                                            transition-all duration-300 ease-in-out
+                                                            group-hover:scale-110
+                                                            group-hover:-translate-y-0.5
+                                                            group-hover:drop-shadow-sm
+                                                        "
+                                                    />
+                                                </button>
                                             </div>
                                         </div>
-
-                                        <ChevronDown
-                                            className={`w-5 h-5 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''
-                                                }`}
-                                        />
-                                    </button>
+                                    </div>
 
                                     {/* Expanded View */}
                                     {isExpanded && (
-                                        <div className="border-t border-gray-200 px-4 py-4 bg-gray-50">
+                                        <div className="border-t border-gray-200 dark:border-gray-700 px-4 py-4 bg-gray-50 dark:bg-gray-800">
                                             <div className="grid grid-cols-2 gap-4 mb-4">
                                                 <div>
-                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Created By
+                                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                                        {tGlobal('createdBy')}
                                                     </label>
-                                                    <p className="text-gray-900">{expense.created_by}</p>
+                                                    <p className="text-gray-900 dark:text-white">{expense.created_by}</p>
                                                 </div>
                                                 <div>
-                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Last Updated By
+                                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                                        {tGlobal('updatedBy')}
                                                     </label>
-                                                    <p className="text-gray-900">{expense.last_updated_by}</p>
+                                                    <p className="text-gray-900 dark:text-white">{expense.last_updated_by}</p>
                                                 </div>
                                                 <div>
-                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Created At
+                                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                                        {tGlobal('createdAt')}
                                                     </label>
-                                                    <p className="text-gray-900">{formatDateTime(expense.created_at, false)}</p>
+                                                    <p className="text-gray-900 dark:text-white">{formatDateTime(expense.created_at, false)}</p>
                                                 </div>
                                                 <div>
-                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Last Updated
+                                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                                        {tGlobal('updatedAt')}
                                                     </label>
-                                                    <p className="text-gray-900">{formatDateTime(expense.last_updated_at, false)}</p>
+                                                    <p className="text-gray-900 dark:text-white">{formatDateTime(expense.last_updated_at, false)}</p>
                                                 </div>
                                             </div>
 
                                             {expense.notes && (
                                                 <div className="mb-4">
-                                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                        Notes
+                                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                                        {tExpense('notes')}
                                                     </label>
-                                                    <div className="bg-white p-2 rounded border border-gray-200">
-                                                        <TableNote note={expense.notes} />
+                                                    <div className="bg-white dark:bg-gray-700 p-2 rounded border border-gray-200 dark:border-gray-600">
+                                                        {/* <TableNote note={expense.notes} /> */}
+                                                        <p className="break-words whitespace-normal text-gray-900 dark:text-gray-100">{expense.notes}</p>
                                                     </div>
                                                 </div>
                                             )}
 
-                                            {expense.image ? (
-                                                <div className="flex items-center gap-2 p-3 bg-white rounded border border-gray-300 text-sm text-gray-700">
-                                                    <ImageIcon className="w-4 h-4 text-blue-600" />
+                                            {/* Mobile View - Image Label on Top, Image Below */}
+                                            <div className="lg:hidden">
+                                                {expense.image ? (
+                                                    <div className="space-y-2">
+                                                        <div className="flex items-center gap-2">
+                                                            <PhotoIcon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                                {tExpense('image') || 'Image'}
+                                                            </label>
+                                                        </div>
+                                                        <div className="cursor-pointer hover:opacity-80 transition-opacity overflow-hidden rounded-lg">
+                                                            <Gallery onClick={() => setImage([{ img: expense.image }])} className='w-full h-48 object-contain' images={[{ img: expense.image }]} />
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <div className="space-y-2">
+                                                        <div className="flex items-center gap-2">
+                                                            <PhotoIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                                                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                                {tExpense('image') || 'Image'}
+                                                            </label>
+                                                        </div>
+                                                        <div className="p-3 bg-white dark:bg-gray-700 rounded border border-dashed border-gray-300 dark:border-gray-600 text-sm text-gray-500 dark:text-gray-400 text-center">
+                                                            <span>{tExpense('noImage')}</span>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </div>
 
-
-                                                    <span>{expense.image}</span>
-                                                    <Gallery onClick={() => setImage([{ img: expense.image }])} className='w-3xs h-3xs max-w-3xs max-h-3xs' images={[{ img: expense.image }]} />
-                                                </div>
-                                            ) : (
-                                                <div className="flex items-center gap-2 p-3 bg-white rounded border border-dashed border-gray-300 text-sm text-gray-500">
-                                                    <ImageIcon className="w-4 h-4" />
-                                                    <span>No image attached</span>
-                                                </div>
-                                            )}
+                                            {/* Desktop View - Original Layout */}
+                                            <div className="hidden lg:block">
+                                                {expense.image ? (
+                                                    <div className="flex items-center gap-2 p-3 bg-white dark:bg-gray-700 rounded border border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300">
+                                                        <PhotoIcon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                                                        <span>{expense.image}</span>
+                                                        <div className="cursor-pointer hover:opacity-80 transition-opacity">
+                                                            <Gallery onClick={() => setImage([{ img: expense.image }])} className='w-3xs h-3xs max-w-3xs max-h-3xs' images={[{ img: expense.image }]} />
+                                                        </div>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex items-center gap-2 p-3 bg-white dark:bg-gray-700 rounded border border-dashed border-gray-300 dark:border-gray-600 text-sm text-gray-500 dark:text-gray-400">
+                                                        <PhotoIcon className="w-4 h-4" />
+                                                        <span>{tExpense('noImage')}</span>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -173,9 +385,15 @@ export default function ExpenseList() {
                     )}
                 </div>
 
+                <PaginationControls
+                    resCount={res.data?.count}
+                    hasNext={res.data?.next}
+                    hasPrev={res.data?.previous}
+                />
+
                 {/* Summary */}
-                <div className="mt-8 bg-white rounded-lg border border-gray-200 p-6">
-                    <h2 className="text-lg font-semibold text-gray-900 mb-4">Summary</h2>
+                <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">{tExpense('summary')}</h2>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {Object.keys(statusMap).map(status => {
                             const data = res.data?.results
@@ -184,12 +402,12 @@ export default function ExpenseList() {
                                 ?.reduce((sum, e) => sum + e.amount, 0);
 
                             return (
-                                <div key={status} className="p-4 bg-gray-50 rounded-lg">
-                                    <p className="text-sm font-medium text-gray-600 mb-2">
+                                <div key={status} className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">
                                         {statusMap[status].label}
                                     </p>
-                                    <p className="text-2xl font-bold text-gray-900">{count}</p>
-                                    <p className="text-sm text-gray-600">{formatCurrency(total)}</p>
+                                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{count}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-400">{formatCurrency(total)}</p>
                                 </div>
                             );
                         })}
@@ -198,56 +416,11 @@ export default function ExpenseList() {
             </div>
 
             <ImageView images={image} onClose={onImageViewClose} startIndex={0} />
-
-            <PaginationControls
-                resCount={res.data?.count}
-                hasNext={res.data?.next}
-                hasPrev={res.data?.previous}
-            />
         </div>
     );
 }
 
 
-const ChevronDown = () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-    </svg>
-);
 
-const ImageIcon = () => (
-    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-    </svg>
-);
 
-const AlertCircle = () => (
-    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4v.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-);
 
-const CheckCircle = () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-);
-
-const Clock = () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-);
-
-const XCircle = () => (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-);
-
-const statusMap = {
-    '1': { label: 'Pending', color: 'bg-yellow-100 text-yellow-800', icon: Clock },
-    '2': { label: 'Confirmed', color: 'bg-blue-100 text-blue-800', icon: CheckCircle },
-    '3': { label: 'Rejected', color: 'bg-red-100 text-red-800', icon: XCircle },
-    '4': { label: 'Reimbursed', color: 'bg-green-100 text-green-800', icon: CheckCircle },
-};

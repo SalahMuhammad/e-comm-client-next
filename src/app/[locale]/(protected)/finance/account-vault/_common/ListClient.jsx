@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -58,6 +58,10 @@ export default function ListClient({ type, initialItems, count, next, previous }
     const t = useTranslations();
     const [items, setItems] = useState(initialItems);
 
+    useEffect(() => {
+        setItems(initialItems);
+    }, [initialItems]);
+
     const handleItemCreated = (newItemData) => {
         // Add the new item to the beginning of the list
         if (newItemData) {
@@ -92,7 +96,7 @@ export default function ListClient({ type, initialItems, count, next, previous }
                         {t('accountVault.fields.isActive')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Actions
+                        {t('global.actions')}
                     </th>
                 </>
             );
@@ -109,7 +113,7 @@ export default function ListClient({ type, initialItems, count, next, previous }
                         {t('global.updatedAt')}
                     </th>
                     <th scope="col" className="px-6 py-3">
-                        Actions
+                        {t('global.actions')}
                     </th>
                 </>
             );
