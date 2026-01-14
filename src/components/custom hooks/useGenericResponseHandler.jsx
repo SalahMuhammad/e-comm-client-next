@@ -8,17 +8,20 @@ import { toast } from 'sonner'
 export default function useGenericResponseHandler(t= useTranslations('global.errors')) {
     // const t = useTranslations('global.errors')
 
-    const handleResponse = (res) => {
+    const handleResponse = (res, errorMessage) => {
         if (! res.status) return true
-        
+
         switch (res.status) {
             case 200:
             case 201:
             case 204:
                 break;
             case 400:
-                res.data?.detail &&
+                if (res.data?.detail) {
                     toast.error(res.data?.detail)
+                } else if (errorMessage) {
+                    toast.error(errorMessage)
+                }
                 break;
             case 403:
                 if (res.data?.detail?.includes('jwt')) {

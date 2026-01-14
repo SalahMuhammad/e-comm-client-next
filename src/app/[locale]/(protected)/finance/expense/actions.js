@@ -18,16 +18,39 @@ export async function getExpense(hashed_id) {
 export async function createUpdateExpense(prevState, formData) {
     const hashed_id = formData.get('hashed_id');
     const isUpdate = Boolean(hashed_id);
-    const formDataObj = Object.fromEntries(formData.entries());
+
+    // Check if there are any file uploads (and they're not empty)
+    const image = formData.get('image')
+
+    // Remove empty file field from FormData
+    if (image && image.size === 0) formData.delete('image')
+
+    const hasFiles = image && image.size > 0
+
+    let body, headers
+
+    if (hasFiles) {
+        // Use FormData for file uploads (multipart/form-data)
+        body = formData
+        headers = {} // Let browser set Content-Type with boundary
+    } else {
+        // Use JSON for regular data
+        const formDataObj = Object.fromEntries(formData.entries());
+        body = JSON.stringify(formDataObj)
+        headers = {
+            'Content-Type': 'application/json',
+        }
+    }
 
     const res = await apiRequest(`/api/finance/expenses/${isUpdate ? `${hashed_id}/` : ''}`, {
         method: isUpdate ? 'PATCH' : 'POST',
-        body: formData
+        body: body,
+        headers: headers,
     });
 
     return {
         ...res,
-        formData: ! res.ok && formDataObj
+        formData: !res.ok && Object.fromEntries(formData.entries())
     }
 }
 
@@ -36,17 +59,7 @@ export async function deleteExpense(hashed_id, isDeleteFromView) {
         method: 'DELETE'
     });
 
-    if (res.ok && ! isDeleteFromView) revalidatePath('/finance/expenses/list');
+    if (res.ok && !isDeleteFromView) revalidatePath('/finance/expenses/list');
 
     return res
-}
-
-export async function changeDebtSettlementStatus(id, status) {
-    return await apiRequest(`/api/finance/expenses/${id}/`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: status })
-    });
 }
