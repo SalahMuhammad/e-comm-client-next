@@ -1,13 +1,19 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useTranslations } from 'use-intl'
 
-function SearchInput({ paramOptions, placeholder = 'Search ...' }) {
+function SearchInput({ paramOptions, placeholder, allText }) {
     const router = useRouter()
     const searchParams = useSearchParams()
+    const t = useTranslations()
     const [selectedParam, setSelectedParam] = useState(paramOptions[0]?.value || '')
     const [query, setQuery] = useState(searchParams.get(selectedParam) || '')
     const [isOpen, setIsOpen] = useState(false)
+    const [isSelectOpen, setIsSelectOpen] = useState(false)
+
+    const translatedAllText = allText ?? t('global.all')
+    const translatedPlaceholder = placeholder ?? t('global.searchPlaceholder')
 
     const handleParamChange = (value) => {
         // Clear all other search parameters when switching
@@ -49,7 +55,123 @@ function SearchInput({ paramOptions, placeholder = 'Search ...' }) {
         router.replace(`?${params.toString()}`, { scroll: false })
     }
 
+    // Close select dropdown on Escape key
+    useEffect(() => {
+        const handleEscape = (e) => {
+            if (e.key === 'Escape' && isSelectOpen) {
+                setIsSelectOpen(false)
+            }
+        }
+
+        window.addEventListener('keydown', handleEscape)
+        return () => window.removeEventListener('keydown', handleEscape)
+    }, [isSelectOpen])
+
     const selectedOption = paramOptions.find(opt => opt.value === selectedParam)
+    const inputType = selectedOption?.inputType || 'text' // Default to text for backward compatibility
+
+    // Render the appropriate input based on inputType
+    const renderInput = () => {
+        if (inputType === 'date') {
+            return (
+                <input
+                    type="date"
+                    className="flex-1 pl-10 sm:pl-12 pr-8 sm:pr-10 py-3 sm:py-4 text-sm text-gray-900 dark:text-white bg-transparent border-0 rounded-l-xl focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-all duration-200"
+                    value={query}
+                    onChange={handleQueryChange}
+                />
+            )
+        } else if (inputType === 'select') {
+            const selectedOption_value = selectedOption?.selectOptions?.find(opt => opt.value === searchParams.get(selectedParam))
+            const displayValue = selectedOption_value?.label || ''
+
+            return (
+                <div className="flex-1 relative">
+                    <input
+                        type="text"
+                        value={query}
+                        onChange={(e) => {
+                            setQuery(e.target.value)
+                            setIsSelectOpen(true)
+                        }}
+                        onFocus={() => setIsSelectOpen(true)}
+                        placeholder={displayValue || translatedPlaceholder}
+                        className="w-full pl-10 sm:pl-12 pr-8 sm:pr-10 py-3 sm:py-4 text-sm text-gray-900 dark:text-white bg-transparent border-0 rounded-l-xl focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-all duration-200"
+                    />
+
+                    {isSelectOpen && (
+                        <>
+                            <div
+                                className="fixed inset-0 z-[9998]"
+                                onClick={() => setIsSelectOpen(false)}
+                            />
+                            <div className="absolute left-0 top-full mt-1 w-full bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-600 overflow-hidden z-[9999] max-h-60 overflow-y-auto">
+                                <div className="p-1">
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setQuery('')
+                                            const params = new URLSearchParams(Array.from(searchParams.entries()))
+                                            params.delete(selectedParam)
+                                            params.delete('offset')
+                                            router.replace(`?${params.toString()}`, { scroll: false })
+                                            setIsSelectOpen(false)
+                                        }}
+                                        className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-all duration-200 ${!query
+                                            ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium'
+                                            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                            }`}
+                                    >
+                                        {translatedAllText}
+                                    </button>
+                                    {selectedOption?.selectOptions
+                                        ?.filter(option => option.label.toLowerCase().includes(query.toLowerCase()))
+                                        ?.map((option) => (
+                                            <button
+                                                key={option.value}
+                                                type="button"
+                                                onClick={() => {
+                                                    setQuery('')
+                                                    const params = new URLSearchParams(Array.from(searchParams.entries()))
+                                                    params.set(selectedParam, option.value)
+                                                    params.delete('offset')
+                                                    router.replace(`?${params.toString()}`, { scroll: false })
+                                                    setIsSelectOpen(false)
+                                                }}
+                                                className={`w-full text-left px-3 py-2.5 text-sm rounded-md transition-all duration-200 ${searchParams.get(selectedParam) === option.value
+                                                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 font-medium'
+                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                                                    }`}
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <span>{option.label}</span>
+                                                    {searchParams.get(selectedParam) === option.value && (
+                                                        <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                        </svg>
+                                                    )}
+                                                </div>
+                                            </button>
+                                        ))}
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </div>
+            )
+        } else {
+            // Default text input
+            return (
+                <input
+                    type="text"
+                    className="flex-1 pl-10 sm:pl-12 pr-8 sm:pr-10 py-3 sm:py-4 text-sm text-gray-900 dark:text-white bg-transparent border-0 rounded-l-xl focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-all duration-200"
+                    placeholder={translatedPlaceholder}
+                    value={query}
+                    onChange={handleQueryChange}
+                />
+            )
+        }
+    }
 
     return (
         <form onSubmit={(e) => e.preventDefault()} className='pb-4'>
@@ -62,13 +184,7 @@ function SearchInput({ paramOptions, placeholder = 'Search ...' }) {
                         </svg>
                     </div>
 
-                    <input
-                        type="text"
-                        className="flex-1 pl-10 sm:pl-12 pr-8 sm:pr-10 py-3 sm:py-4 text-sm text-gray-900 dark:text-white bg-transparent border-0 rounded-l-xl focus:outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400 transition-all duration-200"
-                        placeholder={placeholder}
-                        value={query}
-                        onChange={handleQueryChange}
-                    />
+                    {renderInput()}
 
                     {query && (
                         <button
@@ -93,7 +209,10 @@ function SearchInput({ paramOptions, placeholder = 'Search ...' }) {
                     <div className="relative">
                         <button
                             type="button"
-                            onClick={() => setIsOpen(!isOpen)}
+                            onClick={() => {
+                                setIsSelectOpen(false)
+                                setIsOpen(!isOpen)
+                            }}
                             className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-r-xl transition-all duration-200 min-w-[80px] sm:min-w-[120px] relative"
                         >
                             <span className="truncate max-w-[60px] sm:max-w-none w-[80%]">{selectedOption?.label}</span>

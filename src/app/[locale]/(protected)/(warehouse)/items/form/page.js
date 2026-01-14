@@ -30,8 +30,9 @@ function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
     const handleGenericErrors = useGenericResponseHandler(t)
 
     // Memoize the onChange callback to prevent infinite renders
-    const handleImageChange = useCallback((files, imageIds) => {
-        setKeepImageIds(imageIds || []);
+    const handleImageChange = useCallback(({ newFiles, existingIds, hasChanges }) => {
+        // For multi-image support, keep track of existing image IDs
+        setKeepImageIds(existingIds || []);
     }, []);
 
 

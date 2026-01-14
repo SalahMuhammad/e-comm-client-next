@@ -19,10 +19,10 @@ const DeleteButton = ({ type, id, onDelete, isViewPage = false }) => {
                 onClick: async () => {
                     const deleteFunc = type === 'account' ? deleteAccount : deleteAccountType;
                     const res = await deleteFunc(id, isViewPage);
-                    if (handleGenericErrors(res)) return;
+                    if (handleGenericErrors(res, t('global.errors.deleteError'))) return;
 
                     if (res?.ok) {
-                        toast.success(t('successDelete'));
+                        toast.success(t('global.delete.success'));
 
                         if (isViewPage) {
                             // Navigate back to list on view pages
@@ -34,8 +34,6 @@ const DeleteButton = ({ type, id, onDelete, isViewPage = false }) => {
                             // Call callback for list pages
                             onDelete?.();
                         }
-                    } else {
-                        toast.error(res.data?.detail || t('global.errors.deleteError'));
                     }
                 },
             },

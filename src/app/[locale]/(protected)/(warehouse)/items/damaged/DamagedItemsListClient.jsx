@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -52,6 +52,10 @@ function CreateDamagedItemFormModal({ onSuccess, onCancel, isModal }) {
 
 export default function DamagedItemsListClient({ initialItems }) {
     const [items, setItems] = useState(initialItems);
+
+    useEffect(() => {
+        setItems(initialItems);
+    }, [initialItems]);
 
     const handleItemCreated = (newItemData) => {
         // Add the new item to the beginning of the list

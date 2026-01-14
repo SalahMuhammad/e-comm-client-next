@@ -14,10 +14,14 @@ async function Page({ searchParams }) {
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
     const search = params[searchParamName] ?? '';
+    const accountType = params['account_type__name'] ?? '';
+    const phoneNumber = params['phone_number'] ?? '';
+    const bankName = params['bank_name'] ?? '';
+    const isActive = params['is_active'] ?? '';
     const t = await getTranslations();
 
 
-    const res = await getAccountList(`?limit=${limit}&offset=${offset}${search ? `&name=${search}` : ''}`);
+    const res = await getAccountList(`?limit=${limit}&offset=${offset}${search ? `&account_name=${search}` : ''}${accountType ? `&account_type__name=${accountType}` : ''}${phoneNumber ? `&phone_number=${phoneNumber}` : ''}${bankName ? `&bank_name=${bankName}` : ''}${isActive ? `&is_active=${isActive}` : ''}`);
 
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
         redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
@@ -30,6 +34,18 @@ async function Page({ searchParams }) {
                 paramName={searchParamName}
                 paramOptions={[
                     { label: t('accountVault.placeholders.searchAccountName'), value: 's' },
+                    { label: t('accountVault.placeholders.searchAccountType'), value: 'account_type__name' },
+                    { label: t('accountVault.fields.phoneNumber'), value: 'phone_number' },
+                    { label: t('accountVault.fields.bankName'), value: 'bank_name' },
+                    {
+                        label: t('accountVault.fields.isActive'),
+                        value: 'is_active',
+                        inputType: 'select',
+                        selectOptions: [
+                            { label: t('accountVault.status.active'), value: 'true' },
+                            { label: t('accountVault.status.inactive'), value: 'false' }
+                        ]
+                    }
                 ]}
             />
 

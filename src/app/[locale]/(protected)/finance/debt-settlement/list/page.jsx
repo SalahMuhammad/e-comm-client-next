@@ -21,10 +21,13 @@ async function List({ searchParams }) {
     const limit = params['limit'] ?? 12;
     const offset = params['offset'] ?? 0;
     const search = params[searchParamName] ?? '';
+    const notes = params['notes'] ?? '';
+    const date = params['date'] ?? '';
+    const status = params['status'] ?? '';
     const t = await getTranslations();
 
 
-    const res = (await getDebtSettlements(`?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}`));
+    const res = (await getDebtSettlements(`?limit=${limit}&offset=${offset}${search ? `&owner=${search}` : ''}${notes ? `&notes=${notes}` : ''}${date ? `&date=${date}` : ''}${status ? `&status=${status}` : ''}`));
     (res?.status === 403 && res.data?.detail?.includes('jwt')) &&
         redirect(`/auth/logout?nexturl=${(await headers()).get('x-original-url') || ''}`, 'replace')
     const data = res.data
@@ -94,6 +97,17 @@ async function List({ searchParams }) {
                 paramName={searchParamName}
                 paramOptions={[
                     { label: t('inputs.search.ownerName'), value: 's' },
+                    { label: t('inputs.search.notes'), value: 'notes' },
+                    { label: t('inputs.search.date'), value: 'date', inputType: 'date' },
+                    {
+                        label: t('finance.debtSettlement.status.label'),
+                        value: 'status',
+                        inputType: 'select',
+                        selectOptions: [
+                            { label: t('finance.debtSettlement.status.approved'), value: 'approved' },
+                            { label: t('finance.debtSettlement.status.not_approved'), value: 'not_approved' }
+                        ]
+                    }
                 ]}
             />
 

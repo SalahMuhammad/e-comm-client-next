@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 
 import { ChevronLeftIcon, ChevronRightIcon, PlayIcon, PauseIcon } from '@heroicons/react/24/outline'
 
-function Gallery({className = "w-full max-w-4xl mx-auto", images, autoplay = false, autoplayInterval = 5000, onClick = () => {} }) {
+function Gallery({ className = "w-full max-w-4xl mx-auto", images, autoplay = false, autoplayInterval = 5000, onClick = () => { } }) {
     const [currentIndex, setCurrentIndex] = useState(0)
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isAutoPlay, setIsAutoPlay] = useState(autoplay)

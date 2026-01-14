@@ -37,6 +37,19 @@ function DeleteButton({ type, id, isDeleteFromView = false }) {
         });
     }
 
+    if (isDeleteFromView) {
+        return (
+            <button
+                onClick={handleDelete}
+                style={{ backgroundColor: '#b91c1c', opacity: 1 }}
+                className="inline-flex cursor-pointer items-center gap-2 px-4 py-2 text-white rounded-lg transition-colors duration-200 text-sm font-medium shadow-sm hover:shadow-md"
+            >
+                <TrashIcon className="h-4 w-4" />
+                {t('global.delete.label')}
+            </button>
+        )
+    }
+
     return (
         <button
             onClick={handleDelete}

@@ -26,8 +26,12 @@ function MyForm({ initialData, type }) {
         value: initialData.sale,
         label: `Sale #${initialData.related_order_ref || initialData.sale}`
     } : null)
-    // Track whether to keep payment_proof image
-    const [keepPaymentProof, setKeepPaymentProof] = useState(initialData?.payment_proof ? true : false)
+    // Track image state with simpler logic
+    const [imageState, setImageState] = useState({
+        hadInitialImage: initialData?.payment_proof ? true : false,  // Did we start with an image?
+        currentlyHasFiles: initialData?.payment_proof ? true : false, // Does FileInput currently have files?
+        userDeleted: false  // Did user explicitly delete the initial image?
+    })
 
     // const options = type === 'payments' ? [
     //     { value: 'invoice_payment', label: 'invoice_payment' },
@@ -214,17 +218,29 @@ function MyForm({ initialData, type }) {
                     <div className={styles.formGroup + ' z-20'}>
                         <StaticSelect
                             options={[
-                                { value: '1', label: t('finance.statusOptions.confirmed') },
-                                { value: '2', label: t('finance.statusOptions.pending') },
-                                { value: '4', label: t('finance.statusOptions.rejected') },
-                                { value: '3', label: t('finance.statusOptions.reimbursed') },
+                                { value: '1', label: t('finance.statusOptions.pending') },
+                                { value: '2', label: t('finance.statusOptions.confirmed') },
+                                { value: '3', label: t('finance.statusOptions.rejected') },
+                                { value: '4', label: t('finance.statusOptions.reimbursed') },
                             ]}
                             name="status"
                             label={t('finance.fields.status')}
-                            defaultValue={state.formData?.status || initialData?.status ? {
-                                value: state.formData?.status || initialData?.status,
-                                label: state.formData?.status || initialData?.status
-                            } : undefined}
+                            defaultValue={(() => {
+                                const statusValue = state.formData?.status || initialData?.status;
+                                if (!statusValue) return undefined;
+
+                                const statusMap = {
+                                    '1': t('finance.statusOptions.pending'),
+                                    '2': t('finance.statusOptions.confirmed'),
+                                    '3': t('finance.statusOptions.rejected'),
+                                    '4': t('finance.statusOptions.reimbursed')
+                                };
+
+                                return {
+                                    value: statusValue,
+                                    label: statusMap[statusValue] || statusValue
+                                };
+                            })()}
                         />
                         <FieldError error={!state?.ok ? state.data?.status : null} />
                     </div>
@@ -260,8 +276,15 @@ function MyForm({ initialData, type }) {
                 {/* File Upload Section - Conditional based on module type */}
                 {(type === 'payments' || type === 'reverse-payment') && (
                     <div className={styles.invoiceDetails}>
-                        {/* Hidden input to signal if we should keep or delete the image */}
-                        <input type="hidden" name="delete_payment_proof" value={keepPaymentProof ? "false" : "true"} />
+                        {/* Hidden input to signal if we should keep the existing image */}
+                        <input
+                            type="hidden"
+                            name="keep_payment_proof"
+                            value={
+                                // Keep if: had initial image AND user didn't delete it
+                                imageState.hadInitialImage && !imageState.userDeleted ? "true" : "false"
+                            }
+                        />
 
                         <FileInput
                             name="payment_proof"
@@ -271,10 +294,16 @@ function MyForm({ initialData, type }) {
                             showPreview={true}
                             error={!state?.ok ? state.data?.payment_proof : null}
                             defaultValue={initialData?.payment_proof ? [{ img: initialData.payment_proof }] : []}
-                            onChange={(files, imageIds) => {
-                                // If there are any files (new or existing), keep the image
-                                // If no files, user deleted it
-                                setKeepPaymentProof(files.length > 0 || imageIds.length > 0);
+                            onChange={({ newFiles, existingIds, hasChanges }) => {
+                                // Update state based on current files
+                                const totalFiles = newFiles.length + existingIds.length;
+
+                                setImageState(prev => ({
+                                    hadInitialImage: prev.hadInitialImage, // This never changes
+                                    currentlyHasFiles: totalFiles > 0,
+                                    // User deleted if: had initial image AND made changes AND now has no files
+                                    userDeleted: prev.hadInitialImage && hasChanges && totalFiles === 0
+                                }));
                             }}
                         />
                     </div>
@@ -384,12 +413,12 @@ function MyForm({ initialData, type }) {
                         <label htmlFor="note">{t('finance.fields.note')}</label>
                         <textarea
                             id="note"
-                            name="note"
+                            name="notes"
                             rows="3"
-                            defaultValue={state.formData?.note || initialData?.note || ''}
+                            defaultValue={state.formData?.notes || initialData?.notes || ''}
                             placeholder={t('finance.fields.moreNotes')}
                         />
-                        <FieldError error={!state?.ok ? state.data?.note : null} />
+                        <FieldError error={!state?.ok ? state.data?.notes : null} />
                     </div>
                 </div>
 

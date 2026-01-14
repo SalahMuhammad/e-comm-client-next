@@ -2,9 +2,9 @@
 
 import { useActionState, useEffect, useState } from "react"
 import { useTranslations } from "next-intl";
-import { createUpdateTransfer } from "../actions"
+import { createUpdateExpense } from "../actions"
 import Form from "next/form";
-import { TextInput, FileInput, DateInput } from "@/components/inputs/index"
+import { DateInput, FileInput, TextInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
@@ -17,41 +17,41 @@ import StaticSelect from "@/components/ReactStaticSelect";
 import { getFormDefaultValue } from "@/utils/formDefaultValue";
 
 
-function TransferForm({ initialData }) {
+function ExpenseForm({ initialData }) {
     const t = useTranslations()
     const handleGenericErrors = useGenericResponseHandler()
-    const [state, formAction, isPending] = useActionState(createUpdateTransfer, {})
+    const [state, formAction, isPending] = useActionState(createUpdateExpense, {})
     const router = useRouter();
     // Track image state with simpler logic
     const [imageState, setImageState] = useState({
-        hadInitialImage: initialData?.proof ? true : false,  // Did we start with an image?
-        currentlyHasFiles: initialData?.proof ? true : false, // Does FileInput currently have files?
+        hadInitialImage: initialData?.image ? true : false,  // Did we start with an image?
+        currentlyHasFiles: initialData?.image ? true : false, // Does FileInput currently have files?
         userDeleted: false  // Did user explicitly delete the initial image?
     })
 
-    const transferTypeOptions = [
-        { value: 'internal', label: t('finance.transferTypes.internal') },
-        { value: 'external', label: t('finance.transferTypes.external') },
-        { value: 'p2p', label: t('finance.transferTypes.p2p') },
+    const statusOptions = [
+        { value: '1', label: t('finance.statusOptions.pending') },
+        { value: '2', label: t('finance.statusOptions.confirmed') },
+        { value: '3', label: t('finance.statusOptions.rejected') },
+        { value: '4', label: t('finance.statusOptions.reimbursed') }
     ]
 
     const defaultDate = getFormDefaultValue(state, initialData, 'date', {
         defaultValue: formatDateManual(new Date())
     })
 
-    const defaultFromVault = getFormDefaultValue(state, initialData, 'from_vault', {
-        labelKey: 'from_vault_name'
+    const defaultCategory = getFormDefaultValue(state, initialData, 'category', {
+        labelKey: 'category_name'
     })
 
-    const defaultToVault = getFormDefaultValue(state, initialData, 'to_vault', {
-        labelKey: 'to_vault_name'
+    const defaultBusinessAccount = getFormDefaultValue(state, initialData, 'business_account', {
+        labelKey: 'payment_method_name'
     })
 
-    const defaultTransferType = getFormDefaultValue(state, initialData, 'transfer_type', {
-        selectOptions: transferTypeOptions,
-        defaultValue: transferTypeOptions[0]
+    const defaultStatus = getFormDefaultValue(state, initialData, 'status', {
+        selectOptions: statusOptions,
+        defaultValue: statusOptions[0]
     })
-
 
     useEffect(() => {
         if (state?.ok === undefined) {
@@ -62,13 +62,12 @@ function TransferForm({ initialData }) {
         if (handleGenericErrors(res)) return
 
         if (state?.ok) {
-            toast.success(t(initialData?.id ? "successEdit" : "successCreate"));
+            toast.success(initialData?.hashed_id ? t("global.form.successEdit") : t("global.form.successCreate"));
             if (state.data?.hashed_id) {
-                router.replace(`/finance/internal-money-transfer/view/${state.data?.hashed_id}`);
+                router.replace(`/finance/expense/list`);
             }
         }
-    }, [state])
-
+    }, [state, handleGenericErrors, router, t])
 
     const handleAccountTransformer = (res, callback) => {
         const data = res?.results?.map((obj) => ({
@@ -79,13 +78,13 @@ function TransferForm({ initialData }) {
     }
 
     return (
-        <div className={styles.invoiceContainer}>
+        <div className={`${styles.invoiceContainer} w-20`}>
             <Form
                 action={formAction}
                 className={styles.invoiceForm}
             >
                 <div className={styles.invoiceHeader}>
-                    <h2>{initialData?.id ? t("finance.fields.update") : t("finance.fields.transaction")} {t("navLinks.finance.subLabels.internalTransfer")} {initialData?.hashed_id && "#"} {initialData?.hashed_id}</h2>
+                    <h2>{initialData?.hashed_id ? t("finance.general.update") : t("finance.general.add")} {t("finance.expense.header")} {initialData?.hashed_id && "#"} {initialData?.hashed_id}</h2>
                 </div>
 
                 <div className={styles.invoiceDetails}>
@@ -117,25 +116,23 @@ function TransferForm({ initialData }) {
                     <div className={`mt-8 ${styles.formGroup}`}>
                         <SearchableDropdown
                             url={'/api/finance/account-vault/?is_active=true&account_name='}
-                            label={t('finance.fields.fromVault')}
+                            label={t('finance.fields.toVault')}
                             customLoadOptions={handleAccountTransformer}
-                            name={'from_vault'}
-                            defaultValue={defaultFromVault}
+                            name={'business_account'}
+                            defaultValue={defaultBusinessAccount}
                             required
                         />
-                        <FieldError error={!state?.ok ? state.data?.from_vault : null} />
+                        <FieldError error={!state?.ok ? state.data?.business_account : null} />
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
                         <SearchableDropdown
-                            url={'/api/finance/account-vault/?is_active=true&account_name='}
-                            label={t('finance.fields.toVault')}
-                            customLoadOptions={handleAccountTransformer}
-                            name={'to_vault'}
-                            defaultValue={defaultToVault}
-                            required
+                            url={'/api/finance/expenses/category/list/?name='}
+                            label={t('finance.fields.category')}
+                            name="category"
+                            defaultValue={defaultCategory}
                         />
-                        <FieldError error={!state?.ok ? state.data?.to_vault : null} />
+                        <FieldError error={!state?.ok ? state.data?.category : null} />
                     </div>
 
                     <div className={styles.detailsRow}>
@@ -151,14 +148,15 @@ function TransferForm({ initialData }) {
                             />
                             <FieldError error={!state?.ok ? state.data?.amount : null} />
                         </div>
-                        <div className={`${styles.formGroup} relative z-50`}>
+
+                        <div className={`${styles.formGroup} z-20`}>
                             <StaticSelect
-                                options={transferTypeOptions}
-                                name={'transfer_type'}
-                                label={t('finance.fields.transferType')}
-                                defaultValue={defaultTransferType}
+                                options={statusOptions}
+                                name={'status'}
+                                label={t('finance.fields.status')}
+                                defaultValue={defaultStatus}
                             />
-                            <FieldError error={!state?.ok ? state.data?.transfer_type : null} />
+                            <FieldError error={!state?.ok ? state.data?.status : null} />
                         </div>
                     </div>
                 </div>
@@ -168,7 +166,7 @@ function TransferForm({ initialData }) {
                     {/* Hidden input to signal if we should keep the existing image */}
                     <input
                         type="hidden"
-                        name="keep_proof"
+                        name="keep_image"
                         value={
                             // Keep if: had initial image AND user didn't delete it
                             imageState.hadInitialImage && !imageState.userDeleted ? "true" : "false"
@@ -176,13 +174,13 @@ function TransferForm({ initialData }) {
                     />
 
                     <FileInput
-                        name="proof"
-                        id="proof"
-                        placeholder={t('finance.fields.transferProof')}
+                        name="image"
+                        id="image"
+                        placeholder={t('finance.fields.image')}
                         acceptedTypes="images"
                         showPreview={true}
-                        error={!state?.ok ? state.data?.proof : null}
-                        defaultValue={initialData?.proof ? [{ img: initialData.proof }] : []}
+                        error={!state?.ok ? state.data?.image : null}
+                        defaultValue={initialData?.image ? [{ img: initialData.image }] : []}
                         onChange={({ newFiles, existingIds, hasChanges }) => {
                             // Update state based on current files
                             const totalFiles = newFiles.length + existingIds.length;
@@ -204,7 +202,7 @@ function TransferForm({ initialData }) {
                             id="notes"
                             name="notes"
                             rows="3"
-                            defaultValue={getFormDefaultValue(state, initialData, 'notes')}
+                            defaultValue={state.formData?.notes || initialData?.notes || ''}
                             placeholder={t('finance.fields.moreNotes')}
                         />
                         <FieldError error={!state?.ok ? state.data?.notes : null} />
@@ -214,15 +212,15 @@ function TransferForm({ initialData }) {
                 <div className={styles.formActions}>
                     <FormButton
                         type="submit"
-                        variant={initialData?.id ? "secondary" : "primary"}
+                        variant={initialData?.hashed_id ? "secondary" : "primary"}
                         size="md"
-                        bgColor={initialData?.id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
-                        hoverBgColor={initialData?.id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
+                        bgColor={initialData?.hashed_id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
+                        hoverBgColor={initialData?.hashed_id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
                         textColor="text-white dark:text-gray-100"
                         className="w-full"
                         isLoading={isPending}
                     >
-                        {initialData?.id ? t("global.form.edit") : t("global.form.submit")}
+                        {initialData?.hashed_id ? t("global.form.edit") : t("global.form.submit")}
                     </FormButton>
                 </div>
             </Form>
@@ -230,4 +228,4 @@ function TransferForm({ initialData }) {
     )
 }
 
-export default TransferForm
+export default ExpenseForm

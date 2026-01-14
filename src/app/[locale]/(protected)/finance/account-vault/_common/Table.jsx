@@ -38,7 +38,7 @@ export default function Table({ type, items, setItems }) {
                             <td className="px-6 py-4">
                                 {numberFormatter(item.current_balance)}
                             </td>
-                            <td className="px-6 py-4 flex items-center justify-center">
+                            <td className="px-6 py-4 flex">
                                 <StatusBadge isActive={item.is_active} t={t} />
                             </td>
                         </>

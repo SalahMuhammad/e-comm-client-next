@@ -48,7 +48,9 @@
 				"addInternalTransfer": "إضافة تحويل داخلي",
 				"accountVault": "الحسابات التجارية",
 				"accountTypes": "أنواع الحسابات",
-				"debts": "الديون"
+				"expenseCategories": "فئات المصروفات",
+				"debts": "الديون",
+				"management": "الإدارة المالية"
 			}
 		},
 		"reports": {
@@ -377,13 +379,23 @@
 			"note": "ملاحظة",
 			"moreNotes": "ملاحظات إضافية...",
 			"optionalFields": "حقول اختيارية",
+			"paymentProof": "إثبات الدفع",
+			"expenseProof": "إثبات المصروف",
+			"transferProof": "إثبات التحويل",
 			"paymentRef": "مرجع الدفع",
 			"paymentRefHelper": "رقم مرجعي فريد لهذه الدفعة",
 			"transactionId": "رقم المعاملة",
 			"senderPhone": "رقم هاتف المرسل",
 			"senderName": "اسم المرسل",
 			"bankName": "اسم البنك",
-			"receivedBy": "استلمت بواسطة"
+			"receivedBy": "استلمت بواسطة",
+			"fromVault": "من الخزينة",
+			"toVault": "إلى الخزينة",
+			"transferType": "نوع التحويل",
+			"dateRangeAfter": "التاريخ من",
+			"dateRangeBefore": "التاريخ إلى",
+			"category": "الفئة",
+			"image": "صورة الإيصال/الإثبات"
 		},
 		"status": {
 			"paid": "مدفوع",
@@ -406,6 +418,26 @@
 				"not_approved": "غير معتمد"
 			}
 		},
+		"expense": {
+			"header": "المصروف",
+			"list": {
+				"noExpenses": "لم يتم العثور على مصروفات",
+				"notes": "ملاحظات",
+				"noImage": "لا توجد صورة مرفقة",
+				"summary": "ملخص",
+				"createTitle": "إنشاء مصروف"
+			},
+			"category": {
+				"name": "اسم الفئة",
+				"description": "الوصف",
+				"create": "إنشاء فئة",
+				"edit": "تعديل الفئة",
+				"namePlaceholder": "مثلاً: مستلزمات المكتب",
+				"descriptionPlaceholder": "وصف اختياري لهذه الفئة",
+				"deleteConfirm": "هل أنت متأكد من حذف هذه الفئة؟ لا يمكن التراجع عن هذا الإجراء.",
+				"deleteSuccess": "تم حذف الفئة بنجاح"
+			}
+		},
 		"general": {
 			"t": "معاملة",
 			"add": "إضافة",
@@ -416,6 +448,11 @@
 			"pending": "قيد الانتظار",
 			"rejected": "مرفوض",
 			"reimbursed": "تم التعويض"
+		},
+		"transferTypes": {
+			"internal": "داخلي",
+			"external": "خارجي",
+			"p2p": "من نظير لنظير"
 		},
 		"placeholders": {
 			"paymentRef": "PAY-20240110-ABC12345",
@@ -431,6 +468,17 @@
 			"senderName": "للتحويلات البنكية",
 			"bankName": "للتحويلات البنكية",
 			"receivedBy": "من استلم النقود فعلياً"
+		},
+		"management": {
+			"title": "نظرة مالية عامة",
+			"computedFromTransactions": "محسوبة من المعاملات",
+			"totalBalance": "الرصيد الإجمالي",
+			"summary": "ملخص",
+			"totalAccounts": "إجمالي الحسابات",
+			"activeAccounts": "الحسابات النشطة",
+			"highestBalance": "أعلى رصيد",
+			"status": "الحالة",
+			"ofTotal": "من الإجمالي"
 		}
 	},
 	"accountVault": {
@@ -574,6 +622,8 @@
 			"repository": "المستودع",
 			"notes": "الملاحظات",
 			"category": "الفئة",
+			"categoryName": "اسم الفئة",
+			"accountName": "اسم الحساب",
 			"limit": "الحد",
 			"offset": "الإزاحة",
 			"fromDate": "من تاريخ",
@@ -590,18 +640,24 @@
 			"barcode": "الباركود",
 			"place": "المكان",
 			"origin": "المنشأ",
-			"repositoryName": "اسم المستودع"
+			"repositoryName": "اسم المستودع",
+			"date": "التاريخ"
 		}
 	},
 	"global": {
 		"backToList": "العودة إلى القائمة",
 		"createdAt": "تاريخ الإنشاء",
 		"updatedAt": "تاريخ التحديث",
+		"actions": "الإجراءات",
+		"all": "الكل",
+		"searchPlaceholder": "بحث ...",
 		"form": {
 			"submit": "إرسال",
 			"edit": "تعديل",
 			"editSuccess": "تم التعديل بنجاح",
 			"createSuccess": "تم الإنشاء بنجاح",
+			"successEdit": "تم التحديث بنجاح",
+			"successCreate": "تم الإنشاء بنجاح",
 			"id": "المعرّف"
 		},
 		"errors": {
@@ -626,6 +682,9 @@
 				"description": "لا يمكن التراجع عن هذا الإجراء.",
 				"canceled": "تم الإلغاء"
 			}
+		},
+		"print": {
+			"label": "طباعة"
 		}
 	},
 	"ownerAccountStatement": {
@@ -802,7 +861,15 @@
 				"filteredResults": "النتائج المُرشَّحة",
 				"totalSize": "الحجم الإجمالي"
 			},
-			"search": "بحث عن الملفات...",
+			"search": {
+				"name": "الاسم",
+				"nameOrDescription": "الاسم أو الوصف",
+				"categoryName": "اسم الفئة",
+				"size": "الحجم",
+				"actions": "الإجراءات",
+				"view": "عرض",
+				"download": "تحميل"
+			},
 			"category": "الفئة",
 			"allCategories": "جميع الفئات",
 			"sortBy": "ترتيب حسب",
@@ -810,11 +877,7 @@
 			"fileSize": "حجم الملف",
 			"table": {
 				"file": "الملف",
-				"category": "الفئة",
-				"size": "الحجم",
-				"actions": "الإجراءات",
-				"view": "عرض",
-				"download": "تحميل"
+				"category": "الفئة"
 			},
 			"noFiles": "لم يتم العثور على ملفات تطابق معاييرك",
 			"showing": "عرض",

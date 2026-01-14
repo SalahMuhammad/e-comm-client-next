@@ -1,9 +1,9 @@
-import List from "../../_common/list";
+import TransferList from "./list-component";
 
 
 async function Page({ searchParams }) {
     return (
-        <List searchParams={searchParams} type={'internal-money-transfer'} />
+        <TransferList searchParams={searchParams} />
     )
 }
 
