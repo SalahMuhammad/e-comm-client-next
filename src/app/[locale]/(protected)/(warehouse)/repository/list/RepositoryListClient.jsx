@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -53,6 +53,11 @@ function CreateRepositoryFormModal({ onSuccess, onCancel, isModal }) {
 export default function RepositoryListClient({ initialRepositories, count, next, previous }) {
     const t = useTranslations("warehouse.repositories");
     const [repositories, setRepositories] = useState(initialRepositories);
+
+    // Update repositories when initialRepositories changes (e.g., when search results update)
+    useEffect(() => {
+        setRepositories(initialRepositories);
+    }, [initialRepositories]);
 
     const handleRepositoryCreated = (newRepositoryData) => {
         // Add the new repository to the beginning of the list

@@ -71,7 +71,9 @@ function TableRow({ id, name, origin, place, p4, imgSrc, isDeleting = false, fun
                 {imgSrc[0]?.img ? (
                     <img src={imgSrc[0]?.img} alt={name} className="w-10 h-10 rounded object-cover rounded border-2 border-transparent group-hover:border-blue-500 transition-all duration-300" />
                 ) :
-                    <div className="w-10 h-10 rounded object-cover border rounded-sm"></div>
+                    <div className="w-10 h-10 rounded object-cover border rounded-sm flex items-center justify-center bg-gray-50 dark:bg-gray-700">
+                        <PhotoIcon className="w-5 h-5 text-gray-400" />
+                    </div>
                 }
             </td>
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
