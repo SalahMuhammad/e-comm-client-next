@@ -44,11 +44,13 @@
 				"addReversePayment": "Add Reverse Pyament",
 				"debtSettlement": "Debt Settlement List",
 				"debtSettlementForm": "Add Debt Settlement",
-				"internalTransfer": "Internal Money Transfer",
+				"internalTransfer": "Internal Transfers",
 				"addInternalTransfer": "Add Internal Transfer",
 				"accountVault": "Business Accounts",
 				"accountTypes": "Account Types",
-				"debts": "Debts"
+				"expenseCategories": "Expense Categories",
+				"debts": "Debts",
+				"management": "Financial Management"
 			}
 		},
 		"reports": {
@@ -391,7 +393,14 @@
 			"senderPhone": "Sender Phone",
 			"senderName": "Sender Name",
 			"bankName": "Bank Name",
-			"receivedBy": "Received By"
+			"receivedBy": "Received By",
+			"fromVault": "From Vault",
+			"toVault": "To Vault",
+			"transferType": "Transfer Type",
+			"dateRangeAfter": "Date From",
+			"dateRangeBefore": "Date To",
+			"category": "Category",
+			"image": "Receipt/Proof Image"
 		},
 		"status": {
 			"paid": "Paid",
@@ -414,6 +423,27 @@
 				"not_approved": "Not Approved"
 			}
 		},
+		"expense": {
+			"header": "Expense",
+			"list": {
+				"noExpenses": "No expenses found",
+				"notes": "Notes",
+				"noImage": "No image attached",
+				"image": "Image",
+				"summary": "Summary",
+				"createTitle": "Create Expense"
+			},
+			"category": {
+				"name": "Category Name",
+				"description": "Description",
+				"create": "Create Category",
+				"edit": "Edit Category",
+				"namePlaceholder": "e.g., Office Supplies",
+				"descriptionPlaceholder": "Optional description for this category",
+				"deleteConfirm": "Are you sure you want to delete this category? This action cannot be undone.",
+				"deleteSuccess": "Category deleted successfully"
+			}
+		},
 		"general": {
 			"t": "transaction",
 			"add": "Add",
@@ -424,6 +454,11 @@
 			"pending": "Pending",
 			"rejected": "Rejected",
 			"reimbursed": "Reimbursed"
+		},
+		"transferTypes": {
+			"internal": "Internal",
+			"external": "External",
+			"p2p": "Peer to Peer"
 		},
 		"placeholders": {
 			"paymentRef": "PAY-20240110-ABC12345",
@@ -439,6 +474,17 @@
 			"senderName": "For bank transfers",
 			"bankName": "For bank transfers",
 			"receivedBy": "Who physically received cash"
+		},
+		"management": {
+			"title": "Financial Overview",
+			"computedFromTransactions": "Computed from transactions",
+			"totalBalance": "Total Balance",
+			"summary": "Summary",
+			"totalAccounts": "Total Accounts",
+			"activeAccounts": "Active Accounts",
+			"highestBalance": "Highest Balance",
+			"status": "Status",
+			"ofTotal": "of total"
 		}
 	},
 	"accountVault": {
@@ -582,6 +628,8 @@
 			"repository": "Repository",
 			"notes": "Notes",
 			"category": "Category",
+			"categoryName": "Category Name",
+			"accountName": "Account Name",
 			"limit": "Limit",
 			"offset": "Offset",
 			"fromDate": "From Date",
@@ -598,18 +646,26 @@
 			"barcode": "Barcode",
 			"place": "Place",
 			"origin": "Origin",
-			"repositoryName": "Repository Name"
+			"repositoryName": "Repository Name",
+			"date": "Date"
 		}
 	},
 	"global": {
 		"backToList": "Back to List",
 		"createdAt": "Created At",
 		"updatedAt": "Updated At",
+		"createdBy": "Created By",
+		"updatedBy": "Updated By",
+		"actions": "Actions",
+		"all": "All",
+		"searchPlaceholder": "Search ...",
 		"form": {
 			"submit": "Submit",
 			"edit": "Edit",
 			"editSuccess": "Edit successful",
 			"createSuccess": "Create successful",
+			"successEdit": "Updated successfully",
+			"successCreate": "Created successfully",
 			"id": "ID"
 		},
 		"errors": {
@@ -630,10 +686,14 @@
 			"cancelLabel": "Cancel",
 			"confirmMessage": "Are you sure you want to delete this item?",
 			"deleting": "Deleting...",
+			"success": "Deleted successfully",
 			"assert": {
 				"description": "This action cannot be undone.",
 				"canceled": "Canceled"
 			}
+		},
+		"print": {
+			"label": "Print"
 		}
 	},
 	"ownerAccountStatement": {
@@ -810,7 +870,15 @@
 				"filteredResults": "Filtered Results",
 				"totalSize": "Total Size"
 			},
-			"search": "Search files...",
+			"search": {
+				"name": "Name",
+				"nameOrDescription": "Name or Description",
+				"categoryName": "Category Name",
+				"size": "Size",
+				"actions": "Actions",
+				"view": "View",
+				"download": "Download"
+			},
 			"category": "Category",
 			"allCategories": "All Categories",
 			"sortBy": "Sort By",
