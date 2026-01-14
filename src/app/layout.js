@@ -84,6 +84,7 @@ export default async function RootLayout({ children, params }) {
     >
       <head>
         {/* <script type="module" src="/theme-init.js" /> */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexArabic.variable} antialiased`}>
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
