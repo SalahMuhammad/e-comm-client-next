@@ -128,7 +128,7 @@ export const getMenuItems = (t) => {
             ),
             links: [
                 {
-                    label: 'management',
+                    label: t('finance.subLabels.management'),
                     path: '/finance/management',
                     icon: <CreditCardIcon className="w-4 h-4" />
                 },
@@ -165,6 +165,12 @@ export const getMenuItems = (t) => {
                 //     path: '/finance/expense/form',
                 //     icon: <ExclamationTriangleIcon className="w-4 h-4" />
                 // },
+                {
+                    label: t('finance.subLabels.expenseCategories'),
+                    path: '/finance/expense/category/list',
+                    icon: <ExclamationTriangleIcon className="w-4 h-4" />,
+                    addPath: '/finance/expense/category/form'
+                },
                 {
                     label: t('finance.subLabels.debtSettlement'),
                     path: '/finance/debt-settlement/list',
