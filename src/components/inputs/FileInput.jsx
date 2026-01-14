@@ -45,6 +45,7 @@ export default function FileUploadInput({
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const fileInputRef = useRef(null);
     const hasInitialized = useRef(false); // Track if we've loaded defaultValue
+    const hasUserInteracted = useRef(false); // Track if user has made any changes
     const hasError = Boolean(error);
 
     // Combined files for display (existing + new)
@@ -69,7 +70,7 @@ export default function FileUploadInput({
                 // and the browser cleared the file input - we need to reset our state
                 if (currentFiles.length === 0 && newFiles.length > 0) {
                     setNewFiles([]);
-                    onChange([], existingImageIds);
+                    onChange({ newFiles: [], existingIds: existingImageIds, hasChanges: hasUserInteracted.current });
                 }
             }
         };
@@ -139,12 +140,12 @@ export default function FileUploadInput({
 
                 setExistingImages(validImages);
                 setExistingImageIds(validIds);
-                // Initialize with existing IDs as the kept IDs
-                onChange([], validIds); // Empty new files, but pass existing IDs
+                // Initialize with existing IDs - hasChanges is false since this is initial load
+                onChange({ newFiles: [], existingIds: validIds, hasChanges: false });
             } catch (e) {
                 setExistingImages([]);
                 setExistingImageIds([]);
-                onChange([], []);
+                onChange({ newFiles: [], existingIds: [], hasChanges: false });
             } finally {
                 setLoadind(false);
                 hasInitialized.current = true; // Mark as initialized
@@ -201,6 +202,7 @@ export default function FileUploadInput({
     };
 
     const handleFileChange = (selectedFiles) => {
+        hasUserInteracted.current = true; // Mark that user has made changes
         const fileList = Array.from(selectedFiles);
         const validFiles = fileList.filter(file => {
             if (file.size > maxSize) return false;
@@ -216,13 +218,13 @@ export default function FileUploadInput({
             const updatedNewFiles = [...newFiles, ...uniqueFiles];
             setNewFiles(updatedNewFiles);
             // Pass new files and existing image IDs
-            onChange(updatedNewFiles, existingImageIds);
+            onChange({ newFiles: updatedNewFiles, existingIds: existingImageIds, hasChanges: true });
         } else {
             // For single file mode, replace everything
             setNewFiles(validFiles);
             setExistingImages([]);  // Clear existing images
             setExistingImageIds([]); // Clear existing image IDs
-            onChange(validFiles, []);
+            onChange({ newFiles: validFiles, existingIds: [], hasChanges: true });
         }
     };
 
@@ -247,6 +249,7 @@ export default function FileUploadInput({
 
     // Remove file (works for both existing images and new files)
     const removeFile = (index) => {
+        hasUserInteracted.current = true; // Mark that user has made changes
         const totalExisting = existingImages.length;
 
         if (index < totalExisting) {
@@ -255,13 +258,13 @@ export default function FileUploadInput({
             const newExistingIds = existingImageIds.filter((_, i) => i !== index);
             setExistingImages(newExistingImages);
             setExistingImageIds(newExistingIds);
-            onChange(newFiles, newExistingIds);
+            onChange({ newFiles, existingIds: newExistingIds, hasChanges: true });
         } else {
             // Removing a new file - adjust index and remove from newFiles
             const newFileIndex = index - totalExisting;
             const updatedNewFiles = newFiles.filter((_, i) => i !== newFileIndex);
             setNewFiles(updatedNewFiles);
-            onChange(updatedNewFiles, existingImageIds);
+            onChange({ newFiles: updatedNewFiles, existingIds: existingImageIds, hasChanges: true });
         }
     };
 
@@ -386,7 +389,7 @@ export default function FileUploadInput({
 
             {/* Selected Files */}
             {allFiles.length > 0 && (
-                <div className="mt-3 space-y-2">
+                <div className="mt-3 space-y-2 w-full max-w-full overflow-hidden">
                     {allFiles.map((file, index) => {
                         const isErrorObject = error && typeof error === "object"
                         const errorMessages = isErrorObject ? error[String(index)]?.['img'] : null;
@@ -394,21 +397,21 @@ export default function FileUploadInput({
                         return (
                             <div
                                 key={index}
-                                className={`relative ${hasError && "pb-6"} transition-[padding] duration-[200ms]`}
+                                className={`relative ${hasError && "pb-6"} transition-[padding] duration-[200ms] w-full`}
                             >
 
                                 <div
-                                    className={`flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 
+                                    className={`flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 w-full max-w-full
                           ${errorMessages && "border-red-500 dark:border-red-400"}`}
                                 >
-                                    <div className="text-gray-400 dark:text-gray-300">
+                                    <div className="text-gray-400 dark:text-gray-300 flex-shrink-0">
                                         {getFileIcon(file)}
                                     </div>
                                     {showPreview && file.type.startsWith("image/") && (
                                         <button
                                             type="button"
                                             onClick={() => setPreviewFile(file)}
-                                            className="relative group w-[80px] h-[80px]"
+                                            className="relative group w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] flex-shrink-0"
                                         >
                                             <img
                                                 src={URL.createObjectURL(file)}
@@ -426,7 +429,7 @@ export default function FileUploadInput({
                                     <button
                                         type="button"
                                         onClick={() => removeFile(index)}
-                                        className="p-1 text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+                                        className="p-1 text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors flex-shrink-0"
                                     >
                                         <XMarkIcon className="w-4 h-4" />
                                     </button>

@@ -4,7 +4,7 @@ import { useActionState, useEffect, useState } from "react"
 import { useTranslations } from "next-intl";
 import { createUpdateTransfer } from "../actions"
 import Form from "next/form";
-import { TextInput, FileInput } from "@/components/inputs/index"
+import { TextInput, FileInput, DateInput } from "@/components/inputs/index"
 import FormButton from "@/components/FormButton"
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
 import SearchableDropdown from "@/components/SearchableDropdown";
 import StaticSelect from "@/components/ReactStaticSelect";
+import { getFormDefaultValue } from "@/utils/formDefaultValue";
 
 
 function TransferForm({ initialData }) {
@@ -21,28 +22,35 @@ function TransferForm({ initialData }) {
     const handleGenericErrors = useGenericResponseHandler()
     const [state, formAction, isPending] = useActionState(createUpdateTransfer, {})
     const router = useRouter();
+    // Track image state with simpler logic
+    const [imageState, setImageState] = useState({
+        hadInitialImage: initialData?.proof ? true : false,  // Did we start with an image?
+        currentlyHasFiles: initialData?.proof ? true : false, // Does FileInput currently have files?
+        userDeleted: false  // Did user explicitly delete the initial image?
+    })
 
     const transferTypeOptions = [
-        { value: 'internal', label: 'Internal' },
-        { value: 'external', label: 'External' },
-        { value: 'p2p', label: 'Peer to Peer' },
+        { value: 'internal', label: t('finance.transferTypes.internal') },
+        { value: 'external', label: t('finance.transferTypes.external') },
+        { value: 'p2p', label: t('finance.transferTypes.p2p') },
     ]
 
-    const defaultDate = state.formData?.date || initialData?.date || formatDateManual(new Date())
-    const defaultFromVault = state.formData?.from_vault || initialData?.from_vault ? {
-        value: state.formData?.from_vault || initialData?.from_vault,
-        label: state.formData?.from_vault_name || initialData?.from_vault_name
-    } : undefined
+    const defaultDate = getFormDefaultValue(state, initialData, 'date', {
+        defaultValue: formatDateManual(new Date())
+    })
 
-    const defaultToVault = state.formData?.to_vault || initialData?.to_vault ? {
-        value: state.formData?.to_vault || initialData?.to_vault,
-        label: state.formData?.to_vault_name || initialData?.to_vault_name
-    } : undefined
+    const defaultFromVault = getFormDefaultValue(state, initialData, 'from_vault', {
+        labelKey: 'from_vault_name'
+    })
 
-    const defaultTransferType = state.formData?.transfer_type || initialData?.transfer_type ? {
-        value: state.formData?.transfer_type || initialData?.transfer_type,
-        label: state.formData?.transfer_type || initialData?.transfer_type
-    } : transferTypeOptions[0]
+    const defaultToVault = getFormDefaultValue(state, initialData, 'to_vault', {
+        labelKey: 'to_vault_name'
+    })
+
+    const defaultTransferType = getFormDefaultValue(state, initialData, 'transfer_type', {
+        selectOptions: transferTypeOptions,
+        defaultValue: transferTypeOptions[0]
+    })
 
 
     useEffect(() => {
@@ -54,7 +62,7 @@ function TransferForm({ initialData }) {
         if (handleGenericErrors(res)) return
 
         if (state?.ok) {
-            toast.success(t(state.data?.id ? "successEdit" : "successCreate"));
+            toast.success(t(initialData?.id ? "successEdit" : "successCreate"));
             if (state.data?.hashed_id) {
                 router.replace(`/finance/internal-money-transfer/view/${state.data?.hashed_id}`);
             }
@@ -77,7 +85,7 @@ function TransferForm({ initialData }) {
                 className={styles.invoiceForm}
             >
                 <div className={styles.invoiceHeader}>
-                    <h2>{initialData?.id ? t("finance.fields.update") : t("finance.fields.transaction")} Internal Money Transfer {initialData?.hashed_id && "#"} {initialData?.hashed_id}</h2>
+                    <h2>{initialData?.id ? t("finance.fields.update") : t("finance.fields.transaction")} {t("navLinks.finance.subLabels.internalTransfer")} {initialData?.hashed_id && "#"} {initialData?.hashed_id}</h2>
                 </div>
 
                 <div className={styles.invoiceDetails}>
@@ -95,22 +103,21 @@ function TransferForm({ initialData }) {
                         />
                     )}
 
-                    <div className={styles.formGroup}>
-                        <label htmlFor="date">{t('finance.fields.date')}</label>
-                        <input
-                            type="date"
+                    <div className={`${initialData?.hashed_id ? 'mt-3' : ''}`}>
+                        <DateInput
                             id="date"
                             name="date"
+                            placeholder={t('finance.fields.date')}
                             defaultValue={defaultDate}
+                            error={!state?.ok ? state?.data?.date : ""}
                             required
                         />
-                        <FieldError error={!state?.ok ? state.data?.date : null} />
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
                         <SearchableDropdown
-                            url={'/api/finance/account-vault/?account_name='}
-                            label="From Vault"
+                            url={'/api/finance/account-vault/?is_active=true&account_name='}
+                            label={t('finance.fields.fromVault')}
                             customLoadOptions={handleAccountTransformer}
                             name={'from_vault'}
                             defaultValue={defaultFromVault}
@@ -121,8 +128,8 @@ function TransferForm({ initialData }) {
 
                     <div className={`mt-8 ${styles.formGroup}`}>
                         <SearchableDropdown
-                            url={'/api/finance/account-vault/?account_name='}
-                            label="To Vault"
+                            url={'/api/finance/account-vault/?is_active=true&account_name='}
+                            label={t('finance.fields.toVault')}
                             customLoadOptions={handleAccountTransformer}
                             name={'to_vault'}
                             defaultValue={defaultToVault}
@@ -138,17 +145,17 @@ function TransferForm({ initialData }) {
                                 type="number"
                                 name="amount"
                                 step={'.01'}
-                                defaultValue={state.formData?.amount || initialData?.amount || ''}
+                                defaultValue={getFormDefaultValue(state, initialData, 'amount')}
                                 placeholder="0.00"
                                 required
                             />
                             <FieldError error={!state?.ok ? state.data?.amount : null} />
                         </div>
-                        <div className={styles.formGroup}>
+                        <div className={`${styles.formGroup} relative z-50`}>
                             <StaticSelect
                                 options={transferTypeOptions}
                                 name={'transfer_type'}
-                                label="Transfer Type"
+                                label={t('finance.fields.transferType')}
                                 defaultValue={defaultTransferType}
                             />
                             <FieldError error={!state?.ok ? state.data?.transfer_type : null} />
@@ -158,13 +165,35 @@ function TransferForm({ initialData }) {
 
                 {/* File Upload Section */}
                 <div className={styles.invoiceDetails}>
+                    {/* Hidden input to signal if we should keep the existing image */}
+                    <input
+                        type="hidden"
+                        name="keep_proof"
+                        value={
+                            // Keep if: had initial image AND user didn't delete it
+                            imageState.hadInitialImage && !imageState.userDeleted ? "true" : "false"
+                        }
+                    />
+
                     <FileInput
                         name="proof"
                         id="proof"
                         placeholder={t('finance.fields.transferProof')}
                         acceptedTypes="images"
+                        showPreview={true}
                         error={!state?.ok ? state.data?.proof : null}
                         defaultValue={initialData?.proof ? [{ img: initialData.proof }] : []}
+                        onChange={({ newFiles, existingIds, hasChanges }) => {
+                            // Update state based on current files
+                            const totalFiles = newFiles.length + existingIds.length;
+
+                            setImageState(prev => ({
+                                hadInitialImage: prev.hadInitialImage, // This never changes
+                                currentlyHasFiles: totalFiles > 0,
+                                // User deleted if: had initial image AND made changes AND now has no files
+                                userDeleted: prev.hadInitialImage && hasChanges && totalFiles === 0
+                            }));
+                        }}
                     />
                 </div>
 
@@ -175,7 +204,7 @@ function TransferForm({ initialData }) {
                             id="notes"
                             name="notes"
                             rows="3"
-                            defaultValue={state.formData?.notes || initialData?.notes || ''}
+                            defaultValue={getFormDefaultValue(state, initialData, 'notes')}
                             placeholder={t('finance.fields.moreNotes')}
                         />
                         <FieldError error={!state?.ok ? state.data?.notes : null} />
