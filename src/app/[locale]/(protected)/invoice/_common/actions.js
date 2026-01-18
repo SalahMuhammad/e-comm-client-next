@@ -49,22 +49,26 @@ export async function createUpdateInv(_, actualFormData) {
         } else {
             transformedData[key] = dataObject[key];
         }
-    }); 
+    });
     // Add transformed items
     transformedData[typePrefix] = items.filter(item => item); // Remove empty slots
 
     if (type == 'sales/refund')
         transformedData['repository_permit'] = true
 
-    const res = await apiRequest(`/api/${type == 'sales/refund' ? 'sales/s/refund' : type}/${(isUpdate && ! actualFormData.get('original_invoice')) ? actualFormData.get('hashed_id') + '/' : ''}`, {
-        method: `${(isUpdate && ! actualFormData.get('original_invoice')) ? 'PATCH' : 'POST'}`,
+    // Convert empty owner string to null
+    if (transformedData['owner'] === '') {
+        transformedData['owner'] = null;
+    }
+
+    const res = await apiRequest(`/api/${type == 'sales/refund' ? 'sales/s/refund' : type}/${(isUpdate && !actualFormData.get('original_invoice')) ? actualFormData.get('hashed_id') + '/' : ''}`, {
+        method: `${(isUpdate && !actualFormData.get('original_invoice')) ? 'PATCH' : 'POST'}`,
         body: JSON.stringify(transformedData),
         headers: {
             'Content-Type': 'application/json',
         },
     })
-    const formData = ! res.ok && transformedData
-
+    const formData = !res.ok && transformedData
     return {
         ...res,
         formData
@@ -76,8 +80,8 @@ export async function deleteInv(type, hashed_id, isDeleteFromView) {
     const res = await apiRequest(`/api/${type}/${hashed_id}/`, {
         method: "DELETE",
     })
-    
-    if (res.ok && ! isDeleteFromView) revalidatePath('/invoice/sales/list');
+
+    if (res.ok && !isDeleteFromView) revalidatePath('/invoice/sales/list');
 
     return res
 }
