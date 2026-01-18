@@ -328,7 +328,8 @@
 				"success": "تم حذف العنصر",
 				"canceled": "تم إلغاء الحذف"
 			},
-			"edit": "تعديل"
+			"edit": "تعديل",
+			"refund": "استرداد"
 		},
 		"form": {
 			"invoice": "فاتورة",
@@ -350,8 +351,30 @@
 			"successCreate": "تم إنشاء الفاتورة بنجاح",
 			"successEdit": "تم تحديث الفاتورة بنجاح",
 			"itemId": "معرّف العنصر:",
+			"itemName": "اسم العنصر",
 			"notSet": "غير محدد",
 			"description": "الوصف",
+			"previewItem": "معاينة العنصر",
+			"addToInvoice": "إضافة إلى الفاتورة",
+			"cancelPreview": "إلغاء",
+			"removeItem": "إزالة العنصر",
+			"quantity": "الكمية",
+			"noImage": "لا توجد صورة متاحة",
+			"paymentType": "نوع الدفع",
+			"cash": "نقدي",
+			"client": "عميل",
+			"addPayment": "إضافة دفعة مع هذه الفاتورة",
+			"showPayment": "إظهار الدفع",
+			"yes": "نعم",
+			"no": "لا",
+			"paymentAmount": "مبلغ الدفع",
+			"paymentAccount": "حساب الدفع",
+			"paymentNotes": "ملاحظات الدفع",
+			"selectPaymentAccount": "اختر حساب الدفع",
+			"noItemsError": "الرجاء إضافة عنصر واحد على الأقل إلى الفاتورة",
+			"ownerRequired": "المالك مطلوب",
+			"paymentFieldsRequired": "مبلغ الدفع والحساب مطلوبان للدفع الفوري",
+			"paymentDisabledZeroAmount": "الدفع معطل لأن المبلغ الإجمالي هو 0.00$",
 			"statusOptions": {
 				"3": "غير مدفوع",
 				"4": "مدفوع جزئياً",
@@ -641,7 +664,22 @@
 			"place": "المكان",
 			"origin": "المنشأ",
 			"repositoryName": "اسم المستودع",
-			"date": "التاريخ"
+			"date": "التاريخ",
+			"status": "الحالة",
+			"repositoryPermit": "إذن المستودع",
+			"repositoryPermitOptions": {
+				"true": "تم التسليم",
+				"false": "لم يتم التسليم"
+			},
+			"issueDateAfter": "تاريخ الإصدار من",
+			"issueDateBefore": "تاريخ الإصدار إلى",
+			"dueDateAfter": "تاريخ الاستحقاق من",
+			"dueDateBefore": "تاريخ الاستحقاق إلى"
+		},
+		"quantity": {
+			"label": "الكمية",
+			"increment": "زيادة الكمية",
+			"decrement": "تقليل الكمية"
 		}
 	},
 	"global": {

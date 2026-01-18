@@ -328,7 +328,8 @@
 				"success": "Item deleted",
 				"canceled": "Deletion canceled"
 			},
-			"edit": "Edit"
+			"edit": "Edit",
+			"refund": "Refund"
 		},
 		"form": {
 			"invoice": "Invoice",
@@ -350,8 +351,30 @@
 			"successCreate": "Invoice created successfully",
 			"successEdit": "Invoice updated successfully",
 			"itemId": "Item ID:",
+			"itemName": "Item Name",
 			"notSet": "Not set",
 			"description": "Description",
+			"previewItem": "Preview Item",
+			"addToInvoice": "Add to Invoice",
+			"cancelPreview": "Cancel",
+			"removeItem": "Remove Item",
+			"quantity": "Quantity",
+			"noImage": "No image available",
+			"paymentType": "Payment Type",
+			"cash": "Cash",
+			"client": "Client",
+			"addPayment": "Add payment with this invoice",
+			"showPayment": "Show Payment",
+			"yes": "Yes",
+			"no": "No",
+			"paymentAmount": "Payment Amount",
+			"paymentAccount": "Payment Account",
+			"paymentNotes": "Payment Notes",
+			"selectPaymentAccount": "Select payment account",
+			"noItemsError": "Please add at least one item to the invoice",
+			"ownerRequired": "Owner is required",
+			"paymentFieldsRequired": "Payment amount and account are required for immediate payment",
+			"paymentDisabledZeroAmount": "Payment is disabled because the total amount is $0.00",
 			"statusOptions": {
 				"3": "Unpaid",
 				"4": "Partially Paid",
@@ -647,7 +670,22 @@
 			"place": "Place",
 			"origin": "Origin",
 			"repositoryName": "Repository Name",
-			"date": "Date"
+			"date": "Date",
+			"status": "Status",
+			"repositoryPermit": "Repository Permit",
+			"repositoryPermitOptions": {
+				"true": "Delivered",
+				"false": "Not Delivered"
+			},
+			"issueDateAfter": "Issue Date From",
+			"issueDateBefore": "Issue Date To",
+			"dueDateAfter": "Due Date From",
+			"dueDateBefore": "Due Date To"
+		},
+		"quantity": {
+			"label": "Quantity",
+			"increment": "Increase quantity",
+			"decrement": "Decrease quantity"
 		}
 	},
 	"global": {
