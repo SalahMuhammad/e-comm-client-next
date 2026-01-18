@@ -5,11 +5,11 @@ import { redirect } from 'next/navigation'
 import { toast } from 'sonner'
 
 
-export default function useGenericResponseHandler(t= useTranslations('global.errors')) {
+export default function useGenericResponseHandler(t = useTranslations('global.errors')) {
     // const t = useTranslations('global.errors')
 
     const handleResponse = (res, errorMessage) => {
-        if (! res.status) return true
+        if (!res.status) return true
 
         switch (res.status) {
             case 200:
