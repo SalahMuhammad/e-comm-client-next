@@ -62,14 +62,18 @@ export default function InvoiceListTable({ initialData, type }) {
                             `}
                         >
                             <th scope="row" className="px-6 py-4 w-[12rem] max-w-[12rem] font-medium text-gray-900 whitespace-normal">
-                                <Link className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200" href={`/customer-supplier/view/${inv.owner}`}>
-                                    {inv.owner_name}
-                                </Link>
+                                {inv.owner ? (
+                                    <Link className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200" href={`/customer-supplier/view/${inv.owner}`}>
+                                        {inv.owner_name}
+                                    </Link>
+                                ) : (
+                                    <span className="text-gray-500 dark:text-gray-400">_</span>
+                                )}
                             </th>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">
+                            <td className="px-6 py-4 max-w-xs overflow-x-auto whitespace-nowrap">
                                 {inv.issue_date}
                             </td>
-                            <td className="px-6 py-4 max-w-xs overflow-x-auto">{inv.due_date}</td>
+                            <td className="px-6 py-4 max-w-xs overflow-x-auto whitespace-nowrap">{inv.due_date}</td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{numberFormatter(inv.total_amount)}</td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">{numberFormatter(inv.remaining_balance)}</td>
                             <td className="px-6 py-4 max-w-xs overflow-x-auto">
@@ -80,6 +84,7 @@ export default function InvoiceListTable({ initialData, type }) {
                                     <RepositoryPermitButton id={inv.id} type={type} permitValue={inv.repository_permit} width="170px" />
                                 </td>
                             )}
+
                             <td className="px-6 py-4 max-w-xs">
                                 <TableNote note={inv.notes} />
                             </td>
@@ -108,6 +113,17 @@ export default function InvoiceListTable({ initialData, type }) {
                                             <PencilIcon className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />
                                             <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
                                                 {t("table.edit")}
+                                            </span>
+                                        </Link>
+                                        <Link
+                                            href={`/invoice/${type}/refund/form/${inv.hashed_id}`}
+                                            className="ml-2 flex items-center text-purple-600 hover:text-purple-500 group transition-colors dark:text-purple-400 dark:hover:text-white"
+                                        >
+                                            <svg className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                                            </svg>
+                                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                                {t("table.refund")}
                                             </span>
                                         </Link>
                                         <DeleteButton type={type} hashed_id={inv.hashed_id} onDelete={() => handleDelete(inv.id)} />
