@@ -91,14 +91,14 @@ export default function PaymentListTable({ data, type, pageCount }) {
                                     <StatusBadge status={payment.status} t={t} />
                                 </td>
                                 <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                                    {payment?.ref ? (
+                                    {payment?.related_order_ref ? (
                                         <Link className="
                                             ml-2 flex items-center text-blue-700 
                                             hover:text-blue-800 group transition 
                                             duration-300 dark:text-blue-200 
-                                            dark:hover:text-white" href={`/invoice/${type == 'payment' ? 'sales' : 'purchases'}/view/${payment.ref}`}
+                                            dark:hover:text-white" href={`/invoice/${type == 'payment' ? 'sales' : 'purchases'}/view/${payment.related_order_ref}`}
                                         >
-                                            #{payment.ref}
+                                            #{payment.related_order_ref}
                                         </Link>
                                     ) : '-'}
                                 </td>
