@@ -12,7 +12,7 @@
     overflow: hidden;
 }
 
-:global(html.dark)  .invoiceForm {
+:global(html.dark) .invoiceForm {
     background: #273549;
 }
 
@@ -22,7 +22,7 @@
     border-bottom: 1px solid #e5e7eb;
 }
 
-:global(html.dark)  .invoiceHeader {
+:global(html.dark) .invoiceHeader {
     background: #1e293b;
     border-color: #374151;
 }
@@ -34,7 +34,7 @@
     color: #1f2937;
 }
 
-:global(html.dark)  .invoiceHeader h2 {
+:global(html.dark) .invoiceHeader h2 {
     color: #e2e8f0;
 }
 
@@ -43,7 +43,7 @@
     border-bottom: 1px solid #e5e7eb;
 }
 
-:global(html.dark)  .invoiceDetails {
+:global(html.dark) .invoiceDetails {
     border-color: #374151;
 }
 
@@ -66,7 +66,7 @@
     font-size: 0.875rem;
 }
 
-:global(html.dark)  .formGroup label {
+:global(html.dark) .formGroup label {
     color: #9ca3af;
 }
 
@@ -81,8 +81,8 @@
     color: #1f2937;
 }
 
-:global(html.dark)  .formGroup input,
-:global(html.dark)  .formGroup textarea {
+:global(html.dark) .formGroup input,
+:global(html.dark) .formGroup textarea {
     background-color: #1e293b;
     border-color: #4b5563;
     color: #e2e8f0;
@@ -95,8 +95,8 @@
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-:global(html.dark)  .formGroup input:focus,
-:global(html.dark)  .formGroup textarea:focus {
+:global(html.dark) .formGroup input:focus,
+:global(html.dark) .formGroup textarea:focus {
     border-color: #60a5fa;
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
 }
@@ -119,7 +119,7 @@
     color: #1f2937;
 }
 
-:global(html.dark)  .itemsHeader h3 {
+:global(html.dark) .itemsHeader h3 {
     color: #e2e8f0;
 }
 
@@ -137,7 +137,7 @@
     transition: border-color 0.2s ease;
 }
 
-:global(html.dark)  .itemCard {
+:global(html.dark) .itemCard {
     background-color: #273549;
     border-color: #374151;
 }
@@ -146,7 +146,7 @@
     border-color: #d1d5db;
 }
 
-:global(html.dark)  .itemCard:hover {
+:global(html.dark) .itemCard:hover {
     border-color: #4b5563;
 }
 
@@ -168,11 +168,11 @@
     background-color: #2563eb;
 }
 
-:global(html.dark)  .addItemButton {
+:global(html.dark) .addItemButton {
     background-color: #60a5fa;
 }
 
-:global(html.dark)  .addItemButton:hover {
+:global(html.dark) .addItemButton:hover {
     background-color: #3b82f6;
 }
 
@@ -182,7 +182,7 @@
     margin-top: 0.25rem;
 }
 
-:global(html.dark)  .error {
+:global(html.dark) .error {
     color: #f87171;
 }
 
@@ -191,8 +191,8 @@
     border-color: #ef4444;
 }
 
-:global(html.dark)  .formGroup input.hasError,
-:global(html.dark)  .formGroup textarea.hasError {
+:global(html.dark) .formGroup input.hasError,
+:global(html.dark) .formGroup textarea.hasError {
     border-color: #f87171;
 }
 
@@ -204,9 +204,9 @@
     opacity: 0.7;
 }
 
-:global(html.dark)  .formGroup input:disabled,
-:global(html.dark)  .formGroup textarea:disabled,
-:global(html.dark)  .addItemButton:disabled {
+:global(html.dark) .formGroup input:disabled,
+:global(html.dark) .formGroup textarea:disabled,
+:global(html.dark) .addItemButton:disabled {
     background-color: #1f2937;
 }
 
@@ -223,7 +223,7 @@
     z-index: 10;
 }
 
-:global(html.dark)  .loadingOverlay {
+:global(html.dark) .loadingOverlay {
     background-color: rgba(17, 24, 39, 0.7);
 }
 
@@ -234,14 +234,24 @@
 }
 
 .itemCard {
-    background: #f8f9fa;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     overflow: hidden;
     transition: box-shadow 0.2s ease;
 }
 
+:global(html.dark) .itemCard {
+    background: #1e293b;
+    border: 1px solid #4b5563;
+}
+
 .itemCard:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+:global(html.dark) .itemCard:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .itemHeader {
@@ -253,6 +263,11 @@
     gap: 16px;
     background: white;
     border-bottom: 1px solid #e9ecef;
+}
+
+:global(html.dark) .itemHeader {
+    background: #273549;
+    border-bottom: 1px solid #4b5563;
 }
 
 .itemActions {
@@ -277,13 +292,16 @@
     transition: background-color 0.2s ease;
 }
 
-.removeBtn:hover:not(:disabled) {
+.removeBtn:hover {
     background: #c82333;
 }
 
-.removeBtn:disabled {
-    background: #6c757d;
-    cursor: not-allowed;
+:global(html.dark) .removeBtn {
+    background: #dc3545;
+}
+
+:global(html.dark) .removeBtn:hover {
+    background: #bd2130;
 }
 
 .itemImage {
@@ -303,9 +321,25 @@
     position: relative;
 }
 
+:global(html.dark) .placeholderImage {
+    background: #374151;
+}
+
 .placeholderImage::before {
     content: '📦';
     font-size: 24px;
+}
+
+.itemImg {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+}
+
+:global(html.dark) .itemImg {
+    border-color: #4b5563;
 }
 
 .itemMain {
@@ -325,6 +359,10 @@
     font-weight: 500;
     color: #2c3e50;
     padding: 4px 0;
+}
+
+:global(html.dark) .itemName {
+    color: #e2e8f0;
 }
 
 
@@ -355,6 +393,10 @@
     color: #6c757d;
 }
 
+:global(html.dark) .itemMeta {
+    color: #9ca3af;
+}
+
 .itemQuantity {
     display: flex;
     align-items: center;
@@ -363,6 +405,11 @@
     border: 1px solid #ced4da;
     border-radius: 6px;
     padding: 4px;
+}
+
+:global(html.dark) .itemQuantity {
+    background: #1e293b;
+    border-color: #4b5563;
 }
 
 .qtyBtn {
@@ -404,6 +451,10 @@
     text-align: right;
 }
 
+:global(html.dark) .itemTotal {
+    color: #e2e8f0;
+}
+
 .expandIndicator {
     display: flex;
     align-items: center;
@@ -425,6 +476,11 @@
     background: #f8f9fa;
     border-top: 1px solid #e9ecef;
     animation: slideDown 0.2s ease;
+}
+
+:global(html.dark) .itemDetails {
+    background: #1e293b;
+    border-top: 1px solid #4b5563;
 }
 
 @keyframes slideDown {
@@ -467,12 +523,12 @@
 }
 
 :global(html.dark) .invoiceSummary {
-    background: #1f2937; 
-    border-top: 1px solid #374151; 
-    color: #f9fafb; 
+    background: #1f2937;
+    border-top: 1px solid #374151;
+    color: #f9fafb;
 }
 
-:global(html.dark)  .totalSection {
+:global(html.dark) .totalSection {
     border-top: 2px solid #4b5563;
 }
 
@@ -539,7 +595,8 @@
         gap: 8px;
         padding: 12px;
     }
-/* ####################################################################################################### */
+
+    /* ####################################################################################################### */
     .itemDescription {
         font-size: 14px;
     }

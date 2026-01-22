@@ -65,7 +65,6 @@ export async function createUpdateTransfer(prevState, formData) {
         body: body,
         headers: headers,
     })
-    console.log(res)
     return {
         ...res,
         formData: !res.ok && Object.fromEntries(formData.entries()),
