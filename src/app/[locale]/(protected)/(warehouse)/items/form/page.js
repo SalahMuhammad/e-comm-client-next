@@ -1,5 +1,5 @@
 "use client";
-import SearchableDropdown from "@/components/SearchableDropdown"
+import { DynamicOptionsInput } from "@/components/inputs/index"
 import { getPP, createUpdateItem } from "../actions"
 import { useEffect, useRef, useState, useCallback } from "react";
 import { TextInput, NumberInput, FileInput, DateInput } from "@/components/inputs/index"
@@ -85,7 +85,7 @@ function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
 
             {/* Causes Hydration issue */}
             <input type="text" className="hidden" name="type_name" value={state.type_name ?? ''} readOnly />
-            <SearchableDropdown
+            <DynamicOptionsInput
                 url={'api/items/types/?s='}
                 label={t('type')}
                 name="type"

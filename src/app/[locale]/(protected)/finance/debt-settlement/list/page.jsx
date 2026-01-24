@@ -1,6 +1,6 @@
 import { getDebtSettlements } from "../actions";
 import PaginationControls from '@/components/PaginationControls';
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import { getTranslations } from "next-intl/server";
 import DeleteTransaction from "../DeleteButton";
 import Link from 'next/link';
@@ -93,7 +93,7 @@ async function List({ searchParams }) {
 
     return (
         <>
-            <QueryParamSetterInput
+            <URLQueryParameterSetter
                 paramName={searchParamName}
                 paramOptions={[
                     { label: t('inputs.search.ownerName'), value: 's' },

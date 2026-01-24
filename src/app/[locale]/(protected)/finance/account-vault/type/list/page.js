@@ -1,6 +1,6 @@
 import { getAccountTypeList } from "../../actions";
 import PaginationControls from '@/components/PaginationControls';
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -25,7 +25,7 @@ async function Page({ searchParams }) {
 
     return (
         <>
-            <QueryParamSetterInput
+            <URLQueryParameterSetter
                 paramName={searchParamName}
                 paramOptions={[
                     { label: t('inputs.search.name'), value: 's' },

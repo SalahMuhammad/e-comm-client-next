@@ -1,8 +1,7 @@
 'use client'
 
 import FormButton from '@/components/FormButton'
-import SearchableDropdown from '@/components/SearchableDropdown'
-import { formatDateManual } from '@/utils/dateFormatter'
+import { DynamicOptionsInput } from "@/components/inputs/index"
 import Form from 'next/form'
 import { redirect, RedirectType } from 'next/navigation'
 import styles from '@/styles/reports/main.module.css'
@@ -25,12 +24,12 @@ function page() {
         <Form onSubmit={handleSubmit} className={styles.form}>
             <h1 className='text-2xl font-bold mb-2'>{t("reportSections.warehouse.links.itemMovement.label")}</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
-                <SearchableDropdown
+                <DynamicOptionsInput
                     url={'/api/items/?name='}
                     name={'item'}
                     placeholder={'Item'}
                 />
-                <SearchableDropdown
+                <DynamicOptionsInput
                     url={'/api/repositories/?s='}
                     name={'repository_id'}
                     placeholder={'Repository'}

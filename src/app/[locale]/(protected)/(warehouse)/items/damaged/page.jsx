@@ -1,7 +1,7 @@
 import { getDamagedItems } from "./actions";
 import DamagedItemsListClient from './DamagedItemsListClient';
 import PaginationControls from '@/components/PaginationControls';
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import ErrorLoading from '@/components/ErrorLoading';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
@@ -29,7 +29,7 @@ export default async function DamagedItems({ searchParams }) {
 
     return (
         <>
-            <QueryParamSetterInput
+            <URLQueryParameterSetter
                 paramOptions={[
                     { label: t('itemName'), value: 'item__name' },
                     { label: t('ownerName'), value: 'owner__name' },

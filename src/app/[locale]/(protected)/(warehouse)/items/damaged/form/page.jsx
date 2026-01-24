@@ -1,5 +1,5 @@
 "use client";
-import SearchableDropdown from "@/components/SearchableDropdown"
+import { DynamicOptionsInput } from "@/components/inputs/index"
 import { createUpdateDamagedItem } from "../actions"
 import { useEffect, useRef, useState } from "react";
 import { TextInput, NumberInput, DateInput } from "@/components/inputs/index"
@@ -70,14 +70,14 @@ function DamagedItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
                 <NumberInput placeholder={t("id")} id="id" value={state?.id || obj?.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
             )}
 
-            <SearchableDropdown
+            <DynamicOptionsInput
                 url={'/api/items/?name='}
                 label={t('item')}
                 name="item"
                 defaultValue={(state?.item || obj?.item) ? { value: state?.item || obj.item, label: obj?.item_name || state?.item_name || obj?.item } : {}}
             />
 
-            <SearchableDropdown
+            <DynamicOptionsInput
                 url={'/api/repositories/?s='}
                 label={t('repository')}
                 name="repository"

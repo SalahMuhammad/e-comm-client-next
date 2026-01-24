@@ -1,4 +1,4 @@
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -28,7 +28,7 @@ async function TransferList({ searchParams }) {
 
     return (
         <>
-            <QueryParamSetterInput
+            <URLQueryParameterSetter
                 paramName={'search'}
                 paramOptions={[
                     { label: t('finance.fields.fromVault'), value: 'from', inputType: 'text' },

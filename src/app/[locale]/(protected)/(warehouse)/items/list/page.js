@@ -1,8 +1,7 @@
 import { ItemsView } from './Card'
 import { getItems } from "./actions";
 import PaginationControls from '@/components/PaginationControls';
-import styles from "./itemsList.module.css";
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import ErrorLoading from '@/components/ErrorLoading';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
@@ -36,7 +35,7 @@ ${origin ? `&origin=${origin}` : ''}
 
     return (
         <>
-            <QueryParamSetterInput
+            <URLQueryParameterSetter
                 paramOptions={[
                     { label: t('inputs.search.name'), value: 'name' },
                     { label: t('inputs.search.type'), value: 'type' },

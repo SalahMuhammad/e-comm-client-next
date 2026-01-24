@@ -1,6 +1,6 @@
 import { getRepositories } from "../actions";
 import PaginationControls from '@/components/PaginationControls';
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import { getTranslations } from "next-intl/server";
 import ErrorLoading from "@/components/ErrorLoading";
 import RepositoryListClient from "./RepositoryListClient";
@@ -27,7 +27,7 @@ async function Page({ searchParams }) {
                 <ErrorLoading name="warehouse.repositories.table" message={data.err} />
                 :
                 <>
-                    <QueryParamSetterInput
+                    <URLQueryParameterSetter
                         paramName={searchParamName}
                         paramOptions={[{ label: t('inputs.search.repositoryName'), value: 's' }]}
                     />

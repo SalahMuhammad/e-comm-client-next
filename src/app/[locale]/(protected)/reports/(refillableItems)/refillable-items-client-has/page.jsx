@@ -1,7 +1,7 @@
 'use client'
 
 import FormButton from '@/components/FormButton'
-import SearchableDropdown from '@/components/SearchableDropdown'
+import { DynamicOptionsInput } from "@/components/inputs/index"
 import Form from 'next/form'
 import { redirect, RedirectType } from 'next/navigation'
 import styles from '@/styles/reports/main.module.css'
@@ -21,7 +21,7 @@ function page() {
         <div>
         <Form onSubmit={handleSubmit} className={styles.form}>
             <h1 className='text-2xl font-bold mb-2'>{t("reportSections.refillableItems.links.refillableItemsClient.label")}</h1>
-                <SearchableDropdown
+                <DynamicOptionsInput
                     url={'/api/buyer-supplier-party/?s='}
                     name={`owner`}
                     placeholder={"Client-supplier"}

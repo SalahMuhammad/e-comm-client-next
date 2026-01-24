@@ -5,7 +5,7 @@ import DeleteButton from "./DeleteButton"
 import PaginationControls from "@/components/PaginationControls"
 import ErrorLoading from "@/components/ErrorLoading";
 import { getTranslations } from "next-intl/server";
-import SearchInput from "@/components/QueryParamSetterInput";
+import { URLQueryParameterSetter } from "@/components/inputs/index";
 
 
 async function page({ searchParams }) {
@@ -26,7 +26,7 @@ ${note ? `&note=${note}` : ''}
 
     return (
         <div>
-            <SearchInput
+            <URLQueryParameterSetter
                 paramOptions={[
                     { label: t('inputs.search.refilledItem'), value: 'ritem' },
                     { label: t('inputs.search.usedItem'), value: 'uitem' },

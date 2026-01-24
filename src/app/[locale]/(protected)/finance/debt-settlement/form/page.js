@@ -12,8 +12,8 @@ import useGenericResponseHandler from "@/components/custom hooks/useGenericRespo
 import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
-import SearchableDropdown from "@/components/SearchableDropdown";
-import StaticSelect from "@/components/ReactStaticSelect";
+import { DynamicOptionsInput } from "@/components/inputs/index"
+import { StaticOptions } from "@/components/inputs/index";
 
 
 function DebtSettlementForm({ initialData }) {
@@ -89,7 +89,7 @@ function DebtSettlementForm({ initialData }) {
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             url={'/api/buyer-supplier-party/?s='}
                             label={t('finance.fields.owner')}
                             name="owner"
@@ -113,7 +113,7 @@ function DebtSettlementForm({ initialData }) {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <StaticSelect
+                            <StaticOptions
                                 options={options}
                                 name={'status'}
                                 label={t('finance.fields.status')}

@@ -10,7 +10,7 @@ import { formatCurrency } from '@/utils/CurrencyFormatter';
 import Gallery from '../../../(warehouse)/items/list/Gallery';
 import ImageView from '@/components/ImageView';
 import { useSearchParams } from 'next/navigation';
-import SearchInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import Link from 'next/link';
 import { PencilIcon, TrashIcon, ChevronDownIcon, PhotoIcon, ExclamationCircleIcon, CheckCircleIcon, ClockIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { toast } from 'sonner';
@@ -86,7 +86,7 @@ export default function ExpenseList() {
                     <p className="text-gray-600 dark:text-gray-400">Manage and track your business expenses</p>
                 </div> */}
 
-                <SearchInput paramOptions={[
+                <URLQueryParameterSetter paramOptions={[
                     { label: t('categoryName'), value: 'category__name' },
                     { label: t('accountName'), value: 'business_account__account_name' },
                     { label: t('notes'), value: 'notes' },
