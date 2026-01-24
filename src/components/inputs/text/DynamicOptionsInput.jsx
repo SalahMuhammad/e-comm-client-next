@@ -7,7 +7,7 @@ import { PulsingDots } from '@/components/loaders';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 
 
-const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
+const DynamicOptionsInput = ({ url, label, customLoadOptions, ...props }) => {
   const handleResponse = useGenericResponseHandler()
   const t = useTranslations("inputs.searchableDropdown");
   const selectId = useId();
@@ -160,4 +160,4 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
   );
 };
 
-export default SearchableDropdown;
+export default DynamicOptionsInput;

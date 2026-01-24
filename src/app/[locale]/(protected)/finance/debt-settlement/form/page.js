@@ -13,7 +13,7 @@ import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
 import { DynamicOptionsInput } from "@/components/inputs/index"
-import { StaticOptions } from "@/components/inputs/index";
+import { StaticOptionsInput } from "@/components/inputs/index";
 
 
 function DebtSettlementForm({ initialData }) {
@@ -113,7 +113,7 @@ function DebtSettlementForm({ initialData }) {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <StaticOptions
+                            <StaticOptionsInput
                                 options={options}
                                 name={'status'}
                                 label={t('finance.fields.status')}

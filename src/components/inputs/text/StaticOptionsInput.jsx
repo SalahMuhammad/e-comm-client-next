@@ -1,7 +1,7 @@
 import { useId, useState, useEffect } from 'react';
 import Select from 'react-select'
 
-const StaticSelect = ({ options, label, ...props }) => {
+const StaticOptionsInput = ({ options, label, ...props }) => {
     const selectId = useId();
     const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -89,4 +89,4 @@ const StaticSelect = ({ options, label, ...props }) => {
     )
 }
 
-export default StaticSelect
+export default StaticOptionsInput

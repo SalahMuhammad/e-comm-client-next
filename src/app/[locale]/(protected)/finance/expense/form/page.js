@@ -13,7 +13,7 @@ import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
 import { DynamicOptionsInput } from "@/components/inputs/index"
-import { StaticOptions } from "@/components/inputs/index";
+import { StaticOptionsInput } from "@/components/inputs/index";
 import { getFormDefaultValue } from "@/utils/formDefaultValue";
 
 
@@ -150,7 +150,7 @@ function ExpenseForm({ initialData }) {
                         </div>
 
                         <div className={`${styles.formGroup} z-20`}>
-                            <StaticOptions
+                            <StaticOptionsInput
                                 options={statusOptions}
                                 name={'status'}
                                 label={t('finance.fields.status')}

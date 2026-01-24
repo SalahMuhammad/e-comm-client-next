@@ -6,9 +6,9 @@ export { default as DateInput } from './date/DateInput';
 // text
 export { default as TextInput } from './text/TextInput';
 export { default as TextAreaInput } from './text/TextArea'
-export { default as StaticOptions } from './text/ReactStaticSelect';
-export { default as URLQueryParameterSetter } from './text/QueryParamSetterInput';
-export { default as DynamicOptionsInput } from './text/SearchableDropdown';
+export { default as StaticOptionsInput } from './text/StaticOptionsInput';
+export { default as URLQueryParameterSetter } from './text/URLQueryParameterSetter';
+export { default as DynamicOptionsInput } from './text/DynamicOptionsInput';
 // 
 export { default as FileInput } from './FileInput';
 export { default as RadioSwitch } from './RadioSwitch';

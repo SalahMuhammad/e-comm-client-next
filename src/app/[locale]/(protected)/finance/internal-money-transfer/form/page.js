@@ -12,7 +12,7 @@ import useGenericResponseHandler from "@/components/custom hooks/useGenericRespo
 import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
-import { DynamicOptionsInput, StaticOptions } from "@/components/inputs/index"
+import { DynamicOptionsInput, StaticOptionsInput } from "@/components/inputs/index"
 import { getFormDefaultValue } from "@/utils/formDefaultValue";
 
 
@@ -151,7 +151,7 @@ function TransferForm({ initialData }) {
                             <FieldError error={!state?.ok ? state.data?.amount : null} />
                         </div>
                         <div className={`${styles.formGroup} relative z-50`}>
-                            <StaticOptions
+                            <StaticOptionsInput
                                 options={transferTypeOptions}
                                 name={'transfer_type'}
                                 label={t('finance.fields.transferType')}

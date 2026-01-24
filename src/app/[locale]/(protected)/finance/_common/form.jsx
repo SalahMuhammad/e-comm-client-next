@@ -13,7 +13,7 @@ import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
 import { DynamicOptionsInput } from "@/components/inputs/index"
-import { StaticOptions } from "@/components/inputs/index"; 
+import { StaticOptionsInput } from "@/components/inputs/index"; 
 
 
 function MyForm({ initialData, type }) {
@@ -216,7 +216,7 @@ function MyForm({ initialData, type }) {
 
                     {/* Status */}
                     <div className={styles.formGroup + ' z-20'}>
-                        <StaticOptions
+                        <StaticOptionsInput
                             options={[
                                 { value: '1', label: t('finance.statusOptions.pending') },
                                 { value: '2', label: t('finance.statusOptions.confirmed') },
