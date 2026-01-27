@@ -1,3 +1,5 @@
+'use client'
+
 import { useId, useState, useEffect } from 'react';
 import Select from 'react-select'
 
