@@ -8,6 +8,7 @@ import FormButton from "@/components/FormButton"
 import { toast } from 'sonner'
 import { useRouter } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
+import styles from '../../_common/form.module.css';
 
 
 function RepositoryForm({ obj, onSuccess, onCancel, isModal = false }) {
@@ -45,30 +46,39 @@ function RepositoryForm({ obj, onSuccess, onCancel, isModal = false }) {
     }, [state, isModal, onSuccess])
 
     return (
-        <Form
-            action={formAction}
-            className="max-w-md mx-auto mt-10"
-            style={{ paddingTop: '1rem' }}
-        >
-            {obj?.id && (
-                <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
-            )}
-
-            <TextInput name="name" id="name" defaultValue={defaultName} placeholder={t("name")} error={!state?.ok && state?.data?.name || ""} required />
-
-            <FormButton
-                type="submit"
-                variant={obj?.id ? "secondary" : "danger"}
-                size="md"
-                bgColor={obj?.id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
-                hoverBgColor={obj?.id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
-                textColor="text-white dark:text-gray-100"
-                className="w-full mt-3"
-                isLoading={isPending}
+        <div className={styles.formContainer}>
+            <Form
+                action={formAction}
+                className={styles.form}
             >
-                {obj?.id ? t("edit") : t("submit")}
-            </FormButton>
-        </Form>
+                <div className={styles.formHeader}>
+                    <h2>{t(obj?.id ? "edit" : "title")}</h2>
+                </div>
+
+                <div className={styles.formContent}>
+                    {obj?.id && (
+                        <NumberInput placeholder={t("id")} id="id" value={state?.id || obj.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
+                    )}
+
+                    <TextInput className={`${!obj?.id && "-mb-4 -mt-5"}`} name="name" id="name" defaultValue={defaultName} placeholder={t("name")} error={!state?.ok && state?.data?.name || ""} required />
+                </div>
+
+                <div className={styles.formActions}>
+                    <FormButton
+                        type="submit"
+                        variant={obj?.id ? "secondary" : "danger"}
+                        size="md"
+                        bgColor={obj?.id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
+                        hoverBgColor={obj?.id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
+                        textColor="text-white dark:text-gray-100"
+                        className="w-full"
+                        isLoading={isPending}
+                    >
+                        {obj?.id ? t("edit") : t("submit")}
+                    </FormButton>
+                </div>
+            </Form>
+        </div>
     )
 }
 
