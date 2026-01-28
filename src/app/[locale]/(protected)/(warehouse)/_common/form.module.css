@@ -1,0 +1,91 @@
+.formContainer {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+.form {
+    background: var(--background);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+:global(html.dark) .form {
+    background: #273549;
+}
+
+.formHeader {
+    background: #f9f9fb;
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 1rem;
+}
+
+:global(html.dark) .formHeader {
+    background: #1e293b;
+    border-color: #374151;
+}
+
+.formHeader h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+:global(html.dark) .formHeader h2 {
+    color: #e2e8f0;
+}
+
+.formContent {
+    padding: 1.5rem;
+}
+
+:global(html.dark) .formContent {
+    border-color: #374151;
+}
+
+.formActions {
+    padding: 1.5rem;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: center;
+}
+
+:global(html.dark) .formActions {
+    border-color: #374151;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .formContainer {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .formContainer {
+        padding: 10px;
+    }
+
+    .formHeader {
+        padding: 1rem;
+    }
+
+    .formHeader h2 {
+        font-size: 1.25rem;
+    }
+
+    .formContent {
+        padding: 1rem;
+    }
+
+    .formActions {
+        padding: 1rem;
+    }
+}
