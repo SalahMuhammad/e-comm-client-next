@@ -119,6 +119,7 @@
 				}
 			},
 			"form": {
+				"title": "Create Item",
 				"id": "ID",
 				"type": "Type",
 				"name": "Name",
@@ -175,11 +176,13 @@
 				"updated": "Updated",
 				"lastUpdated": "Last Updated",
 				"by": "by",
-				"barcodes": "Barcodes"
+				"barcodes": "Barcodes",
+				"outOfStock": "Out of Stock"
 			}
 		},
 		"repositories": {
 			"form": {
+				"title": "Create Repository",
 				"id": "ID",
 				"name": "Repository Name",
 				"submit": "Submit Repository",
@@ -242,6 +245,7 @@
 					"edit": "Edit"
 				},
 				"form": {
+					"title": "Register Damaged Item",
 					"id": "ID",
 					"item": "Item",
 					"repository": "Repository",
@@ -934,6 +938,68 @@
 			"showing": "Showing",
 			"of": "of",
 			"files": "files"
+		}
+	},
+	"barcodeScanner": {
+		"scan": "Scan",
+		"scanBarcode": "Scan Barcode",
+		"cameraError": "Camera Error",
+		"retry": "Retry",
+		"torch": "Torch",
+		"switch": "Switch",
+		"positionBarcode": "Position barcode within frame",
+		"noItemFound": "No item found with barcode",
+		"itemSelected": "Item selected",
+		"itemAdded": "Item added",
+		"scanError": "Error occurred during scan",
+		"mode": {
+			"select": "Scanner Mode",
+			"camera": "Camera",
+			"pos": "POS Scanner",
+			"recommendedMobile": "Recommended",
+			"recommendedDesktop": "Recommended"
+		},
+		"camera": {
+			"idle": "Camera paused due to inactivity",
+			"tapToResume": "Tap to resume scanning",
+			"timeout": "Auto-pause after {seconds}s of inactivity"
+		},
+		"pos": {
+			"waiting": "Waiting for scan...",
+			"scanning": "Scanning...",
+			"ready": "Point your POS scanner at a barcode",
+			"instructions": "Use your handheld or desktop barcode scanner",
+			"lastScan": "Last Scan:",
+			"instructionStep1": "Use your handheld or desktop barcode scanner",
+			"instructionStep2": "Point it at any barcode and scan",
+			"instructionStep3": "The barcode will be automatically detected"
+		},
+		"confirmation": {
+			"loading": "Loading...",
+			"error": "Error",
+			"confirmItem": "Confirm Item",
+			"searchingItem": "Searching for item...",
+			"itemNotFound": "Item Not Found",
+			"itemId": "Item ID",
+			"price": "Price",
+			"cancel": "Cancel",
+			"addToInvoice": "Add to Invoice",
+			"addToDamagedItems": "Add to Damaged Items",
+			"addItem": "Add Item",
+			"select": "Select",
+			"close": "Close"
+		},
+		"manager": {
+			"title": "Barcodes",
+			"addBarcode": "Add Barcode",
+			"noBarcodesYet": "No barcodes added yet. Click \"Add Barcode\" to get started.",
+			"placeholder": "Enter or scan barcode",
+			"removeBarcode": "Remove barcode"
+		},
+		"errorBoundary": {
+			"title": "Scanner Error",
+			"message": "The barcode scanner encountered an error. Please try again or use manual entry.",
+			"close": "Close"
 		}
 	}
 }
