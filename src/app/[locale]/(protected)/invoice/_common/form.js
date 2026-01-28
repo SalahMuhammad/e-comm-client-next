@@ -17,6 +17,10 @@ import { PhotoIcon } from '@heroicons/react/24/outline';
 import ImageView from '@/components/ImageView';
 import { NumberInput, QuantityInput, DateInput, RadioSwitch } from '@/components/inputs';
 import { getFormDefaultValue } from '@/utils/formDefaultValue';
+import BarcodeScanner from '@/components/BarcodeScanner';
+import BarcodeConfirmationModal from '@/components/BarcodeConfirmationModal';
+import { apiRequest } from '@/utils/api';
+import useBarcodeScanner from '@/components/custom hooks/useBarcodeScanner';
 
 const InvoiceForm = ({ type, initialData = null }) => {
     const [selectedItem, setSelectedItem] = useState(null);
@@ -31,12 +35,15 @@ const InvoiceForm = ({ type, initialData = null }) => {
     const [paymentType, setPaymentType] = useState(initialData?.owner ? 'client' : 'cash');
     const [addPaymentWithInvoice, setAddPaymentWithInvoice] = useState(false);
 
+
+
     // Check if this is edit mode or refund mode
     const isEditMode = initialData?.id || type.includes('refund');
     const handleGenericErrors = useGenericResponseHandler()
     const [state, formAction, isPending] = useActionState(createUpdateInv, { errors: {} });
     const tGlobal = useTranslations();
     const t = useTranslations('invoice.form');
+    const tScanner = useTranslations('barcodeScanner');
     const router = useRouter();
 
     // Calculate total amount reactively
@@ -87,6 +94,24 @@ const InvoiceForm = ({ type, initialData = null }) => {
             item.id === itemId ? { ...item, [field]: value } : item
         ));
     };
+
+    // Barcode scanner hook
+    const {
+        barcodeItem,
+        showBarcodeConfirm,
+        barcodeLoading,
+        barcodeError,
+        handleBarcodeScan,
+        handleBarcodeConfirm,
+        handleBarcodeCancel
+    } = useBarcodeScanner({
+        tScanner,
+        handleGenericErrors,
+        onConfirm: (item) => {
+            addItem(item);
+        }
+    });
+
 
     const itemsLoadOptions = (res, callback) => {
         const options = res?.results?.map((obj) => ({
@@ -295,16 +320,26 @@ const InvoiceForm = ({ type, initialData = null }) => {
                         }
                     </div>
 
-                    <SearchableDropdown
-                        url={'/api/items/?name='}
-                        label={t("addItem")}
-                        customLoadOptions={itemsLoadOptions}
-                        value={selectedItem}
-                        onChange={(item) => {
-                            setPreviewItem(item);
-                            setShowPreview(true);
-                        }}
-                    />
+                    <div className="flex gap-3 items-end items-start">
+                        <div className="flex-1">
+                            <SearchableDropdown
+                                url={'/api/items/?name='}
+                                label={t("addItem")}
+                                customLoadOptions={itemsLoadOptions}
+                                value={selectedItem}
+                                onChange={(item) => {
+                                    setPreviewItem(item);
+                                    setShowPreview(true);
+                                }}
+                            />
+                        </div>
+                        <BarcodeScanner
+                            onScan={handleBarcodeScan}
+                            onError={(error) => toast.error('Scanner error: ' + error.message)}
+                            disabled={isPending}
+                        />
+                    </div>
+
 
                     <ItemPreviewModal
                         item={previewItem}
@@ -553,6 +588,15 @@ const InvoiceForm = ({ type, initialData = null }) => {
                     setViewImageStartIndex(0);
                 }}
                 startIndex={viewImageStartIndex}
+            />
+
+            <BarcodeConfirmationModal
+                item={barcodeItem}
+                isOpen={showBarcodeConfirm}
+                onClose={handleBarcodeCancel}
+                onConfirm={handleBarcodeConfirm}
+                isLoading={barcodeLoading}
+                error={barcodeError}
             />
         </div>
     );
