@@ -140,7 +140,7 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
     return (
         <div className={`
             w-full max-w-sm bg-white border border-gray-200 rounded-sm shadow-md dark:bg-gray-800 dark:border-gray-700
-            transform transition-all duration-300 ease-in-out relative
+            transform transition-all duration-300 ease-in-out relative group
             ${isDeleting ? 'opacity-0 scale-0 h-0 p-0 m-0 overflow-hidden' : ''}
         `}
             onMouseEnter={() => setIsHovered(true)}
@@ -149,15 +149,15 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
 
 
             {/* menu */}
-            <div className={`flex justify-end absolute z-100 left-2 top-1 transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}>
-                <button id={`dropdownButton${id}`} data-dropdown-toggle={`dropdown${id}`} className="transition-all duration-300 inline-block bg-gray-500 text-gray-800 bg-gray-300 opacity-40 hover:opacity-100 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
+            <div className={`flex justify-end absolute z-10 left-2 top-1 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100`}>
+                <button id={`dropdownButton${id}`} data-dropdown-toggle={`dropdown${id}`} className="transition-all duration-300 inline-block bg-white/80 text-gray-700 hover:bg-white dark:bg-gray-700/80 dark:text-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-600 rounded-lg text-sm p-1.5 shadow-sm hover:shadow-md" type="button">
                     <span className="sr-only">Open dropdown</span>
                     <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
                         <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
                     </svg>
                 </button>
 
-                <div id={`dropdown${id}`} className="z-100 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                <div id={`dropdown${id}`} className="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
                     <ul className="py-2" aria-labelledby={`dropdownButton${id}`}>
                         <li className="group">
                             <Link
@@ -283,8 +283,10 @@ function CreateItemButton({ onItemCreated }) {
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
-                <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto z-50 p-6">
-                    <Dialog.Title className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto z-50 p-6 pt-0">
+
+                    {/* <Dialog.Title className="text-2xl font-bold mb-4 text-gray-900 dark:text-white"> */}
+                    <Dialog.Title className="sr-only">
                         {t("items.card.createTitle")}
                     </Dialog.Title>
                     <Dialog.Description className="sr-only">
