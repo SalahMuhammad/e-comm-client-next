@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
-import SearchableDropdown from "@/components/SearchableDropdown";
+import { DynamicOptionsInput } from "@/components/inputs/index"
 
 
 function RefilledForm({ initialData }) {
@@ -73,7 +73,7 @@ function RefilledForm({ initialData }) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             name={'refilled_item'}
                             url="api/refillable-sys/item-transformer/?s="
                             customLoadOptions={handleItemTransformer}
@@ -95,7 +95,7 @@ function RefilledForm({ initialData }) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             name={'used_item'}
                             url="api/refillable-sys/ore-item/?s="
                             customLoadOptions={handleLoadOre}
@@ -118,7 +118,7 @@ function RefilledForm({ initialData }) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             url={'/api/repositories/?s='}
                             name={`repository`}
                             defaultValue={initialData?.id ? { value: initialData.repository, label: initialData.repository_name } : { value: 10000, label: 'الرئيسي' }}
@@ -128,7 +128,7 @@ function RefilledForm({ initialData }) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             url={'/api/employees/?s='}
                             customLoadOptions={handleLoadEmployees}
                             name={`employee`}

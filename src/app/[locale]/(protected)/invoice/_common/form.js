@@ -4,7 +4,7 @@ import { useActionState, useEffect, useState, useMemo } from 'react';
 import { createUpdateInv, getDefaultRepository } from './actions';
 import styles from './form.module.css';
 import { addDays, formatDateManual } from '@/utils/dateFormatter';
-import SearchableDropdown from '@/components/SearchableDropdown';
+import { DynamicOptionsInput } from "@/components/inputs/index"
 import { useTranslations } from 'next-intl';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import FieldError from '@/components/FieldError';
@@ -213,7 +213,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                     {paymentType === 'client' && (
                         <>
                             <div className={`mt-8 ${styles.formGroup}`}>
-                                <SearchableDropdown
+                                <DynamicOptionsInput
                                     url={'/api/buyer-supplier-party/?s='}
                                     label={t('owner')}
                                     name="owner"
@@ -275,7 +275,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
 
                             {/* Payment Account - full width */}
                             <div className={paymentType === 'cash' ? 'grid grid-cols-1 md:grid-cols-2 gap-4 mt-8' : 'mt-4'}>
-                                <SearchableDropdown
+                                <DynamicOptionsInput
                                     url={'/api/finance/account-vault/?is_active=true&account_name='}
                                     label={tGlobal('finance.fields.paymentMethod')}
                                     name="payment_account"
@@ -322,7 +322,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
 
                     <div className="flex gap-3 items-end items-start">
                         <div className="flex-1">
-                            <SearchableDropdown
+                            <DynamicOptionsInput
                                 url={'/api/items/?name='}
                                 label={t("addItem")}
                                 customLoadOptions={itemsLoadOptions}
@@ -339,7 +339,6 @@ const InvoiceForm = ({ type, initialData = null }) => {
                             disabled={isPending}
                         />
                     </div>
-
 
                     <ItemPreviewModal
                         item={previewItem}
@@ -511,7 +510,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                                         </div>
                                         <div className="space-y-2">
                                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">{t("repository")}</label>
-                                            <SearchableDropdown
+                                            <DynamicOptionsInput
                                                 url={'/api/repositories/?s='}
                                                 name={`items[${index}][repository]`}
                                                 value={{ value: item.repository, label: item.repository_name }}

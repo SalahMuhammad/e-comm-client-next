@@ -1,5 +1,5 @@
 "use client";
-import SearchableDropdown from "@/components/SearchableDropdown"
+import { DynamicOptionsInput } from "@/components/inputs/index"
 import { createUpdateDamagedItem } from "../actions"
 import { useEffect, useRef, useState } from "react";
 import { TextInput, NumberInput, DateInput } from "@/components/inputs/index"
@@ -127,17 +127,16 @@ function DamagedItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
                         <NumberInput placeholder={t("id")} id="id" value={state?.id || obj?.id} borderColor="border-green-500 dark:border-green-400" labelColor="text-green-600 dark:text-green-400" focusColor="" focusLabelColor="" name="id" readOnly />
                     )}
 
-                    {/* Item selection with barcode scanner */}
                     <div className="flex gap-3 items-start">
                         <div className="flex-1">
-                            <SearchableDropdown
+                            <DynamicOptionsInput
                                 url={'/api/items/?name='}
                                 label={t('item')}
                                 name="item"
                                 value={selectedItem}
                                 onChange={handleItemSelect}
                                 customLoadOptions={itemsLoadOptions}
-                                defaultValue={(state?.item || obj?.item) ? { value: state?.item || obj.item, label: obj?.item_name || state?.item_name || obj?.item } : {}}
+                                defaultValue={(state?.item || obj?.item) ? { value: state?.item || obj.item, label: obj?.item_name || state?.item_name || obj?.item } : null }
                             />
                         </div>
                         <BarcodeScanner
@@ -148,11 +147,11 @@ function DamagedItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
                     </div>
 
                     <div className="mt-6">
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             url={'/api/repositories/?s='}
                             label={t('repository')}
                             name="repository"
-                            defaultValue={(state?.repository || obj?.repository) ? { value: state?.repository || obj.repository, label: obj?.repository_name || state?.repository_name || obj?.repository } : {}}
+                            defaultValue={(state?.repository || obj?.repository) ? { value: state?.repository || obj.repository, label: obj?.repository_name || state?.repository_name || obj?.repository } : null}
                         />
                     </div>
 

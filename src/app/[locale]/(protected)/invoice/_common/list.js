@@ -1,6 +1,6 @@
 import { getInvs } from "./actions";
 import PaginationControls from '@/components/PaginationControls';
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -87,7 +87,7 @@ ${dueDateBefore ? `&due_date_before=${dueDateBefore}` : ''}
 
     return (
         <>
-            <QueryParamSetterInput
+            <URLQueryParameterSetter
                 paramOptions={paramOptions}
             />
 

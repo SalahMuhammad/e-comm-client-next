@@ -3,11 +3,11 @@ import AsyncSelect from 'react-select/async';
 import { useState, useId, useEffect } from 'react';
 import { apiRequest } from '@/utils/api';
 import { useTranslations } from 'next-intl';
-import { PulsingDots } from './loaders';
-import useGenericResponseHandler from './custom hooks/useGenericResponseHandler';
+import { PulsingDots } from '@/components/loaders';
+import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 
 
-const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
+const DynamicOptionsInput = ({ url, label, customLoadOptions, ...props }) => {
   const handleResponse = useGenericResponseHandler()
   const t = useTranslations("inputs.searchableDropdown");
   const selectId = useId();
@@ -160,4 +160,4 @@ const SearchableDropdown = ({ url, label, customLoadOptions, ...props }) => {
   );
 };
 
-export default SearchableDropdown;
+export default DynamicOptionsInput;

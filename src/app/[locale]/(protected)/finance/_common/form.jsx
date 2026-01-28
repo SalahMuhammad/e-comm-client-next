@@ -12,8 +12,8 @@ import useGenericResponseHandler from "@/components/custom hooks/useGenericRespo
 import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
-import SearchableDropdown from "@/components/SearchableDropdown";
-import StaticSelect from "@/components/ReactStaticSelect";
+import { DynamicOptionsInput } from "@/components/inputs/index"
+import { StaticOptionsInput } from "@/components/inputs/index"; 
 
 
 function MyForm({ initialData, type }) {
@@ -173,7 +173,7 @@ function MyForm({ initialData, type }) {
                     </div> */}
 
                     <div className={`mt-8 ${styles.formGroup}`}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             url={'/api/buyer-supplier-party/?s='}
                             label={t('finance.fields.owner')}
                             name="owner"
@@ -190,7 +190,7 @@ function MyForm({ initialData, type }) {
                     {/* Sales Invoice Dropdown - Filtered by Owner */}
                     {(type === 'payment' || type === 'payments' || type === 'reverse-payment') && (
                         <div className={`mt-8 ${styles.formGroup}`}>
-                            <SearchableDropdown
+                            <DynamicOptionsInput
                                 url={selectedOwner ? `/api/sales/?owner=${selectedOwner}&status=3,4&no=` : '/api/sales/?no='}
                                 label={t('finance.fields.relatedInvoice')}
                                 customLoadOptions={handleSaleTransformer}
@@ -204,7 +204,7 @@ function MyForm({ initialData, type }) {
                     )}
 
                     <div className={`mt-8 ${styles.formGroup}`}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             url={'/api/finance/account-vault/?is_active=true&account_name='}
                             label={t('finance.fields.paymentMethod')}
                             customLoadOptions={handleAccountTransformer}
@@ -216,7 +216,7 @@ function MyForm({ initialData, type }) {
 
                     {/* Status */}
                     <div className={styles.formGroup + ' z-20'}>
-                        <StaticSelect
+                        <StaticOptionsInput
                             options={[
                                 { value: '1', label: t('finance.statusOptions.pending') },
                                 { value: '2', label: t('finance.statusOptions.confirmed') },

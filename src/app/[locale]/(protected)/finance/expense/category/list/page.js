@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getCategoryList } from "../actions";
 import PaginationControls from '@/components/PaginationControls';
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import ErrorLoading from "@/components/ErrorLoading";
@@ -27,7 +27,7 @@ export default function Page() {
 
     return (
         <>
-            <QueryParamSetterInput
+            <URLQueryParameterSetter
                 paramOptions={[
                     { label: t('inputs.search.name'), value: 'name' },
                     { label: t('finance.expense.category.description'), value: 'description' },

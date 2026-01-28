@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
-import SearchableDropdown from "@/components/SearchableDropdown";
+import { DynamicOptionsInput } from "@/components/inputs/index"
 
 
 function RefilledForm({ initialData }) {
@@ -73,7 +73,7 @@ function RefilledForm({ initialData }) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             label={t("form.owner")}
                             url={'/api/buyer-supplier-party/?s='}
                             name={`owner`}
@@ -84,7 +84,7 @@ function RefilledForm({ initialData }) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             label={t("form.item")}
                             name={'item'}
                             url="api/refillable-sys/item-transformer/?s="
@@ -107,7 +107,7 @@ function RefilledForm({ initialData }) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             label={t("form.repository")}
                             url={'/api/repositories/?s='}
                             name={`repository`}

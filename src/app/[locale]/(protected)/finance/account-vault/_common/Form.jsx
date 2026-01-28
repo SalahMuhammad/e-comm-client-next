@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import FieldError from "@/components/FieldError";
-import SearchableDropdown from "@/components/SearchableDropdown";
+import { DynamicOptionsInput } from "@/components/inputs/index"
 
 
 function AccountVaultForm({ type, initialData, onSuccess, onCancel, isModal = false }) {
@@ -101,7 +101,7 @@ function AccountVaultForm({ type, initialData, onSuccess, onCancel, isModal = fa
                         <>
                             {/* Account Type - Required */}
                             <div className={`mt-8 ${styles.formGroup}`}>
-                                <SearchableDropdown
+                                <DynamicOptionsInput
                                     url={'/api/finance/account-vault/type/?name='}
                                     label={t('accountVault.fields.accountType')}
                                     customLoadOptions={handleAccountTypeTransformer}

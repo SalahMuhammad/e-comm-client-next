@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTranslations } from 'use-intl'
 
-function SearchInput({ paramOptions, placeholder, allText }) {
+function URLQueryParameterSetter({ paramOptions, placeholder, allText }) {
     const router = useRouter()
     const searchParams = useSearchParams()
     const t = useTranslations()
@@ -270,4 +270,4 @@ function SearchInput({ paramOptions, placeholder, allText }) {
     )
 }
 
-export default SearchInput
+export default URLQueryParameterSetter

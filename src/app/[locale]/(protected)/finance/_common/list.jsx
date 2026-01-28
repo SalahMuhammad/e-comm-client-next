@@ -1,5 +1,5 @@
 import { getList } from "./actions";
-import QueryParamSetterInput from '@/components/QueryParamSetterInput';
+import { URLQueryParameterSetter } from '@/components/inputs/index';
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -29,7 +29,7 @@ async function List({ searchParams, type }) {
 
     return (
         <>
-            <QueryParamSetterInput
+            <URLQueryParameterSetter
                 paramName={searchParamName}
                 paramOptions={[
                     { label: t('inputs.search.ownerName'), value: 's' },

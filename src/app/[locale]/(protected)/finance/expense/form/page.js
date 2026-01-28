@@ -12,8 +12,8 @@ import useGenericResponseHandler from "@/components/custom hooks/useGenericRespo
 import styles from '@/app/[locale]/(protected)/invoice/_common/form.module.css'
 import { formatDateManual } from "@/utils/dateFormatter";
 import FieldError from "@/components/FieldError";
-import SearchableDropdown from "@/components/SearchableDropdown";
-import StaticSelect from "@/components/ReactStaticSelect";
+import { DynamicOptionsInput } from "@/components/inputs/index"
+import { StaticOptionsInput } from "@/components/inputs/index";
 import { getFormDefaultValue } from "@/utils/formDefaultValue";
 
 
@@ -114,7 +114,7 @@ function ExpenseForm({ initialData }) {
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             url={'/api/finance/account-vault/?is_active=true&account_name='}
                             label={t('finance.fields.toVault')}
                             customLoadOptions={handleAccountTransformer}
@@ -126,7 +126,7 @@ function ExpenseForm({ initialData }) {
                     </div>
 
                     <div className={`mt-8 ${styles.formGroup}`}>
-                        <SearchableDropdown
+                        <DynamicOptionsInput
                             url={'/api/finance/expenses/category/list/?name='}
                             label={t('finance.fields.category')}
                             name="category"
@@ -150,7 +150,7 @@ function ExpenseForm({ initialData }) {
                         </div>
 
                         <div className={`${styles.formGroup} z-20`}>
-                            <StaticSelect
+                            <StaticOptionsInput
                                 options={statusOptions}
                                 name={'status'}
                                 label={t('finance.fields.status')}
