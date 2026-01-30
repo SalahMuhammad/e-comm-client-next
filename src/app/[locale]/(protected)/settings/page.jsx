@@ -5,6 +5,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
+// GET /api/services/create-db-backup/ 
+// GET /api/services/restore-db-backup/
+// POST /api/services/create-db-backup/ 
+    // name
+    // file
 
 function page() {
     const [isLoading, setIsLoading] = useState(false);

@@ -2,10 +2,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import "./[locale]/globals.css";
-import {getLocale} from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
 import 'flowbite'
 import { getServerCookie } from "@/utils/serverCookieHandelr";
-import companyDetails from "@/constants/company";
+import { getCompanyDetails } from "@/app/actions/companyDetails";
+import CompanyProvider from "@/app/providers/company-provider";
+import { API_BASE_URL } from "@/config/api";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,20 +42,46 @@ const ibmPlexArabic = localFont({
   display: "swap",
 });
 
-export const metadata = {
-  title: {
-    template: `%s | ${companyDetails.name}`,
-  },
-  icons: {
-    icon: companyDetails.logo,
-  },
-};
+export async function generateMetadata() {
+  try {
+    const res = await getCompanyDetails();
+    const companyDetails = res?.ok ? res.data : null;
+
+    // Prepend API_BASE_URL to logo if it's a relative path
+    let logoUrl = companyDetails?.logo || "/favicon.ico";
+    if (logoUrl.startsWith('/') && !logoUrl.startsWith('//')) {
+      logoUrl = `${API_BASE_URL}${logoUrl}`;
+    }
+
+    return {
+      title: {
+        template: `%s | ${companyDetails?.name || "Company"}`,
+        default: companyDetails?.name || "Company",
+      },
+      icons: {
+        icon: logoUrl,
+      },
+    };
+  } catch (error) {
+    console.error("Failed to load company metadata:", error);
+    return {
+      title: {
+        template: "%s | Company",
+        default: "Company",
+      },
+      icons: {
+        icon: "/favicon.ico",
+      },
+    };
+  }
+}
+
 
 function getDirection(locale) {
   // Force Arabic to RTL
   if (locale === "ar") {
     return "rtl";
-  }  
+  }
   // Default for other languages
   return "ltr";
 }
@@ -72,14 +101,14 @@ export default async function RootLayout({ children, params }) {
     if (PreferredTheme == "dark") {
       themeClass = "dark"
     }
-  } else if(theme == "dark") {
+  } else if (theme == "dark") {
     themeClass = "dark"
   }
 
   return (
-    <html 
+    <html
       lang={lang}
-      // dir={getDirection(lang)} 
+      // dir={getDirection(lang)}
       className={`${themeClass}`}
     >
       <head>
@@ -87,7 +116,9 @@ export default async function RootLayout({ children, params }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexArabic.variable} antialiased`}>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <CompanyProvider>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </CompanyProvider>
       </body>
     </html>
   );

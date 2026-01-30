@@ -1,11 +1,12 @@
 'use client'; // Mark as a Client Component
 
-import companyDetails from '@/constants/company';
+import { useCompany } from '@/app/providers/company-provider.client';
 import { createContext, useState, useContext } from 'react';
 
 const titleContext = createContext(undefined);
 
 export function ThemeProvider({ children }) {
+    const companyDetails = useCompany();
     const [title, setTitle] = useState(companyDetails.name);
 
     const value = { title, setTitle };

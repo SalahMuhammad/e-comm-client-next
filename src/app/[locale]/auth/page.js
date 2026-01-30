@@ -7,20 +7,21 @@ import Form from 'next/form'
 import { useTranslations } from "next-intl";
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from '@/components/LanguageToggle';
-import {PulsingDots} from '@/components/loaders';
+import { PulsingDots } from '@/components/loaders';
 import { redirect, useSearchParams } from 'next/navigation';
-import companyDetails from '@/constants/company';
+import { useCompany } from '@/app/providers/company-provider.client';
 
 export default function Page() {
   const [state, formAction, isPending] = useActionState(Login, { errors: {} });
+  const companyDetails = useCompany();
   const searchParams = useSearchParams()
   const t = useTranslations("auth")
 
   if (state.status === 200) {
     if (searchParams.get('nexturl'))
-        redirect(searchParams.get('nexturl'), 'replace')
+      redirect(searchParams.get('nexturl'), 'replace')
     else
-        redirect('/dashboard')
+      redirect('/dashboard')
   }
 
   function handleErrors(data) {
@@ -49,82 +50,82 @@ export default function Page() {
   }
 
   return (
-    <>  
-    <div className="login-container">
+    <>
+      <div className="login-container">
 
-      <div className="shape shape-1"></div>
-      <div className="shape shape-2"></div>
-      <div className="shape shape-3"></div>
+        <div className="shape shape-1"></div>
+        <div className="shape shape-2"></div>
+        <div className="shape shape-3"></div>
 
-      <div className="login-box">
-        <div className="login-logo">
-          <div className="logo-inner">
-            <img
-              src={companyDetails.logo}
-              alt="Logo"
-              width={100}
-              height={100}
-              className="logo-image"
-            />
+        <div className="login-box">
+          <div className="login-logo">
+            <div className="logo-inner">
+              <img
+                src={companyDetails.logo}
+                alt="Logo"
+                width={100}
+                height={100}
+                className="logo-image"
+              />
+            </div>
           </div>
-        </div>
 
-        <h1>{t("welcome")}</h1>
+          <h1>{t("welcome")}</h1>
 
-        <Form action={formAction}>
-          <div className="input-group">
-            <span className="input-icon">
+          <Form action={formAction}>
+            <div className="input-group">
+              <span className="input-icon">
                 <UserIcon className="h-5 w-5 text-gray-500" />
-            </span>
-            <input
-              type="text"
-              name="username"
-              placeholder={t("username")}
-              required
-              className="input-animate LoginUsername"
-              defaultValue={state?.username || ''} 
-            />
-            {state?.errors?.username && (
-              <span className="error-message">{t('errors.missing.username')}</span>
-            )}
-          </div>
+              </span>
+              <input
+                type="text"
+                name="username"
+                placeholder={t("username")}
+                required
+                className="input-animate LoginUsername"
+                defaultValue={state?.username || ''}
+              />
+              {state?.errors?.username && (
+                <span className="error-message">{t('errors.missing.username')}</span>
+              )}
+            </div>
 
-          <div className="input-group">
-            <span className="input-icon">
+            <div className="input-group">
+              <span className="input-icon">
                 <LockClosedIcon className="h-5 w-5 text-gray-500" />
-            </span>
-            <input
-              type="password"
-              name="password"
-              placeholder={t("password")}
-              required
-              className="input-animate LoginPassword"
-              defaultValue={state?.password || ''}
-            />
-            {state?.errors?.password && (
-              <span className="error-message">{t('errors.missing.password')}</span>
+              </span>
+              <input
+                type="password"
+                name="password"
+                placeholder={t("password")}
+                required
+                className="input-animate LoginPassword"
+                defaultValue={state?.password || ''}
+              />
+              {state?.errors?.password && (
+                <span className="error-message">{t('errors.missing.password')}</span>
+              )}
+            </div>
+
+            {!state?.ok && (
+              <div className="error-message general">{handleErrors(state)}</div>
             )}
-          </div>
 
-          {! state?.ok && (
-            <div className="error-message general">{handleErrors(state)}</div>
-          )}
-
-          <button
-            type="submit"
-            className={`submit-button ${isPending ? 'loading' : ''}`}
-            disabled={isPending}
-          >
-            <span>{isPending ? t("loading") : t("login")} {isPending && <PulsingDots className='loader' color='bg-gray-200' size='sm' /> }</span>
-          </button>
-        </Form>
+            <button
+              type="submit"
+              className={`submit-button ${isPending ? 'loading' : ''}`}
+              disabled={isPending}
+            >
+              <span>{isPending ? t("loading") : t("login")} {isPending && <PulsingDots className='loader' color='bg-gray-200' size='sm' />}</span>
+            </button>
+          </Form>
+        </div>
       </div>
-    </div>
 
-    <div id="control">
-      <ThemeToggle />
-      <LanguageToggle />
-    </div>
+      <div id="control">
+        <ThemeToggle />
+        <LanguageToggle />
+      </div>
     </>
   );
 }

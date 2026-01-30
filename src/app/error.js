@@ -2,10 +2,12 @@
 
 import { useTranslations } from 'next-intl';
 import Head from 'next/head';
-import companyDetails from '@/constants/company';
+import { useCompany } from '@/app/providers/company-provider.client';
+
 
 export default function Error({ error, reset }) {
     const t = useTranslations('Error');
+    const companyDetails = useCompany();
 
     // Log error without using useEffect state changes
     if (typeof window !== 'undefined') {

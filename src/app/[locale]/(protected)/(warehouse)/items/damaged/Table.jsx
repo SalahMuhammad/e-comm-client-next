@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { FillText } from "@/components/loaders";
-import companyDetails from "@/constants/company";
+import { useCompany } from "@/app/providers/company-provider.client";
 import { TrashIcon, PencilIcon } from '@heroicons/react/24/outline';
 import { toast } from "sonner";
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import { deleteDamagedItem } from "./actions";
 import TableNote from "@/components/TableNote";
+
 
 function handleDelete(t, id, onDelete) {
     const handleGenericErrors = useGenericResponseHandler(t)
@@ -127,6 +128,7 @@ function TableRow({ id, item_id, owner_name, repository_name, item_name, quantit
 // Table View Component
 export function DamagedItemsTable({ items: rawItems, setItems }) {
     const t = useTranslations("warehouse");
+    const companyDetails = useCompany();
     const [isClient, setIsClient] = useState(false);
     const items = rawItems;
     const [deletingId, setDeletingId] = useState(null);

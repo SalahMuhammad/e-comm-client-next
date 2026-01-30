@@ -11,10 +11,11 @@ import { useEffect, useState, useRef } from 'react';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 import { getMenuItems } from '@/constants/navigation';
-import companyDetails from '@/constants/company';
+import { useCompany } from '@/app/providers/company-provider.client';
 
 export default function Sidebar({ username }) {
     const t = useTranslations('navLinks');
+    const companyDetails = useCompany();
     const sidebarRef = useRef(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 

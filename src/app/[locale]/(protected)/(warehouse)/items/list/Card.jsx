@@ -10,9 +10,10 @@ import { toast } from "sonner";
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import Gallery from "./Gallery";
 import ImageView from "@/components/ImageView";
-import companyDetails from "@/constants/company";
+import { useCompany } from "@/app/providers/company-provider.client";
 import * as Dialog from '@radix-ui/react-dialog';
 import ItemsForm from "../form/page";
+
 
 function handleDelete(t, id, onDelete, funs) {
     const handleGenericErrors = useGenericResponseHandler(t)
@@ -443,6 +444,7 @@ export function GalleryView({ items, setItems, viewImages }) {
 // Main Component with View Switch
 export function ItemsView({ items: rawItems = [] }) {
     const { viewMode, setViewMode, isClient } = useViewMode();
+    const companyDetails = useCompany();
     const [items, setItems] = useState(rawItems);
     const [images, setImages] = useState([])
     const [startIndex, setStartIndex] = useState(0)
