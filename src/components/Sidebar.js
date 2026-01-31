@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import '@/styles/sidebar.css';
 import UserAvatar from './UserAvatar';
 import { WrenchScrewdriverIcon, Cog6ToothIcon, ArrowRightOnRectangleIcon, PlusIcon } from '@heroicons/react/24/outline';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 // import logout from './logout';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from './LanguageToggle';
@@ -15,12 +15,44 @@ import companyDetails from '@/constants/company';
 
 export default function Sidebar({ username }) {
     const t = useTranslations('navLinks');
-
+    const sidebarRef = useRef(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         // Initialize Flowbite when component mounts
         initFlowbite();
     }, []);
+
+    // Monitor sidebar state changes
+    useEffect(() => {
+        const sidebar = sidebarRef.current;
+        if (!sidebar) return;
+
+        const checkSidebarState = () => {
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            setIsSidebarOpen(isOpen);
+        };
+
+        // Check initial state
+        checkSidebarState();
+
+        // Create a MutationObserver to watch for class changes
+        const observer = new MutationObserver(checkSidebarState);
+        observer.observe(sidebar, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    const closeSidebar = () => {
+        const sidebar = sidebarRef.current;
+        if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
+            sidebar.classList.add('-translate-x-full');
+            setIsSidebarOpen(false);
+        }
+    };
 
     const [openSection, setOpenSection] = useState(null);
     const menuItems = getMenuItems(t);
@@ -109,11 +141,20 @@ export default function Sidebar({ username }) {
                 </div>
             </nav>
 
-            <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white borderR border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+            {/* Backdrop overlay for mobile - only visible when sidebar is open */}
+            {isSidebarOpen && (
+                <div
+                    className="fixed inset-0 bg-black/50 z-30 sm:hidden"
+                    onClick={closeSidebar}
+                    aria-hidden="true"
+                />
+            )}
+
+            <aside ref={sidebarRef} id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white borderR border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
                 <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800" id='SidebarDiv'>
                     <ul className="space-y-2 font-medium">
                         <li>
-                            <Link href="/dashboard" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <Link href="/dashboard" onClick={closeSidebar} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                                     <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                                     <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
@@ -144,15 +185,16 @@ export default function Sidebar({ username }) {
                                 >
                                     {obj.links.map((link, j) => (
                                         <li key={j} className="flex items-center relative group/item">
-                                            <Link href={link.path} className={`flex items-center w-full p-2 text-gray-900 transition-all duration-200 rounded-lg pl-3 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${link.addPath ? 'group-hover/item:pr-10' : ''}`}>
+                                            <Link href={link.path} onClick={closeSidebar} className={`flex items-center w-full p-2 text-gray-900 transition-all duration-200 rounded-lg pl-3 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 ${link.addPath ? 'group-hover/item:pr-10' : ''}`}>
                                                 {link.icon}
                                                 <span className='ms-3 flex-1 text-ellipsis overflow-hidden whitespace-nowrap'>{link.label}</span>
                                             </Link>
                                             {link.addPath && (
                                                 <Link
                                                     href={link.addPath}
+                                                    onClick={closeSidebar}
                                                     title={t('quickAdd')}
-                                                    className="absolute right-2 p-1.5 text-gray-500 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-md shadow-sm border border-gray-100 dark:border-gray-700 opacity-0 group-hover/item:opacity-100 hover:bg-gray-50 hover:text-blue-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-blue-400 transition-all duration-200 z-10"
+                                                    className="absolute right-2 p-1.5 text-gray-500 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-md shadow-sm border border-gray-100 dark:border-gray-700 opacity-100 sm:opacity-0 sm:group-hover/item:opacity-100 hover:bg-gray-50 hover:text-blue-600 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-blue-400 transition-all duration-200 z-10"
                                                 >
                                                     <PlusIcon className="w-4 h-4" />
                                                 </Link>
@@ -207,13 +249,13 @@ export default function Sidebar({ username }) {
                             </a>
                         </li> */}
                         <li>
-                            <Link href={'/reports'} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <Link href={'/reports'} onClick={closeSidebar} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <WrenchScrewdriverIcon className="w-4 h-4" />
                                 <span className="flex-1 ms-3 whitespace-nowrap">{t("reports.headLabel")}</span>
                             </Link>
                         </li>
                         <li>
-                            <Link href={'/settings'} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            <Link href={'/settings'} onClick={closeSidebar} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <WrenchScrewdriverIcon className="w-4 h-4" />
                                 <span className="flex-1 ms-3 whitespace-nowrap">{t("settings")}</span>
                             </Link>

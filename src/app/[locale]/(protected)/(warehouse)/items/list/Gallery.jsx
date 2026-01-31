@@ -60,7 +60,7 @@ function Gallery({ className = "w-full max-w-4xl mx-auto", images, autoplay = fa
             <div className={`relative ${className}`}>
                 {/* Carousel Container */}
                 <div className="relative h-64 md:h-96 lg:h-[12rem] overflow-hidden rounded-sm bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 shadow-2xl">
-                    <div className="absolute top-2 right-3 z-10 px-3 py-1 rounded-sm bg-black/50 dark:bg-white/20 backdrop-blur-sm text-white text-sm font-medium">
+                    <div className="absolute top-2 right-3 z-[10] px-3 py-1 rounded-sm bg-black/50 dark:bg-white/20 backdrop-blur-sm text-white text-sm font-medium">
                         {currentIndex + 1} / {images.length}
                     </div>
                     {/* Images */}

@@ -31,8 +31,10 @@ function CreateRepositoryButton({ onRepositoryCreated }) {
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
-                <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto z-50 p-6">
-                    <Dialog.Title className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto z-50 p-6 pt-0">
+           
+                    {/* <Dialog.Title className="text-2xl font-bold mb-4 text-gray-900 dark:text-white"> */}
+                    <Dialog.Title className="sr-only">
                         {t("table.createTitle")}
                     </Dialog.Title>
                     <Dialog.Description className="sr-only">

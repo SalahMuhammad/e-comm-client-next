@@ -3,6 +3,20 @@
 import { getTranslations } from "next-intl/server";
 import { getItem } from "../../actions";
 import { getItemFluctuationDuringlast60Dayes } from "../actions";
+import LocalizedDate from "@/components/LocalizedDate";
+import {
+    ArchiveBoxIcon,
+    CurrencyDollarIcon,
+    InformationCircleIcon,
+    ClockIcon,
+    UserIcon,
+    CalendarIcon,
+    ArrowPathIcon,
+    QrCodeIcon,
+    TagIcon,
+    GlobeAltIcon,
+    MapPinIcon
+} from '@heroicons/react/24/outline';
 import './itemView.modul.css'
 
 async function ItemView({ id }) {
@@ -122,34 +136,40 @@ async function ItemView({ id }) {
 
                     {/* Main Content */}
                     <div className="p-4 sm:p-6 lg:p-8">
-                        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
+                        <div className={`grid grid-cols-1 ${item?.barcodes?.length > 0 ? 'xl:grid-cols-3' : 'xl:grid-cols-2'} gap-6 lg:gap-8`}>
                             {/* Left Column */}
                             <div className="space-y-6">
                                 {/* Stock Information */}
                                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-blue-100/50 dark:border-gray-600/30">
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className="p-2 bg-blue-500/10 rounded-lg">
-                                            <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                            </svg>
+                                            <ArchiveBoxIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                                         </div>
                                         <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("information")}</h2>
                                     </div>
 
                                     <div className="space-y-3">
-                                        {item.stock.map((stockItem, index) => (
-                                            <div key={stockItem.id} className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-blue-100/30 dark:border-gray-600/30">
-                                                <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
-                                                    {stockItem.repository_name}
-                                                </span>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                                                        {stockItem.quantity}
-                                                    </span>
-                                                    <span className="text-gray-500 dark:text-gray-400 text-sm">{t("units")}</span>
-                                                </div>
+                                        {(!item.stock || item.stock.length === 0) ? (
+                                            <div className="flex items-center justify-center p-6 bg-red-50 dark:bg-red-900/20 rounded-lg border-2 border-red-200 dark:border-red-800">
+                                                <p className="text-red-600 dark:text-red-400 font-semibold text-lg">
+                                                    {t("outOfStock")}
+                                                </p>
                                             </div>
-                                        ))}
+                                        ) : (
+                                            item.stock.map((stockItem, index) => (
+                                                <div key={stockItem.id} className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-blue-100/30 dark:border-gray-600/30">
+                                                    <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
+                                                        {stockItem.repository_name}
+                                                    </span>
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                                                            {stockItem.quantity}
+                                                        </span>
+                                                        <span className="text-gray-500 dark:text-gray-400 text-sm">{t("units")}</span>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        )}
                                     </div>
                                 </div>
 
@@ -157,19 +177,17 @@ async function ItemView({ id }) {
                                 <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-emerald-100/50 dark:border-gray-600/30">
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className="p-2 bg-emerald-500/10 rounded-lg">
-                                            <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                                            </svg>
+                                            <CurrencyDollarIcon className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                                         </div>
                                         <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("pricing")}</h2>
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-3">
                                         {[
-                                            { label:  `${t('price')} 1`, value: item.price1 },
-                                            { label:  `${t('price')} 2`, value: item.price2 },
-                                            { label:  `${t('price')} 3`, value: item.price3 },
-                                            { label:  `${t('price')} 4`, value: item.price4 }
+                                            { label: `${t('price')} 1`, value: item.price1 },
+                                            { label: `${t('price')} 2`, value: item.price2 },
+                                            { label: `${t('price')} 3`, value: item.price3 },
+                                            { label: `${t('price')} 4`, value: item.price4 }
                                         ].map((price, index) => (
                                             <div key={index} className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-emerald-100/30 dark:border-gray-600/30">
                                                 <div className="text-gray-600 dark:text-gray-400 text-xs font-medium mb-1">
@@ -190,31 +208,51 @@ async function ItemView({ id }) {
                                 <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-purple-100/50 dark:border-gray-600/30">
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className="p-2 bg-purple-500/10 rounded-lg">
-                                            <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
+                                            <InformationCircleIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                                         </div>
                                         <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("details")}</h2>
                                     </div>
 
                                     <div className="space-y-3">
-                                        {[
-                                            { label: t("type"), value: item.type_name, icon: '🏷️' },
-                                            { label: t('origin'), value: item.origin, icon: '🌍' },
-                                            { label: t('place'), value: item.place, icon: '📍' }
-                                        ].map((detail, index) => (
-                                            <div key={index} className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-purple-100/30 dark:border-gray-600/30">
+                                        {item.type_name && (
+                                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-purple-100/30 dark:border-gray-600/30">
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-lg">{detail.icon}</span>
+                                                    <TagIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
                                                     <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
-                                                        {detail.label}:
+                                                        {t("type")}:
                                                     </span>
                                                 </div>
                                                 <span className="font-bold text-purple-600 dark:text-purple-400 text-sm sm:text-base pl-8 sm:pl-0">
-                                                    {detail.value}
+                                                    {item.type_name}
                                                 </span>
                                             </div>
-                                        ))}
+                                        )}
+                                        {item.origin && (
+                                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-purple-100/30 dark:border-gray-600/30">
+                                                <div className="flex items-center gap-2">
+                                                    <GlobeAltIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                                                    <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
+                                                        {t('origin')}:
+                                                    </span>
+                                                </div>
+                                                <span className="font-bold text-purple-600 dark:text-purple-400 text-sm sm:text-base pl-8 sm:pl-0">
+                                                    {item.origin}
+                                                </span>
+                                            </div>
+                                        )}
+                                        {item.place && (
+                                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-purple-100/30 dark:border-gray-600/30">
+                                                <div className="flex items-center gap-2">
+                                                    <MapPinIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                                                    <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
+                                                        {t('place')}:
+                                                    </span>
+                                                </div>
+                                                <span className="font-bold text-purple-600 dark:text-purple-400 text-sm sm:text-base pl-8 sm:pl-0">
+                                                    {item.place}
+                                                </span>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 
@@ -222,23 +260,21 @@ async function ItemView({ id }) {
                                 <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-orange-100/50 dark:border-gray-600/30">
                                     <div className="flex items-center gap-3 mb-4">
                                         <div className="p-2 bg-orange-500/10 rounded-lg">
-                                            <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                            </svg>
+                                            <ClockIcon className="w-5 h-5 text-orange-600 dark:text-orange-400" />
                                         </div>
                                         <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("timeline")}</h2>
                                     </div>
 
                                     <div className="space-y-3">
                                         <div className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-orange-100/30 dark:border-gray-600/30">
-                                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                                                 <div className="flex items-center gap-2">
-                                                    <span className="text-lg">📅</span>
+                                                    <CalendarIcon className="w-5 h-5 text-orange-600 dark:text-orange-400" />
                                                     <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t("created")}:</span>
                                                 </div>
                                                 <div className="text-right pl-8 sm:pl-0">
                                                     <div className="font-bold text-orange-600 dark:text-orange-400 text-sm">
-                                                        {new Date(item.created_at).toLocaleString()}
+                                                        <LocalizedDate date={item.created_at} format="long" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -246,63 +282,64 @@ async function ItemView({ id }) {
 
                                         {isUpdated && (
                                             <div className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-orange-100/30 dark:border-gray-600/30">
-                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                                                     <div className="flex items-center gap-2">
-                                                        <span className="text-lg">🔄</span>
+                                                        <ArrowPathIcon className="w-5 h-5 text-orange-600 dark:text-orange-400" />
                                                         <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">{t("updated")}:</span>
                                                     </div>
                                                     <div className="text-right pl-8 sm:pl-0">
                                                         <div className="font-bold text-orange-600 dark:text-orange-400 text-sm">
-                                                            {new Date(item.updated_at).toLocaleString()}
+                                                            <LocalizedDate date={item.updated_at} format="long" />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         )}
 
-                                        <div className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-orange-100/30 dark:border-gray-600/30">
-                                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-lg">👤</span>
-                                                    <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">
-                                                        {isUpdated ? t("lastUpdated") : t("created")} {t('by')}:
-                                                    </span>
-                                                </div>
-                                                <div className="text-right pl-8 sm:pl-0">
-                                                    <div className="font-bold text-orange-600 dark:text-orange-400 text-sm">
-                                                        {item.by_username}
+                                        {item.by_username && (
+                                            <div className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-orange-100/30 dark:border-gray-600/30">
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                                                    <div className="flex items-center gap-2">
+                                                        <UserIcon className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                                                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm">
+                                                            {isUpdated ? t("lastUpdated") : t("created")} {t('by')}:
+                                                        </span>
+                                                    </div>
+                                                    <div className="text-right pl-8 sm:pl-0">
+                                                        <div className="font-bold text-orange-600 dark:text-orange-400 text-sm">
+                                                            {item.by_username}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
 
-                            {/* third row */}
-                            {(item?.barcodes?.length > 0) && <div className="space-y-6">
-                                {/* barcodes */}
-                                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-emerald-100/50 dark:border-gray-600/30">
-                                    <div className="flex items-center gap-3 mb-4">
-                                        <div className="p-2 bg-emerald-500/10 rounded-lg">
-                                            <svg className="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
-                                            </svg>
-                                        </div>
-                                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("barcodes")}</h2>
-                                    </div>
-
-                                    <div className="grid grid-cols-2 gap-3">
-                                        {item.barcodes.map((obj, index) => (
-                                            <div key={index} className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-emerald-100/30 dark:border-gray-600/30">
-                                                <div className="text-lg sm:text-xl font-bold text-emerald-600 dark:text-emerald-400">
-                                                    {obj.barcode}
-                                                </div>
+                            {/* Third Column - Barcodes (only when barcodes exist) */}
+                            {(item?.barcodes?.length > 0) && (
+                                <div className="space-y-6">
+                                    <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-cyan-100/50 dark:border-gray-600/30">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="p-2 bg-cyan-500/10 rounded-lg">
+                                                <QrCodeIcon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
                                             </div>
-                                        ))}
+                                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("barcodes")}</h2>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            {item.barcodes.map((obj, index) => (
+                                                <div key={index} className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-cyan-100/30 dark:border-gray-600/30">
+                                                    <div className="text-base font-bold text-cyan-600 dark:text-cyan-400 text-center">
+                                                        {obj.barcode}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>}
+                            )}
                         </div>
                     </div>
                 </div>

@@ -3,9 +3,10 @@ import Modal from './Modal';
 import ItemView from '../../../../view/[id]/ItemView';
 
 export default async function InterceptedItemView({ params }) {
+    const { id } = await params;
     return (
         <Modal>
-            <ItemView id={await params.id} />
+            <ItemView id={id} />
         </Modal>
     );
 }
