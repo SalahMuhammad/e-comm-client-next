@@ -72,6 +72,14 @@
 				"cansWithClints": "العناصر القابلة لإعادة التعبئة التي لدى العملاء"
 			}
 		},
+		"userManagement": {
+			"headLabel": "إدارة المستخدمين",
+			"subLabels": {
+				"users": "قائمة المستخدمين",
+				"permissions": "قائمة الصلاحيات",
+				"createUser": "إنشاء مستخدم"
+			}
+		},
 		"userDropDown": {
 			"settings": "الإعدادات",
 			"signOut": "تسجيل الخروج"
@@ -607,7 +615,8 @@
 			"403": "بيانات اعتماد غير صالحة.",
 			"404": "الخدمة غير موجودة.",
 			"500": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
-			"etc": "خطأ في الخادم أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى."
+			"etc": "خطأ في الخادم أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+			"invalidForm": "بيانات النموذج غير صالحة."
 		},
 		"logout": {
 			"loading": "جارٍ تسجيل الخروج…",
@@ -619,6 +628,162 @@
 			"failed": "فشل تسجيل الخروج",
 			"retry": "إعادة محاولة تسجيل الخروج",
 			"error": "فشل تسجيل الخروج. يرجى المحاولة مرة أخرى."
+		},
+		"changePassword": {
+			"title": "تغيير كلمة المرور",
+			"description": "يجب تغيير كلمة المرور قبل المتابعة.",
+			"currentPassword": "كلمة المرور الحالية",
+			"newPassword": "كلمة المرور الجديدة",
+			"confirmPassword": "تأكيد كلمة المرور الجديدة",
+			"submit": "تغيير كلمة المرور",
+			"loading": "جارٍ التغيير...",
+			"back": "العودة",
+			"success": "تم تغيير كلمة المرور بنجاح!",
+			"errors": {
+				"allFields": "جميع الحقول مطلوبة.",
+				"match": "كلمات المرور غير متطابقة."
+			}
+		}
+	},
+	"user-management": {
+		"table": {
+			"create": "إنشاء مستخدم",
+			"head": {
+				"username": "اسم المستخدم",
+				"status": "الحالة",
+				"groups": "المجموعات",
+				"permissions": "الصلاحيات",
+				"dateJoined": "تاريخ الانضمام",
+				"actions": "الإجراءات"
+			},
+			"active": "نشط",
+			"inactive": "غير نشط",
+			"superuser": "مشرف",
+			"permissionsCount": "صلاحية",
+			"edit": "تعديل",
+			"remove": {
+				"label": "إزالة",
+				"confirm": "حذف المستخدم؟",
+				"description": "سيتم حذف حساب المستخدم نهائياً.",
+				"yes": "حذف",
+				"no": "إلغاء",
+				"success": "تم حذف المستخدم بنجاح",
+				"canceled": "تم إلغاء الحذف"
+			}
+		},
+		"form": {
+			"createTitle": "إنشاء مستخدم",
+			"editTitle": "تعديل مستخدم",
+			"profileDetails": "تفاصيل الملف الشخصي",
+			"removePhoto": "إزالة الصورة",
+			"clickToUpload": "اضغط لرفع صورة جديدة",
+			"firstName": "الاسم الأول",
+			"lastName": "الاسم الأخير",
+			"basicInfo": "المعلومات الأساسية",
+			"username": "اسم المستخدم",
+			"password": "كلمة المرور",
+			"passwordHint": "اتركه فارغاً للاحتفاظ بكلمة المرور الحالية",
+			"isActive": "نشط",
+			"isStaff": "موظف",
+			"isSuperuser": "مشرف عام",
+			"permissions": "الصلاحيات والمجموعات",
+			"saveAsGroup": {
+				"button": "حفظ كمجموعة",
+				"title": "حفظ الصلاحيات كمجموعة",
+				"description": "إنشاء مجموعة جديدة بـ {count} صلاحية محددة حالياً.",
+				"namePlaceholder": "اسم المجموعة",
+				"nameRequired": "الرجاء إدخال اسم المجموعة",
+				"noPermissions": "لم يتم تحديد أي صلاحيات",
+				"save": "إنشاء المجموعة",
+				"saving": "جارٍ الإنشاء...",
+				"success": "تم إنشاء المجموعة بنجاح!",
+				"error": "فشل في إنشاء المجموعة"
+			}
+		},
+		"filters": {
+			"username": "البحث باسم المستخدم",
+			"all": "الكل",
+			"isActive": {
+				"label": "الحالة",
+				"active": "نشط",
+				"inactive": "غير نشط"
+			},
+			"isSuperuser": {
+				"label": "مشرف عام",
+				"yes": "نعم",
+				"no": "لا"
+			},
+			"isStaff": {
+				"label": "موظف",
+				"yes": "نعم",
+				"no": "لا"
+			}
+		}
+	},
+	"permission-management": {
+		"title": "إدارة الصلاحيات",
+		"tabs": {
+			"groups": "المجموعات",
+			"permissions": "الصلاحيات"
+		},
+		"selector": {
+			"modeGroups": "المجموعات فقط",
+			"modeManual": "يدوي فقط",
+			"modeCombined": "مجمّع",
+			"groupsTitle": "اختر المجموعات",
+			"permissionsTitle": "الصلاحيات الفردية",
+			"selected": "محدد",
+			"selectAll": "تحديد الكل",
+			"clearAll": "مسح الكل",
+			"selectApp": "تحديد الكل",
+			"unselectApp": "إلغاء تحديد الكل",
+			"fromGroup": "من مجموعة",
+			"groupRemovedWarning": "تمت إزالة المجموعة '{groupNames}' للسماح بتحديد الأذونات المخصصة."
+		},
+		"permissions": {
+			"searchPlaceholder": "بحث في الصلاحيات...",
+			"expandAll": "توسيع الكل",
+			"collapseAll": "طي الكل",
+			"noResults": "لم يتم العثور على صلاحيات",
+			"table": {
+				"name": "الاسم",
+				"codename": "الكود",
+				"model": "النموذج"
+			}
+		},
+		"groups": {
+			"description": "إدارة مجموعات الصلاحيات لتبسيط التحكم في الوصول.",
+			"create": "إنشاء مجموعة",
+			"noGroups": "لم يتم العثور على مجموعات. انقر 'إنشاء مجموعة' لإضافة واحدة.",
+			"table": {
+				"name": "اسم المجموعة",
+				"permissionCount": "الصلاحيات",
+				"permissions": "صلاحية",
+				"actions": "الإجراءات",
+				"edit": "تعديل",
+				"delete": "حذف"
+			},
+			"delete": {
+				"confirm": "حذف المجموعة؟",
+				"description": "سيتم إزالة المجموعة وفصلها عن جميع المستخدمين.",
+				"yes": "حذف",
+				"no": "إلغاء",
+				"success": "تم حذف المجموعة بنجاح",
+				"canceled": "تم إلغاء الحذف"
+			}
+		},
+		"groupForm": {
+			"createTitle": "إنشاء مجموعة",
+			"editTitle": "تعديل مجموعة",
+			"namePlaceholder": "أدخل اسم المجموعة",
+			"inheritFrom": "وراثة الصلاحيات من مجموعات موجودة",
+			"permissionsTitle": "الصلاحيات",
+			"selected": "محدد",
+			"selectAll": "تحديد الكل",
+			"clearAll": "مسح الكل",
+			"selectApp": "تحديد الكل",
+			"unselectApp": "إلغاء تحديد الكل",
+			"saving": "جارٍ الحفظ..."
 		}
 	},
 	"inputs": {
@@ -881,11 +1046,35 @@
 		}
 	},
 	"settings": {
+		"title": "إعدادات المستخدم",
+		"firstName": "الاسم الأول",
+		"lastName": "اسم العائلة",
+		"username": "اسم المستخدم",
+		"firstNamePlaceholder": "محمد",
+		"lastNamePlaceholder": "أحمد",
+		"clickToUpload": "انقر لرفع صورة جديدة",
+		"removePhoto": "إزالة الصورة",
+		"cancel": "إلغاء",
+		"saveChanges": "حفظ التغييرات",
+		"changePassword": "تغيير كلمة المرور",
+		"saving": "جارٍ الحفظ...",
+		"successUpdate": "تم تحديث الملف الشخصي بنجاح",
+		"errorUpdate": "فشل في تحديث الملف الشخصي",
+		"errorGeneric": "حدث خطأ ما",
 		"database": {
 			"title": "إدارة قاعدة البيانات",
 			"createBackup": "إنشاء نسخة احتياطية لقاعدة البيانات",
 			"createBackupDataOnly": "إنشاء نسخة احتياطية لقاعدة البيانات (البيانات فقط)",
-			"processing": "جارِ المعالجة..."
+			"processing": "جارِ المعالجة...",
+			"backupRetentionWarning": "ملاحظة: يتم الاحتفاظ بآخر {count} نسخة احتياطية فقط. يتم حذف النسخ القديمة تلقائيًا.",
+			"notes": "ملاحظات النسخة الاحتياطية",
+			"notesPlaceholder": "أدخل ملاحظات اختيارية لهذه النسخة...",
+			"saveChanges": "حفظ الإعدادات",
+			"saving": "جارٍ الحفظ...",
+			"configSaved": "تم تحديث الإعدادات بنجاح.",
+			"maxBackupsRetention": "الحد الأقصى للاحتفاظ بالنسخ الاحتياطية",
+			"noBackupsFound": "لا توجد نسخ احتياطية على الخادم",
+			"backupBy": "بواسطة: {user}"
 		},
 		"warehouse": {
 			"title": "إدارة المستودع",
