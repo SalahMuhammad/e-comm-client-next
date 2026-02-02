@@ -12,16 +12,42 @@ import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from './LanguageToggle';
 import { getMenuItems } from '@/constants/navigation';
 import { useCompany } from '@/app/providers/company-provider.client';
+import { useRoleContext } from '@/app/providers/role-provider.client';
 
-export default function Sidebar({ username }) {
+import SettingsModal from './SettingsModal';
+import { API_BASE_URL } from '@/config/api';
+// import { getClientAuthToken } from '@/utils/cookieHandler';
+
+export default function Sidebar({ username, token }) {
     const t = useTranslations('navLinks');
     const companyDetails = useCompany();
     const sidebarRef = useRef(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [userData, setUserData] = useState({ username });
 
     useEffect(() => {
         // Initialize Flowbite when component mounts
         initFlowbite();
+
+        // Fetch user data
+        const fetchUserData = async () => {
+            try {
+                // const token = getClientAuthToken();
+                const res = await fetch(`${API_BASE_URL}/api/users/user/`, {
+                    headers: {
+                        'auth': token || ''
+                    }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setUserData(data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch user data:", error);
+            }
+        };
+        fetchUserData();
     }, []);
 
     // Monitor sidebar state changes
@@ -55,8 +81,25 @@ export default function Sidebar({ username }) {
         }
     };
 
+    const { hasPermission } = useRoleContext();
+
     const [openSection, setOpenSection] = useState(null);
-    const menuItems = getMenuItems(t);
+    const rawMenuItems = getMenuItems(t);
+
+    const menuItems = rawMenuItems.map(section => {
+        // Filter links in the section
+        const filteredLinks = section.links.filter(link => {
+            // If no permissions defined, show it
+            if (!link.permissions || link.permissions.length === 0) return true;
+            // Check if user has at least one of the required permissions
+            return link.permissions.some(perm => hasPermission(perm));
+        });
+
+        return {
+            ...section,
+            links: filteredLinks
+        };
+    }).filter(section => section.links.length > 0); // Only show sections that have visible links
 
     return (
         <>
@@ -88,7 +131,8 @@ export default function Sidebar({ username }) {
                                     <button type="button" className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                         <span className="sr-only">Open user menu</span>
                                         {/* <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" /> */}
-                                        <UserAvatar username={username} imageUrl={''} />
+                                        {/* <img className="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" /> */}
+                                        <UserAvatar username={userData?.username || username} imageUrl={userData?.avatar} />
                                     </button>
                                 </div>
                                 <div
@@ -97,11 +141,14 @@ export default function Sidebar({ username }) {
                                 >
                                     <div className="px-4 py-3" role="none">
                                         <p className="text-sm text-gray-900 dark:text-white" role="none">
-                                            {username?.charAt(0).toUpperCase() + username?.slice(1)}
+                                            {(userData?.first_name || userData?.last_name)
+                                                ? `${userData.first_name || ''} ${userData.last_name || ''}`.trim()
+                                                : (userData?.username || username)?.charAt(0).toUpperCase() + (userData?.username || username)?.slice(1)
+                                            }
                                         </p>
-                                        {/* <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                            neil.sims@flowbite.com
-                                        </p> */}
+                                        <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
+                                            @{userData?.username || username}
+                                        </p>
                                     </div>
                                     <ul className="py-1" role="none">
                                         {/* <li>
@@ -112,14 +159,15 @@ export default function Sidebar({ username }) {
                                         </li> */}
 
                                         <li>
-                                            <a
-                                                href="#"
-                                                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                                            <button
+                                                type='button'
+                                                onClick={() => setIsSettingsOpen(true)}
+                                                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white w-full text-left"
                                                 role="menuitem"
                                             >
                                                 <Cog6ToothIcon className="h-4 w-4" />
                                                 {t('userDropDown.settings')}
-                                            </a>
+                                            </button>
                                         </li>
 
                                         <li>
@@ -190,7 +238,7 @@ export default function Sidebar({ username }) {
                                                 {link.icon}
                                                 <span className='ms-3 flex-1 text-ellipsis overflow-hidden whitespace-nowrap'>{link.label}</span>
                                             </Link>
-                                            {link.addPath && (
+                                            {link.addPath && (!link.addPermissions || link.addPermissions.some(perm => hasPermission(perm))) && (
                                                 <Link
                                                     href={link.addPath}
                                                     onClick={closeSidebar}
@@ -274,6 +322,14 @@ export default function Sidebar({ username }) {
                     </ul>
                 </div>
             </aside>
+            {/* Settings Modal */}
+            <SettingsModal
+                isOpen={isSettingsOpen}
+                onClose={() => setIsSettingsOpen(false)}
+                userData={userData}
+                onUpdate={(newUserData) => setUserData(newUserData)}
+                token={token}
+            />
         </>
     )
 }

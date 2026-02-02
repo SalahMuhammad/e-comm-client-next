@@ -51,7 +51,7 @@ const StaticOptionsInput = ({ options, label, ...props }) => {
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isFocused 
+            backgroundColor: state.isFocused
                 ? isDarkMode ? '#374151' : '#f3f4f6'
                 : isDarkMode ? '#1f2937' : '#ffffff',
             color: isDarkMode ? '#f9fafb' : '#111827',
@@ -68,25 +68,33 @@ const StaticOptionsInput = ({ options, label, ...props }) => {
 
     return (
         <div
-            className="relative z-0 w-full my-7 group"
+            className="w-full mb-4"
             onClick={(e) => e.stopPropagation()}
         >
+            <label
+                htmlFor={selectId}
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+            >
+                {label}
+            </label>
             <Select
                 instanceId={selectId}
                 options={options}
                 defaultValue={options[0]}
                 styles={customStyles}
+                formatOptionLabel={(data, meta) => {
+                    if (data.note && meta.context === 'menu') {
+                        return (
+                            <div className="flex flex-col">
+                                <span>{data.label}</span>
+                                <span className="text-xs opacity-70">{data.note}</span>
+                            </div>
+                        );
+                    }
+                    return data.label;
+                }}
                 {...props}
             />
-            <label
-                htmlFor={selectId}
-                className={`
-                    absolute text-sm duration-300 transform -translate-y-6 scale-75 top-1 -z-10 origin-[0]
-                    text-blue-600 dark:text-blue-500
-                    peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-                    peer-focus:scale-75 peer-focus:-translate-y-6
-                `}
-            >{label}</label>
         </div>
     )
 }
