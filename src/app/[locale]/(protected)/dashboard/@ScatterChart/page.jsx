@@ -3,7 +3,7 @@ import { getRefilledItems } from "../../refillable-items/actions";
 export default async function ScatterChart() {
     const res = await getRefilledItems(`?limit=150`);
 
-    const transformed = res?.data?.results.map(item => ({
+    const transformed = (res?.data?.results || []).map(item => ({
         date: new Date(item.date),
         refilled: parseFloat(item.refilled_quantity),
         used: parseFloat(item.used_quantity),
