@@ -133,6 +133,10 @@
 
 .input-group {
   position: relative;
+}
+
+.input-container {
+  position: relative;
   margin-bottom: 16px;
 }
 
@@ -241,6 +245,7 @@
 }
 
 .error-message {
+  display: block;
   color: #dc2626;
   font-size: 14px;
   margin-top: 8px;
@@ -313,7 +318,7 @@
   right: 30px;
   display: flex;
   align-items: center;
-  width: 81px;
+  gap: 0.5rem;
   justify-content: space-around;
 }
 

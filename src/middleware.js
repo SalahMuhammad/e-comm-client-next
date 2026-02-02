@@ -17,12 +17,20 @@ export default function middleware(request) {
     const username = request.cookies.get('username')?.value;
     const auth0 = request.cookies.get('auth_0')?.value;
     const auth1 = request.cookies.get('auth_1')?.value;
+    const passwordChangeRequired = request.cookies.get('password_change_required')?.value === 'true';
 
     const isLogout = pathname.includes('/logout');
     const isAuthPage = pathname.includes('/auth');
+    const isChangePasswordPage = pathname.includes('/auth/change-password');
 
-    // If Logged in redirect
-    if (username && auth0 && auth1 && !isLogout && isAuthPage) {
+    // If user needs to change password, redirect to change-password page
+    // (except if already on change-password or logout page)
+    if (username && auth0 && auth1 && passwordChangeRequired && !isChangePasswordPage && !isLogout) {
+        return NextResponse.redirect(new URL(`/auth/change-password?required=true`, request.url));
+    }
+
+    // If Logged in and on auth page (but not change-password), redirect to dashboard
+    if (username && auth0 && auth1 && !isLogout && isAuthPage && !isChangePasswordPage && !passwordChangeRequired) {
         return NextResponse.redirect(new URL(`/dashboard`, request.url));
     }
 
