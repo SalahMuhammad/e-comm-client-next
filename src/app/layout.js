@@ -2,12 +2,13 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import { NextIntlClientProvider } from "next-intl";
 import "./[locale]/globals.css";
-import { getLocale } from 'next-intl/server';
+import { getLocale, getMessages } from 'next-intl/server';
 import 'flowbite'
 import { getServerCookie } from "@/utils/serverCookieHandelr";
 import { getCompanyDetails } from "@/app/actions/companyDetails";
 import CompanyProvider from "@/app/providers/company-provider";
 import { API_BASE_URL } from "@/config/api";
+import { Toaster } from 'sonner';
 
 
 const geistSans = Geist({
@@ -88,6 +89,7 @@ function getDirection(locale) {
 
 export default async function RootLayout({ children, params }) {
   const locale = await getLocale();
+  const messages = await getMessages();
   const lang = locale ?? 'en';
 
   const theme = await getServerCookie('theme') || 'light'
@@ -96,7 +98,9 @@ export default async function RootLayout({ children, params }) {
   // }
 
   let themeClass = ""
+  let toastTheme = theme
   if (theme == "auto") {
+    toastTheme = "system"
     let PreferredTheme = await getServerCookie("lastPreferredTheme");
     if (PreferredTheme == "dark") {
       themeClass = "dark"
@@ -117,7 +121,18 @@ export default async function RootLayout({ children, params }) {
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${ibmPlexArabic.variable} antialiased`}>
         <CompanyProvider>
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <Toaster
+            position="bottom-right"
+            theme={toastTheme}
+            richColors={true}
+            closeButton={true}
+            toastOptions={{
+              style: {
+                pointerEvents: 'auto',
+              },
+            }}
+          />
+          <NextIntlClientProvider messages={messages}>{children}</NextIntlClientProvider>
         </CompanyProvider>
       </body>
     </html>

@@ -11,6 +11,11 @@ const nextConfig = {
         },
         resolveExtensions: ['.mdx', '.tsx', '.ts', '.jsx', '.js', '.json'],
     },
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '50mb',
+        },
+    },
 };
 
 export default withNextIntl(nextConfig);

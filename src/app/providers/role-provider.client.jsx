@@ -26,8 +26,12 @@ export default function RoleProviderClient({ role = "guest", permissions = [], c
 // hook to read role + helpers
 export function useRole() {
   const { role } = useContext(RoleContext);
-  
+
   return role
+}
+
+export function useRoleContext() {
+  return useContext(RoleContext);
 }
 
 export function useHasPermission(permission, useServer = true) {
