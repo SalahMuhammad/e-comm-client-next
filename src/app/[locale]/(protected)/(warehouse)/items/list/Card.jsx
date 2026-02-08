@@ -10,9 +10,10 @@ import { toast } from "sonner";
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import Gallery from "./Gallery";
 import ImageView from "@/components/ImageView";
-import companyDetails from "@/constants/company";
+import { useCompany } from "@/app/providers/company-provider.client";
 import * as Dialog from '@radix-ui/react-dialog';
 import ItemsForm from "../form/page";
+
 
 function handleDelete(t, id, onDelete, funs) {
     const handleGenericErrors = useGenericResponseHandler(t)
@@ -149,60 +150,31 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
 
 
             {/* menu */}
-            <div className={`flex justify-end absolute z-10 left-2 top-1 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100`}>
-                <button id={`dropdownButton${id}`} data-dropdown-toggle={`dropdown${id}`} className="transition-all duration-300 inline-block bg-white/80 text-gray-700 hover:bg-white dark:bg-gray-700/80 dark:text-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-600 rounded-lg text-sm p-1.5 shadow-sm hover:shadow-md" type="button">
-                    <span className="sr-only">Open dropdown</span>
-                    <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                    </svg>
-                </button>
+            <div className={`flex justify-end absolute z-50 left-2 top-1 transition-opacity duration-300 opacity-100 md:opacity-0 md:group-hover:opacity-100`}>
 
-                <div id={`dropdown${id}`} className="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
-                    <ul className="py-2" aria-labelledby={`dropdownButton${id}`}>
-                        <li className="group">
-                            <Link
-                                href={`/items/form/${id}`}
-                                className="flex block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white group"
-                            >
-                                <PencilIcon
-                                    className="h-4 w-4 mr-1
-                                    text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white
-                                    transition-all duration-300 ease-in-out
-                                    group-hover:rotate-[8deg]
-                                    group-hover:-translate-y-0.5
-                                    group-hover:scale-110
-                                    group-hover:drop-shadow-sm"
-                                />
-                                {t('items.card.edit')}
-                            </Link>
-                        </li>
-                        {/* <li>
-                            <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
-                        </li> */}
-                        <li>
-                            <button
-                                onClick={() => handleDelete(tGlobal, id, (setItems, setDeletingId, id) => {
-                                    setDeletingId(id);
-                                    setTimeout(() => {
-                                        setItems(prev => prev.filter(item => item.id !== id));
-                                        setDeletingId(null);
-                                    }, 300);
-                                }, funs)}
-                                className="group flex w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 cursor-pointer
-                        transition-all duration-300 ease-in-out"
-                            >
-                                <TrashIcon
-                                    className="
-                                    h-4 w-4 mr-1
-                                    transition-transform duration-300 ease-in-out
-                                    group-hover:rotate-[15deg]
-                                    group-hover:scale-125
-                                    "
-                                />
-                                {t("items.card.delete")}
-                            </button>
-                        </li>
-                    </ul>
+                {/* Desktop Dropdown */}
+                <div className="hidden md:block relative">
+                    <button id={`dropdownButton${id}`} data-dropdown-toggle={`dropdown${id}`} className="transition-all duration-300 inline-block bg-white/80 text-gray-700 hover:bg-white dark:bg-gray-700/80 dark:text-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-600 rounded-lg text-sm p-1.5 shadow-sm hover:shadow-md" type="button">
+                        <span className="sr-only">Open dropdown</span>
+                        <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                        </svg>
+                    </button>
+
+                    <div id={`dropdown${id}`} className="z-20 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow-xl w-44 dark:bg-gray-700 absolute top-full left-0 mt-2">
+                        <ul className="py-2" aria-labelledby={`dropdownButton${id}`}>
+                            <ActionButtons t={t} tGlobal={tGlobal} id={id} handleDelete={handleDelete} funs={funs} />
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Mobile Action Sheet */}
+                <div className="block md:hidden">
+                    <MobileActionSheet id={id} t={t}>
+                        <ul className="py-2">
+                            <ActionButtons t={t} tGlobal={tGlobal} id={id} handleDelete={handleDelete} funs={funs} />
+                        </ul>
+                    </MobileActionSheet>
                 </div>
             </div>
 
@@ -256,6 +228,82 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
                 </Link>
             </div>
         </div>
+    );
+}
+
+// Reusable Action Buttons
+function ActionButtons({ t, tGlobal, id, handleDelete, funs }) {
+    return (
+        <>
+            <li className="group">
+                <Link
+                    href={`/items/form/${id}`}
+                    className="flex rounded-sm block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white group"
+                >
+                    <PencilIcon
+                        className="h-4 w-4 mr-1
+                        text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white
+                        transition-all duration-300 ease-in-out
+                        group-hover:rotate-[8deg]
+                        group-hover:-translate-y-0.5
+                        group-hover:scale-110
+                        group-hover:drop-shadow-sm"
+                    />
+                    {t('items.card.edit')}
+                </Link>
+            </li>
+            {/* <li>
+                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
+            </li> */}
+            <li>
+                <button
+                    onClick={() => handleDelete(tGlobal, id, (setItems, setDeletingId, id) => {
+                        setDeletingId(id);
+                        setTimeout(() => {
+                            setItems(prev => prev.filter(item => item.id !== id));
+                            setDeletingId(null);
+                        }, 300);
+                    }, funs)}
+                    className="group rounded-sm flex w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 cursor-pointer dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600
+            transition-all duration-300 ease-in-out"
+                >
+                    <TrashIcon
+                        className="
+                        h-4 w-4 mr-1
+                        transition-transform duration-300 ease-in-out
+                        group-hover:rotate-[15deg]
+                        group-hover:scale-125
+                        "
+                    />
+                    {t("items.card.delete")}
+                </button>
+            </li>
+        </>
+    )
+}
+
+
+// Mobile Bottom Sheet Component
+function MobileActionSheet({ children, id }) {
+    return (
+        <Dialog.Root>
+            <Dialog.Trigger asChild>
+                <button className="transition-all duration-300 inline-block bg-white/80 text-gray-700 hover:bg-white dark:bg-gray-700/80 dark:text-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-600 rounded-lg text-sm p-1.5 shadow-sm hover:shadow-md" type="button">
+                    <span className="sr-only">Open menu</span>
+                    <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                        <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                    </svg>
+                </button>
+            </Dialog.Trigger>
+            <Dialog.Portal>
+                <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+                <Dialog.Content className="fixed bottom-0 left-0 right-0 z-50 mt-24 bg-white dark:bg-gray-800 rounded-t-[10px] shadow-xl p-4 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom focus:outline-none">
+                    <Dialog.Title className="sr-only">Actions</Dialog.Title>
+                    <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-gray-300 dark:bg-gray-600 mb-4" />
+                    {children}
+                </Dialog.Content>
+            </Dialog.Portal>
+        </Dialog.Root>
     );
 }
 
@@ -443,6 +491,7 @@ export function GalleryView({ items, setItems, viewImages }) {
 // Main Component with View Switch
 export function ItemsView({ items: rawItems = [] }) {
     const { viewMode, setViewMode, isClient } = useViewMode();
+    const companyDetails = useCompany();
     const [items, setItems] = useState(rawItems);
     const [images, setImages] = useState([])
     const [startIndex, setStartIndex] = useState(0)

@@ -1,12 +1,17 @@
-import { FillText } from "@/components/loaders"
-import companyDetails from "@/constants/company"
+'use client';
 
-function loading() {
+import { FillText } from "@/components/loaders"
+import { useCompany } from "@/app/providers/company-provider.client"
+
+function Loading() {
+  const companyDetails = useCompany();
+
   return (
     <div className="flex flex-row min-h-screen justify-center items-center">
-      <FillText text={companyDetails.name}/>
+      <FillText text={companyDetails.name} />
     </div>
   )
 }
 
-export default loading
+export default Loading
+

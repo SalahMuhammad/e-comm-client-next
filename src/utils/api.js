@@ -1,10 +1,9 @@
 import { getServerAuthToken } from "./serverCookieHandelr";
-
-
-const BASE_URL = process.env.API_URL || 'http://192.168.1.254:8000';
+import { API_BASE_URL } from "@/config/api";
 
 export async function apiRequest(endpoint, options = {}) {
-    const url = `${BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+    const url = `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+
     const headersss = { ...options.headers }
     delete options['headers']
     let response;

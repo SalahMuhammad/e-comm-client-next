@@ -12,3 +12,4 @@ export { default as DynamicOptionsInput } from './text/DynamicOptionsInput';
 // 
 export { default as FileInput } from './FileInput';
 export { default as RadioSwitch } from './RadioSwitch';
+export { default as AvatarUpload } from './AvatarUpload';

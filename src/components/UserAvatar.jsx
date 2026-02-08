@@ -18,22 +18,30 @@ function getDeterministicColor(username) {
   return bgColors[index];
 }
 
-export default function UserAvatar({ username, imageUrl }) {
+// import { UserIcon } from '@heroicons/react/24/solid';
+import { API_BASE_URL } from '@/config/api';
+
+export default function UserAvatar({ username, imageUrl, className = "w-8 h-8" }) {
   const initial = username?.charAt(0)?.toUpperCase() || '?';
   const bgColor = getDeterministicColor(username || 'default');
 
   if (imageUrl) {
+    const src = imageUrl.startsWith('http') ? imageUrl : `${API_BASE_URL}${imageUrl}`;
     return (
       <img
-        className="w-8 h-8 rounded-full object-cover"
-        src={imageUrl}
+        className={`${className} rounded-full object-cover`}
+        src={src}
         alt="user photo"
       />
     );
   }
 
   return (
-    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${bgColor}`}>
+    // <div className={`${className} rounded-full flex items-center justify-center bg-gray-200 dark:bg-gray-700 text-gray-400`}>
+    //   <UserIcon className="w-3/5 h-3/5" />
+    // </div>
+
+    <div className={`w-full h-full min-w-8 min-h-8 rounded-full flex items-center justify-center text-white font-bold ${bgColor}`}>
       {initial}
     </div>
   );

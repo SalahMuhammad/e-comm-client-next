@@ -35,23 +35,17 @@ async function page({ params }) {
             ]
         },
         {
-            title: t("reportSections.refillableItems.title"),
-            icon: ArrowPathIcon,
-            color: "emerald",
-            gradient: "from-emerald-500 to-emerald-600",
-            darkGradient: "dark:from-emerald-600 dark:to-emerald-700",
+            title: t("reportSections.clientsSuppliers.title"),
+            icon: UserGroupIcon,
+            color: "orange",
+            gradient: "from-orange-500 to-orange-600",
+            darkGradient: "dark:from-orange-600 dark:to-orange-700",
             links: [
                 {
-                    href: "/reports/refilled-used-items",
-                    label: t("reportSections.refillableItems.links.refilledItems.label"),
-                    description: t("reportSections.refillableItems.links.refilledItems.description"),
-                    icon: ArrowPathIcon,
-                },
-                {
-                    href: "/reports/refillable-items-client-has",
-                    label: t("reportSections.refillableItems.links.refillableItemsClient.label"),
-                    description: t("reportSections.refillableItems.links.refillableItemsClient.description"),
-                    icon: ArrowPathIcon,
+                    href: "/reports/owner-account-statement",
+                    label: t("reportSections.clientsSuppliers.links.accountStatement.label"),
+                    description: t("reportSections.clientsSuppliers.links.accountStatement.description"),
+                    icon: CurrencyDollarIcon,
                 }
             ]
         },
@@ -83,21 +77,28 @@ async function page({ params }) {
                 }
             ]
         },
+
         {
-            title: t("reportSections.clientsSuppliers.title"),
-            icon: UserGroupIcon,
-            color: "orange",
-            gradient: "from-orange-500 to-orange-600",
-            darkGradient: "dark:from-orange-600 dark:to-orange-700",
+            title: t("reportSections.refillableItems.title"),
+            icon: ArrowPathIcon,
+            color: "emerald",
+            gradient: "from-emerald-500 to-emerald-600",
+            darkGradient: "dark:from-emerald-600 dark:to-emerald-700",
             links: [
                 {
-                    href: "/reports/owner-account-statement",
-                    label: t("reportSections.clientsSuppliers.links.accountStatement.label"),
-                    description: t("reportSections.clientsSuppliers.links.accountStatement.description"),
-                    icon: CurrencyDollarIcon,
+                    href: "/reports/refilled-used-items",
+                    label: t("reportSections.refillableItems.links.refilledItems.label"),
+                    description: t("reportSections.refillableItems.links.refilledItems.description"),
+                    icon: ArrowPathIcon,
+                },
+                {
+                    href: "/reports/refillable-items-client-has",
+                    label: t("reportSections.refillableItems.links.refillableItemsClient.label"),
+                    description: t("reportSections.refillableItems.links.refillableItemsClient.description"),
+                    icon: ArrowPathIcon,
                 }
             ]
-        }
+        },
     ];
 
     return (
@@ -115,7 +116,7 @@ async function page({ params }) {
                 </div>
 
                 {/* Reports Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     {reportSections.map((section, sectionIndex) => {
                         const SectionIcon = section.icon;
                         return (

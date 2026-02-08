@@ -24,6 +24,7 @@ export default function useGenericResponseHandler(t = useTranslations('global.er
                 }
                 break;
             case 403:
+                if (errorMessage === false) break;
                 if (res.data?.detail?.includes('jwt')) {
                     redirect(`/auth/logout?nexturl=${window.location.pathname}`, 'replace')
                 }

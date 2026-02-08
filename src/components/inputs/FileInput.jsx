@@ -184,7 +184,13 @@ export default function FileUploadInput({
     };
 
     // Get current file type based on acceptedTypes prop
-    const currentType = fileTypes[acceptedTypes] || fileTypes.all;
+    const currentType = Array.isArray(acceptedTypes)
+        ? {
+            label: acceptedTypes.map(t => t.label).join(', '),
+            value: acceptedTypes.map(t => t.value).join(','),
+            icon: <DocumentIcon className="w-8 h-8" />
+        }
+        : (fileTypes[acceptedTypes] || fileTypes.all);
 
     // Available types for dropdown (when acceptedTypes is "all")
     const availableTypes = Object.values(fileTypes);

@@ -72,6 +72,14 @@
 				"cansWithClints": "Refillable items clints has"
 			}
 		},
+		"userManagement": {
+			"headLabel": "User Management",
+			"subLabels": {
+				"users": "Users List",
+				"permissions": "Permissions List",
+				"createUser": "Create User"
+			}
+		},
 		"userDropDown": {
 			"settings": "Settings",
 			"signOut": "Sign out"
@@ -613,7 +621,8 @@
 			"403": "Invalid credentials.",
 			"404": "Service not found.",
 			"500": "Server error. Please try again later.",
-			"etc": "Server error during login. Please try again."
+			"etc": "Server error during login. Please try again.",
+			"invalidForm": "Invalid form submission."
 		},
 		"logout": {
 			"loading": "Logging out…",
@@ -625,6 +634,162 @@
 			"failed": "Logout Failed",
 			"retry": "Retry Logout",
 			"error": "Logout failed. Please try again."
+		},
+		"changePassword": {
+			"title": "Change Password",
+			"description": "You must change your password before continuing.",
+			"currentPassword": "Current Password",
+			"newPassword": "New Password",
+			"confirmPassword": "Confirm New Password",
+			"submit": "Change Password",
+			"loading": "Changing...",
+			"back": "Go Back",
+			"success": "Password changed successfully!",
+			"errors": {
+				"allFields": "All fields are required.",
+				"match": "Passwords do not match."
+			}
+		}
+	},
+	"user-management": {
+		"table": {
+			"create": "Create User",
+			"head": {
+				"username": "Username",
+				"status": "Status",
+				"groups": "Groups",
+				"permissions": "Permissions",
+				"dateJoined": "Date Joined",
+				"actions": "Actions"
+			},
+			"active": "Active",
+			"inactive": "Inactive",
+			"superuser": "Superuser",
+			"permissionsCount": "permissions",
+			"edit": "Edit",
+			"remove": {
+				"label": "Remove",
+				"confirm": "Delete User?",
+				"description": "This will permanently delete the user account.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "User deleted successfully",
+				"canceled": "Deletion canceled"
+			}
+		},
+		"form": {
+			"createTitle": "Create User",
+			"editTitle": "Edit User",
+			"profileDetails": "Profile Details",
+			"removePhoto": "Remove Photo",
+			"clickToUpload": "Click to upload new avatar",
+			"firstName": "First Name",
+			"lastName": "Last Name",
+			"basicInfo": "Basic Information",
+			"username": "Username",
+			"password": "Password",
+			"passwordHint": "Leave blank to keep current password",
+			"isActive": "Active",
+			"isStaff": "Staff",
+			"isSuperuser": "Superuser",
+			"permissions": "Permissions & Groups",
+			"saveAsGroup": {
+				"button": "Save as Group",
+				"title": "Save Permissions as Group",
+				"description": "Create a new group with the {count} currently selected permissions.",
+				"namePlaceholder": "Group name",
+				"nameRequired": "Please enter a group name",
+				"noPermissions": "No permissions selected",
+				"save": "Create Group",
+				"saving": "Creating...",
+				"success": "Group created successfully!",
+				"error": "Failed to create group"
+			}
+		},
+		"filters": {
+			"username": "Search by username",
+			"all": "All",
+			"isActive": {
+				"label": "Status",
+				"active": "Active",
+				"inactive": "Inactive"
+			},
+			"isSuperuser": {
+				"label": "Superuser",
+				"yes": "Yes",
+				"no": "No"
+			},
+			"isStaff": {
+				"label": "Staff",
+				"yes": "Yes",
+				"no": "No"
+			}
+		}
+	},
+	"permission-management": {
+		"title": "Permission Management",
+		"tabs": {
+			"groups": "Groups",
+			"permissions": "Permissions"
+		},
+		"selector": {
+			"modeGroups": "Groups Only",
+			"modeManual": "Manual Only",
+			"modeCombined": "Combined",
+			"groupsTitle": "Select Groups",
+			"permissionsTitle": "Individual Permissions",
+			"selected": "selected",
+			"selectAll": "Select All",
+			"clearAll": "Clear All",
+			"selectApp": "Select All",
+			"unselectApp": "Unselect All",
+			"fromGroup": "from group",
+			"groupRemovedWarning": "Group '{groupNames}' removed to allow custom permission selection."
+		},
+		"permissions": {
+			"searchPlaceholder": "Search permissions...",
+			"expandAll": "Expand All",
+			"collapseAll": "Collapse All",
+			"noResults": "No permissions found",
+			"table": {
+				"name": "Name",
+				"codename": "Codename",
+				"model": "Model"
+			}
+		},
+		"groups": {
+			"description": "Manage permission groups to simplify user access control.",
+			"create": "Create Group",
+			"noGroups": "No groups found. Click 'Create Group' to add one.",
+			"table": {
+				"name": "Group Name",
+				"permissionCount": "Permissions",
+				"permissions": "permissions",
+				"actions": "Actions",
+				"edit": "Edit",
+				"delete": "Delete"
+			},
+			"delete": {
+				"confirm": "Delete Group?",
+				"description": "This will remove the group and disassociate it from all users.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "Group deleted successfully",
+				"canceled": "Deletion canceled"
+			}
+		},
+		"groupForm": {
+			"createTitle": "Create Group",
+			"editTitle": "Edit Group",
+			"namePlaceholder": "Enter group name",
+			"inheritFrom": "Inherit permissions from existing groups",
+			"permissionsTitle": "Permissions",
+			"selected": "selected",
+			"selectAll": "Select All",
+			"clearAll": "Clear All",
+			"selectApp": "Select All",
+			"unselectApp": "Unselect All",
+			"saving": "Saving..."
 		}
 	},
 	"inputs": {
@@ -889,57 +1054,6 @@
 			"selectDate": "Select date"
 		}
 	},
-	"settings": {
-		"database": {
-			"title": "Database Management",
-			"createBackup": "Create Database Backup",
-			"createBackupDataOnly": "Create Database Backup (Data Only)",
-			"processing": "Processing..."
-		},
-		"warehouse": {
-			"title": "Warehouse Management",
-			"createItemsXlsx": "Create Items list as xlsx"
-		},
-		"browse": {
-			"title": "Browse",
-			"media": "Media"
-		},
-		"media": {
-			"title": "Media File Browser",
-			"subtitle": "Browse and filter your media files",
-			"stats": {
-				"totalFiles": "Total Files",
-				"filteredResults": "Filtered Results",
-				"totalSize": "Total Size"
-			},
-			"search": {
-				"name": "Name",
-				"nameOrDescription": "Name or Description",
-				"categoryName": "Category Name",
-				"size": "Size",
-				"actions": "Actions",
-				"view": "View",
-				"download": "Download"
-			},
-			"category": "Category",
-			"allCategories": "All Categories",
-			"sortBy": "Sort By",
-			"fileName": "File Name",
-			"fileSize": "File Size",
-			"table": {
-				"file": "File",
-				"category": "Category",
-				"size": "Size",
-				"actions": "Actions",
-				"view": "View",
-				"download": "Download"
-			},
-			"noFiles": "No files found matching your criteria",
-			"showing": "Showing",
-			"of": "of",
-			"files": "files"
-		}
-	},
 	"barcodeScanner": {
 		"scan": "Scan",
 		"scanBarcode": "Scan Barcode",
@@ -1000,6 +1114,110 @@
 			"title": "Scanner Error",
 			"message": "The barcode scanner encountered an error. Please try again or use manual entry.",
 			"close": "Close"
+		}
+	},
+	"settings": {
+		"title": "User Settings",
+		"firstName": "First Name",
+		"lastName": "Last Name",
+		"username": "Username",
+		"firstNamePlaceholder": "John",
+		"lastNamePlaceholder": "Doe",
+		"clickToUpload": "Click to upload new avatar",
+		"removePhoto": "Remove photo",
+		"cancel": "Cancel",
+		"saveChanges": "Save Changes",
+		"changePassword": "Change Password",
+		"saving": "Saving...",
+		"successUpdate": "Profile updated successfully",
+		"errorUpdate": "Failed to update profile",
+		"errorGeneric": "An error occurred",
+		"database": {
+			"title": "Database Management",
+			"createFullBackup": "Create Full Backup",
+			"fullBackupDesc": "Backs up the entire database structure and data",
+			"createDataOnlyBackup": "Create Data-Only Backup",
+			"dataOnlyBackupDesc": "Backs up only the data, preserving existing structure",
+			"createFullBackupWithMedia": "Create Full Backup (+ Media)",
+			"fullBackupMediaDesc": "Backs up database and all media files (Images, etc.)",
+			"restoreFromFile": "Restore from File",
+			"processing": "Processing...",
+			"downloadConfirmation": "Backup created. Do you want to download the file?",
+			"backupCreatedSuccess": "Backup created successfully.",
+			"restoreTitle": "Restore Database",
+			"uploadFile": "Upload File",
+			"createFullBackup_ar": "إنشاء نسخة احتياطية كاملة",
+			"fullBackupDesc_ar": "نسخ احتياطي لهيكل قاعدة البيانات والبيانات بالكامل",
+			"createDataOnlyBackup_ar": "إنشاء نسخة احتياطية للبيانات فقط",
+			"dataOnlyBackupDesc_ar": "نسخ احتياطي للبيانات فقط، مع الحفاظ على الهيكل الحالي",
+			"createFullBackupWithMedia_ar": "إنشاء نسخة احتياطية كاملة (+ الوسائط)",
+			"fullBackupMediaDesc_ar": "نسخ احتياطي لقاعدة البيانات وجميع ملفات الوسائط (الصور وغيرها)",
+			"restoreFromFile_ar": "استعادة من ملف",
+			"selectFromServer": "Select from Server",
+			"dropBackupFile": "Drop backup file here",
+			"selectBackup": "Select Backup",
+			"selectBackupPlaceholder": "Choose a backup...",
+			"restore": "Restore Database",
+			"restoreConfirmation": "Are you sure you want to restore the database? Current data will be replaced.",
+			"restoreSuccess": "Database restored successfully.",
+			"selectFileWarning": "Please select a file to restore.",
+			"selectBackupWarning": "Please select a backup from the server.",
+			"file": "File",
+			"download": "Download",
+			"cancel": "Cancel",
+			"backupRetentionWarning": "Note: Only the last {count} backups are kept. Older backups are automatically deleted.",
+			"errorGeneric": "An error occurred. Please try again.",
+			"notes": "Backup Notes",
+			"notesPlaceholder": "Enter optional notes for this backup...",
+			"saveChanges": "Save Config",
+			"saving": "Saving...",
+			"configSaved": "Configuration updated successfully.",
+			"maxBackupsRetention": "Max Backups Retention",
+			"noBackupsFound": "No backups found on server",
+			"backupBy": "By: {user}"
+		},
+		"warehouse": {
+			"title": "Warehouse Management",
+			"createItemsXlsx": "Create Items list as xlsx"
+		},
+		"browse": {
+			"title": "Browse",
+			"media": "Media"
+		},
+		"media": {
+			"title": "Media File Browser",
+			"subtitle": "Browse and filter your media files",
+			"stats": {
+				"totalFiles": "Total Files",
+				"filteredResults": "Filtered Results",
+				"totalSize": "Total Size"
+			},
+			"search": {
+				"name": "Name",
+				"nameOrDescription": "Name or Description",
+				"categoryName": "Category Name",
+				"size": "Size",
+				"actions": "Actions",
+				"view": "View",
+				"download": "Download"
+			},
+			"category": "Category",
+			"allCategories": "All Categories",
+			"sortBy": "Sort By",
+			"fileName": "File Name",
+			"fileSize": "File Size",
+			"table": {
+				"file": "File",
+				"category": "Category",
+				"size": "Size",
+				"actions": "Actions",
+				"view": "View",
+				"download": "Download"
+			},
+			"noFiles": "No files found matching your criteria",
+			"showing": "Showing",
+			"of": "of",
+			"files": "files"
 		}
 	}
 }
