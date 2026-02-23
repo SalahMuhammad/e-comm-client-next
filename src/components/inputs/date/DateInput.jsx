@@ -82,7 +82,11 @@ export default function DateInput({
 
   const emitChange = (val) => {
     // always emit event-like object for compatibility
-    onChange({ target: { value: val } });
+    // onChange({ target: { value: val } });
+    // Only emit if the value is actually different from our current internal state
+    if (val !== internalISO) {
+      onChange({ target: { value: val } });
+    }
   };
 
   const formatISOToInput = (iso) => {
@@ -174,7 +178,9 @@ export default function DateInput({
   // close on outside click
   useEffect(() => {
     const onDoc = (e) => {
-      if (rootRef.current && !rootRef.current.contains(e.target)) {
+    //   if (rootRef.current && !rootRef.current.contains(e.target)) {
+      // ONLY run this logic if the picker was actually open or the input was focused
+      if ((showPicker || isFocused) && rootRef.current && !rootRef.current.contains(e.target)) {
         setShowPicker(false);
         setIsFocused(false);
         commitText(text);
@@ -182,7 +188,7 @@ export default function DateInput({
     };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
-  }, [text, internalISO]);
+  }, [text, internalISO, showPicker, isFocused]);
 
   return (
     <div className={`relative w-full ${className}`} ref={rootRef}>
