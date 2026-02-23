@@ -9,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import TimeLineRangeSlider from "./TimeLineRangeSlider";
 
 /* ---------- small presentational slider (keeps UI only) ---------- */
 const ModernRangeSlider = ({
@@ -347,45 +348,27 @@ const ScatterChartView = ({
           {/* timeline controls */}
           <div className={`${cardPadding} md:px-6 md:pb-6`}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Timeline</span>
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Historical Range</span>
               <span className="text-xs text-gray-500">{Math.round(timeWindowSize)}% window</span>
             </div>
 
             <div className="space-y-3">
-              <div>
-                <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-                  <span>Start: {Math.round(timeStart)}%</span>
-                  <span>End: {Math.round(timeStart + timeWindowSize)}%</span>
-                </div>
-                <ModernRangeSlider
-                  value={timeStart}
-                  min={0}
-                  max={100 - timeWindowSize}
-                  onChange={handleTimeStartChange}
-                  showProgress={true}
-                  progressStart={timeStart}
-                  progressEnd={timeStart + timeWindowSize}
+                 <TimeLineRangeSlider
+                    value={timeStart}
+                    timeWindowSize={timeWindowSize}
+                    min={0}
+                    max={100 - timeWindowSize}
+                    onChange={(e) => setTimeStart(Number(e.target.value))}
+                    showProgress={true}
+                    progressStart={timeStart}
+                    progressEnd={timeStart + timeWindowSize}
                 />
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Window Size</span>
-                  <span className="text-xs text-gray-500">{Math.round(timeWindowSize)}%</span>
-                </div>
-                <ModernRangeSlider
-                  value={timeWindowSize}
-                  min={10}
-                  max={100}
-                  onChange={handleWindowSizeChange}
-                  trackColor="bg-indigo-500"
+                <TimeLineRangeSlider
+                    timeWindowSize={timeWindowSize}
+                    min={10} max={100}
+                    onChange={handleWindowSizeChange}
+                    trackColor="bg-indigo-500"
                 />
-                <div className="flex justify-between text-xs text-gray-400 mt-1">
-                  <span>10%</span>
-                  <span>{Math.round(timeWindowSize)}%</span>
-                  <span>100%</span>
-                </div>
-              </div>
             </div>
           </div>
 
