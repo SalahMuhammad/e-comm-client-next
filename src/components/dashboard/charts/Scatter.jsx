@@ -11,59 +11,6 @@ import {
 } from "recharts";
 import TimeLineRangeSlider from "./TimeLineRangeSlider";
 
-/* ---------- small presentational slider (keeps UI only) ---------- */
-const ModernRangeSlider = ({
-  value,
-  min,
-  max,
-  onChange,
-  className = "",
-  trackColor = "bg-indigo-500",
-  showProgress = false,
-  progressStart = 0,
-  progressEnd = 100,
-}) => {
-  const percentage = ((value - min) / (max - min)) * 100;
-  return (
-    <div className={`relative ${className}`}>
-      <div className="relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-auto">
-        {showProgress ? (
-          <div
-            className="absolute h-full rounded-full transition-all duration-300"
-            style={{
-              left: `${progressStart}%`,
-              width: `${progressEnd - progressStart}%`,
-              background:
-                "linear-gradient(90deg, rgba(99,102,241,1) 0%, rgba(79,70,229,1) 100%)",
-            }}
-          />
-        ) : (
-          <div
-            className={`absolute h-full rounded-full transition-all duration-300 ${trackColor}`}
-            style={{ width: `${percentage}%` }}
-          />
-        )}
-      </div>
-
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={value}
-        onChange={onChange}
-        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-        aria-label="range"
-      />
-
-      <div
-        className="absolute top-1/2 w-4 h-4 md:w-6 md:h-6 bg-white border-2 md:border-4 border-indigo-500 rounded-full shadow-lg transform -translate-y-1/2 -translate-x-1/2 transition-all duration-200"
-        style={{ left: `${percentage}%` }}
-        aria-hidden
-      />
-    </div>
-  );
-};
-
 /* ---------- logic helpers ---------- */
 const expectedRefilledForUsed = (used) => used * 13;
 
