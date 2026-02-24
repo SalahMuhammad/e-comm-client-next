@@ -4,7 +4,7 @@ import { apiRequest } from "@/utils/api";
 
 export async function getData(params='') {
     if (params)
-        return await apiRequest("api/refillable-sys/analysis/refillable-item-unit-cost/" + params )
+        return await apiRequest("api/refillable-sys/analysis/item-unit-cost/" + params )
 }
 
 export async function getItemTransformerList() {
