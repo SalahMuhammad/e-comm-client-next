@@ -94,10 +94,11 @@ export default function RefillableCostAnalysis({ data = [], itemTransformar, ore
                 oreItems={oreItems} 
             />
 
-            {(searchParams.get('RCA-refilled') ||
+            {((searchParams.get('RCA-refilled') ||
                 searchParams.get('RCA-used') ||
                 searchParams.get('RCA-date-range-from') ||
-                searchParams.get('RCA-date-range-to')) && (
+                searchParams.get('RCA-date-range-to')) && 
+                data?.length > 0) && (
                     <>
                         {/* Line Chart */}
                         <div className="h-[400px] w-full mb-8">
