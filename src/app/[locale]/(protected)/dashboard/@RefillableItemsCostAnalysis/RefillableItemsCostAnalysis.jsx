@@ -16,6 +16,7 @@ import getRandomColor from '../../../../../utils/getRandomColor';
 import TimeLineRangeSlider from '../../../../../components/dashboard/charts/TimeLineRangeSlider';
 import MultiPriceTooltip from './RICACustomTooltip';
 import RICAFiltersForm from './RICAFiltersForm';
+import FieldError from '@/components/FieldError';
 
 
 export default function RefillableCostAnalysis({ data = [], itemTransformar, oreItems }) {
@@ -181,6 +182,11 @@ export default function RefillableCostAnalysis({ data = [], itemTransformar, ore
                         </div>
                     </>
                 )}
+
+                {(data?.length === 0 && searchParams['size'] > 0) && (
+                    <FieldError error={'No data found...'} />
+                )
+            }
         </div>
     );
 }
