@@ -46,29 +46,35 @@ function RICAFiltersForm({ searchParams, itemTransformar, oreItems }) {
                 <DateInput
                     name="RCA-date-range-from"
                     label="From Date"
-                    defaultValue={searchParams.get('data-range-from') || ''}
+                    defaultValue={searchParams.get('RCA-date-range-from') || ''}
                 />
                 <DateInput
                     name="RCA-date-range-to"
                     label="To Date"
-                    defaultValue={searchParams.get('data-range-to') || ''}
+                    defaultValue={searchParams.get('RCA-date-range-to') || ''}
                 />
 
                 {/* Multi-Selects */}
                 <StaticOptionsInput
                     label="Refilled Items"
-                    options={itemTransformar?.results.map(i => ({ value: i.item, label: i.empty }))}
+                    options={itemTransformar?.results?.map(i => ({ value: i.item, label: i.empty }))}
                     isMulti
-                    onChange={(vals) => setRefilledItems(vals.map(v => v.value))}
-                    defaultValue={itemTransformar?.results.filter(opt => refilledItems.includes(opt.item)).map(i => ({ value: i.item, label: i.empty }))}
+                    onChange={(vals) => setRefilledItems(vals?.map(v => v.value))}
+                    defaultValue={itemTransformar?.results
+                        ?.filter(opt => refilledItems.includes(String(opt.item)))
+                        ?.map(i => ({ value: i.item, label: i.empty })) || {}
+                    }
                 />
 
                 <StaticOptionsInput
                     label="Used Items"
-                    options={oreItems?.results.map(i => ({ value: i.item, label: i.item_name }))}
+                    options={oreItems?.results?.map(i => ({ value: i.item, label: i.item_name }))}
                     isMulti={true}
-                    onChange={(vals) => setUsedItems(vals.map(v => v.value))}
-                    defaultValue={oreItems?.results.filter(opt => usedItems.includes(opt.item)).map(i => ({ value: i.item, label: i.item_name }))}
+                    onChange={(vals) => setUsedItems(vals?.map(v => v.value))}
+                    defaultValue={oreItems?.results
+                        ?.filter(opt => usedItems.includes(String(opt.item)))
+                        ?.map(i => ({ value: i.item, label: i.item_name })) || {}
+                    }
                 />
 
                 {/* Action Button */}
