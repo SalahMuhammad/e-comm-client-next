@@ -19,7 +19,7 @@ import { API_BASE_URL } from '@/config/api';
 // import { getClientAuthToken } from '@/utils/cookieHandler';
 
 export default function Sidebar({ username, token }) {
-    const t = useTranslations('navLinks');
+    const t = useTranslations('MainMenu');
     const companyDetails = useCompany();
     const sidebarRef = useRef(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
