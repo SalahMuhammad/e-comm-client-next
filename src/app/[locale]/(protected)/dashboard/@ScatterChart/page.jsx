@@ -1,5 +1,8 @@
 import ScatterChartView from "@/components/dashboard/charts/Scatter";
 import { getRefilledItems } from "../../refillable-items/actions";
+import { PermissionGateServer } from "@/components/PermissionGateServer";
+import { PERMISSIONS } from "@/config/permissions.config";
+
 export default async function ScatterChart() {
     const res = await getRefilledItems(`?limit=150`);
 
@@ -12,5 +15,9 @@ export default async function ScatterChart() {
         notes: item.notes
     }));
 
-    return <ScatterChartView data={transformed} compact={true} className="mb-3" />;
+    return (
+        <PermissionGateServer permission={PERMISSIONS.REFILLABLE_ITEMS.VIEW}>
+            <ScatterChartView data={transformed} compact={true} className="mb-3" />
+        </PermissionGateServer>
+    );
 }

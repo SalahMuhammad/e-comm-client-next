@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import { deleteDamagedItem } from "./actions";
 import TableNote from "@/components/TableNote";
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 
 function handleDelete(t, id, onDelete) {
@@ -89,36 +91,39 @@ function TableRow({ id, item_id, owner_name, repository_name, item_name, quantit
             </td>
             <td className="px-6 py-4">
                 <div className="flex items-center space-x-2">
-                    <button className="group flex items-center gap-1 px-2 py-1 rounded-md
-                        text-red-600 dark:text-red-500 cursor-pointer
-                        transition-all duration-300 ease-in-out"
-                        onClick={() => handleDelete(t, id, handleOnDelete)}
-                    >
-                        <TrashIcon
-                            className="
-                            h-4 w-4
-                            transition-transform duration-300 ease-in-out
-                            group-hover:rotate-[15deg]
-                            group-hover:scale-125
-                            "
-                        />
-
-                        {t("repositories.damagedItems.table.remove.label")}
-                    </button>
-                    <Link
-                        href={`/items/damaged/form/${id}`}
-                        className="flex items-center gap-1 px-2 py-1 rounded-md text-blue-600 dark:text-blue-200 dark:hover:text-white group transition duration-300"
-                    >
-                        <PencilIcon
-                            className="h-4 w-4 mr-1
-                            transition-all duration-300 ease-in-out
-                            group-hover:rotate-[8deg]
-                            group-hover:-translate-y-0.5
-                            group-hover:scale-110
-                            group-hover:drop-shadow-sm"
-                        />
-                        {t("repositories.damagedItems.table.edit")}
-                    </Link>
+                    <PermissionGate permission={PERMISSIONS.DAMAGED_ITEMS.DELETE}>
+                        <button className="group flex items-center gap-1 px-2 py-1 rounded-md
+                            text-red-600 dark:text-red-500 cursor-pointer
+                            transition-all duration-300 ease-in-out"
+                            onClick={() => handleDelete(t, id, handleOnDelete)}
+                        >
+                            <TrashIcon
+                                className="
+                                h-4 w-4
+                                transition-transform duration-300 ease-in-out
+                                group-hover:rotate-[15deg]
+                                group-hover:scale-125
+                                "
+                            />
+                            {t("repositories.damagedItems.table.remove.label")}
+                        </button>
+                    </PermissionGate>
+                    <PermissionGate permission={PERMISSIONS.DAMAGED_ITEMS.CHANGE}>
+                        <Link
+                            href={`/items/damaged/form/${id}`}
+                            className="flex items-center gap-1 px-2 py-1 rounded-md text-blue-600 dark:text-blue-200 dark:hover:text-white group transition duration-300"
+                        >
+                            <PencilIcon
+                                className="h-4 w-4 mr-1
+                                transition-all duration-300 ease-in-out
+                                group-hover:rotate-[8deg]
+                                group-hover:-translate-y-0.5
+                                group-hover:scale-110
+                                group-hover:drop-shadow-sm"
+                            />
+                            {t("repositories.damagedItems.table.edit")}
+                        </Link>
+                    </PermissionGate>
                 </div>
             </td>
         </tr>

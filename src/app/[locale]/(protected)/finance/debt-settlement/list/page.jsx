@@ -13,7 +13,8 @@ import ErrorLoading from "@/components/ErrorLoading";
 import { EyeIcon, PencilIcon } from "@heroicons/react/24/outline";
 import TableNote from "@/components/TableNote";
 import LocalizedDate from "@/components/LocalizedDate";
-
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 async function List({ searchParams }) {
     const searchParamName = 's';
@@ -73,18 +74,23 @@ async function List({ searchParams }) {
                             {t('finance.table.view')}
                         </span>
                     </Link> */}
-                    <Link
-                        href={`/finance/debt-settlement/form/${row.hashed_id}`}
-                        className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
-                    >
-                        <PencilIcon
-                            className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm"
-                        />
-                        <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                            {t('finance.table.edit')}
-                        </span>
-                    </Link>
-                    <DeleteTransaction id={row.hashed_id} />
+                    <PermissionGate permission={PERMISSIONS.DEBT_SETTLEMENT.CHANGE}>
+                        <Link
+                            href={`/finance/debt-settlement/form/${row.hashed_id}`}
+                            className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                        >
+                            <PencilIcon
+                                className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm"
+                            />
+                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                {t('finance.table.edit')}
+                            </span>
+                        </Link>
+                    </PermissionGate>
+
+                    <PermissionGate permission={PERMISSIONS.DEBT_SETTLEMENT.DELETE}>
+                        <DeleteTransaction id={row.hashed_id} />
+                    </PermissionGate>
                     <ToolTip obj={row} />
                 </div>
             )

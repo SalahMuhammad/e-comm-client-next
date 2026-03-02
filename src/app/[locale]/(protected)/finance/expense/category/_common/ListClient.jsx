@@ -6,6 +6,8 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import * as Dialog from '@radix-ui/react-dialog';
 import Form from './Form';
 import Table from './Table';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 // Create Button Component
 function CreateButton({ onItemCreated }) {
@@ -22,26 +24,28 @@ function CreateButton({ onItemCreated }) {
     };
 
     return (
-        <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
-            <Dialog.Trigger asChild>
-                <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors mb-4 dark:bg-gray-600 dark:hover:bg-gray-700">
-                    <PlusIcon className="w-4 h-4" />
-                    <span>{t('finance.expense.category.create')}</span>
-                </button>
-            </Dialog.Trigger>
-            <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
-                <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto z-50 p-6">
-                    <Dialog.Title className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-                        {t('finance.expense.category.create')}
-                    </Dialog.Title>
-                    <Dialog.Description className="sr-only">
-                        {t('finance.expense.category.create')}
-                    </Dialog.Description>
-                    <CreateFormModal key={formKey} onSuccess={handleSuccess} onCancel={() => setIsOpen(false)} isModal={true} />
-                </Dialog.Content>
-            </Dialog.Portal>
-        </Dialog.Root>
+        <PermissionGate permission={PERMISSIONS.EXPENSE_CATEGORIES.ADD}>
+            <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
+                <Dialog.Trigger asChild>
+                    <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors mb-4 dark:bg-gray-600 dark:hover:bg-gray-700">
+                        <PlusIcon className="w-4 h-4" />
+                        <span>{t('finance.expense.category.create')}</span>
+                    </button>
+                </Dialog.Trigger>
+                <Dialog.Portal>
+                    <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
+                    <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto z-50 p-6">
+                        <Dialog.Title className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                            {t('finance.expense.category.create')}
+                        </Dialog.Title>
+                        <Dialog.Description className="sr-only">
+                            {t('finance.expense.category.create')}
+                        </Dialog.Description>
+                        <CreateFormModal key={formKey} onSuccess={handleSuccess} onCancel={() => setIsOpen(false)} isModal={true} />
+                    </Dialog.Content>
+                </Dialog.Portal>
+            </Dialog.Root>
+        </PermissionGate>
     );
 }
 

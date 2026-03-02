@@ -13,6 +13,8 @@ import ImageView from "@/components/ImageView";
 import { useCompany } from "@/app/providers/company-provider.client";
 import * as Dialog from '@radix-ui/react-dialog';
 import ItemsForm from "../form/page";
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 
 function handleDelete(t, id, onDelete, funs) {
@@ -93,36 +95,39 @@ function TableRow({ id, name, origin, place, p4, imgSrc, isDeleting = false, fun
             </td>
             <td className="px-6 py-4">
                 <div className="flex items-center space-x-2">
-                    <Link
-                        href={`/items/form/${id}`}
-                        className="ml-2 flex items-center text-blue-600 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
-                    >
-                        <PencilIcon
-                            className="h-4 w-4 mr-1
-                            transition-all duration-300 ease-in-out
-                            group-hover:rotate-[8deg]
-                            group-hover:-translate-y-0.5
-                            group-hover:scale-110
-                            group-hover:drop-shadow-sm"
-                        />
-                        {t("items.card.edit")}
-                    </Link>
-                    <button className="group flex items-center gap-1 px-2 py-1 rounded-md
-                        text-red-600 dark:text-red-500 cursor-pointer
-                        transition-all duration-300 ease-in-out"
-                        onClick={() => handleDelete(tGlobal, id, handleOnDelete, funs = funs)}
-                    >
-                        <TrashIcon
-                            className="
-                            h-4 w-4
-                            transition-transform duration-300 ease-in-out
-                            group-hover:rotate-[15deg]
-                            group-hover:scale-125
-                            "
-                        />
-
-                        {t("items.card.delete")}
-                    </button>
+                    <PermissionGate permission={PERMISSIONS.ITEMS.CHANGE}>
+                        <Link
+                            href={`/items/form/${id}`}
+                            className="ml-2 flex items-center text-blue-600 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                        >
+                            <PencilIcon
+                                className="h-4 w-4 mr-1
+                                transition-all duration-300 ease-in-out
+                                group-hover:rotate-[8deg]
+                                group-hover:-translate-y-0.5
+                                group-hover:scale-110
+                                group-hover:drop-shadow-sm"
+                            />
+                            {t("items.card.edit")}
+                        </Link>
+                    </PermissionGate>
+                    <PermissionGate permission={PERMISSIONS.ITEMS.DELETE}>
+                        <button className="group flex items-center gap-1 px-2 py-1 rounded-md
+                            text-red-600 dark:text-red-500 cursor-pointer
+                            transition-all duration-300 ease-in-out"
+                            onClick={() => handleDelete(tGlobal, id, handleOnDelete, funs = funs)}
+                        >
+                            <TrashIcon
+                                className="
+                                h-4 w-4
+                                transition-transform duration-300 ease-in-out
+                                group-hover:rotate-[15deg]
+                                group-hover:scale-125
+                                "
+                            />
+                            {t("items.card.delete")}
+                        </button>
+                    </PermissionGate>
                 </div>
             </td>
         </tr>
@@ -235,49 +240,53 @@ function GalleryCard({ id, name, origin, place, p1, p2, p3, p4, stock, imgSrc: i
 function ActionButtons({ t, tGlobal, id, handleDelete, funs }) {
     return (
         <>
-            <li className="group">
-                <Link
-                    href={`/items/form/${id}`}
-                    className="flex rounded-sm block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white group"
-                >
-                    <PencilIcon
-                        className="h-4 w-4 mr-1
-                        text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white
-                        transition-all duration-300 ease-in-out
-                        group-hover:rotate-[8deg]
-                        group-hover:-translate-y-0.5
-                        group-hover:scale-110
-                        group-hover:drop-shadow-sm"
-                    />
-                    {t('items.card.edit')}
-                </Link>
-            </li>
+            <PermissionGate permission={PERMISSIONS.ITEMS.CHANGE}>
+                <li className="group">
+                    <Link
+                        href={`/items/form/${id}`}
+                        className="flex rounded-sm block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white group"
+                    >
+                        <PencilIcon
+                            className="h-4 w-4 mr-1
+                            text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white
+                            transition-all duration-300 ease-in-out
+                            group-hover:rotate-[8deg]
+                            group-hover:-translate-y-0.5
+                            group-hover:scale-110
+                            group-hover:drop-shadow-sm"
+                        />
+                        {t('items.card.edit')}
+                    </Link>
+                </li>
+            </PermissionGate>
             {/* <li>
                 <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Export Data</a>
             </li> */}
-            <li>
-                <button
-                    onClick={() => handleDelete(tGlobal, id, (setItems, setDeletingId, id) => {
-                        setDeletingId(id);
-                        setTimeout(() => {
-                            setItems(prev => prev.filter(item => item.id !== id));
-                            setDeletingId(null);
-                        }, 300);
-                    }, funs)}
-                    className="group rounded-sm flex w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 cursor-pointer dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600
+            <PermissionGate permission={PERMISSIONS.ITEMS.DELETE}>
+                <li>
+                    <button
+                        onClick={() => handleDelete(tGlobal, id, (setItems, setDeletingId, id) => {
+                            setDeletingId(id);
+                            setTimeout(() => {
+                                setItems(prev => prev.filter(item => item.id !== id));
+                                setDeletingId(null);
+                            }, 300);
+                        }, funs)}
+                        className="group rounded-sm flex w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-500 cursor-pointer dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-600
             transition-all duration-300 ease-in-out"
-                >
-                    <TrashIcon
-                        className="
-                        h-4 w-4 mr-1
-                        transition-transform duration-300 ease-in-out
-                        group-hover:rotate-[15deg]
-                        group-hover:scale-125
-                        "
-                    />
-                    {t("items.card.delete")}
-                </button>
-            </li>
+                    >
+                        <TrashIcon
+                            className="
+                            h-4 w-4 mr-1
+                            transition-transform duration-300 ease-in-out
+                            group-hover:rotate-[15deg]
+                            group-hover:scale-125
+                            "
+                        />
+                        {t("items.card.delete")}
+                    </button>
+                </li>
+            </PermissionGate>
         </>
     )
 }
@@ -358,7 +367,9 @@ function ViewToggle({ viewMode, setViewMode, onItemCreated }) {
 
     return (
         <div className="flex items-center justify-between space-x-4 mb-4">
-            <CreateItemButton onItemCreated={onItemCreated} />
+            <PermissionGate permission={PERMISSIONS.ITEMS.ADD}>
+                <CreateItemButton onItemCreated={onItemCreated} />
+            </PermissionGate>
             <div className="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
                 <button
                     onClick={() => setViewMode('gallery')}

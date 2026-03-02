@@ -6,6 +6,8 @@ import PaginationControls from "@/components/PaginationControls"
 import ErrorLoading from "@/components/ErrorLoading";
 import { getTranslations } from "next-intl/server";
 import { URLQueryParameterSetter } from "@/components/inputs/index";
+import { PermissionGateServer } from "@/components/PermissionGateServer";
+import { PERMISSIONS } from "@/config/permissions.config";
 
 
 async function page({ searchParams }) {
@@ -94,7 +96,9 @@ ${note ? `&note=${note}` : ''}
                                         <TableNote note={transaction.notes} />
                                     </td>
                                     <td className="flex items-center px-6 py-4 dark:text-gray-300">
-                                        <DeleteButton id={transaction.id} />
+                                        <PermissionGateServer permission={PERMISSIONS.REFILLABLE_ITEMS.DELETE}>
+                                            <DeleteButton id={transaction.id} />
+                                        </PermissionGateServer>
 
                                         <ToolTip obj={transaction} className="ml-3" />
                                     </td>

@@ -14,9 +14,15 @@ import { useRouter } from "next/navigation";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import BarcodeManager from '@/components/BarcodeManager';
 import styles from '../../_common/form.module.css';
+import { usePermissions } from '@/hooks/usePermissions';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
     const t = useTranslations("warehouse.items.form");
+    const { can } = usePermissions();
+    const canAddImages = can(PERMISSIONS.ITEMS.IMAGES.ADD);
+    const canDeleteImages = can(PERMISSIONS.ITEMS.IMAGES.DELETE);
     const [open, setOpen] = useState(false);
     const [FileLoading, setFileLoading] = useState(true);
     const [keepImageIds, setKeepImageIds] = useState([]); // Track image IDs to keep
@@ -138,31 +144,37 @@ function ItemsForm({ obj, onSuccess, onCancel, isModal = false }) {
                         </Collapsible.Content>
                     </Collapsible.Root>
 
-                    <BarcodeManager
-                        defaultBarcodes={state?.barcodes || obj?.barcodes || []}
-                    />
+                    <PermissionGate permission={PERMISSIONS.ITEMS.BARCODES.VIEW}>
+                        <BarcodeManager
+                            defaultBarcodes={state?.barcodes || obj?.barcodes || []}
+                        />
+                    </PermissionGate>
 
                     <TextInput name="origin" id="origin" defaultValue={state?.origin || obj?.origin} placeholder={t("origin")} error={!state?.ok ? state?.data?.origin : ""} />
 
                     <TextInput name="place" id="place" defaultValue={state?.place || obj?.place} placeholder={t("place")} error={!state?.ok ? state?.data?.place : ""} />
 
-                    {/* Hidden input to track which image IDs to keep */}
+                    {/* Hidden input to track which image IDs to keep — always sent regardless of image permission */}
                     <input type="hidden" name="keep_images" value={keepImageIds.join(',')} />
 
-                    <FileInput
-                        name="images"
-                        id="images"
-                        acceptedTypes="images"
-                        multiple={true}
-                        className="mt-3"
-                        showPreview={true}
-                        setLoadind={setFileLoading}
-                        defaultValue={
-                            state?.images || obj?.images || []
-                        }
-                        onChange={handleImageChange}
-                        error={!state?.ok ? state?.data?.images : ""}
-                    />
+                    <PermissionGate permission={PERMISSIONS.ITEMS.IMAGES.VIEW}>
+                        <FileInput
+                            name="images"
+                            id="images"
+                            acceptedTypes="images"
+                            multiple={true}
+                            className="mt-3"
+                            showPreview={true}
+                            setLoadind={setFileLoading}
+                            defaultValue={
+                                state?.images || obj?.images || []
+                            }
+                            onChange={handleImageChange}
+                            error={!state?.ok ? state?.data?.images : ""}
+                            canAdd={canAddImages}
+                            canDelete={canDeleteImages}
+                        />
+                    </PermissionGate>
                 </div>
 
                 <div className={styles.formActions}>

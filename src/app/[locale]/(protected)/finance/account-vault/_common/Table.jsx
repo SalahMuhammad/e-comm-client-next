@@ -6,12 +6,17 @@ import { EyeIcon, PencilIcon } from "@heroicons/react/24/outline";
 import Link from 'next/link';
 import numberFormatter from "@/utils/NumberFormatter";
 import DeleteButton from './DeleteButton';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function Table({ type, items, setItems }) {
     const t = useTranslations();
 
     // Determine base paths based on type
     const basePath = type === 'account' ? '/finance/account-vault' : '/finance/account-vault/type';
+
+    const editPerm = type === 'account' ? PERMISSIONS.BUSINESS_ACCOUNTS.CHANGE : PERMISSIONS.ACCOUNT_TYPES.CHANGE;
+    const deletePerm = type === 'account' ? PERMISSIONS.BUSINESS_ACCOUNTS.DELETE : PERMISSIONS.ACCOUNT_TYPES.DELETE;
 
     return (
         <tbody>
@@ -71,26 +76,30 @@ export default function Table({ type, items, setItems }) {
                                 </span>
                             </Link>
 
-                            <Link
-                                href={`${basePath}/form/${item.hashed_id}`}
-                                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
-                            >
-                                <PencilIcon
-                                    className="
-                                        h-4 w-4 mr-1
-                                        transition-all duration-300 ease-in-out
-                                        group-hover:rotate-[8deg]
-                                        group-hover:-translate-y-0.5
-                                        group-hover:scale-110
-                                        group-hover:drop-shadow-sm
-                                    "
-                                />
-                                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                    {t("finance.table.edit")}
-                                </span>
-                            </Link>
+                            <PermissionGate permission={editPerm}>
+                                <Link
+                                    href={`${basePath}/form/${item.hashed_id}`}
+                                    className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                                >
+                                    <PencilIcon
+                                        className="
+                                            h-4 w-4 mr-1
+                                            transition-all duration-300 ease-in-out
+                                            group-hover:rotate-[8deg]
+                                            group-hover:-translate-y-0.5
+                                            group-hover:scale-110
+                                            group-hover:drop-shadow-sm
+                                        "
+                                    />
+                                    <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                        {t("finance.table.edit")}
+                                    </span>
+                                </Link>
+                            </PermissionGate>
 
-                            <DeleteButton type={type} id={item.hashed_id} isViewPage={false} />
+                            <PermissionGate permission={deletePerm}>
+                                <DeleteButton type={type} id={item.hashed_id} isViewPage={false} />
+                            </PermissionGate>
                         </div>
                     </td>
                 </tr>
