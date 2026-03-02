@@ -13,27 +13,31 @@ async function Page({ params }) {
     let groups = [];
     let permissions = [];
 
-    // Fetch groups and permissions for the selector
-    const [groupsRes, permissionsRes] = await Promise.all([
-        getGroups(),
-        getPermissions()
-    ]);
+    try {
+        // Fetch groups and permissions for the selector
+        const [groupsRes, permissionsRes] = await Promise.all([
+            getGroups(),
+            getPermissions()
+        ]);
 
-    if (groupsRes.ok) {
-        groups = groupsRes.data || [];
-    }
-
-    if (permissionsRes.ok) {
-        permissions = permissionsRes.data || [];
-    }
-
-    // If editing, fetch user data
-    if (id) {
-        const res = await getUser(id);
-        if (!res.ok) {
-            return <ErrorLoading name="user-management" message={res.data?.detail || "Error loading user"} />;
+        if (groupsRes?.ok) {
+            groups = groupsRes.data || [];
         }
-        user = res.data;
+
+        if (permissionsRes?.ok) {
+            permissions = permissionsRes.data || [];
+        }
+
+        // If editing, fetch user data
+        if (id) {
+            const res = await getUser(id);
+            if (!res?.ok) {
+                return <ErrorLoading name="user-management" message={res?.data?.detail || "Error loading user"} />;
+            }
+            user = res.data;
+        }
+    } catch (error) {
+        console.error("Error fetching user management data:", error);
     }
 
     return (

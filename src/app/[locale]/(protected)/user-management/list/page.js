@@ -8,6 +8,8 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { PermissionGateServer } from '@/components/PermissionGateServer';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 async function Page({ searchParams }) {
     const params = await searchParams;
@@ -103,13 +105,15 @@ async function Page({ searchParams }) {
                         ]}
                     />
 
-
-                    <Link
-                        href="/user-management/form"
-                        className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors mb-4 dark:bg-gray-600 dark:hover:bg-gray-700">
-                        <PlusIcon className="h-5 w-5" />
-                        {t('user-management.table.create')}
-                    </Link>
+                    {/* Add User Button - requires add_user permission */}
+                    <PermissionGateServer permission={PERMISSIONS.USERS.ADD}>
+                        <Link
+                            href="/user-management/form"
+                            className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors mb-4 dark:bg-gray-600 dark:hover:bg-gray-700">
+                            <PlusIcon className="h-5 w-5" />
+                            {t('user-management.table.create')}
+                        </Link>
+                    </PermissionGateServer>
 
                     <div className="relative overflow-x-auto shadow-md rounded-md">
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
