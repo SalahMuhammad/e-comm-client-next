@@ -7,40 +7,47 @@ async function Page({ params }) {
     const { id } = await params;
     const groupId = id?.[0]; // [[...id]] returns an array, take the first element if exists
 
-    // Parallel data fetching
-    const [permissionsRes, groupsRes] = await Promise.all([
-        getPermissions(),
-        getGroups()
-    ]);
-
     let group = null;
+    let permissions = [];
+    let groups = [];
     let error = null;
 
-    if (groupId) {
-        // If ID is present, we try to find the group directly if getGroup supports it,
-        // or filter from the list if getGroup isn't available/efficient.
-        // Assuming getGroup(id) exists based on actions.js check earlier.
-        const groupRes = await getGroup(groupId);
-        if (groupRes.ok) {
-            group = groupRes.data;
-        } else {
-            // If group not found or error
-            if (groupRes.status === 404) {
-                return <NotFound name="Group" />;
+    try {
+        // Parallel data fetching
+        const [permissionsRes, groupsRes] = await Promise.all([
+            getPermissions(),
+            getGroups()
+        ]);
+
+        if (groupId) {
+            // If ID is present, we try to find the group directly if getGroup supports it,
+            // or filter from the list if getGroup isn't available/efficient.
+            // Assuming getGroup(id) exists based on actions.js check earlier.
+            const groupRes = await getGroup(groupId);
+            if (groupRes?.ok) {
+                group = groupRes.data;
+            } else {
+                // If group not found or error
+                if (groupRes?.status === 404) {
+                    return <NotFound name="Group" />;
+                }
+                error = "Error loading group";
             }
-            error = "Error loading group";
         }
-    }
 
-    if (!permissionsRes.ok || !groupsRes.ok) {
-        return <ErrorLoading name="permission-management" message="Error loading required data" />;
-    }
+        if (!permissionsRes?.ok || !groupsRes?.ok) {
+            return <ErrorLoading name="permission-management" message="Error loading required data" />;
+        }
 
-    const permissions = permissionsRes.data || [];
-    const groups = groupsRes.data || [];
+        permissions = permissionsRes.data || [];
+        groups = groupsRes.data || [];
 
-    if (error) {
-        return <ErrorLoading name="permission-management" message={error} />;
+        if (error) {
+            return <ErrorLoading name="permission-management" message={error} />;
+        }
+    } catch (err) {
+        console.error("Error fetching permission management data:", err);
+        // Continue with empty data to prevent server-side rendering failure
     }
 
     return (
