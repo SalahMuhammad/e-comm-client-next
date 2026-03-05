@@ -3,7 +3,7 @@ import { getUserPermissionsAndStatus } from '@/utils/auth/role';
 import { PERMISSIONS } from '@/config/permissions.config';
 import { ChartBarIcon } from '@heroicons/react/24/outline';
 
-export default async function DashboardLayout({ children, ScatterChart, PieChart }) {
+export default async function DashboardLayout({ children, ScatterChart, PieChart, RefillableItemsCostAnalysis }) {
     const { permissions: userPermissions, isSuperuser } = await getUserPermissionsAndStatus();
     const t = await getTranslations('dashboard');
 
@@ -35,6 +35,8 @@ export default async function DashboardLayout({ children, ScatterChart, PieChart
     return (
         <>
             <div>{hasScatterChartPerm ? ScatterChart : null}</div>
+            <div className="mb-3">{RefillableItemsCostAnalysis}</div>
+
             <div className="grid grid-cols-8 gap-1 w-full">
                 <div className="col-span-8 md:col-span-4 row-span-4">{hasPieChartPerm ? PieChart : null}</div>
             </div>

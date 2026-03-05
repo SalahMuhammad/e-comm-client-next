@@ -9,59 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-
-/* ---------- small presentational slider (keeps UI only) ---------- */
-const ModernRangeSlider = ({
-  value,
-  min,
-  max,
-  onChange,
-  className = "",
-  trackColor = "bg-indigo-500",
-  showProgress = false,
-  progressStart = 0,
-  progressEnd = 100,
-}) => {
-  const percentage = ((value - min) / (max - min)) * 100;
-  return (
-    <div className={`relative ${className}`}>
-      <div className="relative h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-auto">
-        {showProgress ? (
-          <div
-            className="absolute h-full rounded-full transition-all duration-300"
-            style={{
-              left: `${progressStart}%`,
-              width: `${progressEnd - progressStart}%`,
-              background:
-                "linear-gradient(90deg, rgba(99,102,241,1) 0%, rgba(79,70,229,1) 100%)",
-            }}
-          />
-        ) : (
-          <div
-            className={`absolute h-full rounded-full transition-all duration-300 ${trackColor}`}
-            style={{ width: `${percentage}%` }}
-          />
-        )}
-      </div>
-
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={value}
-        onChange={onChange}
-        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-        aria-label="range"
-      />
-
-      <div
-        className="absolute top-1/2 w-4 h-4 md:w-6 md:h-6 bg-white border-2 md:border-4 border-indigo-500 rounded-full shadow-lg transform -translate-y-1/2 -translate-x-1/2 transition-all duration-200"
-        style={{ left: `${percentage}%` }}
-        aria-hidden
-      />
-    </div>
-  );
-};
+import TimeLineRangeSlider from "./TimeLineRangeSlider";
 
 /* ---------- logic helpers ---------- */
 const expectedRefilledForUsed = (used) => used * 13;
@@ -347,45 +295,27 @@ const ScatterChartView = ({
           {/* timeline controls */}
           <div className={`${cardPadding} md:px-6 md:pb-6`}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Timeline</span>
+              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Historical Range</span>
               <span className="text-xs text-gray-500">{Math.round(timeWindowSize)}% window</span>
             </div>
 
             <div className="space-y-3">
-              <div>
-                <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-                  <span>Start: {Math.round(timeStart)}%</span>
-                  <span>End: {Math.round(timeStart + timeWindowSize)}%</span>
-                </div>
-                <ModernRangeSlider
-                  value={timeStart}
-                  min={0}
-                  max={100 - timeWindowSize}
-                  onChange={handleTimeStartChange}
-                  showProgress={true}
-                  progressStart={timeStart}
-                  progressEnd={timeStart + timeWindowSize}
+                 <TimeLineRangeSlider
+                    value={timeStart}
+                    timeWindowSize={timeWindowSize}
+                    min={0}
+                    max={100 - timeWindowSize}
+                    onChange={(e) => setTimeStart(Number(e.target.value))}
+                    showProgress={true}
+                    progressStart={timeStart}
+                    progressEnd={timeStart + timeWindowSize}
                 />
-              </div>
-
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Window Size</span>
-                  <span className="text-xs text-gray-500">{Math.round(timeWindowSize)}%</span>
-                </div>
-                <ModernRangeSlider
-                  value={timeWindowSize}
-                  min={10}
-                  max={100}
-                  onChange={handleWindowSizeChange}
-                  trackColor="bg-indigo-500"
+                <TimeLineRangeSlider
+                    timeWindowSize={timeWindowSize}
+                    min={10} max={100}
+                    onChange={handleWindowSizeChange}
+                    trackColor="bg-indigo-500"
                 />
-                <div className="flex justify-between text-xs text-gray-400 mt-1">
-                  <span>10%</span>
-                  <span>{Math.round(timeWindowSize)}%</span>
-                  <span>100%</span>
-                </div>
-              </div>
             </div>
           </div>
 

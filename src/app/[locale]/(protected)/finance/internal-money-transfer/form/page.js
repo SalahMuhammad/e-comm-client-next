@@ -84,7 +84,7 @@ function TransferForm({ initialData }) {
                 className={styles.invoiceForm}
             >
                 <div className={styles.invoiceHeader}>
-                    <h2>{initialData?.id ? t("finance.fields.update") : t("finance.fields.transaction")} {t("navLinks.finance.subLabels.internalTransfer")} {initialData?.hashed_id && "#"} {initialData?.hashed_id}</h2>
+                    <h2>{initialData?.id ? t("finance.fields.update") : t("finance.fields.transaction")} {t("MainMenu.finance.subLabels.internalTransfer")} {initialData?.hashed_id && "#"} {initialData?.hashed_id}</h2>
                 </div>
 
                 <div className={styles.invoiceDetails}>

@@ -6,11 +6,17 @@ import { PERMISSIONS } from "@/config/permissions.config";
 export default async function PieChart() {
     const res = await getCashAndDeferredPercentages();
 
-    const sales = res?.data?.total_orders || 0;
-    const payments = res?.data?.total_payed || 0;
-    const defferd = (sales > payments) ? (sales - payments) : 0
-    const defferdPresentage = sales ? ((defferd / sales) * 100) : 0
-    const cashPresentage = sales ? (100 - defferdPresentage) : 100
+    const ordersTotalAmount = res?.data?.total_orders || 0;
+    const totalRemaining = res?.data?.total_remaining || 0;
+
+    const defferdPresentage = ordersTotalAmount
+    ? (totalRemaining / ordersTotalAmount) * 100
+    : 0;
+
+    const cashPresentage = ordersTotalAmount
+    ? 100 - defferdPresentage
+    : 100;
+
 
     const transformed = [
         { name: 'Defferd', value: defferdPresentage },

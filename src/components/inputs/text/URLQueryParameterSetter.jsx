@@ -7,7 +7,7 @@ function URLQueryParameterSetter({ paramOptions, placeholder, allText }) {
     const router = useRouter()
     const searchParams = useSearchParams()
     const t = useTranslations()
-    const [selectedParam, setSelectedParam] = useState(paramOptions[0]?.value || '')
+    const [selectedParam, setSelectedParam] = useState(paramOptions?.[0]?.value || '')
     const [query, setQuery] = useState(searchParams.get(selectedParam) || '')
     const [isOpen, setIsOpen] = useState(false)
     const [isSelectOpen, setIsSelectOpen] = useState(false)
@@ -67,7 +67,7 @@ function URLQueryParameterSetter({ paramOptions, placeholder, allText }) {
         return () => window.removeEventListener('keydown', handleEscape)
     }, [isSelectOpen])
 
-    const selectedOption = paramOptions.find(opt => opt.value === selectedParam)
+    const selectedOption = paramOptions?.find(opt => opt.value === selectedParam)
     const inputType = selectedOption?.inputType || 'text' // Default to text for backward compatibility
 
     // Render the appropriate input based on inputType
