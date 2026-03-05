@@ -41,16 +41,11 @@ async function Page({ params }) {
     }
 
     return (
-        <div className="max-w-4xl mx-auto w-full">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                {id ? t("form.editTitle") : t("form.createTitle")}
-            </h1>
-            <UserForm
-                user={user}
-                groups={groups}
-                permissions={permissions}
-            />
-        </div>
+        <UserForm
+            user={user}
+            groups={groups}
+            permissions={permissions}
+        />
     );
 }
 
