@@ -1,1247 +1,1285 @@
 {
-  "navLinks": {
-    "dashboard": {
-      "headLabel": "Dashboard"
-    },
-    "warehouse": {
-      "headLabel": "Warehouse",
-      "subLabels": {
-        "items": "Item List",
-        "createItem": "Create Item",
-        "repositories": "Repository List",
-        "createRepository": "Create Repository",
-        "damagedItems": "Damaged Items"
-      }
-    },
-    "invoice": {
-      "sales": {
-        "headLabel": "Sales"
-      },
-      "purchase": {
-        "headLabel": "Purchase"
-      },
-      "subLabels": {
-        "invoiceManagement": "Invoice management",
-        "createInvoice": "Create invoice",
-        "refund": "Refund"
-      }
-    },
-    "customersSuppliers": {
-      "headLabel": "Customers/Suppliers",
-      "subLabels": {
-        "management": "Customer/supplier management",
-        "createInvoice": "Create customer/supplier"
-      }
-    },
-    "finance": {
-      "headLabel": "Finance",
-      "subLabels": {
-        "payments": "Payment List",
-        "addPayment": "Add Payment",
-        "expenses": "Expense List",
-        "addExpenses": "Add Expense",
-        "reversePayment": "Reverse Payment List",
-        "addReversePayment": "Add Reverse Pyament",
-        "debtSettlement": "Debt Settlement List",
-        "debtSettlementForm": "Add Debt Settlement",
-        "internalTransfer": "Internal Transfers",
-        "addInternalTransfer": "Add Internal Transfer",
-        "accountVault": "Business Accounts",
-        "accountTypes": "Account Types",
-        "expenseCategories": "Expense Categories",
-        "debts": "Debts",
-        "management": "Financial Management"
-      }
-    },
-    "reports": {
-      "headLabel": "Reports",
-      "subLabels": {
-        "refilled": "Refilled cans and used big cans",
-        "payments": "Payments in period",
-        "accountStatement": "client-supplier Account statement",
-        "refillableItemsClientClientHas": "Refillable Items Client Has"
-      }
-    },
-    "refilledCans": {
-      "headLabel": "Refilable Items",
-      "subLabels": {
-        "refilled": "Refilled List",
-        "createRefilled": "Refilled Form",
-        "refund": "Refund List",
-        "createRefund": "Refund Form",
-        "cansWithClints": "Refillable items clints has"
-      }
-    },
-    "userManagement": {
-      "headLabel": "User Management",
-      "subLabels": {
-        "users": "Users List",
-        "permissions": "Permissions List",
-        "createUser": "Create User"
-      }
-    },
-    "userDropDown": {
-      "settings": "Settings",
-      "signOut": "Sign out"
-    },
-    "settings": "Settings",
-    "signUp": "Sign Up",
-    "quickAdd": "Quick Add"
-  },
-  "toolTip": {
-    "created": "Created",
-    "lastUpdatedIn": "Last Updated IN",
-    "by": "By",
-    "createdAt": "Created At",
-    "createdBy": "Created By",
-    "lastUpdatedAt": "Last Updated At",
-    "lastUpdatedBy": "Last Updated By"
-  },
-  "warehouse": {
-    "items": {
-      "card": {
-        "image": "Image",
-        "name": "Name",
-        "actions": "Actions",
-        "price": "Price",
-        "origin": "Origin",
-        "place": "Place",
-        "edit": "Edit",
-        "gallery": "Gallery",
-        "table": "Table",
-        "delete": "Delete",
-        "Edit": "Edit",
-        "create": "Create Item",
-        "createTitle": "Create New Item",
-        "createDescription": "Fill in the form to create a new item",
-        "noImg": "No images available",
-        "remove": {
-          "label": "Remove",
-          "confirm": "Are you sure you want to remove this item?",
-          "description": "This action cannot be undone.",
-          "yes": "Delete",
-          "no": "Cancel",
-          "success": "Item deleted",
-          "canceled": "Deletion canceled",
-          "error": "Error Deleting Item"
-        }
-      },
-      "form": {
-        "title": "Create Item",
-        "id": "ID",
-        "type": "Type",
-        "name": "Name",
-        "itemName": "Item Name",
-        "private": "Private",
-        "wholesale": "Wholesale",
-        "piece": "Piece",
-        "collapsible": {
-          "prices": "Prices",
-          "hide": "Hide",
-          "show": "Show",
-          "inputs": "Inputs"
-        },
-        "origin": "Origin",
-        "place": "Place",
-        "submit": "Submit",
-        "edit": "Edit Item",
-        "successCreate": "Item created successfully",
-        "successEdit": "Item updated successfully",
-        "error": "Item",
-        "errors": {
-          "400": "Invalid data. Please check your input.",
-          "500": "Server error. Please try again later.",
-          "etc": "An unexpected error occurred. Please try again.",
-          "inputs": {
-            "name": "Name is invalid",
-            "images_upload": "Images are invalid",
-            "origin": "Origin is invalid",
-            "place": "Place is invalid"
-          }
-        }
-      },
-      "list": {
-        "error": "Error loading items."
-      },
-      "view": {
-        "refillable": "Refillable",
-        "id": "ID",
-        "comparisonPeriod": "Cancel Period",
-        "30vs30": "Last 30 days vs Previous 30 days",
-        "excludedItems": "Items with 0 price or false repository permit are excluded",
-        "previous": "Previous",
-        "current": "Current",
-        "units": "units",
-        "information": "Stock Information",
-        "pricing": "Pricing",
-        "price": "Price",
-        "details": "Details",
-        "type": "Type",
-        "origin": "Origin",
-        "place": "Place",
-        "timeline": "Timeline",
-        "created": "Created",
-        "updated": "Updated",
-        "lastUpdated": "Last Updated",
-        "by": "by",
-        "barcodes": "Barcodes",
-        "outOfStock": "Out of Stock",
-        "notFound": "Item Not Found",
-        "noAccess": "You don't have permission to view this item."
-      }
-    },
-    "repositories": {
-      "form": {
-        "title": "Create Repository",
-        "id": "ID",
-        "name": "Repository Name",
-        "submit": "Submit Repository",
-        "edit": "Edit Repository",
-        "errors": {
-          "400": "Invalid data. Please check your input.",
-          "500": "Server error. Please try again later.",
-          "etc": "An unexpected error occurred. Please try again."
-        },
-        "error": "Repositories",
-        "successCreate": "Repository created successfully",
-        "successEdit": "Repository updated successfully"
-      },
-      "table": {
-        "head": {
-          "name": "Name",
-          "actions": "Actions"
-        },
-        "place": "Place",
-        "edit": "Edit",
-        "create": "Create Repository",
-        "createTitle": "Create New Repository",
-        "createDescription": "Fill in the form to create a new repository",
-        "remove": {
-          "label": "Remove",
-          "confirm": "Are you sure you want to remove this repository?",
-          "description": "This action cannot be undone.",
-          "yes": "Delete",
-          "no": "Cancel",
-          "success": "Repository deleted",
-          "canceled": "Deletion canceled",
-          "error": "Error Deleting Repository"
-        },
-        "error": "Error loading repositories.",
-        "nothing": "Nothing here to show"
-      },
-      "damagedItems": {
-        "table": {
-          "create": "Register Damaged Item",
-          "createTitle": "Register New Damaged Item",
-          "createDescription": "Fill in the form to register a new damaged item",
-          "item": "Item",
-          "owner": "Owner",
-          "repository": "Repository",
-          "quantity": "Quantity",
-          "unitPrice": "Unit Price",
-          "date": "Date",
-          "notes": "Notes",
-          "actions": "Actions",
-          "remove": {
-            "label": "Remove",
-            "confirm": "Are you sure you want to remove this damaged item?",
-            "description": "This action cannot be undone.",
-            "yes": "Delete",
-            "no": "Cancel",
-            "success": "Damaged Item deleted",
-            "canceled": "Deletion canceled",
-            "error": "Error Deleting Damaged Item"
-          },
-          "edit": "Edit"
-        },
-        "form": {
-          "title": "Register Damaged Item",
-          "id": "ID",
-          "item": "Item",
-          "repository": "Repository",
-          "quantity": "Quantity",
-          "unitPrice": "Unit Price",
-          "date": "Date",
-          "notes": "Notes",
-          "edit": "Edit Damaged Item",
-          "submit": "Submit",
-          "successCreate": "Damaged Item created successfully",
-          "successEdit": "Damaged Item updated successfully",
-          "error": "Error loading damaged item"
-        }
-      }
-    }
-  },
-  "customer-supplier": {
-    "table": {
-      "head": {
-        "name": "Name",
-        "details": "Details",
-        "actions": "Actions"
-      },
-      "edit": "Edit",
-      "view": "View",
-      "remove": {
-        "label": "Remove",
-        "confirm": "Are you sure you want to remove this Customer/Supplier?",
-        "description": "This action cannot be undone.",
-        "yes": "Delete",
-        "no": "Cancel",
-        "success": "Customer/Supplier deleted",
-        "canceled": "Deletion canceled",
-        "error": "Error Deleting Customer/Supplier"
-      }
-    },
-    "form": {
-      "id": "ID",
-      "name": "Name",
-      "detail": "Detail",
-      "error": "Customer/Supplier"
-    },
-    "view": {
-      "title": "Customer/Supplier Details",
-      "loading": "Loading",
-      "error": "Failed to load details.",
-      "creditBalance": "Credit Balance",
-      "details": "Details",
-      "noDetails": "No details available",
-      "relatedDocuments": "Related Documents",
-      "salesInvoices": "Sales Invoices",
-      "purchaseInvoices": "Purchase Invoices",
-      "payments": "Payments",
-      "expenses": "Expenses",
-      "salesInvoiceRefunds": "Sales Invoice Refunds",
-      "refillableItemsRefund": "Refillable Items Refund",
-      "reports": "Reports",
-      "accountStatement": "Account Statement",
-      "dueDcdCans": "Due DCD Cans",
-      "showRaw": "Show Raw",
-      "showUI": "Show UI"
-    }
-  },
-  "invoice": {
-    "table": {
-      "view": "View",
-      "head": {
-        "owner": "Owner",
-        "issueDate": "Issue Date",
-        "dueDate": "Due Date",
-        "totalAmount": "Total Amount",
-        "repositoryPremit": "Repository Permit",
-        "originalInvoice": "Original Invoice",
-        "notes": "Notes",
-        "actions": "Actions",
-        "status": "Status"
-      },
-      "remove": {
-        "label": "Remove",
-        "confirm": "Are you sure you want to delete this item?",
-        "description": "This action cannot be undone.",
-        "yes": "Delete",
-        "no": "Cancel",
-        "success": "Item deleted",
-        "canceled": "Deletion canceled"
-      },
-      "edit": "Edit",
-      "refund": "Refund"
-    },
-    "form": {
-      "invoice": "Invoice",
-      "issueDate": "Issue Date",
-      "dueDate": "Due Date",
-      "owner": "Owner",
-      "items": "Invoice Items",
-      "addItem": "Add Item",
-      "notes": "Notes",
-      "additionalNotes": "Additional notes...",
-      "totalAmount": "Total Amount:",
-      "unitPrice": "Unit Price",
-      "discount": "Discount",
-      "taxRate": "Tax Rate",
-      "repository": "Repository",
-      "selectRepository": "Select a repository",
-      "update": "Update Invoice",
-      "create": "Create Invoice",
-      "successCreate": "Invoice created successfully",
-      "successEdit": "Invoice updated successfully",
-      "itemId": "Item ID:",
-      "itemName": "Item Name",
-      "notSet": "Not set",
-      "description": "Description",
-      "previewItem": "Preview Item",
-      "addToInvoice": "Add to Invoice",
-      "cancelPreview": "Cancel",
-      "removeItem": "Remove Item",
-      "quantity": "Quantity",
-      "noImage": "No image available",
-      "paymentType": "Payment Type",
-      "cash": "Cash",
-      "client": "Client",
-      "addPayment": "Add payment with this invoice",
-      "showPayment": "Show Payment",
-      "yes": "Yes",
-      "no": "No",
-      "paymentAmount": "Payment Amount",
-      "paymentAccount": "Payment Account",
-      "paymentNotes": "Payment Notes",
-      "selectPaymentAccount": "Select payment account",
-      "noItemsError": "Please add at least one item to the invoice",
-      "ownerRequired": "Owner is required",
-      "paymentFieldsRequired": "Payment amount and account are required for immediate payment",
-      "paymentDisabledZeroAmount": "Payment is disabled because the total amount is $0.00",
-      "statusOptions": {
-        "3": "Unpaid",
-        "4": "Partially Paid",
-        "5": "Paid",
-        "6": "Overpaid",
-        "default": "Unknown"
-      }
-    }
-  },
-  "finance": {
-    "table": {
-      "view": "View",
-      "edit": "Edit",
-      "delete": "Delete"
-    },
-    "fields": {
-      "transaction": "Add Payment",
-      "update": "Update Payment",
-      "owner": "Owner",
-      "paymentMethod": "Payment Method",
-      "amount": "Amount",
-      "status": "Status",
-      "ref": "Reference",
-      "date": "Date",
-      "note": "Note",
-      "moreNotes": "Additional notes...",
-      "type": "Payment Type",
-      "paymentProof": "Payment Proof",
-      "expenseProof": "Expense Receipt/Proof",
-      "transferProof": "Transfer Proof",
-      "relatedInvoice": "Related Sales Invoice (Optional)",
-      "uploadScreenshot": "Upload screenshot or receipt (optional)",
-      "uploadReceipt": "Upload receipt or proof document (optional)",
-      "uploadProof": "Upload transfer proof or screenshot (optional)",
-      "optionalFields": "Optional Fields",
-      "paymentRef": "Payment Reference",
-      "paymentRefHelper": "Unique reference for this payment",
-      "transactionId": "Transaction ID",
-      "senderPhone": "Sender Phone",
-      "senderName": "Sender Name",
-      "bankName": "Bank Name",
-      "receivedBy": "Received By",
-      "fromVault": "From Vault",
-      "toVault": "To Vault",
-      "transferType": "Transfer Type",
-      "dateRangeAfter": "Date From",
-      "dateRangeBefore": "Date To",
-      "category": "Category",
-      "image": "Receipt/Proof Image"
-    },
-    "status": {
-      "paid": "Paid",
-      "onHold": "ON HOLD"
-    },
-    "success": {
-      "created": "Transaction Created Successfully",
-      "updated": "Transaction Updated Successfully",
-      "delete": "Transaction Deleted Successfully"
-    },
-    "assert": {
-      "message": "Are you sure you want to delete this transaction?"
-    },
-    "debtSettlement": {
-      "header": "Debt Settlement",
-      "settlementAmount": "Settlement Amount",
-      "status": {
-        "label": "Status",
-        "approved": "Approved",
-        "not_approved": "Not Approved"
-      }
-    },
-    "expense": {
-      "header": "Expense",
-      "list": {
-        "noExpenses": "No expenses found",
-        "notes": "Notes",
-        "noImage": "No image attached",
-        "image": "Image",
-        "summary": "Summary",
-        "createTitle": "Create Expense"
-      },
-      "category": {
-        "name": "Category Name",
-        "description": "Description",
-        "create": "Create Category",
-        "edit": "Edit Category",
-        "namePlaceholder": "e.g., Office Supplies",
-        "descriptionPlaceholder": "Optional description for this category",
-        "deleteConfirm": "Are you sure you want to delete this category? This action cannot be undone.",
-        "deleteSuccess": "Category deleted successfully"
-      }
-    },
-    "general": {
-      "t": "transaction",
-      "add": "Add",
-      "update": "Update"
-    },
-    "statusOptions": {
-      "confirmed": "Confirmed",
-      "pending": "Pending",
-      "rejected": "Rejected",
-      "reimbursed": "Reimbursed"
-    },
-    "transferTypes": {
-      "internal": "Internal",
-      "external": "External",
-      "p2p": "Peer to Peer"
-    },
-    "placeholders": {
-      "paymentRef": "PAY-20240110-ABC12345",
-      "transactionId": "TXN123456789",
-      "senderPhone": "01234567890",
-      "senderName": "John Doe",
-      "bankName": "National Bank of Egypt",
-      "receivedBy": "Staff name"
-    },
-    "helpers": {
-      "transactionId": "For InstaPay/Bank Transfer",
-      "senderPhone": "For mobile wallet payments",
-      "senderName": "For bank transfers",
-      "bankName": "For bank transfers",
-      "receivedBy": "Who physically received cash"
-    },
-    "management": {
-      "title": "Financial Overview",
-      "computedFromTransactions": "Computed from transactions",
-      "totalBalance": "Total Balance",
-      "summary": "Summary",
-      "totalAccounts": "Total Accounts",
-      "activeAccounts": "Active Accounts",
-      "highestBalance": "Highest Balance",
-      "status": "Status",
-      "ofTotal": "of total",
-      "loading": "Loading...",
-      "accessDenied": "Access Denied / Error",
-      "defaultError": "Data could not be loaded."
-    }
-  },
-  "accountVault": {
-    "title": "Account Vault",
-    "businessAccounts": "Business Accounts",
-    "accountTypes": "Account Types",
-    "fields": {
-      "accountName": "Account Name",
-      "accountType": "Account Type",
-      "accountNumber": "Account Number",
-      "phoneNumber": "Phone Number",
-      "bankName": "Bank Name",
-      "currentBalance": "Current Balance",
-      "isActive": "Active Status",
-      "typeName": "Type Name"
-    },
-    "placeholders": {
-      "searchAccountName": "Search by account name",
-      "searchAccountType": "Filter by account type",
-      "accountNumber": "Enter account number",
-      "phoneNumber": "Enter phone number (for mobile wallets)",
-      "bankName": "Enter bank name",
-      "typeName": "Enter account type name (e.g., Cash, Bank Account)"
-    },
-    "actions": {
-      "createAccount": "Create Business Account",
-      "createType": "Create Account Type",
-      "editAccount": "Edit Business Account",
-      "editType": "Edit Account Type"
-    },
-    "status": {
-      "active": "Active",
-      "inactive": "Inactive"
-    },
-    "table": {
-      "delete": "Delete"
-    }
-  },
-  "refillableItems": {
-    "form": {
-      "title": {
-        "createRefilled": "Create Refilled Transaction",
-        "editRefilled": "Edit Refilled Transaction",
-        "createRefund": "Create Refund Transaction",
-        "editRefund": "Edit Refund Transaction"
-      },
-      "owner": "Owner",
-      "item": "Item",
-      "quantity": "Refilled Quantity",
-      "repository": "Repository",
-      "notes": "Notes",
-      "moreNotes": "additional Notes...",
-      "refilledItem": "Select Refilled Item",
-      "usedItem": "Select Used Item",
-      "usedQuantity": "Used Quantity",
-      "employee": "Employee",
-      "date": "Date"
-    },
-    "refilled": {
-      "list": {
-        "refilledItem": "Refilled Item",
-        "quantity": "Quantity",
-        "usedItem": "Used Item",
-        "date": "Date",
-        "repo": "Repository",
-        "employee": "Employee",
-        "notes": "Notes"
-      }
-    },
-    "refund": {
-      "list": {
-        "client": "Client",
-        "date": "Date",
-        "refunded": "Refunded",
-        "quantity": "Quantity",
-        "repo": "Repository",
-        "notes": "Notes"
-      }
-    }
-  },
-  "paginationControls": {
-    "next": "Next Page",
-    "prev": "Prev Page",
-    "page": "Page",
-    "of": "of"
-  },
-  "auth": {
-    "welcome": "Welcome Back",
-    "username": "Username",
-    "password": "Password",
-    "login": "Login",
-    "loading": "Logging in",
-    "errors": {
-      "403": "Invalid credentials.",
-      "404": "Service not found.",
-      "500": "Server error. Please try again later.",
-      "missing": {
-        "username": "Username is required",
-        "password": "Password is required",
-        "general": "Username and password are required."
-      },
-      "etc": "Server error during login. Please try again.",
-      "invalidForm": "Invalid form submission."
-    },
-    "logout": {
-      "loading": "Logging out…",
-      "completed": "Logout completed",
-      "progress": "Logout in Progress",
-      "progressMessage": "Please wait while we terminate your session",
-      "completedMessage": "Your session has been terminated",
-      "redirect": "Redirecting to login page in a few seconds...",
-      "failed": "Logout Failed",
-      "retry": "Retry Logout",
-      "error": "Logout failed. Please try again."
-    },
-    "changePassword": {
-      "title": "Change Password",
-      "description": "You must change your password before continuing.",
-      "currentPassword": "Current Password",
-      "newPassword": "New Password",
-      "confirmPassword": "Confirm New Password",
-      "submit": "Change Password",
-      "loading": "Changing...",
-      "back": "Go Back",
-      "success": "Password changed successfully!",
-      "errors": {
-        "allFields": "All fields are required.",
-        "match": "Passwords do not match."
-      }
-    }
-  },
-  "user-management": {
-    "table": {
-      "create": "Create User",
-      "head": {
-        "username": "Username",
-        "status": "Status",
-        "groups": "Groups",
-        "permissions": "Permissions",
-        "dateJoined": "Date Joined",
-        "actions": "Actions"
-      },
-      "active": "Active",
-      "inactive": "Inactive",
-      "superuser": "Superuser",
-      "permissionsCount": "permissions",
-      "edit": "Edit",
-      "remove": {
-        "label": "Remove",
-        "confirm": "Delete User?",
-        "description": "This will permanently delete the user account.",
-        "yes": "Delete",
-        "no": "Cancel",
-        "success": "User deleted successfully",
-        "canceled": "Deletion canceled"
-      }
-    },
-    "form": {
-      "createTitle": "Create User",
-      "editTitle": "Edit User",
-      "profileDetails": "Profile Details",
-      "removePhoto": "Remove Photo",
-      "clickToUpload": "Click to upload new avatar",
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "basicInfo": "Basic Information",
-      "username": "Username",
-      "password": "Password",
-      "passwordHint": "Leave blank to keep current password",
-      "isActive": "Active",
-      "isStaff": "Staff",
-      "isSuperuser": "Superuser",
-      "permissions": "Permissions & Groups",
-      "saveAsGroup": {
-        "button": "Save as Group",
-        "title": "Save Permissions as Group",
-        "description": "Create a new group with the {count} currently selected permissions.",
-        "namePlaceholder": "Group name",
-        "nameRequired": "Please enter a group name",
-        "noPermissions": "No permissions selected",
-        "save": "Create Group",
-        "saving": "Creating...",
-        "success": "Group created successfully!",
-        "error": "Failed to create group"
-      }
-    },
-    "filters": {
-      "username": "Search by username",
-      "all": "All",
-      "isActive": {
-        "label": "Status",
-        "active": "Active",
-        "inactive": "Inactive"
-      },
-      "isSuperuser": {
-        "label": "Superuser",
-        "yes": "Yes",
-        "no": "No"
-      },
-      "isStaff": {
-        "label": "Staff",
-        "yes": "Yes",
-        "no": "No"
-      }
-    }
-  },
-  "permission-management": {
-    "title": "Permission Management",
-    "tabs": {
-      "groups": "Groups",
-      "permissions": "Permissions"
-    },
-    "selector": {
-      "modeGroups": "Groups Only",
-      "modeManual": "Manual Only",
-      "modeCombined": "Combined",
-      "groupsTitle": "Select Groups",
-      "permissionsTitle": "Individual Permissions",
-      "selected": "selected",
-      "selectAll": "Select All",
-      "clearAll": "Clear All",
-      "selectApp": "Select All",
-      "unselectApp": "Unselect All",
-      "fromGroup": "from group",
-      "superuserRequired": "Superuser Required",
-      "groupRemovedWarning": "Group '{groupNames}' removed to allow custom permission selection."
-    },
-    "permissions": {
-      "searchPlaceholder": "Search permissions...",
-      "expandAll": "Expand All",
-      "collapseAll": "Collapse All",
-      "noResults": "No permissions found",
-      "superuserRequired": "Superuser Required",
-      "table": {
-        "name": "Name",
-        "codename": "Codename",
-        "model": "Model"
-      }
-    },
-    "groups": {
-      "description": "Manage permission groups to simplify user access control.",
-      "create": "Create Group",
-      "noGroups": "No groups found. Click 'Create Group' to add one.",
-      "table": {
-        "name": "Group Name",
-        "permissionCount": "Permissions",
-        "permissions": "permissions",
-        "actions": "Actions",
-        "edit": "Edit",
-        "delete": "Delete"
-      },
-      "delete": {
-        "confirm": "Delete Group?",
-        "description": "This will remove the group and disassociate it from all users.",
-        "yes": "Delete",
-        "no": "Cancel",
-        "success": "Group deleted successfully",
-        "canceled": "Deletion canceled"
-      }
-    },
-    "groupForm": {
-      "createTitle": "Create Group",
-      "editTitle": "Edit Group",
-      "namePlaceholder": "Enter group name",
-      "inheritFrom": "Inherit permissions from existing groups",
-      "permissionsTitle": "Permissions",
-      "selected": "selected",
-      "selectAll": "Select All",
-      "clearAll": "Clear All",
-      "selectApp": "Select All",
-      "unselectApp": "Unselect All",
-      "saving": "Saving..."
-    }
-  },
-  "inputs": {
-    "file": {
-      "upload": "Choose Files or drag and drop",
-      "browse": "or click to browse",
-      "maxSize": "Maximum file size is 100MB",
-      "accepted": {
-        "all": "All Files",
-        "images": "Images",
-        "videos": "Videos",
-        "audio": "Audio",
-        "documents": "Documents",
-        "archives": "Archives"
-      },
-      "only": "Only",
-      "preview": "Click to preview"
-    },
-    "searchableDropdown": {
-      "noOptions": "No options available",
-      "loading": "Loading",
-      "placeholder": "Select an option",
-      "searchPlaceholder": "Select..."
-    },
-    "search": {
-      "itemName": "Item Name",
-      "ownerName": "Owner Name",
-      "repository": "Repository",
-      "notes": "Notes",
-      "category": "Category",
-      "categoryName": "Category Name",
-      "accountName": "Account Name",
-      "limit": "Limit",
-      "offset": "Offset",
-      "fromDate": "From Date",
-      "toDate": "To Date",
-      "refilledItem": "Refilled Item",
-      "usedItem": "Used Item",
-      "orderNumber": "Order Number",
-      "itemDescription": "Item Description",
-      "paymentNumber": "Payment No",
-      "transactionNumber": "Transaction Number",
-      "type": "Type",
-      "id": "ID",
-      "name": "Name",
-      "barcode": "Barcode",
-      "place": "Place",
-      "origin": "Origin",
-      "repositoryName": "Repository Name",
-      "date": "Date",
-      "status": "Status",
-      "repositoryPermit": "Repository Permit",
-      "repositoryPermitOptions": {
-        "true": "Delivered",
-        "false": "Not Delivered"
-      },
-      "issueDateAfter": "Issue Date From",
-      "issueDateBefore": "Issue Date To",
-      "dueDateAfter": "Due Date From",
-      "dueDateBefore": "Due Date To"
-    },
-    "quantity": {
-      "label": "Quantity",
-      "increment": "Increase quantity",
-      "decrement": "Decrease quantity"
-    }
-  },
-  "global": {
-    "backToList": "Back to List",
-    "createdAt": "Created At",
-    "updatedAt": "Updated At",
-    "createdBy": "Created By",
-    "updatedBy": "Updated By",
-    "actions": "Actions",
-    "all": "All",
-    "searchPlaceholder": "Search ...",
-    "form": {
-      "submit": "Submit",
-      "edit": "Edit",
-      "editSuccess": "Edit successful",
-      "createSuccess": "Create successful",
-      "successEdit": "Updated successfully",
-      "successCreate": "Created successfully",
-      "id": "ID"
-    },
-    "errors": {
-      "400": "Bad Request",
-      "403": "Access denied.",
-      "404": "Not Found",
-      "500": "Internal Server Error",
-      "503": "Service unavailable. Please try again later.",
-      "etc": "An unexpected error occurred. Please try again.",
-      "pageNotFound": "page not found",
-      "nothing": "Nothing here to show",
-      "loadError": "Failed to load data",
-      "deleteError": "Failed to delete item"
-    },
-    "delete": {
-      "label": "Remove",
-      "actionLabel": "Delete",
-      "cancelLabel": "Cancel",
-      "confirmMessage": "Are you sure you want to delete this item?",
-      "deleting": "Deleting...",
-      "success": "Deleted successfully",
-      "assert": {
-        "description": "This action cannot be undone.",
-        "canceled": "Canceled"
-      }
-    },
-    "print": {
-      "label": "Print"
-    }
-  },
-  "ownerAccountStatement": {
-    "transactionSummary": "Transaction Summary",
-    "table": {
-      "type": "Type",
-      "count": "Count",
-      "amount": "Amount"
-    },
-    "types": {
-      "salesInvoices": "Sales Invoices",
-      "returnSalesInvoices": "Return Sales Invoices",
-      "purchasesInvoices": "Purchases Invoices",
-      "payments": "Payments"
-    },
-    "creditTotals": {
-      "title": "Credit Totals",
-      "items": {
-        "InitialCreditBalance": "Due from last year",
-        "SalesInvoices": "Sales Invoices",
-        "ReturnSalesInvoices": "Sales Invoices Refund",
-        "payments": "Payments",
-        "ReversPayments": "Revers Payments",
-        "PurchaseInvoices": "Purchase Invoices"
-      }
-    },
-    "transactions": {
-      "title": "Transactions",
-      "fields": {
-        "ref": "Ref ID",
-        "type": "Type",
-        "date": "Date",
-        "amount": "Transaction Amount",
-        "remaining": "Remaining Credit Balance"
-      }
-    },
-    "noData": "No data available"
-  },
-  "dashboard": {
-    "emptyState": {
-      "title": "No Dashboard Data Available",
-      "description": "You do not have permission to view any dashboard reports. Please contact your administrator if you need access."
-    }
-  },
-  "reports": {
-    "title": "Reports Dashboard",
-    "emptyState": {
-      "title": "No Reports Available",
-      "description": "You do not have permission to view any reports. Please contact your administrator if you need access."
-    },
-    "reportSections": {
-      "warehouse": {
-        "title": "Warehouse",
-        "links": {
-          "itemMovement": {
-            "label": "Item Movement",
-            "description": "Track inventory movements and transfers"
-          },
-          "itemsSale": {
-            "label": "Items Sale",
-            "description": "Track Items sale in period"
-          },
-          "itemsAsXLSX": {
-            "label": "Generate Items As XLSX",
-            "description": "export items as xlsx"
-          }
-        }
-      },
-      "finance": {
-        "title": "Finance",
-        "links": {
-          "paymentsInPeriod": {
-            "label": "Payments in Period",
-            "description": "Financial transactions and payments"
-          },
-          "debtList": {
-            "label": "Owners's credit balance list",
-            "description": "list of owners who has credit balance"
-          }
-        }
-      },
-      "refillableItems": {
-        "title": "Refillable Items",
-        "links": {
-          "refilledItems": {
-            "label": "Refilled & Used Items",
-            "description": "Items refilled and used in period"
-          },
-          "refillableItemsClient": {
-            "label": "Client Refillable Items",
-            "description": "Refillable items client currently has"
-          }
-        }
-      },
-      "clientsSuppliers": {
-        "title": "Client & Supplier",
-        "links": {
-          "accountStatement": {
-            "label": "Account Statement",
-            "description": "Detailed account statements"
-          }
-        }
-      }
-    },
-    "generate": "Generate"
-  },
-  "Error": {
-    "title": "Oops! Something went wrong",
-    "message": "We encountered an unexpected error. Don't worry, it's not your fault.",
-    "errorDetails": "Error Details",
-    "retry": "Try Again",
-    "home": "Go Home"
-  },
-  "NotFound": {
-    "title": "Page Not Found",
-    "message": "Sorry, we couldn't find the page you're looking for. It might have been moved or deleted.",
-    "home": "Go Home",
-    "back": "Go Back",
-    "url": "Reqquested URL"
-  },
-  "EventNotFound": {
-    "title": "{name} Not Found",
-    "message": "The {name} you're looking for doesn't exist or may have been removed.",
-    "back": "Go Back",
-    "eventId": "{name} ID"
-  },
-  "permitButton": {
-    "delivered": "Delivered",
-    "notDelivered": "Not Delivered"
-  },
-  "successCreate": "Created successfully",
-  "successEdit": "Updated successfully",
-  "datePicker": {
-    "months": {
-      "0": "January",
-      "1": "February",
-      "2": "March",
-      "3": "April",
-      "4": "May",
-      "5": "June",
-      "6": "July",
-      "7": "August",
-      "8": "September",
-      "9": "October",
-      "10": "November",
-      "11": "December"
-    },
-    "weekdays": [
-      "Su",
-      "Mo",
-      "Tu",
-      "We",
-      "Th",
-      "Fr",
-      "Sa"
-    ],
-    "controls": {
-      "today": "Today",
-      "clear": "Clear",
-      "done": "Done",
-      "selectDate": "Select date"
-    }
-  },
-  "barcodeScanner": {
-    "scan": "Scan",
-    "scanBarcode": "Scan Barcode",
-    "cameraError": "Camera Error",
-    "retry": "Retry",
-    "torch": "Torch",
-    "switch": "Switch",
-    "positionBarcode": "Position barcode within frame",
-    "noItemFound": "No item found with barcode",
-    "itemSelected": "Item selected",
-    "itemAdded": "Item added",
-    "scanError": "Error occurred during scan",
-    "mode": {
-      "select": "Scanner Mode",
-      "camera": "Camera",
-      "pos": "POS Scanner",
-      "recommendedMobile": "Recommended",
-      "recommendedDesktop": "Recommended"
-    },
-    "camera": {
-      "idle": "Camera paused due to inactivity",
-      "tapToResume": "Tap to resume scanning",
-      "timeout": "Auto-pause after {seconds}s of inactivity"
-    },
-    "pos": {
-      "waiting": "Waiting for scan...",
-      "scanning": "Scanning...",
-      "ready": "Point your POS scanner at a barcode",
-      "instructions": "Use your handheld or desktop barcode scanner",
-      "lastScan": "Last Scan:",
-      "instructionStep1": "Use your handheld or desktop barcode scanner",
-      "instructionStep2": "Point it at any barcode and scan",
-      "instructionStep3": "The barcode will be automatically detected"
-    },
-    "confirmation": {
-      "loading": "Loading...",
-      "error": "Error",
-      "confirmItem": "Confirm Item",
-      "searchingItem": "Searching for item...",
-      "itemNotFound": "Item Not Found",
-      "itemId": "Item ID",
-      "price": "Price",
-      "cancel": "Cancel",
-      "addToInvoice": "Add to Invoice",
-      "addToDamagedItems": "Add to Damaged Items",
-      "addItem": "Add Item",
-      "select": "Select",
-      "close": "Close"
-    },
-    "manager": {
-      "title": "Barcodes",
-      "addBarcode": "Add Barcode",
-      "noBarcodesYet": "No barcodes added yet. Click \"Add Barcode\" to get started.",
-      "placeholder": "Enter or scan barcode",
-      "removeBarcode": "Remove barcode"
-    },
-    "errorBoundary": {
-      "title": "Scanner Error",
-      "message": "The barcode scanner encountered an error. Please try again or use manual entry.",
-      "close": "Close"
-    }
-  },
-  "settings": {
-    "title": "User Settings",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "username": "Username",
-    "firstNamePlaceholder": "John",
-    "lastNamePlaceholder": "Doe",
-    "clickToUpload": "Click to upload new avatar",
-    "removePhoto": "Remove photo",
-    "cancel": "Cancel",
-    "saveChanges": "Save Changes",
-    "changePassword": "Change Password",
-    "saving": "Saving...",
-    "successUpdate": "Profile updated successfully",
-    "errorUpdate": "Failed to update profile",
-    "errorGeneric": "An error occurred",
-    "database": {
-      "title": "Database Management",
-      "createFullBackup": "Create Full Backup",
-      "fullBackupDesc": "Backs up the entire database structure and data",
-      "createDataOnlyBackup": "Create Data-Only Backup",
-      "dataOnlyBackupDesc": "Backs up only the data, preserving existing structure",
-      "createFullBackupWithMedia": "Create Full Backup (+ Media)",
-      "fullBackupMediaDesc": "Backs up database and all media files (Images, etc.)",
-      "restoreFromFile": "Restore from File",
-      "processing": "Processing...",
-      "downloadConfirmation": "Backup created. Do you want to download the file?",
-      "backupCreatedSuccess": "Backup created successfully.",
-      "restoreTitle": "Restore Database",
-      "uploadFile": "Upload File",
-      "createFullBackup_ar": "إنشاء نسخة احتياطية كاملة",
-      "fullBackupDesc_ar": "نسخ احتياطي لهيكل قاعدة البيانات والبيانات بالكامل",
-      "createDataOnlyBackup_ar": "إنشاء نسخة احتياطية للبيانات فقط",
-      "dataOnlyBackupDesc_ar": "نسخ احتياطي للبيانات فقط، مع الحفاظ على الهيكل الحالي",
-      "createFullBackupWithMedia_ar": "إنشاء نسخة احتياطية كاملة (+ الوسائط)",
-      "fullBackupMediaDesc_ar": "نسخ احتياطي لقاعدة البيانات وجميع ملفات الوسائط (الصور وغيرها)",
-      "restoreFromFile_ar": "استعادة من ملف",
-      "selectFromServer": "Select from Server",
-      "dropBackupFile": "Drop backup file here",
-      "selectBackup": "Select Backup",
-      "selectBackupPlaceholder": "Choose a backup...",
-      "restore": "Restore Database",
-      "restoreConfirmation": "Are you sure you want to restore the database? Current data will be replaced.",
-      "restoreSuccess": "Database restored successfully.",
-      "selectFileWarning": "Please select a file to restore.",
-      "selectBackupWarning": "Please select a backup from the server.",
-      "file": "File",
-      "download": "Download",
-      "cancel": "Cancel",
-      "backupRetentionWarning": "Note: Only the last {count} backups are kept. Older backups are automatically deleted.",
-      "errorGeneric": "An error occurred. Please try again.",
-      "notes": "Backup Notes",
-      "notesPlaceholder": "Enter optional notes for this backup...",
-      "saveChanges": "Save Config",
-      "saving": "Saving...",
-      "configSaved": "Configuration updated successfully.",
-      "maxBackupsRetention": "Max Backups Retention",
-      "noBackupsFound": "No backups found on server",
-      "backupBy": "By: {user}"
-    },
-    "warehouse": {
-      "title": "Warehouse Management",
-      "createItemsXlsx": "Create Items list as xlsx"
-    },
-    "browse": {
-      "title": "Browse",
-      "media": "Media"
-    },
-    "media": {
-      "title": "Media File Browser",
-      "subtitle": "Browse and filter your media files",
-      "stats": {
-        "totalFiles": "Total Files",
-        "filteredResults": "Filtered Results",
-        "totalSize": "Total Size"
-      },
-      "search": {
-        "name": "Name",
-        "nameOrDescription": "Name or Description",
-        "categoryName": "Category Name",
-        "size": "Size",
-        "actions": "Actions",
-        "view": "View",
-        "download": "Download"
-      },
-      "category": "Category",
-      "allCategories": "All Categories",
-      "sortBy": "Sort By",
-      "fileName": "File Name",
-      "fileSize": "File Size",
-      "table": {
-        "file": "File",
-        "category": "Category",
-        "size": "Size",
-        "actions": "Actions",
-        "view": "View",
-        "download": "Download"
-      },
-      "noFiles": "No files found matching your criteria",
-      "showing": "Showing",
-      "of": "of",
-      "files": "files"
-    }
-  },
-  "unauthorized": {
-    "title": "Access Denied",
-    "message": "You don't have permission to access this page.",
-    "contactAdmin": "Please contact your administrator if you believe this is a mistake.",
-    "goBack": "Go Back",
-    "goToDashboard": "Go to Dashboard"
-  }
+	"navLinks": {
+		"dashboard": {
+			"headLabel": "Dashboard"
+		},
+		"warehouse": {
+			"headLabel": "Warehouse",
+			"subLabels": {
+				"items": "Item List",
+				"createItem": "Create Item",
+				"repositories": "Repository List",
+				"createRepository": "Create Repository",
+				"damagedItems": "Damaged Items"
+			}
+		},
+		"invoice": {
+			"sales": {
+				"headLabel": "Sales"
+			},
+			"purchase": {
+				"headLabel": "Purchase"
+			},
+			"subLabels": {
+				"invoiceManagement": "Invoice management",
+				"createInvoice": "Create invoice",
+				"refund": "Refund"
+			}
+		},
+		"customersSuppliers": {
+			"headLabel": "Customers/Suppliers",
+			"subLabels": {
+				"management": "Customer/supplier management",
+				"createInvoice": "Create customer/supplier"
+			}
+		},
+		"finance": {
+			"headLabel": "Finance",
+			"subLabels": {
+				"payments": "Payment List",
+				"addPayment": "Add Payment",
+				"expenses": "Expense List",
+				"addExpenses": "Add Expense",
+				"reversePayment": "Reverse Payment List",
+				"addReversePayment": "Add Reverse Pyament",
+				"debtSettlement": "Debt Settlement List",
+				"debtSettlementForm": "Add Debt Settlement",
+				"internalTransfer": "Internal Transfers",
+				"addInternalTransfer": "Add Internal Transfer",
+				"accountVault": "Business Accounts",
+				"accountTypes": "Account Types",
+				"expenseCategories": "Expense Categories",
+				"debts": "Debts",
+				"management": "Financial Management"
+			}
+		},
+		"reports": {
+			"headLabel": "Reports",
+			"subLabels": {
+				"refilled": "Refilled cans and used big cans",
+				"payments": "Payments in period",
+				"accountStatement": "client-supplier Account statement",
+				"refillableItemsClientClientHas": "Refillable Items Client Has"
+			}
+		},
+		"refilledCans": {
+			"headLabel": "Refilable Items",
+			"subLabels": {
+				"refilled": "Refilled List",
+				"createRefilled": "Refilled Form",
+				"refund": "Refund List",
+				"createRefund": "Refund Form",
+				"cansWithClints": "Refillable items clints has"
+			}
+		},
+		"userManagement": {
+			"headLabel": "User Management",
+			"subLabels": {
+				"users": "Users List",
+				"permissions": "Permissions List",
+				"createUser": "Create User"
+			}
+		},
+		"userDropDown": {
+			"settings": "Settings",
+			"signOut": "Sign out"
+		},
+		"settings": "Settings",
+		"signUp": "Sign Up",
+		"quickAdd": "Quick Add"
+	},
+	"toolTip": {
+		"created": "Created",
+		"lastUpdatedIn": "Last Updated IN",
+		"by": "By",
+		"createdAt": "Created At",
+		"createdBy": "Created By",
+		"lastUpdatedAt": "Last Updated At",
+		"lastUpdatedBy": "Last Updated By"
+	},
+	"warehouse": {
+		"items": {
+			"card": {
+				"image": "Image",
+				"name": "Name",
+				"actions": "Actions",
+				"price": "Price",
+				"origin": "Origin",
+				"place": "Place",
+				"edit": "Edit",
+				"gallery": "Gallery",
+				"table": "Table",
+				"delete": "Delete",
+				"Edit": "Edit",
+				"create": "Create Item",
+				"createTitle": "Create New Item",
+				"createDescription": "Fill in the form to create a new item",
+				"noImg": "No images available",
+				"remove": {
+					"label": "Remove",
+					"confirm": "Are you sure you want to remove this item?",
+					"description": "This action cannot be undone.",
+					"yes": "Delete",
+					"no": "Cancel",
+					"success": "Item deleted",
+					"canceled": "Deletion canceled",
+					"error": "Error Deleting Item"
+				}
+			},
+			"form": {
+				"title": "Create Item",
+				"id": "ID",
+				"type": "Type",
+				"name": "Name",
+				"itemName": "Item Name",
+				"private": "Private",
+				"wholesale": "Wholesale",
+				"piece": "Piece",
+				"collapsible": {
+					"prices": "Prices",
+					"hide": "Hide",
+					"show": "Show",
+					"inputs": "Inputs"
+				},
+				"origin": "Origin",
+				"place": "Place",
+				"submit": "Submit",
+				"edit": "Edit Item",
+				"successCreate": "Item created successfully",
+				"successEdit": "Item updated successfully",
+				"error": "Item",
+				"errors": {
+					"400": "Invalid data. Please check your input.",
+					"500": "Server error. Please try again later.",
+					"etc": "An unexpected error occurred. Please try again.",
+					"inputs": {
+						"name": "Name is invalid",
+						"images_upload": "Images are invalid",
+						"origin": "Origin is invalid",
+						"place": "Place is invalid"
+					}
+				}
+			},
+			"list": {
+				"error": "Error loading items."
+			},
+			"view": {
+				"refillable": "Refillable",
+				"id": "ID",
+				"comparisonPeriod": "Cancel Period",
+				"30vs30": "Last 30 days vs Previous 30 days",
+				"excludedItems": "Items with 0 price or false repository permit are excluded",
+				"previous": "Previous",
+				"current": "Current",
+				"units": "units",
+				"information": "Stock Information",
+				"pricing": "Pricing",
+				"price": "Price",
+				"details": "Details",
+				"type": "Type",
+				"origin": "Origin",
+				"place": "Place",
+				"timeline": "Timeline",
+				"created": "Created",
+				"updated": "Updated",
+				"lastUpdated": "Last Updated",
+				"by": "by",
+				"barcodes": "Barcodes",
+				"outOfStock": "Out of Stock",
+				"notFound": "Item Not Found",
+				"noAccess": "You don't have permission to view this item."
+			}
+		},
+		"repositories": {
+			"form": {
+				"title": "Create Repository",
+				"id": "ID",
+				"name": "Repository Name",
+				"submit": "Submit Repository",
+				"edit": "Edit Repository",
+				"errors": {
+					"400": "Invalid data. Please check your input.",
+					"500": "Server error. Please try again later.",
+					"etc": "An unexpected error occurred. Please try again."
+				},
+				"error": "Repositories",
+				"successCreate": "Repository created successfully",
+				"successEdit": "Repository updated successfully"
+			},
+			"table": {
+				"head": {
+					"name": "Name",
+					"actions": "Actions"
+				},
+				"place": "Place",
+				"edit": "Edit",
+				"create": "Create Repository",
+				"createTitle": "Create New Repository",
+				"createDescription": "Fill in the form to create a new repository",
+				"remove": {
+					"label": "Remove",
+					"confirm": "Are you sure you want to remove this repository?",
+					"description": "This action cannot be undone.",
+					"yes": "Delete",
+					"no": "Cancel",
+					"success": "Repository deleted",
+					"canceled": "Deletion canceled",
+					"error": "Error Deleting Repository"
+				},
+				"error": "Error loading repositories.",
+				"nothing": "Nothing here to show"
+			},
+			"damagedItems": {
+				"table": {
+					"create": "Register Damaged Item",
+					"createTitle": "Register New Damaged Item",
+					"createDescription": "Fill in the form to register a new damaged item",
+					"item": "Item",
+					"owner": "Owner",
+					"repository": "Repository",
+					"quantity": "Quantity",
+					"unitPrice": "Unit Price",
+					"date": "Date",
+					"notes": "Notes",
+					"actions": "Actions",
+					"remove": {
+						"label": "Remove",
+						"confirm": "Are you sure you want to remove this damaged item?",
+						"description": "This action cannot be undone.",
+						"yes": "Delete",
+						"no": "Cancel",
+						"success": "Damaged Item deleted",
+						"canceled": "Deletion canceled",
+						"error": "Error Deleting Damaged Item"
+					},
+					"edit": "Edit"
+				},
+				"form": {
+					"title": "Register Damaged Item",
+					"id": "ID",
+					"item": "Item",
+					"repository": "Repository",
+					"quantity": "Quantity",
+					"unitPrice": "Unit Price",
+					"date": "Date",
+					"notes": "Notes",
+					"edit": "Edit Damaged Item",
+					"submit": "Submit",
+					"successCreate": "Damaged Item created successfully",
+					"successEdit": "Damaged Item updated successfully",
+					"error": "Error loading damaged item"
+				}
+			}
+		}
+	},
+	"customer-supplier": {
+		"table": {
+			"head": {
+				"name": "Name",
+				"details": "Details",
+				"actions": "Actions"
+			},
+			"edit": "Edit",
+			"view": "View",
+			"remove": {
+				"label": "Remove",
+				"confirm": "Are you sure you want to remove this Customer/Supplier?",
+				"description": "This action cannot be undone.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "Customer/Supplier deleted",
+				"canceled": "Deletion canceled",
+				"error": "Error Deleting Customer/Supplier"
+			}
+		},
+		"form": {
+			"id": "ID",
+			"name": "Name",
+			"detail": "Detail",
+			"error": "Customer/Supplier"
+		},
+		"view": {
+			"title": "Customer/Supplier Details",
+			"loading": "Loading",
+			"error": "Failed to load details.",
+			"creditBalance": "Credit Balance",
+			"details": "Details",
+			"noDetails": "No details available",
+			"relatedDocuments": "Related Documents",
+			"salesInvoices": "Sales Invoices",
+			"purchaseInvoices": "Purchase Invoices",
+			"payments": "Payments",
+			"expenses": "Expenses",
+			"salesInvoiceRefunds": "Sales Invoice Refunds",
+			"refillableItemsRefund": "Refillable Items Refund",
+			"reports": "Reports",
+			"accountStatement": "Account Statement",
+			"dueDcdCans": "Due DCD Cans",
+			"showRaw": "Show Raw",
+			"showUI": "Show UI"
+		}
+	},
+	"invoice": {
+		"table": {
+			"view": "View",
+			"head": {
+				"owner": "Owner",
+				"issueDate": "Issue Date",
+				"dueDate": "Due Date",
+				"totalAmount": "Total Amount",
+				"repositoryPremit": "Repository Permit",
+				"originalInvoice": "Original Invoice",
+				"notes": "Notes",
+				"actions": "Actions",
+				"status": "Status"
+			},
+			"remove": {
+				"label": "Remove",
+				"confirm": "Are you sure you want to delete this item?",
+				"description": "This action cannot be undone.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "Item deleted",
+				"canceled": "Deletion canceled"
+			},
+			"edit": "Edit",
+			"refund": "Refund"
+		},
+		"form": {
+			"invoice": "Invoice",
+			"issueDate": "Issue Date",
+			"dueDate": "Due Date",
+			"owner": "Owner",
+			"items": "Invoice Items",
+			"addItem": "Add Item",
+			"notes": "Notes",
+			"additionalNotes": "Additional notes...",
+			"totalAmount": "Total Amount:",
+			"unitPrice": "Unit Price",
+			"discount": "Discount",
+			"taxRate": "Tax Rate",
+			"repository": "Repository",
+			"selectRepository": "Select a repository",
+			"update": "Update Invoice",
+			"create": "Create Invoice",
+			"successCreate": "Invoice created successfully",
+			"successEdit": "Invoice updated successfully",
+			"itemId": "Item ID:",
+			"itemName": "Item Name",
+			"notSet": "Not set",
+			"description": "Description",
+			"previewItem": "Preview Item",
+			"addToInvoice": "Add to Invoice",
+			"cancelPreview": "Cancel",
+			"removeItem": "Remove Item",
+			"quantity": "Quantity",
+			"noImage": "No image available",
+			"paymentType": "Payment Type",
+			"cash": "Cash",
+			"client": "Client",
+			"addPayment": "Add payment with this invoice",
+			"showPayment": "Show Payment",
+			"yes": "Yes",
+			"no": "No",
+			"paymentAmount": "Payment Amount",
+			"paymentAccount": "Payment Account",
+			"paymentNotes": "Payment Notes",
+			"selectPaymentAccount": "Select payment account",
+			"noItemsError": "Please add at least one item to the invoice",
+			"ownerRequired": "Owner is required",
+			"paymentFieldsRequired": "Payment amount and account are required for immediate payment",
+			"paymentDisabledZeroAmount": "Payment is disabled because the total amount is $0.00",
+			"statusOptions": {
+				"3": "Unpaid",
+				"4": "Partially Paid",
+				"5": "Paid",
+				"6": "Overpaid",
+				"default": "Unknown"
+			}
+		}
+	},
+	"finance": {
+		"table": {
+			"view": "View",
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"fields": {
+			"transaction": "Add Payment",
+			"update": "Update Payment",
+			"owner": "Owner",
+			"paymentMethod": "Payment Method",
+			"amount": "Amount",
+			"status": "Status",
+			"ref": "Reference",
+			"date": "Date",
+			"note": "Note",
+			"moreNotes": "Additional notes...",
+			"type": "Payment Type",
+			"paymentProof": "Payment Proof",
+			"expenseProof": "Expense Receipt/Proof",
+			"transferProof": "Transfer Proof",
+			"relatedInvoice": "Related Sales Invoice (Optional)",
+			"uploadScreenshot": "Upload screenshot or receipt (optional)",
+			"uploadReceipt": "Upload receipt or proof document (optional)",
+			"uploadProof": "Upload transfer proof or screenshot (optional)",
+			"optionalFields": "Optional Fields",
+			"paymentRef": "Payment Reference",
+			"paymentRefHelper": "Unique reference for this payment",
+			"transactionId": "Transaction ID",
+			"senderPhone": "Sender Phone",
+			"senderName": "Sender Name",
+			"bankName": "Bank Name",
+			"receivedBy": "Received By",
+			"fromVault": "From Vault",
+			"toVault": "To Vault",
+			"transferType": "Transfer Type",
+			"dateRangeAfter": "Date From",
+			"dateRangeBefore": "Date To",
+			"category": "Category",
+			"image": "Receipt/Proof Image"
+		},
+		"status": {
+			"paid": "Paid",
+			"onHold": "ON HOLD"
+		},
+		"success": {
+			"created": "Transaction Created Successfully",
+			"updated": "Transaction Updated Successfully",
+			"delete": "Transaction Deleted Successfully"
+		},
+		"assert": {
+			"message": "Are you sure you want to delete this transaction?"
+		},
+		"debtSettlement": {
+			"header": "Debt Settlement",
+			"settlementAmount": "Settlement Amount",
+			"status": {
+				"label": "Status",
+				"approved": "Approved",
+				"not_approved": "Not Approved"
+			}
+		},
+		"expense": {
+			"header": "Expense",
+			"list": {
+				"noExpenses": "No expenses found",
+				"notes": "Notes",
+				"noImage": "No image attached",
+				"image": "Image",
+				"summary": "Summary",
+				"createTitle": "Create Expense"
+			},
+			"category": {
+				"name": "Category Name",
+				"description": "Description",
+				"create": "Create Category",
+				"edit": "Edit Category",
+				"namePlaceholder": "e.g., Office Supplies",
+				"descriptionPlaceholder": "Optional description for this category",
+				"deleteConfirm": "Are you sure you want to delete this category? This action cannot be undone.",
+				"deleteSuccess": "Category deleted successfully"
+			}
+		},
+		"general": {
+			"t": "transaction",
+			"add": "Add",
+			"update": "Update"
+		},
+		"statusOptions": {
+			"confirmed": "Confirmed",
+			"pending": "Pending",
+			"rejected": "Rejected",
+			"reimbursed": "Reimbursed"
+		},
+		"transferTypes": {
+			"internal": "Internal",
+			"external": "External",
+			"p2p": "Peer to Peer"
+		},
+		"placeholders": {
+			"paymentRef": "PAY-20240110-ABC12345",
+			"transactionId": "TXN123456789",
+			"senderPhone": "01234567890",
+			"senderName": "John Doe",
+			"bankName": "National Bank of Egypt",
+			"receivedBy": "Staff name"
+		},
+		"helpers": {
+			"transactionId": "For InstaPay/Bank Transfer",
+			"senderPhone": "For mobile wallet payments",
+			"senderName": "For bank transfers",
+			"bankName": "For bank transfers",
+			"receivedBy": "Who physically received cash"
+		},
+		"management": {
+			"title": "Financial Overview",
+			"computedFromTransactions": "Computed from transactions",
+			"totalBalance": "Total Balance",
+			"summary": "Summary",
+			"totalAccounts": "Total Accounts",
+			"activeAccounts": "Active Accounts",
+			"highestBalance": "Highest Balance",
+			"status": "Status",
+			"ofTotal": "of total",
+			"loading": "Loading...",
+			"accessDenied": "Access Denied / Error",
+			"defaultError": "Data could not be loaded."
+		}
+	},
+	"accountVault": {
+		"title": "Account Vault",
+		"businessAccounts": "Business Accounts",
+		"accountTypes": "Account Types",
+		"fields": {
+			"accountName": "Account Name",
+			"accountType": "Account Type",
+			"accountNumber": "Account Number",
+			"phoneNumber": "Phone Number",
+			"bankName": "Bank Name",
+			"currentBalance": "Current Balance",
+			"isActive": "Active Status",
+			"typeName": "Type Name"
+		},
+		"placeholders": {
+			"searchAccountName": "Search by account name",
+			"searchAccountType": "Filter by account type",
+			"accountNumber": "Enter account number",
+			"phoneNumber": "Enter phone number (for mobile wallets)",
+			"bankName": "Enter bank name",
+			"typeName": "Enter account type name (e.g., Cash, Bank Account)"
+		},
+		"actions": {
+			"createAccount": "Create Business Account",
+			"createType": "Create Account Type",
+			"editAccount": "Edit Business Account",
+			"editType": "Edit Account Type"
+		},
+		"status": {
+			"active": "Active",
+			"inactive": "Inactive"
+		},
+		"table": {
+			"delete": "Delete"
+		}
+	},
+	"refillableItems": {
+		"form": {
+			"title": {
+				"createRefilled": "Create Refilled Transaction",
+				"editRefilled": "Edit Refilled Transaction",
+				"createRefund": "Create Refund Transaction",
+				"editRefund": "Edit Refund Transaction"
+			},
+			"owner": "Owner",
+			"item": "Item",
+			"quantity": "Refilled Quantity",
+			"repository": "Repository",
+			"notes": "Notes",
+			"moreNotes": "additional Notes...",
+			"refilledItem": "Select Refilled Item",
+			"usedItem": "Select Used Item",
+			"usedQuantity": "Used Quantity",
+			"employee": "Employee",
+			"date": "Date"
+		},
+		"refilled": {
+			"list": {
+				"refilledItem": "Refilled Item",
+				"quantity": "Quantity",
+				"usedItem": "Used Item",
+				"date": "Date",
+				"repo": "Repository",
+				"employee": "Employee",
+				"notes": "Notes"
+			}
+		},
+		"refund": {
+			"list": {
+				"client": "Client",
+				"date": "Date",
+				"refunded": "Refunded",
+				"quantity": "Quantity",
+				"repo": "Repository",
+				"notes": "Notes"
+			}
+		}
+	},
+	"paginationControls": {
+		"next": "Next Page",
+		"prev": "Prev Page",
+		"page": "Page",
+		"of": "of"
+	},
+	"auth": {
+		"welcome": "Welcome Back",
+		"username": "Username",
+		"password": "Password",
+		"login": "Login",
+		"loading": "Logging in",
+		"errors": {
+			"403": "Invalid credentials.",
+			"404": "Service not found.",
+			"500": "Server error. Please try again later.",
+			"missing": {
+				"username": "Username is required",
+				"password": "Password is required",
+				"general": "Username and password are required."
+			},
+			"etc": "Server error during login. Please try again.",
+			"invalidForm": "Invalid form submission."
+		},
+		"logout": {
+			"loading": "Logging out…",
+			"completed": "Logout completed",
+			"progress": "Logout in Progress",
+			"progressMessage": "Please wait while we terminate your session",
+			"completedMessage": "Your session has been terminated",
+			"redirect": "Redirecting to login page in a few seconds...",
+			"failed": "Logout Failed",
+			"retry": "Retry Logout",
+			"error": "Logout failed. Please try again."
+		},
+		"changePassword": {
+			"title": "Change Password",
+			"description": "You must change your password before continuing.",
+			"currentPassword": "Current Password",
+			"newPassword": "New Password",
+			"confirmPassword": "Confirm New Password",
+			"submit": "Change Password",
+			"loading": "Changing...",
+			"back": "Go Back",
+			"success": "Password changed successfully!",
+			"errors": {
+				"allFields": "All fields are required.",
+				"match": "Passwords do not match."
+			}
+		}
+	},
+	"user-management": {
+		"table": {
+			"create": "Create User",
+			"head": {
+				"username": "Username",
+				"status": "Status",
+				"groups": "Groups",
+				"permissions": "Permissions",
+				"dateJoined": "Date Joined",
+				"actions": "Actions"
+			},
+			"active": "Active",
+			"inactive": "Inactive",
+			"superuser": "Superuser",
+			"permissionsCount": "permissions",
+			"edit": "Edit",
+			"remove": {
+				"label": "Remove",
+				"confirm": "Delete User?",
+				"description": "This will permanently delete the user account.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "User deleted successfully",
+				"canceled": "Deletion canceled"
+			}
+		},
+		"form": {
+			"title": "Add User",
+			"edit": "Edit User",
+			"createTitle": "Create User",
+			"editTitle": "Edit User",
+			"profileDetails": "Profile Details",
+			"removePhoto": "Remove Photo",
+			"clickToUpload": "Click to upload new avatar",
+			"firstName": "First Name",
+			"lastName": "Last Name",
+			"basicInfo": "Basic Information",
+			"username": "Username",
+			"password": "Password",
+			"passwordHint": "Leave blank to keep current password",
+			"isActive": "Active",
+			"isStaff": "Staff",
+			"isSuperuser": "Superuser",
+			"permissions": "Permissions & Groups",
+			"saveAsGroup": {
+				"button": "Save as Group",
+				"title": "Save Permissions as Group",
+				"description": "Create a new group with the {count} currently selected permissions.",
+				"namePlaceholder": "Group name",
+				"nameRequired": "Please enter a group name",
+				"noPermissions": "No permissions selected",
+				"save": "Create Group",
+				"saving": "Creating...",
+				"success": "Group created successfully!",
+				"error": "Failed to create group"
+			}
+		},
+		"filters": {
+			"username": "Search by username",
+			"all": "All",
+			"isActive": {
+				"label": "Status",
+				"active": "Active",
+				"inactive": "Inactive"
+			},
+			"isSuperuser": {
+				"label": "Superuser",
+				"yes": "Yes",
+				"no": "No"
+			},
+			"isStaff": {
+				"label": "Staff",
+				"yes": "Yes",
+				"no": "No"
+			}
+		}
+	},
+	"permission-management": {
+		"title": "Permission Management",
+		"tabs": {
+			"groups": "Groups",
+			"permissions": "Permissions"
+		},
+		"selector": {
+			"modeGroups": "Groups Only",
+			"modeManual": "Manual Only",
+			"modeCombined": "Combined",
+			"groupsTitle": "Select Groups",
+			"permissionsTitle": "Individual Permissions",
+			"selected": "selected",
+			"selectAll": "Select All",
+			"clearAll": "Clear All",
+			"selectApp": "Select All",
+			"unselectApp": "Unselect All",
+			"fromGroup": "from group",
+			"superuserRequired": "Superuser Required",
+			"groupRemovedWarning": "Group '{groupNames}' removed to allow custom permission selection."
+		},
+		"permissions": {
+			"searchPlaceholder": "Search permissions...",
+			"expandAll": "Expand All",
+			"collapseAll": "Collapse All",
+			"noResults": "No permissions found",
+			"superuserRequired": "Superuser Required",
+			"table": {
+				"name": "Name",
+				"codename": "Codename",
+				"model": "Model"
+			}
+		},
+		"groups": {
+			"description": "Manage permission groups to simplify user access control.",
+			"create": "Create Group",
+			"noGroups": "No groups found. Click 'Create Group' to add one.",
+			"table": {
+				"name": "Group Name",
+				"permissionCount": "Permissions",
+				"permissions": "permissions",
+				"actions": "Actions",
+				"edit": "Edit",
+				"delete": "Delete"
+			},
+			"delete": {
+				"confirm": "Delete Group?",
+				"description": "This will remove the group and disassociate it from all users.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "Group deleted successfully",
+				"canceled": "Deletion canceled"
+			}
+		},
+		"groupForm": {
+			"createTitle": "Create Group",
+			"editTitle": "Edit Group",
+			"namePlaceholder": "Enter group name",
+			"inheritFrom": "Inherit permissions from existing groups",
+			"permissionsTitle": "Permissions",
+			"selected": "selected",
+			"selectAll": "Select All",
+			"clearAll": "Clear All",
+			"selectApp": "Select All",
+			"unselectApp": "Unselect All",
+			"saving": "Saving..."
+		}
+	},
+	"inputs": {
+		"file": {
+			"upload": "Choose Files or drag and drop",
+			"browse": "or click to browse",
+			"maxSize": "Maximum file size is 100MB",
+			"accepted": {
+				"all": "All Files",
+				"images": "Images",
+				"videos": "Videos",
+				"audio": "Audio",
+				"documents": "Documents",
+				"archives": "Archives"
+			},
+			"only": "Only",
+			"preview": "Click to preview"
+		},
+		"searchableDropdown": {
+			"noOptions": "No options available",
+			"loading": "Loading",
+			"placeholder": "Select an option",
+			"searchPlaceholder": "Select..."
+		},
+		"search": {
+			"itemName": "Item Name",
+			"ownerName": "Owner Name",
+			"repository": "Repository",
+			"notes": "Notes",
+			"category": "Category",
+			"categoryName": "Category Name",
+			"accountName": "Account Name",
+			"limit": "Limit",
+			"offset": "Offset",
+			"fromDate": "From Date",
+			"toDate": "To Date",
+			"refilledItem": "Refilled Item",
+			"usedItem": "Used Item",
+			"orderNumber": "Order Number",
+			"itemDescription": "Item Description",
+			"paymentNumber": "Payment No",
+			"transactionNumber": "Transaction Number",
+			"type": "Type",
+			"id": "ID",
+			"name": "Name",
+			"barcode": "Barcode",
+			"place": "Place",
+			"origin": "Origin",
+			"repositoryName": "Repository Name",
+			"date": "Date",
+			"status": "Status",
+			"repositoryPermit": "Repository Permit",
+			"repositoryPermitOptions": {
+				"true": "Delivered",
+				"false": "Not Delivered"
+			},
+			"issueDateAfter": "Issue Date From",
+			"issueDateBefore": "Issue Date To",
+			"dueDateAfter": "Due Date From",
+			"dueDateBefore": "Due Date To"
+		},
+		"quantity": {
+			"label": "Quantity",
+			"increment": "Increase quantity",
+			"decrement": "Decrease quantity"
+		}
+	},
+	"global": {
+		"backToList": "Back to List",
+		"createdAt": "Created At",
+		"updatedAt": "Updated At",
+		"createdBy": "Created By",
+		"updatedBy": "Updated By",
+		"actions": "Actions",
+		"all": "All",
+		"searchPlaceholder": "Search ...",
+		"form": {
+			"submit": "Submit",
+			"edit": "Edit",
+			"editSuccess": "Edit successful",
+			"createSuccess": "Create successful",
+			"successEdit": "Updated successfully",
+			"successCreate": "Created successfully",
+			"id": "ID"
+		},
+		"errors": {
+			"400": "Bad Request",
+			"403": "Access denied.",
+			"404": "Not Found",
+			"500": "Internal Server Error",
+			"503": "Service unavailable. Please try again later.",
+			"etc": "An unexpected error occurred. Please try again.",
+			"pageNotFound": "page not found",
+			"nothing": "Nothing here to show",
+			"loadError": "Failed to load data",
+			"deleteError": "Failed to delete item"
+		},
+		"delete": {
+			"label": "Remove",
+			"actionLabel": "Delete",
+			"cancelLabel": "Cancel",
+			"confirmMessage": "Are you sure you want to delete this item?",
+			"deleting": "Deleting...",
+			"success": "Deleted successfully",
+			"assert": {
+				"description": "This action cannot be undone.",
+				"canceled": "Canceled"
+			}
+		},
+		"print": {
+			"label": "Print"
+		}
+	},
+	"ownerAccountStatement": {
+		"transactionSummary": "Transaction Summary",
+		"table": {
+			"type": "Type",
+			"count": "Count",
+			"amount": "Amount"
+		},
+		"types": {
+			"salesInvoices": "Sales Invoices",
+			"returnSalesInvoices": "Return Sales Invoices",
+			"purchasesInvoices": "Purchases Invoices",
+			"payments": "Payments"
+		},
+		"creditTotals": {
+			"title": "Credit Totals",
+			"items": {
+				"InitialCreditBalance": "Due from last year",
+				"SalesInvoices": "Sales Invoices",
+				"ReturnSalesInvoices": "Sales Invoices Refund",
+				"payments": "Payments",
+				"ReversPayments": "Revers Payments",
+				"PurchaseInvoices": "Purchase Invoices"
+			}
+		},
+		"transactions": {
+			"title": "Transactions",
+			"fields": {
+				"ref": "Ref ID",
+				"type": "Type",
+				"date": "Date",
+				"amount": "Transaction Amount",
+				"remaining": "Remaining Credit Balance"
+			}
+		},
+		"noData": "No data available"
+	},
+	"dashboard": {
+		"emptyState": {
+			"title": "Your Dashboard is Empty",
+			"description": "Add widgets to customize your dashboard and get insights at a glance."
+		},
+		"customize": "Customize",
+		"saveCustomization": "Save Layout",
+		"cancelCustomization": "Cancel",
+		"resetLayout": "Reset",
+		"addWidget": "Add Widget",
+		"addWidgets": "Add Widgets",
+		"removeWidget": "Remove",
+		"widgetLibrary": "Widget Library",
+		"customizingHint": "Drag & resize widgets to customize your layout",
+		"allWidgetsActive": "All widgets are on the dashboard",
+		"allWidgetsActiveHint": "Remove a widget first to add it back",
+		"widgets": {
+			"pieChart": {
+				"title": "Sales vs Payments",
+				"description": "Percentage of cash vs deferred payments."
+			},
+			"scatterChart": {
+				"title": "Refillable Items Usage",
+				"description": "Refillable items usage and refill history over time."
+			},
+			"totalSales": {
+				"title": "Total Sales",
+				"description": "Total sales revenue across all invoices.",
+				"subtitle": "All time sales"
+			},
+			"totalPayments": {
+				"title": "Collected",
+				"description": "Total payments collected from customers.",
+				"subtitle": "Payments received"
+			},
+			"pendingDebt": {
+				"title": "Pending Debt",
+				"description": "Outstanding deferred balance not yet collected.",
+				"subtitle": "Unpaid balance"
+			}
+		}
+	},
+	"reports": {
+		"title": "Reports Dashboard",
+		"emptyState": {
+			"title": "No Reports Available",
+			"description": "You do not have permission to view any reports. Please contact your administrator if you need access."
+		},
+		"reportSections": {
+			"warehouse": {
+				"title": "Warehouse",
+				"links": {
+					"itemMovement": {
+						"label": "Item Movement",
+						"description": "Track inventory movements and transfers"
+					},
+					"itemsSale": {
+						"label": "Items Sale",
+						"description": "Track Items sale in period"
+					},
+					"itemsAsXLSX": {
+						"label": "Generate Items As XLSX",
+						"description": "export items as xlsx"
+					}
+				}
+			},
+			"finance": {
+				"title": "Finance",
+				"links": {
+					"paymentsInPeriod": {
+						"label": "Payments in Period",
+						"description": "Financial transactions and payments"
+					},
+					"debtList": {
+						"label": "Owners's credit balance list",
+						"description": "list of owners who has credit balance"
+					}
+				}
+			},
+			"refillableItems": {
+				"title": "Refillable Items",
+				"links": {
+					"refilledItems": {
+						"label": "Refilled & Used Items",
+						"description": "Items refilled and used in period"
+					},
+					"refillableItemsClient": {
+						"label": "Client Refillable Items",
+						"description": "Refillable items client currently has"
+					}
+				}
+			},
+			"clientsSuppliers": {
+				"title": "Client & Supplier",
+				"links": {
+					"accountStatement": {
+						"label": "Account Statement",
+						"description": "Detailed account statements"
+					}
+				}
+			}
+		},
+		"generate": "Generate"
+	},
+	"Error": {
+		"title": "Oops! Something went wrong",
+		"message": "We encountered an unexpected error. Don't worry, it's not your fault.",
+		"errorDetails": "Error Details",
+		"retry": "Try Again",
+		"home": "Go Home"
+	},
+	"NotFound": {
+		"title": "Page Not Found",
+		"message": "Sorry, we couldn't find the page you're looking for. It might have been moved or deleted.",
+		"home": "Go Home",
+		"back": "Go Back",
+		"url": "Reqquested URL"
+	},
+	"EventNotFound": {
+		"title": "{name} Not Found",
+		"message": "The {name} you're looking for doesn't exist or may have been removed.",
+		"back": "Go Back",
+		"eventId": "{name} ID"
+	},
+	"permitButton": {
+		"delivered": "Delivered",
+		"notDelivered": "Not Delivered"
+	},
+	"successCreate": "Created successfully",
+	"successEdit": "Updated successfully",
+	"datePicker": {
+		"months": {
+			"0": "January",
+			"1": "February",
+			"2": "March",
+			"3": "April",
+			"4": "May",
+			"5": "June",
+			"6": "July",
+			"7": "August",
+			"8": "September",
+			"9": "October",
+			"10": "November",
+			"11": "December"
+		},
+		"weekdays": [
+			"Su",
+			"Mo",
+			"Tu",
+			"We",
+			"Th",
+			"Fr",
+			"Sa"
+		],
+		"controls": {
+			"today": "Today",
+			"clear": "Clear",
+			"done": "Done",
+			"selectDate": "Select date"
+		}
+	},
+	"barcodeScanner": {
+		"scan": "Scan",
+		"scanBarcode": "Scan Barcode",
+		"cameraError": "Camera Error",
+		"retry": "Retry",
+		"torch": "Torch",
+		"switch": "Switch",
+		"positionBarcode": "Position barcode within frame",
+		"noItemFound": "No item found with barcode",
+		"itemSelected": "Item selected",
+		"itemAdded": "Item added",
+		"scanError": "Error occurred during scan",
+		"mode": {
+			"select": "Scanner Mode",
+			"camera": "Camera",
+			"pos": "POS Scanner",
+			"recommendedMobile": "Recommended",
+			"recommendedDesktop": "Recommended"
+		},
+		"camera": {
+			"idle": "Camera paused due to inactivity",
+			"tapToResume": "Tap to resume scanning",
+			"timeout": "Auto-pause after {seconds}s of inactivity"
+		},
+		"pos": {
+			"waiting": "Waiting for scan...",
+			"scanning": "Scanning...",
+			"ready": "Point your POS scanner at a barcode",
+			"instructions": "Use your handheld or desktop barcode scanner",
+			"lastScan": "Last Scan:",
+			"instructionStep1": "Use your handheld or desktop barcode scanner",
+			"instructionStep2": "Point it at any barcode and scan",
+			"instructionStep3": "The barcode will be automatically detected"
+		},
+		"confirmation": {
+			"loading": "Loading...",
+			"error": "Error",
+			"confirmItem": "Confirm Item",
+			"searchingItem": "Searching for item...",
+			"itemNotFound": "Item Not Found",
+			"itemId": "Item ID",
+			"price": "Price",
+			"cancel": "Cancel",
+			"addToInvoice": "Add to Invoice",
+			"addToDamagedItems": "Add to Damaged Items",
+			"addItem": "Add Item",
+			"select": "Select",
+			"close": "Close"
+		},
+		"manager": {
+			"title": "Barcodes",
+			"addBarcode": "Add Barcode",
+			"noBarcodesYet": "No barcodes added yet. Click \"Add Barcode\" to get started.",
+			"placeholder": "Enter or scan barcode",
+			"removeBarcode": "Remove barcode"
+		},
+		"errorBoundary": {
+			"title": "Scanner Error",
+			"message": "The barcode scanner encountered an error. Please try again or use manual entry.",
+			"close": "Close"
+		}
+	},
+	"settings": {
+		"title": "User Settings",
+		"firstName": "First Name",
+		"lastName": "Last Name",
+		"username": "Username",
+		"firstNamePlaceholder": "John",
+		"lastNamePlaceholder": "Doe",
+		"clickToUpload": "Click to upload new avatar",
+		"removePhoto": "Remove photo",
+		"cancel": "Cancel",
+		"saveChanges": "Save Changes",
+		"changePassword": "Change Password",
+		"saving": "Saving...",
+		"successUpdate": "Profile updated successfully",
+		"errorUpdate": "Failed to update profile",
+		"errorGeneric": "An error occurred",
+		"database": {
+			"title": "Database Management",
+			"createFullBackup": "Create Full Backup",
+			"fullBackupDesc": "Backs up the entire database structure and data",
+			"createDataOnlyBackup": "Create Data-Only Backup",
+			"dataOnlyBackupDesc": "Backs up only the data, preserving existing structure",
+			"createFullBackupWithMedia": "Create Full Backup (+ Media)",
+			"fullBackupMediaDesc": "Backs up database and all media files (Images, etc.)",
+			"restoreFromFile": "Restore from File",
+			"processing": "Processing...",
+			"downloadConfirmation": "Backup created. Do you want to download the file?",
+			"backupCreatedSuccess": "Backup created successfully.",
+			"restoreTitle": "Restore Database",
+			"uploadFile": "Upload File",
+			"createFullBackup_ar": "إنشاء نسخة احتياطية كاملة",
+			"fullBackupDesc_ar": "نسخ احتياطي لهيكل قاعدة البيانات والبيانات بالكامل",
+			"createDataOnlyBackup_ar": "إنشاء نسخة احتياطية للبيانات فقط",
+			"dataOnlyBackupDesc_ar": "نسخ احتياطي للبيانات فقط، مع الحفاظ على الهيكل الحالي",
+			"createFullBackupWithMedia_ar": "إنشاء نسخة احتياطية كاملة (+ الوسائط)",
+			"fullBackupMediaDesc_ar": "نسخ احتياطي لقاعدة البيانات وجميع ملفات الوسائط (الصور وغيرها)",
+			"restoreFromFile_ar": "استعادة من ملف",
+			"selectFromServer": "Select from Server",
+			"dropBackupFile": "Drop backup file here",
+			"selectBackup": "Select Backup",
+			"selectBackupPlaceholder": "Choose a backup...",
+			"restore": "Restore Database",
+			"restoreConfirmation": "Are you sure you want to restore the database? Current data will be replaced.",
+			"restoreSuccess": "Database restored successfully.",
+			"selectFileWarning": "Please select a file to restore.",
+			"selectBackupWarning": "Please select a backup from the server.",
+			"file": "File",
+			"download": "Download",
+			"cancel": "Cancel",
+			"backupRetentionWarning": "Note: Only the last {count} backups are kept. Older backups are automatically deleted.",
+			"errorGeneric": "An error occurred. Please try again.",
+			"notes": "Backup Notes",
+			"notesPlaceholder": "Enter optional notes for this backup...",
+			"saveChanges": "Save Config",
+			"saving": "Saving...",
+			"configSaved": "Configuration updated successfully.",
+			"maxBackupsRetention": "Max Backups Retention",
+			"noBackupsFound": "No backups found on server",
+			"backupBy": "By: {user}"
+		},
+		"warehouse": {
+			"title": "Warehouse Management",
+			"createItemsXlsx": "Create Items list as xlsx"
+		},
+		"browse": {
+			"title": "Browse",
+			"media": "Media"
+		},
+		"media": {
+			"title": "Media File Browser",
+			"subtitle": "Browse and filter your media files",
+			"stats": {
+				"totalFiles": "Total Files",
+				"filteredResults": "Filtered Results",
+				"totalSize": "Total Size"
+			},
+			"search": {
+				"name": "Name",
+				"nameOrDescription": "Name or Description",
+				"categoryName": "Category Name",
+				"size": "Size",
+				"actions": "Actions",
+				"view": "View",
+				"download": "Download"
+			},
+			"category": "Category",
+			"allCategories": "All Categories",
+			"sortBy": "Sort By",
+			"fileName": "File Name",
+			"fileSize": "File Size",
+			"table": {
+				"file": "File",
+				"category": "Category",
+				"size": "Size",
+				"actions": "Actions",
+				"view": "View",
+				"download": "Download"
+			},
+			"noFiles": "No files found matching your criteria",
+			"showing": "Showing",
+			"of": "of",
+			"files": "files"
+		}
+	},
+	"unauthorized": {
+		"title": "Access Denied",
+		"message": "You don't have permission to access this page.",
+		"contactAdmin": "Please contact your administrator if you believe this is a mistake.",
+		"goBack": "Go Back",
+		"goToDashboard": "Go to Dashboard"
+	}
 }
