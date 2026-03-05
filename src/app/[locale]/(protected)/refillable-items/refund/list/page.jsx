@@ -1,105 +1,61 @@
-import ToolTip from "@/components/ToolTip"
-import TableNote from "@/components/TableNote";
-import { getRefundedItems } from "../../actions";
-import DeleteButton from "./DeleteButton"
-import PaginationControls from "@/components/PaginationControls"
-import Link from "next/link";
-import ErrorLoading from "@/components/ErrorLoading";
-import { getTranslations } from "next-intl/server";
-import { PermissionGateServer } from "@/components/PermissionGateServer";
-import { PERMISSIONS } from "@/config/permissions.config";
+import GenericDataTable from '@/components/GenericDataTable';
+import GenericDeleteButton from '@/components/GenericDeleteButton';
+import { PermissionGateServer } from '@/components/PermissionGateServer';
+import { PERMISSIONS } from '@/config/permissions.config';
+import { getRefundedItems, deleteRefundedItems } from '../../actions';
+import { getTranslations } from 'next-intl/server';
+import TableNote from '@/components/TableNote';
+import Link from 'next/link';
 
-
-async function page({ searchParams }) {
-    const params = await searchParams;
-    const limit = params['limit'] ?? 12;
-    const offset = params['offset'] ?? 0;
-    const ownerId = params['s'] ?? '';
-    const res = await getRefundedItems(`?limit=${limit}&offset=${offset}&ownerid=${ownerId}`)
-    const t = await getTranslations("refillableItems.refund.list")
-
+export default async function Page({ searchParams }) {
+    const t = await getTranslations('refillableItems.refund.list');
     return (
-        <>
-            {/* {data?.ok ?
-            <ErrorLoading name="warehouse.repositories.table" message={data.err} />
-        : */}
-            <div>
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" className="px-6 py-3">
-                                    {t("client")}
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    {t("date")}
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    {t("refunded")}
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    {t("quantity")}
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    {t("repo")}
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    {t("notes")}
-                                </th>
-                                <th scope="col" className="px-6 py-3"></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                res.data?.results?.map((transaction) => (
-                                    <tr key={transaction.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <Link className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200" href={`/customer-supplier/view/${transaction.owner}`}>
-                                                {transaction.owner_name}
-                                            </Link>
-                                        </th>
-                                        <td className="px-6 py-4">
-                                            {transaction.date}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {transaction.item_name}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {transaction.quantity}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {transaction.repository_name}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <TableNote note={transaction.notes} />
-                                        </td>
-                                        <td className="flex items-center px-6 py-4 dark:text-gray-300">
-                                            <PermissionGateServer permission={PERMISSIONS.REFUNDED_REFILLABLE_ITEMS.DELETE}>
-                                                <DeleteButton id={transaction.id} />
-                                            </PermissionGateServer>
-
-                                            <ToolTip obj={transaction} className="ml-3" />
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-                </div>
-
-                {res.data?.results?.length == 0 &&
-                    <ErrorLoading name="warehouse.repositories.table" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 mt-3 rounded" />
-                }
-
-                <PaginationControls
-                    resCount={res.data?.count}
-                    hasNext={res.data?.next}
-                    hasPrev={res.data?.previous}
-                />
-            </div>
-            {/* } */}
-        </>
-    )
+        <GenericDataTable
+            searchParams={searchParams}
+            fetchFn={getRefundedItems}
+            queryParams={[
+                { key: 'limit', default: 12 },
+                { key: 'offset', default: 0 },
+                { key: 'client', default: '', searchLabel: t('client') },
+                { key: 'item', default: '', searchLabel: t('refunded') },
+                { key: 'repo', default: '', searchLabel: t('repo') },
+                { key: 'notes', default: '', searchLabel: t('notes') },
+                { key: 'date_after', default: '', searchLabel: t('dateFrom'), inputType: 'date' },
+                { key: 'date_before', default: '', searchLabel: t('dateTo'), inputType: 'date' },
+            ]}
+            columns={[
+                {
+                    label: t('client'),
+                    render: (row) => (
+                        <Link
+                            className="text-blue-600 dark:text-blue-200 hover:underline dark:hover:text-white hover:text-gray-700 transition-all duration-200"
+                            href={`/customer-supplier/view/${row.owner}`}
+                        >
+                            {row.owner_name}
+                        </Link>
+                    ),
+                },
+                { label: t('date'), render: (row) => row.date },
+                { label: t('refunded'), render: (row) => row.item_name },
+                { label: t('quantity'), render: (row) => row.quantity },
+                { label: t('repo'), render: (row) => row.repository_name },
+                { label: t('notes'), render: (row) => <TableNote note={row.notes} /> },
+                {
+                    label: '',
+                    hideHeader: true,
+                    render: (row) => (
+                        <PermissionGateServer permission={PERMISSIONS.REFUNDED_REFILLABLE_ITEMS.DELETE}>
+                            <GenericDeleteButton
+                                id={row.id}
+                                deleteAction={deleteRefundedItems}
+                                translationKey="warehouse.repositories.table"
+                            />
+                        </PermissionGateServer>
+                    ),
+                },
+            ]}
+            emptyStateKey="warehouse.repositories.table"
+            showTooltip={true}
+        />
+    );
 }
-
-export default page
