@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { DamagedItemsForm } from './form/DamagedItemsFormComponent';
 import { DamagedItemsTable } from './Table';
-import { PermissionGate } from '@/components/PermissionGate';
 import { PERMISSIONS } from '@/config/permissions.config';
 import CreateDialogButton from '@/components/CreateDialogButton';
 

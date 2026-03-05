@@ -10,7 +10,7 @@ import { createRefilledItemsTransaction } from "../../actions";
 
 
 function RefilledForm({ initialData }) {
-    const t = useTranslations("refillableItems");
+    const t = useTranslations("refillableItems.form");
     const tGlobal = useTranslations("global");
     const [state, formAction, isPending] = useActionState(createRefilledItemsTransaction, { errors: {} });
 
@@ -45,7 +45,7 @@ function RefilledForm({ initialData }) {
                         customLoadOptions={handleItemTransformer}
                         className={state.data?.owner && 'invalid-select'}
                         defaultValue={initialData?.id ? { value: initialData?.refilled_item, label: initialData?.refilled_item_name } : null}
-                        placeholder={t("form.refilledItem")}
+                        placeholder={t("refilledItem")}
                     />
                     <FieldError error={!state?.ok ? state.data?.refilled_item : null} />
                 </div>
@@ -54,7 +54,7 @@ function RefilledForm({ initialData }) {
                     <NumberInput
                         id="refilled_quantity"
                         name="refilled_quantity"
-                        placeholder={t("form.quantity")}
+                        placeholder={t("quantity")}
                         error={!state?.ok ? state.data?.refilled_quantity : ""}
                         defaultValue={initialData?.id ? initialData?.refilled_quantity : state?.formData?.refilled_quantity || ''}
                     />
@@ -67,7 +67,7 @@ function RefilledForm({ initialData }) {
                         customLoadOptions={handleLoadOre}
                         className={state.data?.owner && 'invalid-select'}
                         defaultValue={initialData?.id ? { value: initialData?.used_item, label: initialData?.used_item_name } : null}
-                        placeholder={t("form.usedItem")}
+                        placeholder={t("usedItem")}
                     />
                     <FieldError error={!state?.ok ? state.data?.used_item : null} />
                 </div>
@@ -77,7 +77,7 @@ function RefilledForm({ initialData }) {
                         id="used_quantity"
                         name="used_quantity"
                         step={'0.01'}
-                        placeholder={t("form.usedQuantity")}
+                        placeholder={t("usedQuantity")}
                         error={!state?.ok ? state.data?.used_quantity : ""}
                         defaultValue={initialData?.id ? initialData?.used_quantity : state?.formData?.used_quantity || ''}
                     />
@@ -88,7 +88,7 @@ function RefilledForm({ initialData }) {
                         url={'/api/repositories/?s='}
                         name={`repository`}
                         defaultValue={initialData?.id ? { value: initialData.repository, label: initialData.repository_name } : { value: 10000, label: 'الرئيسي' }}
-                        placeholder={t("form.repository")}
+                        placeholder={t("repository")}
                     />
                     <FieldError error={!state?.ok ? state?.data?.repository : null} />
                 </div>
@@ -99,19 +99,19 @@ function RefilledForm({ initialData }) {
                         customLoadOptions={handleLoadEmployees}
                         name={`employee`}
                         defaultValue={state.formData?.id ? { value: state.formData?.employee, label: state.formData?.employee_name } : initialData?.id ? { value: initialData?.employee, label: initialData?.employee_name } : null}
-                        placeholder={t("form.employee")}
+                        placeholder={t("employee")}
                     />
                     <FieldError error={!state?.ok ? state?.data?.employee : null} />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="notes">{t("form.notes")}</label>
+                    <label htmlFor="notes">{t("notes")}</label>
                     <textarea
                         id="notes"
                         name="notes"
                         rows="3"
                         defaultValue={state?.formData?.notes ? state?.formData?.notes : initialData?.notes || ''}
-                        placeholder={t("form.moreNotes")}
+                        placeholder={t("moreNotes")}
                         className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                     />
                     <FieldError error={!state?.ok ? state?.data?.notes : null} />

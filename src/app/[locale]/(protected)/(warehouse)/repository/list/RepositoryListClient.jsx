@@ -29,7 +29,7 @@ export default function RepositoryListClient({ initialRepositories, count, next,
                 FormComponent={RepositoryForm}
                 formProps={{ obj: {} }}
                 onSuccess={handleRepositoryCreated}
-                buttonClassName="mb-4"
+                buttonClassName="w-full mb-4"
             />
 
             <div className="relative overflow-x-auto shadow-md sm:rounded-md">

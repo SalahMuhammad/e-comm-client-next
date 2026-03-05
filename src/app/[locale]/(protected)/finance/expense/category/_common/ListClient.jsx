@@ -31,7 +31,7 @@ export default function ListClient({ initialItems, count, next, previous }) {
                 formProps={{ initialData: null }}
                 onSuccess={handleItemCreated}
                 permission={PERMISSIONS.EXPENSE_CATEGORIES.ADD}
-                buttonClassName="mb-4"
+                buttonClassName="w-full mb-4"
             />
 
             <div className="relative overflow-x-auto shadow-md sm:rounded-md">

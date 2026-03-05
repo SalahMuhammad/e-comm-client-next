@@ -86,7 +86,7 @@ export default function ListClient({ type, initialItems, count, next, previous }
                 formProps={{ type, initialData: null }}
                 onSuccess={handleItemCreated}
                 permission={type === 'account' ? PERMISSIONS.BUSINESS_ACCOUNTS.ADD : PERMISSIONS.ACCOUNT_TYPES.ADD}
-                buttonClassName="mb-4"
+                buttonClassName="w-full mb-4"
             />
 
             <div className="relative overflow-x-auto shadow-md sm:rounded-md">

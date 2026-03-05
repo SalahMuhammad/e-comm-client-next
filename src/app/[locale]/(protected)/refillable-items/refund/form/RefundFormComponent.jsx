@@ -10,7 +10,7 @@ import { createRefundTransaction } from "../../actions";
 
 
 function RefilledForm({ initialData }) {
-    const t = useTranslations("refillableItems");
+    const t = useTranslations("refillableItems.form");
     const tGlobal = useTranslations("global");
     const [state, formAction, isPending] = useActionState(createRefundTransaction, { errors: {} });
 
@@ -26,7 +26,7 @@ function RefilledForm({ initialData }) {
         >
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="date">{t("form.date")}</label>
+                    <label htmlFor="date">{t("date")}</label>
                     <input
                         type="date"
                         id="date"
@@ -40,24 +40,24 @@ function RefilledForm({ initialData }) {
 
                 <div className="flex flex-col gap-2">
                     <DynamicOptionsInput
-                        label={t("form.owner")}
+                        label={t("owner")}
                         url={'/api/buyer-supplier-party/?s='}
                         name={`owner`}
                         defaultValue={state.formData?.id ? { value: state.formData?.owner, label: state.formData?.owner_name } : initialData?.id ? { value: initialData?.owner, label: initialData?.owner_name } : null}
-                        placeholder={t("form.owner")}
+                        placeholder={t("owner")}
                     />
                     <FieldError error={!state?.ok ? state?.data?.owner : null} />
                 </div>
 
                 <div className="flex flex-col gap-2">
                     <DynamicOptionsInput
-                        label={t("form.item")}
+                        label={t("item")}
                         name={'item'}
                         url="api/refillable-sys/item-transformer/?s="
                         customLoadOptions={handleItemTransformer}
                         className={state.data?.item && 'invalid-select'}
                         defaultValue={initialData?.id ? { value: initialData?.item, label: initialData?.item_name } : null}
-                        placeholder={t("form.item")}
+                        placeholder={t("item")}
                     />
                     <FieldError error={!state?.ok ? state.data?.item : null} />
                 </div>
@@ -66,7 +66,7 @@ function RefilledForm({ initialData }) {
                     <NumberInput
                         id="quantity"
                         name="quantity"
-                        placeholder={t("form.quantity")}
+                        placeholder={t("quantity")}
                         error={!state?.ok ? state.data?.quantity : ""}
                         defaultValue={initialData?.id ? initialData?.quantity : state?.formData?.quantity || ''}
                     />
@@ -74,23 +74,23 @@ function RefilledForm({ initialData }) {
 
                 <div className="flex flex-col gap-2">
                     <DynamicOptionsInput
-                        label={t("form.repository")}
+                        label={t("repository")}
                         url={'/api/repositories/?s='}
                         name={`repository`}
                         defaultValue={initialData?.id ? { value: initialData.repository, label: initialData.repository_name } : { value: 10000, label: 'الرئيسي' }}
-                        placeholder={t("form.repository")}
+                        placeholder={t("repository")}
                     />
                     <FieldError error={!state?.ok ? state?.data?.repository : null} />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <label htmlFor="notes">{t("form.notes")}</label>
+                    <label htmlFor="notes">{t("notes")}</label>
                     <textarea
                         id="notes"
                         name="notes"
                         rows="3"
                         defaultValue={state?.formData?.notes ? state?.formData?.notes : initialData?.notes || ''}
-                        placeholder={t("form.moreNotes")}
+                        placeholder={t("moreNotes")}
                         className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
                     />
                     <FieldError error={!state?.ok ? state?.data?.notes : null} />

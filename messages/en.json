@@ -204,6 +204,8 @@
 			}
 		},
 		"form": {
+			"title": "Create Customer/Supplier",
+			"edit": "Edit Customer/Supplier",
 			"id": "ID",
 			"name": "Name",
 			"detail": "Detail",
@@ -486,12 +488,8 @@
 	},
 	"refillableItems": {
 		"form": {
-			"title": {
-				"createRefilled": "Create Refilled Transaction",
-				"editRefilled": "Edit Refilled Transaction",
-				"createRefund": "Create Refund Transaction",
-				"editRefund": "Edit Refund Transaction"
-			},
+			"title": "Create Refillable Item",
+			"edit": "Edit Refillable Item",
 			"owner": "Owner",
 			"item": "Item",
 			"quantity": "Refilled Quantity",
