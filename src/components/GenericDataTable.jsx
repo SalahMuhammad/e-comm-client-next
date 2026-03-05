@@ -108,7 +108,7 @@ export default async function GenericDataTable({
                                     col.hideHeader ? (
                                         <th key={i} scope="col" className="px-6 py-3" />
                                     ) : (
-                                        <th key={i} scope="col" className="px-6 py-3">
+                                        <th key={i} scope="col" className="px-6 py-3 whitespace-nowrap">
                                             {col.label}
                                         </th>
                                     )
