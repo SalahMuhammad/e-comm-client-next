@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { getDebtSettlement } from "../../actions";
-import DebtSettlementForm from "../page";
+import DebtSettlementForm from "../Form";
 
 
 async function page({ params }) {
