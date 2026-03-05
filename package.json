@@ -23,9 +23,11 @@
     "radix-ui": "^1.4.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-grid-layout": "^2.2.2",
     "react-select": "^5.10.1",
     "recharts": "^3.2.1",
-    "sonner": "^2.0.6"
+    "sonner": "^2.0.6",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
