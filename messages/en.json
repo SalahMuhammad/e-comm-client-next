@@ -313,7 +313,17 @@
 		"table": {
 			"view": "View",
 			"edit": "Edit",
-			"delete": "Delete"
+			"delete": "Delete",
+			"remove": {
+				"label": "Remove",
+				"confirm": "Are you sure you want to remove this item?",
+				"description": "This action cannot be undone.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "Item deleted",
+				"canceled": "Deletion canceled",
+				"error": "Error Deleting Item"
+			}
 		},
 		"fields": {
 			"transaction": "Add Payment",
@@ -502,7 +512,9 @@
 				"date": "Date",
 				"repo": "Repository",
 				"employee": "Employee",
-				"notes": "Notes"
+				"notes": "Notes",
+				"dateFrom": "From Date",
+				"dateTo": "To Date"
 			}
 		},
 		"refund": {
@@ -512,7 +524,9 @@
 				"refunded": "Refunded",
 				"quantity": "Quantity",
 				"repo": "Repository",
-				"notes": "Notes"
+				"notes": "Notes",
+				"dateFrom": "From Date",
+				"dateTo": "To Date"
 			}
 		}
 	},
@@ -625,6 +639,7 @@
 			}
 		},
 		"filters": {
+			"name": "Search by name",
 			"username": "Search by username",
 			"all": "All",
 			"isActive": {
@@ -861,11 +876,16 @@
 	},
 	"dashboard": {
 		"emptyState": {
-			"title": "Your Dashboard is Empty",
-			"description": "Add widgets to customize your dashboard and get insights at a glance."
+			"title": "No Dashboard Widgets Available",
+			"description": "You do not have permission to view any widgets on the dashboard. Please contact your administrator if you need access."
+		},
+		"noWidgets": {
+			"title": "Dashboard is Empty",
+			"description": "You haven't added any widgets to your dashboard yet. Click Customize to add some."
 		},
 		"customize": "Customize",
 		"saveCustomization": "Save Layout",
+		"saveCustomizationCompact": "Save",
 		"cancelCustomization": "Cancel",
 		"resetLayout": "Reset",
 		"addWidget": "Add Widget",
@@ -898,6 +918,25 @@
 				"title": "Pending Debt",
 				"description": "Outstanding deferred balance not yet collected.",
 				"subtitle": "Unpaid balance"
+			},
+			"rica": {
+				"title": "RItems Cost Analysis",
+				"description": "Compare unit price trends across refillable items over time.",
+				"filtersTitle": "Filters",
+				"filter": "Filters",
+				"openFilters": "Open Filters",
+				"fromDate": "From Date",
+				"toDate": "To Date",
+				"refilledItems": "Refilled Items",
+				"usedItems": "Used Items",
+				"generate": "Generate",
+				"historicalRange": "Historical Range",
+				"window": "Window",
+				"avgPrice": "avg price",
+				"noData": "No data found for the selected filters.",
+				"noDataTitle": "No results found",
+				"noDataHint": "No data matched your selected filters. Try adjusting the date range or item selection.",
+				"applyFiltersHint": "Select filters above and click Generate to see the chart."
 			}
 		}
 	},
