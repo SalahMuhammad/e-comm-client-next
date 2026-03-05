@@ -70,6 +70,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 
 @media print {
+
     /* Hide everything not essential for printing */
     nav,
     aside {
@@ -119,10 +120,121 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 @media print {
-  .print-no-shadow {
-    box-shadow: none !important;
-  }
-  .print-custom-shadow {
-    box-shadow: 8px 8px 8px -10px rgba(0,0,0,0.3) !important;
-  }
+    .print-no-shadow {
+        box-shadow: none !important;
+    }
+
+    .print-custom-shadow {
+        box-shadow: 8px 8px 8px -10px rgba(0, 0, 0, 0.3) !important;
+    }
+}
+
+/* ─── React Grid Layout Resize Handles ─── */
+.react-resizable-handle {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+    background-color: transparent;
+    transition: all 0.15s ease;
+    z-index: 50;
+    opacity: 0.7;
+}
+
+.react-resizable-handle:hover {
+    opacity: 1;
+    background-color: rgba(99, 102, 241, 0.15);
+    border-radius: 4px;
+}
+
+/* Only the se (bottom-right) corner handle is shown — styled as a grip dot */
+.react-resizable-handle-se {
+    bottom: 4px;
+    right: 4px;
+    cursor: se-resize;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    background-image: radial-gradient(circle, rgba(99, 102, 241, 0.7) 1.5px, transparent 1.5px);
+    background-size: 4px 4px;
+    background-position: center;
+    opacity: 0.6;
+    transition: opacity 0.15s ease;
+}
+
+.react-resizable-handle-se:hover {
+    opacity: 1;
+    background-color: rgba(99, 102, 241, 0.1);
+}
+
+.react-resizable-handle-sw {
+    bottom: 4px;
+    left: 4px;
+    cursor: sw-resize;
+    border-left: 2px solid rgba(99, 102, 241, 0.9);
+    border-bottom: 2px solid rgba(99, 102, 241, 0.9);
+    border-radius: 0 0 0 5px;
+}
+
+.react-resizable-handle-ne {
+    top: 4px;
+    right: 4px;
+    cursor: ne-resize;
+    border-right: 2px solid rgba(99, 102, 241, 0.9);
+    border-top: 2px solid rgba(99, 102, 241, 0.9);
+    border-radius: 0 5px 0 0;
+}
+
+.react-resizable-handle-nw {
+    top: 4px;
+    left: 4px;
+    cursor: nw-resize;
+    border-left: 2px solid rgba(99, 102, 241, 0.9);
+    border-top: 2px solid rgba(99, 102, 241, 0.9);
+    border-radius: 5px 0 0 0;
+}
+
+/* Edge handles */
+.react-resizable-handle-e {
+    top: 50%;
+    right: 4px;
+    transform: translateY(-50%);
+    cursor: e-resize;
+    height: 28px;
+    width: 8px;
+    border-right: 3px solid rgba(99, 102, 241, 0.7);
+    border-radius: 4px;
+}
+
+.react-resizable-handle-w {
+    top: 50%;
+    left: 4px;
+    transform: translateY(-50%);
+    cursor: w-resize;
+    height: 28px;
+    width: 8px;
+    border-left: 3px solid rgba(99, 102, 241, 0.7);
+    border-radius: 4px;
+}
+
+.react-resizable-handle-s {
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: s-resize;
+    width: 28px;
+    height: 8px;
+    border-bottom: 3px solid rgba(99, 102, 241, 0.7);
+    border-radius: 4px;
+}
+
+.react-resizable-handle-n {
+    top: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: n-resize;
+    width: 28px;
+    height: 8px;
+    border-top: 3px solid rgba(99, 102, 241, 0.7);
+    border-radius: 4px;
 }
