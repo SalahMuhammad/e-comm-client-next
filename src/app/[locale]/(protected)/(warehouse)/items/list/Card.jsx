@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { initFlowbite } from 'flowbite'
-import { TrashIcon, PencilIcon, MapPinIcon, HomeIcon, PhotoIcon, PlusIcon } from '@heroicons/react/24/outline';
+import { TrashIcon, PencilIcon, MapPinIcon, HomeIcon, PhotoIcon } from '@heroicons/react/24/outline';
 import { FillText } from "@/components/loaders";
 import { deleteItem } from "./actions";
 import { toast } from "sonner";
@@ -11,10 +11,10 @@ import useGenericResponseHandler from '@/components/custom hooks/useGenericRespo
 import Gallery from "./Gallery";
 import ImageView from "@/components/ImageView";
 import { useCompany } from "@/app/providers/company-provider.client";
-import * as Dialog from '@radix-ui/react-dialog';
 import ItemsForm from "../form/page";
 import { PermissionGate } from '@/components/PermissionGate';
 import { PERMISSIONS } from '@/config/permissions.config';
+import CreateDialogButton from '@/components/CreateDialogButton';
 
 
 function handleDelete(t, id, onDelete, funs) {
@@ -316,49 +316,20 @@ function MobileActionSheet({ children, id }) {
     );
 }
 
-// Create Item Button Component
+// Create Item Button — delegates to the shared CreateDialogButton
 function CreateItemButton({ onItemCreated }) {
     const t = useTranslations("warehouse");
-    const [isOpen, setIsOpen] = useState(false);
-    const [formKey, setFormKey] = useState(0);
-
-    const handleSuccess = (newItemData) => {
-        setIsOpen(false);
-        setFormKey(prev => prev + 1); // Reset form
-        if (onItemCreated && newItemData) {
-            onItemCreated(newItemData);
-        }
-    };
-
     return (
-        <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
-            <Dialog.Trigger asChild>
-                <button className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 dark:bg-gray-600 dark:hover:bg-gray-700 text-white shadow-sm transition-colors">
-                    <PlusIcon className="w-4 h-4" />
-                    <span>{t("items.card.create")}</span>
-                </button>
-            </Dialog.Trigger>
-            <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
-                <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto z-50 p-6 pt-0">
-
-                    {/* <Dialog.Title className="text-2xl font-bold mb-4 text-gray-900 dark:text-white"> */}
-                    <Dialog.Title className="sr-only">
-                        {t("items.card.createTitle")}
-                    </Dialog.Title>
-                    <Dialog.Description className="sr-only">
-                        {t("items.card.createDescription")}
-                    </Dialog.Description>
-                    <CreateItemFormModal key={formKey} onSuccess={handleSuccess} onCancel={() => setIsOpen(false)} isModal={true} />
-                </Dialog.Content>
-            </Dialog.Portal>
-        </Dialog.Root>
+        <CreateDialogButton
+            label={t("items.card.create")}
+            title={t("items.card.createTitle")}
+            description={t("items.card.createDescription")}
+            FormComponent={ItemsForm}
+            formProps={{ obj: {} }}
+            onSuccess={onItemCreated}
+            maxWidth="max-w-3xl"
+        />
     );
-}
-
-// Modal Form Wrapper
-function CreateItemFormModal({ onSuccess, onCancel, isModal }) {
-    return <ItemsForm obj={{}} onSuccess={onSuccess} onCancel={onCancel} isModal={isModal} />;
 }
 
 // View Toggle Switch Component
