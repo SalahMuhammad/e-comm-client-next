@@ -1,1181 +1,1241 @@
 {
-	"navLinks": {
-		"dashboard": {
-			"headLabel": "لوحة التحكم"
-		},
-		"warehouse": {
-			"headLabel": "المستودع",
-			"subLabels": {
-				"items": "قائمة العناصر",
-				"createItem": "إنشاء عنصر",
-				"repositories": "قائمة المستودعات",
-				"createRepository": "إنشاء مستودع",
-				"damagedItems": "العناصر التالفة"
-			}
-		},
-		"invoice": {
-			"sales": {
-				"headLabel": "المبيعات"
-			},
-			"purchase": {
-				"headLabel": "المشتريات"
-			},
-			"subLabels": {
-				"invoiceManagement": "إدارة الفواتير",
-				"createInvoice": "إنشاء فاتورة",
-				"refund": "استرداد"
-			}
-		},
-		"customersSuppliers": {
-			"headLabel": "العملاء/الموردون",
-			"subLabels": {
-				"management": "إدارة العملاء/الموردين",
-				"createInvoice": "إنشاء عميل/مورد"
-			}
-		},
-		"finance": {
-			"headLabel": "المالية",
-			"subLabels": {
-				"payments": "قائمة الدفعات",
-				"addPayment": "إضافة دفعة",
-				"expenses": "قائمة المصاريف",
-				"addExpenses": "إضافة مصروف",
-				"reversePayment": "قائمة المدفوعات المعكوسة",
-				"addReversePayment": "إضافة دفعة معكوسة",
-				"debtSettlement": "قائمة تسوية الديون",
-				"debtSettlementForm": "إضافة تسوية دين",
-				"internalTransfer": "التحويلات الداخلية",
-				"addInternalTransfer": "إضافة تحويل داخلي",
-				"accountVault": "الحسابات التجارية",
-				"accountTypes": "أنواع الحسابات",
-				"expenseCategories": "فئات المصروفات",
-				"debts": "الديون",
-				"management": "الإدارة المالية"
-			}
-		},
-		"reports": {
-			"headLabel": "التقارير",
-			"subLabels": {
-				"refilled": "العبوات المعاد تعبئتها والعبوات الكبيرة المستخدمة",
-				"payments": "الدفعات خلال الفترة",
-				"accountStatement": "كشف حساب العميل/المورد",
-				"refillableItemsClientClientHas": "العناصر القابلة لإعادة التعبئة لدى العميل"
-			}
-		},
-		"refilledCans": {
-			"headLabel": "العناصر القابلة لإعادة التعبئة",
-			"subLabels": {
-				"refilled": "قائمة التعبئة",
-				"createRefilled": "نموذج التعبئة",
-				"refund": "قائمة المرتجعات",
-				"createRefund": "نموذج المرتجع",
-				"cansWithClints": "العناصر القابلة لإعادة التعبئة التي لدى العملاء"
-			}
-		},
-		"userManagement": {
-			"headLabel": "إدارة المستخدمين",
-			"subLabels": {
-				"users": "قائمة المستخدمين",
-				"permissions": "قائمة الصلاحيات",
-				"createUser": "إنشاء مستخدم"
-			}
-		},
-		"userDropDown": {
-			"settings": "الإعدادات",
-			"signOut": "تسجيل الخروج"
-		},
-		"settings": "الإعدادات",
-		"signUp": "التسجيل",
-		"quickAdd": "إضافة سريعة"
-	},
-	"toolTip": {
-		"created": "تم الإنشاء",
-		"lastUpdatedIn": "آخر تحديث في",
-		"by": "بواسطة",
-		"createdAt": "تاريخ الإنشاء",
-		"createdBy": "أنشأه",
-		"lastUpdatedAt": "آخر تحديث في",
-		"lastUpdatedBy": "آخر تحديث بواسطة"
-	},
-	"warehouse": {
-		"items": {
-			"card": {
-				"image": "الصورة",
-				"name": "الاسم",
-				"actions": "الإجراءات",
-				"price": "السعر",
-				"origin": "المصدر",
-				"place": "المكان",
-				"edit": "تعديل",
-				"gallery": "المعرض",
-				"table": "جدول",
-				"delete": "حذف",
-				"Edit": "تعديل",
-				"create": "إنشاء عنصر",
-				"createTitle": "إنشاء عنصر جديد",
-				"createDescription": "املأ النموذج لإنشاء عنصر جديد",
-				"noImg": "لا توجد صور متاحة",
-				"remove": {
-					"label": "إزالة",
-					"confirm": "هل أنت متأكد أنك تريد إزالة هذا العنصر؟",
-					"description": "لا يمكن التراجع عن هذا الإجراء.",
-					"yes": "حذف",
-					"no": "إلغاء",
-					"success": "تم حذف العنصر",
-					"canceled": "تم إلغاء الحذف",
-					"error": "خطأ أثناء حذف العنصر"
-				}
-			},
-			"form": {
-				"title": "إنشاء عنصر",
-				"id": "المعرّف",
-				"type": "النوع",
-				"name": "الاسم",
-				"itemName": "اسم العنصر",
-				"private": "خاص",
-				"wholesale": "جملة",
-				"piece": "قطعة",
-				"collapsible": {
-					"prices": "الأسعار",
-					"hide": "إخفاء",
-					"show": "عرض",
-					"inputs": "المدخلات"
-				},
-				"origin": "المصدر",
-				"place": "الموقع",
-				"submit": "إرسال",
-				"edit": "تعديل العنصر",
-				"successCreate": "تم إنشاء العنصر بنجاح",
-				"successEdit": "تم تحديث العنصر بنجاح",
-				"error": "خطأ في العنصر",
-				"errors": {
-					"400": "بيانات غير صالحة. يرجى التحقق من إدخالك.",
-					"500": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
-					"etc": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
-					"inputs": {
-						"name": "الاسم غير صالح",
-						"images_upload": "الصور غير صالحة",
-						"origin": "المصدر غير صالح",
-						"place": "الموقع غير صالح"
-					}
-				}
-			},
-			"list": {
-				"error": "خطأ في تحميل العناصر."
-			},
-			"view": {
-				"refillable": "قابل لإعادة التعبئة",
-				"id": "المعرّف",
-				"comparisonPeriod": "فترة المقارنة",
-				"30vs30": "آخر 30 يومًا مقابل الـ 30 يومًا السابقة",
-				"excludedItems": "يتم استبعاد العناصر ذات السعر 0 أوإذن المستودع غير المسموح به",
-				"previous": "السابق",
-				"current": "الحالي",
-				"units": "وحدات",
-				"information": "معلومات المخزون",
-				"pricing": "التسعير",
-				"price": "السعر",
-				"details": "تفاصيل",
-				"type": "النوع",
-				"origin": "المصدر",
-				"place": "المكان",
-				"timeline": "الجدول الزمني",
-				"created": "تم الإنشاء",
-				"updated": "تم التحديث",
-				"lastUpdated": "آخر تحديث",
-				"by": "بواسطة",
-				"barcodes": "الأكواد الشريطية",
-				"outOfStock": "نفذت الكمية"
-			}
-		},
-		"repositories": {
-			"form": {
-				"title": "إنشاء مستودع",
-				"id": "المعرّف",
-				"name": "اسم المستودع",
-				"submit": "إرسال المستودع",
-				"edit": "تعديل المستودع",
-				"errors": {
-					"400": "بيانات غير صالحة. يرجى التحقق من إدخالك.",
-					"500": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
-					"etc": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
-				},
-				"error": "المستودعات",
-				"successCreate": "تم إنشاء المستودع بنجاح",
-				"successEdit": "تم تحديث المستودع بنجاح"
-			},
-			"table": {
-				"head": {
-					"name": "الاسم",
-					"actions": "الإجراءات"
-				},
-				"place": "المكان",
-				"edit": "تعديل",
-				"create": "إنشاء مستودع",
-				"createTitle": "إنشاء مستودع جديد",
-				"createDescription": "املأ النموذج لإنشاء مستودع جديد",
-				"remove": {
-					"label": "إزالة",
-					"confirm": "هل أنت متأكد أنك تريد إزالة هذا المستودع؟",
-					"description": "لا يمكن التراجع عن هذا الإجراء.",
-					"yes": "حذف",
-					"no": "إلغاء",
-					"success": "تم حذف المستودع",
-					"canceled": "تم إلغاء الحذف",
-					"error": "خطأ أثناء حذف المستودع"
-				},
-				"error": "خطأ في تحميل المستودعات.",
-				"nothing": "لا يوجد شيء لعرضه هنا"
-			},
-			"damagedItems": {
-				"table": {
-					"create": "تسجيل عنصر تالف",
-					"createTitle": "تسجيل عنصر تالف جديد",
-					"createDescription": "املأ النموذج لتسجيل عنصر تالف جديد",
-					"item": "العنصر",
-					"owner": "المالك",
-					"repository": "المستودع",
-					"quantity": "الكمية",
-					"unitPrice": "سعر الوحدة",
-					"date": "التاريخ",
-					"notes": "ملاحظات",
-					"actions": "الإجراءات",
-					"remove": {
-						"label": "إزالة",
-						"confirm": "هل أنت متأكد أنك تريد إزالة هذا العنصر التالف؟",
-						"description": "لا يمكن التراجع عن هذا الإجراء.",
-						"yes": "حذف",
-						"no": "إلغاء",
-						"success": "تم حذف العنصر التالف",
-						"canceled": "تم إلغاء الحذف",
-						"error": "خطأ أثناء حذف العنصر التالف"
-					},
-					"edit": "تعديل"
-				},
-				"form": {
-					"title": "تسجيل عنصر تالف",
-					"id": "المعرّف",
-					"item": "العنصر",
-					"repository": "المستودع",
-					"quantity": "الكمية",
-					"unitPrice": "سعر الوحدة",
-					"date": "التاريخ",
-					"notes": "ملاحظات",
-					"edit": "تعديل العنصر التالف",
-					"submit": "إرسال",
-					"successCreate": "تم إنشاء العنصر التالف بنجاح",
-					"successEdit": "تم تحديث العنصر التالف بنجاح",
-					"error": "خطأ في تحميل العنصر التالف"
-				}
-			}
-		}
-	},
-	"customer-supplier": {
-		"table": {
-			"head": {
-				"name": "الاسم",
-				"details": "التفاصيل",
-				"actions": "الإجراءات"
-			},
-			"edit": "تعديل",
-			"view": "عرض",
-			"remove": {
-				"label": "إزالة",
-				"confirm": "هل أنت متأكد أنك تريد إزالة هذا العميل/المورد؟",
-				"description": "لا يمكن التراجع عن هذا الإجراء.",
-				"yes": "حذف",
-				"no": "إلغاء",
-				"success": "تم حذف العميل/المورد",
-				"canceled": "تم إلغاء الحذف",
-				"error": "خطأ أثناء حذف العميل/المورد"
-			}
-		},
-		"form": {
-			"id": "المعرّف",
-			"name": "الاسم",
-			"detail": "التفاصيل",
-			"error": "خطأ في العميل/المورد"
-		},
-		"view": {
-			"title": "تفاصيل العميل/المورد",
-			"loading": "جارٍ التحميل",
-			"error": "فشل في تحميل التفاصيل.",
-			"creditBalance": "رصيد الائتمان",
-			"details": "التفاصيل",
-			"noDetails": "لا توجد تفاصيل متاحة",
-			"relatedDocuments": "المستندات ذات الصلة",
-			"salesInvoices": "فواتير المبيعات",
-			"purchaseInvoices": "فواتير الشراء",
-			"payments": "المدفوعات",
-			"expenses": "المصاريف",
-			"salesInvoiceRefunds": "مرتجعات فواتير المبيعات",
-			"refillableItemsRefund": "مرتجع عناصر قابلة لإعادة التعبئة",
-			"reports": "التقارير",
-			"accountStatement": "كشف الحساب",
-			"dueDcdCans": "العبوات المستحقة (DCD)",
-			"showRaw": "عرض الخام",
-			"showUI": "عرض واجهة المستخدم"
-		}
-	},
-	"invoice": {
-		"table": {
-			"view": "عرض",
-			"head": {
-				"owner": "المالك",
-				"issueDate": "تاريخ الإصدار",
-				"dueDate": "تاريخ الاستحقاق",
-				"totalAmount": "المبلغ الإجمالي",
-				"repositoryPremit": "إذن المستودع",
-				"originalInvoice": "الفاتورة الأصلية",
-				"notes": "ملاحظات",
-				"actions": "الإجراءات",
-				"status": "الحالة"
-			},
-			"remove": {
-				"label": "إزالة",
-				"confirm": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
-				"description": "لا يمكن التراجع عن هذا الإجراء.",
-				"yes": "حذف",
-				"no": "إلغاء",
-				"success": "تم حذف العنصر",
-				"canceled": "تم إلغاء الحذف"
-			},
-			"edit": "تعديل",
-			"refund": "استرداد"
-		},
-		"form": {
-			"invoice": "فاتورة",
-			"issueDate": "تاريخ الإصدار",
-			"dueDate": "تاريخ الاستحقاق",
-			"owner": "المالك",
-			"items": "عناصر الفاتورة",
-			"addItem": "إضافة عنصر",
-			"notes": "ملاحظات",
-			"additionalNotes": "ملاحظات إضافية...",
-			"totalAmount": "المبلغ الإجمالي:",
-			"unitPrice": "سعر الوحدة",
-			"discount": "الخصم",
-			"taxRate": "نسبة الضريبة",
-			"repository": "المستودع",
-			"selectRepository": "اختر مستودعًا",
-			"update": "تحديث الفاتورة",
-			"create": "إنشاء فاتورة",
-			"successCreate": "تم إنشاء الفاتورة بنجاح",
-			"successEdit": "تم تحديث الفاتورة بنجاح",
-			"itemId": "معرّف العنصر:",
-			"itemName": "اسم العنصر",
-			"notSet": "غير محدد",
-			"description": "الوصف",
-			"previewItem": "معاينة العنصر",
-			"addToInvoice": "إضافة إلى الفاتورة",
-			"cancelPreview": "إلغاء",
-			"removeItem": "إزالة العنصر",
-			"quantity": "الكمية",
-			"noImage": "لا توجد صورة متاحة",
-			"paymentType": "نوع الدفع",
-			"cash": "نقدي",
-			"client": "عميل",
-			"addPayment": "إضافة دفعة مع هذه الفاتورة",
-			"showPayment": "إظهار الدفع",
-			"yes": "نعم",
-			"no": "لا",
-			"paymentAmount": "مبلغ الدفع",
-			"paymentAccount": "حساب الدفع",
-			"paymentNotes": "ملاحظات الدفع",
-			"selectPaymentAccount": "اختر حساب الدفع",
-			"noItemsError": "الرجاء إضافة عنصر واحد على الأقل إلى الفاتورة",
-			"ownerRequired": "المالك مطلوب",
-			"paymentFieldsRequired": "مبلغ الدفع والحساب مطلوبان للدفع الفوري",
-			"paymentDisabledZeroAmount": "الدفع معطل لأن المبلغ الإجمالي هو 0.00$",
-			"statusOptions": {
-				"3": "غير مدفوع",
-				"4": "مدفوع جزئياً",
-				"5": "مدفوع",
-				"6": "مدفوع بالزيادة",
-				"default": "غير معروف"
-			}
-		}
-	},
-	"finance": {
-		"table": {
-			"view": "عرض",
-			"edit": "تعديل",
-			"delete": "حذف"
-		},
-		"fields": {
-			"transaction": "إضافة دفعة",
-			"update": "تحديث الدفعة",
-			"owner": "المالك",
-			"paymentMethod": "طريقة الدفع",
-			"amount": "المبلغ",
-			"status": "الحالة",
-			"ref": "المرجع",
-			"date": "التاريخ",
-			"note": "ملاحظة",
-			"moreNotes": "ملاحظات إضافية...",
-			"optionalFields": "حقول اختيارية",
-			"paymentProof": "إثبات الدفع",
-			"expenseProof": "إثبات المصروف",
-			"transferProof": "إثبات التحويل",
-			"paymentRef": "مرجع الدفع",
-			"paymentRefHelper": "رقم مرجعي فريد لهذه الدفعة",
-			"transactionId": "رقم المعاملة",
-			"senderPhone": "رقم هاتف المرسل",
-			"senderName": "اسم المرسل",
-			"bankName": "اسم البنك",
-			"receivedBy": "استلمت بواسطة",
-			"fromVault": "من الخزينة",
-			"toVault": "إلى الخزينة",
-			"transferType": "نوع التحويل",
-			"dateRangeAfter": "التاريخ من",
-			"dateRangeBefore": "التاريخ إلى",
-			"category": "الفئة",
-			"image": "صورة الإيصال/الإثبات"
-		},
-		"status": {
-			"paid": "مدفوع",
-			"onHold": "معلق"
-		},
-		"success": {
-			"created": "تم إنشاء المعاملة بنجاح",
-			"updated": "تم تحديث المعاملة بنجاح",
-			"delete": "تم حذف المعاملة بنجاح"
-		},
-		"assert": {
-			"message": "هل أنت متأكد أنك تريد حذف هذه المعاملة؟"
-		},
-		"debtSettlement": {
-			"header": "تسوية الديون",
-			"settlementAmount": "مبلغ التسوية",
-			"status": {
-				"label": "الحالة",
-				"approved": "معتمد",
-				"not_approved": "غير معتمد"
-			}
-		},
-		"expense": {
-			"header": "المصروف",
-			"list": {
-				"noExpenses": "لم يتم العثور على مصروفات",
-				"notes": "ملاحظات",
-				"noImage": "لا توجد صورة مرفقة",
-				"summary": "ملخص",
-				"createTitle": "إنشاء مصروف"
-			},
-			"category": {
-				"name": "اسم الفئة",
-				"description": "الوصف",
-				"create": "إنشاء فئة",
-				"edit": "تعديل الفئة",
-				"namePlaceholder": "مثلاً: مستلزمات المكتب",
-				"descriptionPlaceholder": "وصف اختياري لهذه الفئة",
-				"deleteConfirm": "هل أنت متأكد من حذف هذه الفئة؟ لا يمكن التراجع عن هذا الإجراء.",
-				"deleteSuccess": "تم حذف الفئة بنجاح"
-			}
-		},
-		"general": {
-			"t": "معاملة",
-			"add": "إضافة",
-			"update": "تحديث"
-		},
-		"statusOptions": {
-			"confirmed": "تم التأكيد",
-			"pending": "قيد الانتظار",
-			"rejected": "مرفوض",
-			"reimbursed": "تم التعويض"
-		},
-		"transferTypes": {
-			"internal": "داخلي",
-			"external": "خارجي",
-			"p2p": "من نظير لنظير"
-		},
-		"placeholders": {
-			"paymentRef": "PAY-20240110-ABC12345",
-			"transactionId": "TXN123456789",
-			"senderPhone": "01234567890",
-			"senderName": "الاسم الثلاثي",
-			"bankName": "البنك الأهلي المصري",
-			"receivedBy": "اسم الموظف"
-		},
-		"helpers": {
-			"transactionId": "لإنستا باي / التحويل البنكي",
-			"senderPhone": "لمدفوعات المحافظ الإلكترونية",
-			"senderName": "للتحويلات البنكية",
-			"bankName": "للتحويلات البنكية",
-			"receivedBy": "من استلم النقود فعلياً"
-		},
-		"management": {
-			"title": "نظرة مالية عامة",
-			"computedFromTransactions": "محسوبة من المعاملات",
-			"totalBalance": "الرصيد الإجمالي",
-			"summary": "ملخص",
-			"totalAccounts": "إجمالي الحسابات",
-			"activeAccounts": "الحسابات النشطة",
-			"highestBalance": "أعلى رصيد",
-			"status": "الحالة",
-			"ofTotal": "من الإجمالي"
-		}
-	},
-	"accountVault": {
-		"title": "خزينة الحسابات",
-		"businessAccounts": "الحسابات التجارية",
-		"accountTypes": "أنواع الحسابات",
-		"fields": {
-			"accountName": "اسم الحساب",
-			"accountType": "نوع الحساب",
-			"accountNumber": "رقم الحساب",
-			"phoneNumber": "رقم الهاتف",
-			"bankName": "اسم البنك",
-			"currentBalance": "الرصيد الحالي",
-			"isActive": "حالة النشاط",
-			"typeName": "اسم النوع"
-		},
-		"placeholders": {
-			"searchAccountName": "بحث باسم الحساب",
-			"searchAccountType": "تصفية حسب نوع الحساب",
-			"accountNumber": "أدخل رقم الحساب",
-			"phoneNumber": "أدخل رقم الهاتف (للمحافظ الإلكترونية)",
-			"bankName": "أدخل اسم البنك",
-			"typeName": "أدخل اسم نوع الحساب (مثال: نقدي، حساب بنكي)"
-		},
-		"actions": {
-			"createAccount": "إنشاء حساب تجاري",
-			"createType": "إنشاء نوع حساب",
-			"editAccount": "تعديل الحساب التجاري",
-			"editType": "تعديل نوع الحساب"
-		},
-		"status": {
-			"active": "نشط",
-			"inactive": "غير نشط"
-		},
-		"table": {
-			"delete": "حذف"
-		}
-	},
-	"refillableItems": {
-		"form": {
-			"title": {
-				"createRefilled": "إنشاء معاملة تعبئة",
-				"editRefilled": "تعديل معاملة التعبئة",
-				"createRefund": "إنشاء معاملة استرداد",
-				"editRefund": "تعديل معاملة الاسترداد"
-			},
-			"owner": "المالك",
-			"item": "العنصر",
-			"quantity": "كمية التعبئة",
-			"repository": "المستودع",
-			"notes": "ملاحظات",
-			"moreNotes": "ملاحظات إضافية...",
-			"refilledItem": "اختر العنصر المعاد تعبئته",
-			"usedItem": "اختر العنصر المستخدم",
-			"usedQuantity": "الكمية المستخدمة",
-			"employee": "الموظف",
-			"date": "التاريخ"
-		},
-		"refilled": {
-			"list": {
-				"refilledItem": "العنصر المعاد تعبئته",
-				"quantity": "الكمية",
-				"usedItem": "العنصر المستخدم",
-				"date": "التاريخ",
-				"repo": "المستودع",
-				"employee": "الموظف",
-				"notes": "ملاحظات"
-			}
-		},
-		"refund": {
-			"list": {
-				"client": "العميل",
-				"date": "التاريخ",
-				"refunded": "المسترد",
-				"quantity": "الكمية",
-				"repo": "المستودع",
-				"notes": "ملاحظات"
-			}
-		}
-	},
-	"paginationControls": {
-		"next": "الصفحة التالية",
-		"prev": "الصفحة السابقة",
-		"page": "الصفحة",
-		"of": "من"
-	},
-	"auth": {
-		"welcome": "مرحبًا بعودتك",
-		"username": "اسم المستخدم",
-		"password": "كلمة المرور",
-		"login": "تسجيل الدخول",
-		"loading": "جارٍ تسجيل الدخول",
-		"errors": {
-			"missing": {
-				"username": "اسم المستخدم مطلوب",
-				"password": "كلمة المرور مطلوبة",
-				"general": "اسم المستخدم وكلمة المرور مطلوبان."
-			},
-			"403": "بيانات اعتماد غير صالحة.",
-			"404": "الخدمة غير موجودة.",
-			"500": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
-			"etc": "خطأ في الخادم أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.",
-			"invalidForm": "بيانات النموذج غير صالحة."
-		},
-		"logout": {
-			"loading": "جارٍ تسجيل الخروج…",
-			"completed": "اكتمل تسجيل الخروج",
-			"progress": "جارٍ تسجيل الخروج",
-			"progressMessage": "يرجى الانتظار بينما ننهي جلستك",
-			"completedMessage": "تم إنهاء جلستك",
-			"redirect": "إعادة التوجيه إلى صفحة تسجيل الدخول بعد ثوانٍ...",
-			"failed": "فشل تسجيل الخروج",
-			"retry": "إعادة محاولة تسجيل الخروج",
-			"error": "فشل تسجيل الخروج. يرجى المحاولة مرة أخرى."
-		},
-		"changePassword": {
-			"title": "تغيير كلمة المرور",
-			"description": "يجب تغيير كلمة المرور قبل المتابعة.",
-			"currentPassword": "كلمة المرور الحالية",
-			"newPassword": "كلمة المرور الجديدة",
-			"confirmPassword": "تأكيد كلمة المرور الجديدة",
-			"submit": "تغيير كلمة المرور",
-			"loading": "جارٍ التغيير...",
-			"back": "العودة",
-			"success": "تم تغيير كلمة المرور بنجاح!",
-			"errors": {
-				"allFields": "جميع الحقول مطلوبة.",
-				"match": "كلمات المرور غير متطابقة."
-			}
-		}
-	},
-	"user-management": {
-		"table": {
-			"create": "إنشاء مستخدم",
-			"head": {
-				"username": "اسم المستخدم",
-				"status": "الحالة",
-				"groups": "المجموعات",
-				"permissions": "الصلاحيات",
-				"dateJoined": "تاريخ الانضمام",
-				"actions": "الإجراءات"
-			},
-			"active": "نشط",
-			"inactive": "غير نشط",
-			"superuser": "مشرف",
-			"permissionsCount": "صلاحية",
-			"edit": "تعديل",
-			"remove": {
-				"label": "إزالة",
-				"confirm": "حذف المستخدم؟",
-				"description": "سيتم حذف حساب المستخدم نهائياً.",
-				"yes": "حذف",
-				"no": "إلغاء",
-				"success": "تم حذف المستخدم بنجاح",
-				"canceled": "تم إلغاء الحذف"
-			}
-		},
-		"form": {
-			"createTitle": "إنشاء مستخدم",
-			"editTitle": "تعديل مستخدم",
-			"profileDetails": "تفاصيل الملف الشخصي",
-			"removePhoto": "إزالة الصورة",
-			"clickToUpload": "اضغط لرفع صورة جديدة",
-			"firstName": "الاسم الأول",
-			"lastName": "الاسم الأخير",
-			"basicInfo": "المعلومات الأساسية",
-			"username": "اسم المستخدم",
-			"password": "كلمة المرور",
-			"passwordHint": "اتركه فارغاً للاحتفاظ بكلمة المرور الحالية",
-			"isActive": "نشط",
-			"isStaff": "موظف",
-			"isSuperuser": "مشرف عام",
-			"permissions": "الصلاحيات والمجموعات",
-			"saveAsGroup": {
-				"button": "حفظ كمجموعة",
-				"title": "حفظ الصلاحيات كمجموعة",
-				"description": "إنشاء مجموعة جديدة بـ {count} صلاحية محددة حالياً.",
-				"namePlaceholder": "اسم المجموعة",
-				"nameRequired": "الرجاء إدخال اسم المجموعة",
-				"noPermissions": "لم يتم تحديد أي صلاحيات",
-				"save": "إنشاء المجموعة",
-				"saving": "جارٍ الإنشاء...",
-				"success": "تم إنشاء المجموعة بنجاح!",
-				"error": "فشل في إنشاء المجموعة"
-			}
-		},
-		"filters": {
-			"username": "البحث باسم المستخدم",
-			"all": "الكل",
-			"isActive": {
-				"label": "الحالة",
-				"active": "نشط",
-				"inactive": "غير نشط"
-			},
-			"isSuperuser": {
-				"label": "مشرف عام",
-				"yes": "نعم",
-				"no": "لا"
-			},
-			"isStaff": {
-				"label": "موظف",
-				"yes": "نعم",
-				"no": "لا"
-			}
-		}
-	},
-	"permission-management": {
-		"title": "إدارة الصلاحيات",
-		"tabs": {
-			"groups": "المجموعات",
-			"permissions": "الصلاحيات"
-		},
-		"selector": {
-			"modeGroups": "المجموعات فقط",
-			"modeManual": "يدوي فقط",
-			"modeCombined": "مجمّع",
-			"groupsTitle": "اختر المجموعات",
-			"permissionsTitle": "الصلاحيات الفردية",
-			"selected": "محدد",
-			"selectAll": "تحديد الكل",
-			"clearAll": "مسح الكل",
-			"selectApp": "تحديد الكل",
-			"unselectApp": "إلغاء تحديد الكل",
-			"fromGroup": "من مجموعة",
-			"groupRemovedWarning": "تمت إزالة المجموعة '{groupNames}' للسماح بتحديد الأذونات المخصصة."
-		},
-		"permissions": {
-			"searchPlaceholder": "بحث في الصلاحيات...",
-			"expandAll": "توسيع الكل",
-			"collapseAll": "طي الكل",
-			"noResults": "لم يتم العثور على صلاحيات",
-			"table": {
-				"name": "الاسم",
-				"codename": "الكود",
-				"model": "النموذج"
-			}
-		},
-		"groups": {
-			"description": "إدارة مجموعات الصلاحيات لتبسيط التحكم في الوصول.",
-			"create": "إنشاء مجموعة",
-			"noGroups": "لم يتم العثور على مجموعات. انقر 'إنشاء مجموعة' لإضافة واحدة.",
-			"table": {
-				"name": "اسم المجموعة",
-				"permissionCount": "الصلاحيات",
-				"permissions": "صلاحية",
-				"actions": "الإجراءات",
-				"edit": "تعديل",
-				"delete": "حذف"
-			},
-			"delete": {
-				"confirm": "حذف المجموعة؟",
-				"description": "سيتم إزالة المجموعة وفصلها عن جميع المستخدمين.",
-				"yes": "حذف",
-				"no": "إلغاء",
-				"success": "تم حذف المجموعة بنجاح",
-				"canceled": "تم إلغاء الحذف"
-			}
-		},
-		"groupForm": {
-			"createTitle": "إنشاء مجموعة",
-			"editTitle": "تعديل مجموعة",
-			"namePlaceholder": "أدخل اسم المجموعة",
-			"inheritFrom": "وراثة الصلاحيات من مجموعات موجودة",
-			"permissionsTitle": "الصلاحيات",
-			"selected": "محدد",
-			"selectAll": "تحديد الكل",
-			"clearAll": "مسح الكل",
-			"selectApp": "تحديد الكل",
-			"unselectApp": "إلغاء تحديد الكل",
-			"saving": "جارٍ الحفظ..."
-		}
-	},
-	"inputs": {
-		"file": {
-			"upload": "اختر ملفات أو اسحبها وأسقطها",
-			"browse": "أو انقر للتصفح",
-			"maxSize": "الحد الأقصى لحجم الملف هو 100 ميجابايت",
-			"accepted": {
-				"all": "جميع الملفات",
-				"images": "الصور",
-				"videos": "الفيديوهات",
-				"audio": "الملفات الصوتية",
-				"documents": "المستندات",
-				"archives": "الأرشيفات"
-			},
-			"only": "فقط",
-			"preview": "انقر للمعاينة"
-		},
-		"searchableDropdown": {
-			"noOptions": "لا توجد خيارات متاحة",
-			"loading": "جارٍ التحميل",
-			"placeholder": "اختر خيارًا",
-			"searchPlaceholder": "اختر..."
-		},
-		"search": {
-			"itemName": "اسم الصنف",
-			"ownerName": "اسم المالك",
-			"repository": "المستودع",
-			"notes": "الملاحظات",
-			"category": "الفئة",
-			"categoryName": "اسم الفئة",
-			"accountName": "اسم الحساب",
-			"limit": "الحد",
-			"offset": "الإزاحة",
-			"fromDate": "من تاريخ",
-			"toDate": "إلى تاريخ",
-			"refilledItem": "الصنف المعبأ",
-			"usedItem": "الصنف المستخدم",
-			"orderNumber": "رقم الطلب",
-			"itemDescription": "وصف الصنف",
-			"paymentNumber": "رقم الدفعة",
-			"transactionNumber": "رقم المعاملة",
-			"type": "النوع",
-			"id": "المعرف",
-			"name": "الاسم",
-			"barcode": "الباركود",
-			"place": "المكان",
-			"origin": "المنشأ",
-			"repositoryName": "اسم المستودع",
-			"date": "التاريخ",
-			"status": "الحالة",
-			"repositoryPermit": "إذن المستودع",
-			"repositoryPermitOptions": {
-				"true": "تم التسليم",
-				"false": "لم يتم التسليم"
-			},
-			"issueDateAfter": "تاريخ الإصدار من",
-			"issueDateBefore": "تاريخ الإصدار إلى",
-			"dueDateAfter": "تاريخ الاستحقاق من",
-			"dueDateBefore": "تاريخ الاستحقاق إلى"
-		},
-		"quantity": {
-			"label": "الكمية",
-			"increment": "زيادة الكمية",
-			"decrement": "تقليل الكمية"
-		}
-	},
-	"global": {
-		"backToList": "العودة إلى القائمة",
-		"createdAt": "تاريخ الإنشاء",
-		"updatedAt": "تاريخ التحديث",
-		"actions": "الإجراءات",
-		"all": "الكل",
-		"searchPlaceholder": "بحث ...",
-		"form": {
-			"submit": "إرسال",
-			"edit": "تعديل",
-			"editSuccess": "تم التعديل بنجاح",
-			"createSuccess": "تم الإنشاء بنجاح",
-			"successEdit": "تم التحديث بنجاح",
-			"successCreate": "تم الإنشاء بنجاح",
-			"id": "المعرّف"
-		},
-		"errors": {
-			"400": "طلب غير صالح",
-			"403": "تم رفض الوصول.",
-			"404": "غير موجود",
-			"500": "خطأ داخلي في الخادم",
-			"503": "الخدمة غير متاحة. يرجى المحاولة مرة أخرى لاحقًا.",
-			"etc": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
-			"pageNotFound": "الصفحة غير موجودة",
-			"nothing": "لا يوجد شيء لعرضه هنا",
-			"loadError": "فشل في تحميل البيانات",
-			"deleteError": "فشل في حذف العنصر"
-		},
-		"delete": {
-			"label": "إزالة",
-			"actionLabel": "حذف",
-			"cancelLabel": "إلغاء",
-			"confirmMessage": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
-			"deleting": "جارٍ الحذف...",
-			"assert": {
-				"description": "لا يمكن التراجع عن هذا الإجراء.",
-				"canceled": "تم الإلغاء"
-			}
-		},
-		"print": {
-			"label": "طباعة"
-		}
-	},
-	"ownerAccountStatement": {
-		"transactionSummary": "ملخص المعاملات",
-		"table": {
-			"type": "النوع",
-			"count": "العدد",
-			"amount": "المبلغ"
-		},
-		"types": {
-			"salesInvoices": "فواتير المبيعات",
-			"returnSalesInvoices": "فواتير إرجاع المبيعات",
-			"purchasesInvoices": "فواتير الشراء",
-			"payments": "المدفوعات"
-		},
-		"creditTotals": {
-			"title": "إجماليات الائتمان",
-			"items": {
-				"InitialCreditBalance": "المستحق من العام السابق",
-				"SalesInvoices": "فواتير المبيعات",
-				"ReturnSalesInvoices": "مرتجعات فواتير المبيعات",
-				"payments": "المدفوعات",
-				"ReversPayments": "المدفوعات المعكوسة",
-				"PurchaseInvoices": "فواتير الشراء"
-			}
-		},
-		"transactions": {
-			"title": "المعاملات",
-			"fields": {
-				"ref": "معرّف المرجع",
-				"type": "النوع",
-				"date": "التاريخ",
-				"amount": "مبلغ المعاملة",
-				"remaining": "رصيد الائتمان المتبقي"
-			}
-		},
-		"noData": "لا توجد بيانات متاحة"
-	},
-	"reports": {
-		"title": "لوحة التقارير",
-		"reportSections": {
-			"warehouse": {
-				"title": "المستودع",
-				"links": {
-					"itemMovement": {
-						"label": "حركة العناصر",
-						"description": "تتبع تحركات ونقل المخزون"
-					},
-					"itemsSale": {
-						"label": "مبيعات العناصر",
-						"description": "تتبع مبيعات العناصر خلال الفترة"
-					},
-					"itemsAsXLSX": {
-						"label": "توليد العناصر كملف XLSX",
-						"description": "تصدير العناصر كملف XLSX"
-					}
-				}
-			},
-			"finance": {
-				"title": "المالية",
-				"links": {
-					"paymentsInPeriod": {
-						"label": "الدفعات خلال الفترة",
-						"description": "المعاملات والدفعات المالية"
-					},
-					"debtList": {
-						"label": "قائمة أرصدة الائتمان للمالكين",
-						"description": "قائمة المالكين الذين لديهم رصيد ائتماني"
-					}
-				}
-			},
-			"refillableItems": {
-				"title": "العناصر القابلة لإعادة التعبئة",
-				"links": {
-					"refilledItems": {
-						"label": "العناصر المعاد تعبئتها والمستخدمة",
-						"description": "العناصر المعاد تعبئتها والمستخدمة خلال الفترة"
-					},
-					"refillableItemsClient": {
-						"label": "عناصر قابلة لإعادة التعبئة لدى العميل",
-						"description": "العناصر القابلة لإعادة التعبئة التي يمتلكها العميل حاليًا"
-					}
-				}
-			},
-			"clientsSuppliers": {
-				"title": "العملاء والموردون",
-				"links": {
-					"accountStatement": {
-						"label": "كشف الحساب",
-						"description": "كشف حساب مفصل"
-					}
-				}
-			}
-		},
-		"generate": "توليد"
-	},
-	"Error": {
-		"title": "عفوًا! حدث خطأ ما",
-		"message": "واجهنا خطأ غير متوقع. لا تقلق، ليس ذنبك.",
-		"errorDetails": "تفاصيل الخطأ",
-		"retry": "حاول مرة أخرى",
-		"home": "العودة إلى الصفحة الرئيسية"
-	},
-	"NotFound": {
-		"title": "الصفحة غير موجودة",
-		"message": "عذرًا، لم نتمكن من العثور على الصفحة التي تبحث عنها. قد تكون نقلت أو حُذفت.",
-		"home": "العودة إلى الصفحة الرئيسية",
-		"back": "العودة",
-		"url": "عنوان URL المطلوب"
-	},
-	"EventNotFound": {
-		"title": "{name} غير موجود",
-		"message": "{name} الذي تبحث عنه غير موجود أو قد تم حذفه.",
-		"back": "العودة",
-		"eventId": "معرّف {name}"
-	},
-	"permitButton": {
-		"delivered": "تم التسليم",
-		"notDelivered": "لم يتم التسليم"
-	},
-	"successCreate": "تم الإنشاء بنجاح",
-	"successEdit": "تم التحديث بنجاح",
-	"datePicker": {
-		"months": {
-			"0": "يناير",
-			"1": "فبراير",
-			"2": "مارس",
-			"3": "أبريل",
-			"4": "مايو",
-			"5": "يونيو",
-			"6": "يوليو",
-			"7": "أغسطس",
-			"8": "سبتمبر",
-			"9": "أكتوبر",
-			"10": "نوفمبر",
-			"11": "ديسمبر"
-		},
-		"weekdays": [
-			"أحد",
-			"إثن",
-			"ثلا",
-			"أرب",
-			"خمي",
-			"جمع",
-			"سبت"
-		],
-		"controls": {
-			"today": "اليوم",
-			"clear": "مسح",
-			"done": "تم",
-			"selectDate": "اختر التاريخ"
-		}
-	},
-	"settings": {
-		"title": "إعدادات المستخدم",
-		"firstName": "الاسم الأول",
-		"lastName": "اسم العائلة",
-		"username": "اسم المستخدم",
-		"firstNamePlaceholder": "محمد",
-		"lastNamePlaceholder": "أحمد",
-		"clickToUpload": "انقر لرفع صورة جديدة",
-		"removePhoto": "إزالة الصورة",
-		"cancel": "إلغاء",
-		"saveChanges": "حفظ التغييرات",
-		"changePassword": "تغيير كلمة المرور",
-		"saving": "جارٍ الحفظ...",
-		"successUpdate": "تم تحديث الملف الشخصي بنجاح",
-		"errorUpdate": "فشل في تحديث الملف الشخصي",
-		"errorGeneric": "حدث خطأ ما",
-		"database": {
-			"title": "إدارة قاعدة البيانات",
-			"createBackup": "إنشاء نسخة احتياطية لقاعدة البيانات",
-			"createBackupDataOnly": "إنشاء نسخة احتياطية لقاعدة البيانات (البيانات فقط)",
-			"processing": "جارِ المعالجة...",
-			"backupRetentionWarning": "ملاحظة: يتم الاحتفاظ بآخر {count} نسخة احتياطية فقط. يتم حذف النسخ القديمة تلقائيًا.",
-			"notes": "ملاحظات النسخة الاحتياطية",
-			"notesPlaceholder": "أدخل ملاحظات اختيارية لهذه النسخة...",
-			"saveChanges": "حفظ الإعدادات",
-			"saving": "جارٍ الحفظ...",
-			"configSaved": "تم تحديث الإعدادات بنجاح.",
-			"maxBackupsRetention": "الحد الأقصى للاحتفاظ بالنسخ الاحتياطية",
-			"noBackupsFound": "لا توجد نسخ احتياطية على الخادم",
-			"backupBy": "بواسطة: {user}"
-		},
-		"warehouse": {
-			"title": "إدارة المستودع",
-			"createItemsXlsx": "إنشاء قائمة العناصر كملف xlsx"
-		},
-		"browse": {
-			"title": "تصفح",
-			"media": "الوسائط"
-		},
-		"media": {
-			"title": "متصفح ملفات الوسائط",
-			"subtitle": "تصفح وترشيح ملف الوسائط الخاصة بك",
-			"stats": {
-				"totalFiles": "إجمالي الملفات",
-				"filteredResults": "النتائج المُرشَّحة",
-				"totalSize": "الحجم الإجمالي"
-			},
-			"search": {
-				"name": "الاسم",
-				"nameOrDescription": "الاسم أو الوصف",
-				"categoryName": "اسم الفئة",
-				"size": "الحجم",
-				"actions": "الإجراءات",
-				"view": "عرض",
-				"download": "تحميل"
-			},
-			"category": "الفئة",
-			"allCategories": "جميع الفئات",
-			"sortBy": "ترتيب حسب",
-			"fileName": "اسم الملف",
-			"fileSize": "حجم الملف",
-			"table": {
-				"file": "الملف",
-				"category": "الفئة"
-			},
-			"noFiles": "لم يتم العثور على ملفات تطابق معاييرك",
-			"showing": "عرض",
-			"of": "من",
-			"files": "ملفات"
-		}
-	},
-	"barcodeScanner": {
-		"scan": "مسح",
-		"scanBarcode": "مسح الباركود",
-		"cameraError": "خطأ في الكاميرا",
-		"retry": "إعادة المحاولة",
-		"torch": "مصباح",
-		"switch": "تبديل",
-		"positionBarcode": "ضع الباركود داخل الإطار",
-		"noItemFound": "لم يتم العثور على عنصر بالباركود",
-		"itemSelected": "تم اختيار العنصر",
-		"itemAdded": "تم إضافة العنصر",
-		"scanError": "حدث خطأ أثناء المسح",
-		"mode": {
-			"select": "وضع الماسح",
-			"camera": "الكاميرا",
-			"pos": "ماسح POS",
-			"recommendedMobile": "موصى به",
-			"recommendedDesktop": "موصى به"
-		},
-		"camera": {
-			"idle": "تم إيقاف الكاميرا مؤقتًا بسبب عدم النشاط",
-			"tapToResume": "اضغط لاستئناف المسح",
-			"timeout": "إيقاف تلقائي بعد {seconds} ثانية من عدم النشاط"
-		},
-		"pos": {
-			"waiting": "في انتظار المسح...",
-			"scanning": "جاري المسح...",
-			"ready": "وجه ماسح POS إلى الباركود",
-			"instructions": "استخدم ماسح الباركود اليدوي أو المكتبي",
-			"lastScan": "آخر مسح:",
-			"instructionStep1": "استخدم ماسح الباركود اليدوي أو المكتبي",
-			"instructionStep2": "وجهه إلى أي باركود وامسح",
-			"instructionStep3": "سيتم اكتشاف الباركود تلقائيًا"
-		},
-		"confirmation": {
-			"loading": "جاري التحميل...",
-			"error": "خطأ",
-			"confirmItem": "تأكيد العنصر",
-			"searchingItem": "جاري البحث عن العنصر...",
-			"itemNotFound": "لم يتم العثور على العنصر",
-			"itemId": "معرف العنصر",
-			"price": "السعر",
-			"cancel": "إلغاء",
-			"addToInvoice": "إضافة إلى الفاتورة",
-			"addToDamagedItems": "إضافة إلى البضائع التالفة",
-			"addItem": "إضافة عنصر",
-			"select": "اختيار",
-			"close": "إغلاق"
-		},
-		"manager": {
-			"title": "الأكواد الشريطية",
-			"addBarcode": "إضافة باركود",
-			"noBarcodesYet": "لم تتم إضافة أكواد شريطية بعد. انقر على \"إضافة باركود\" للبدء.",
-			"placeholder": "أدخل أو امسح الباركود",
-			"removeBarcode": "إزالة الباركود"
-		},
-		"errorBoundary": {
-			"title": "خطأ في الماسح",
-			"message": "واجه ماسح الباركود خطأ. يرجى المحاولة مرة أخرى أو استخدام الإدخال اليدوي.",
-			"close": "إغلاق"
-		}
-	}
+  "navLinks": {
+    "dashboard": {
+      "headLabel": "لوحة التحكم"
+    },
+    "warehouse": {
+      "headLabel": "المستودع",
+      "subLabels": {
+        "items": "قائمة العناصر",
+        "createItem": "إنشاء عنصر",
+        "repositories": "قائمة المستودعات",
+        "createRepository": "إنشاء مستودع",
+        "damagedItems": "العناصر التالفة"
+      }
+    },
+    "invoice": {
+      "sales": {
+        "headLabel": "المبيعات"
+      },
+      "purchase": {
+        "headLabel": "المشتريات"
+      },
+      "subLabels": {
+        "invoiceManagement": "إدارة الفواتير",
+        "createInvoice": "إنشاء فاتورة",
+        "refund": "استرداد"
+      }
+    },
+    "customersSuppliers": {
+      "headLabel": "العملاء/الموردون",
+      "subLabels": {
+        "management": "إدارة العملاء/الموردين",
+        "createInvoice": "إنشاء عميل/مورد"
+      }
+    },
+    "finance": {
+      "headLabel": "المالية",
+      "subLabels": {
+        "payments": "قائمة الدفعات",
+        "addPayment": "إضافة دفعة",
+        "expenses": "قائمة المصاريف",
+        "addExpenses": "إضافة مصروف",
+        "reversePayment": "قائمة المدفوعات المعكوسة",
+        "addReversePayment": "إضافة دفعة معكوسة",
+        "debtSettlement": "قائمة تسوية الديون",
+        "debtSettlementForm": "إضافة تسوية دين",
+        "internalTransfer": "التحويلات الداخلية",
+        "addInternalTransfer": "إضافة تحويل داخلي",
+        "accountVault": "الحسابات التجارية",
+        "accountTypes": "أنواع الحسابات",
+        "expenseCategories": "فئات المصروفات",
+        "debts": "الديون",
+        "management": "الإدارة المالية"
+      }
+    },
+    "reports": {
+      "headLabel": "التقارير",
+      "subLabels": {
+        "refilled": "العبوات المعاد تعبئتها والعبوات الكبيرة المستخدمة",
+        "payments": "الدفعات خلال الفترة",
+        "accountStatement": "كشف حساب العميل/المورد",
+        "refillableItemsClientClientHas": "العناصر القابلة لإعادة التعبئة لدى العميل"
+      }
+    },
+    "refilledCans": {
+      "headLabel": "العناصر القابلة لإعادة التعبئة",
+      "subLabels": {
+        "refilled": "قائمة التعبئة",
+        "createRefilled": "نموذج التعبئة",
+        "refund": "قائمة المرتجعات",
+        "createRefund": "نموذج المرتجع",
+        "cansWithClints": "العناصر القابلة لإعادة التعبئة التي لدى العملاء"
+      }
+    },
+    "userManagement": {
+      "headLabel": "إدارة المستخدمين",
+      "subLabels": {
+        "users": "قائمة المستخدمين",
+        "permissions": "قائمة الصلاحيات",
+        "createUser": "إنشاء مستخدم"
+      }
+    },
+    "userDropDown": {
+      "settings": "الإعدادات",
+      "signOut": "تسجيل الخروج"
+    },
+    "settings": "الإعدادات",
+    "signUp": "التسجيل",
+    "quickAdd": "إضافة سريعة"
+  },
+  "toolTip": {
+    "created": "تم الإنشاء",
+    "lastUpdatedIn": "آخر تحديث في",
+    "by": "بواسطة",
+    "createdAt": "تاريخ الإنشاء",
+    "createdBy": "أنشأه",
+    "lastUpdatedAt": "آخر تحديث في",
+    "lastUpdatedBy": "آخر تحديث بواسطة"
+  },
+  "warehouse": {
+    "items": {
+      "card": {
+        "image": "الصورة",
+        "name": "الاسم",
+        "actions": "الإجراءات",
+        "price": "السعر",
+        "origin": "المصدر",
+        "place": "المكان",
+        "edit": "تعديل",
+        "gallery": "المعرض",
+        "table": "جدول",
+        "delete": "حذف",
+        "Edit": "تعديل",
+        "create": "إنشاء عنصر",
+        "createTitle": "إنشاء عنصر جديد",
+        "createDescription": "املأ النموذج لإنشاء عنصر جديد",
+        "noImg": "لا توجد صور متاحة",
+        "remove": {
+          "label": "إزالة",
+          "confirm": "هل أنت متأكد أنك تريد إزالة هذا العنصر؟",
+          "description": "لا يمكن التراجع عن هذا الإجراء.",
+          "yes": "حذف",
+          "no": "إلغاء",
+          "success": "تم حذف العنصر",
+          "canceled": "تم إلغاء الحذف",
+          "error": "خطأ أثناء حذف العنصر"
+        }
+      },
+      "form": {
+        "title": "إنشاء عنصر",
+        "id": "المعرّف",
+        "type": "النوع",
+        "name": "الاسم",
+        "itemName": "اسم العنصر",
+        "private": "خاص",
+        "wholesale": "جملة",
+        "piece": "قطعة",
+        "collapsible": {
+          "prices": "الأسعار",
+          "hide": "إخفاء",
+          "show": "عرض",
+          "inputs": "المدخلات"
+        },
+        "origin": "المصدر",
+        "place": "الموقع",
+        "submit": "إرسال",
+        "edit": "تعديل العنصر",
+        "successCreate": "تم إنشاء العنصر بنجاح",
+        "successEdit": "تم تحديث العنصر بنجاح",
+        "error": "خطأ في العنصر",
+        "errors": {
+          "400": "بيانات غير صالحة. يرجى التحقق من إدخالك.",
+          "500": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
+          "etc": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
+          "inputs": {
+            "name": "الاسم غير صالح",
+            "images_upload": "الصور غير صالحة",
+            "origin": "المصدر غير صالح",
+            "place": "الموقع غير صالح"
+          }
+        }
+      },
+      "list": {
+        "error": "خطأ في تحميل العناصر."
+      },
+      "view": {
+        "refillable": "قابل لإعادة التعبئة",
+        "id": "المعرّف",
+        "comparisonPeriod": "فترة المقارنة",
+        "30vs30": "آخر 30 يومًا مقابل الـ 30 يومًا السابقة",
+        "excludedItems": "يتم استبعاد العناصر ذات السعر 0 أوإذن المستودع غير المسموح به",
+        "previous": "السابق",
+        "current": "الحالي",
+        "units": "وحدات",
+        "information": "معلومات المخزون",
+        "pricing": "التسعير",
+        "price": "السعر",
+        "details": "تفاصيل",
+        "type": "النوع",
+        "origin": "المصدر",
+        "place": "المكان",
+        "timeline": "الجدول الزمني",
+        "created": "تم الإنشاء",
+        "updated": "تم التحديث",
+        "lastUpdated": "آخر تحديث",
+        "by": "بواسطة",
+        "barcodes": "الأكواد الشريطية",
+        "outOfStock": "نفذت الكمية",
+        "notFound": "العنصر غير موجود",
+        "noAccess": "ليس لديك صلاحية لعرض هذا العنصر."
+      }
+    },
+    "repositories": {
+      "form": {
+        "title": "إنشاء مستودع",
+        "id": "المعرّف",
+        "name": "اسم المستودع",
+        "submit": "إرسال المستودع",
+        "edit": "تعديل المستودع",
+        "errors": {
+          "400": "بيانات غير صالحة. يرجى التحقق من إدخالك.",
+          "500": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
+          "etc": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى."
+        },
+        "error": "المستودعات",
+        "successCreate": "تم إنشاء المستودع بنجاح",
+        "successEdit": "تم تحديث المستودع بنجاح"
+      },
+      "table": {
+        "head": {
+          "name": "الاسم",
+          "actions": "الإجراءات"
+        },
+        "place": "المكان",
+        "edit": "تعديل",
+        "create": "إنشاء مستودع",
+        "createTitle": "إنشاء مستودع جديد",
+        "createDescription": "املأ النموذج لإنشاء مستودع جديد",
+        "remove": {
+          "label": "إزالة",
+          "confirm": "هل أنت متأكد أنك تريد إزالة هذا المستودع؟",
+          "description": "لا يمكن التراجع عن هذا الإجراء.",
+          "yes": "حذف",
+          "no": "إلغاء",
+          "success": "تم حذف المستودع",
+          "canceled": "تم إلغاء الحذف",
+          "error": "خطأ أثناء حذف المستودع"
+        },
+        "error": "خطأ في تحميل المستودعات.",
+        "nothing": "لا يوجد شيء لعرضه هنا"
+      },
+      "damagedItems": {
+        "table": {
+          "create": "تسجيل عنصر تالف",
+          "createTitle": "تسجيل عنصر تالف جديد",
+          "createDescription": "املأ النموذج لتسجيل عنصر تالف جديد",
+          "item": "العنصر",
+          "owner": "المالك",
+          "repository": "المستودع",
+          "quantity": "الكمية",
+          "unitPrice": "سعر الوحدة",
+          "date": "التاريخ",
+          "notes": "ملاحظات",
+          "actions": "الإجراءات",
+          "remove": {
+            "label": "إزالة",
+            "confirm": "هل أنت متأكد أنك تريد إزالة هذا العنصر التالف؟",
+            "description": "لا يمكن التراجع عن هذا الإجراء.",
+            "yes": "حذف",
+            "no": "إلغاء",
+            "success": "تم حذف العنصر التالف",
+            "canceled": "تم إلغاء الحذف",
+            "error": "خطأ أثناء حذف العنصر التالف"
+          },
+          "edit": "تعديل"
+        },
+        "form": {
+          "title": "تسجيل عنصر تالف",
+          "id": "المعرّف",
+          "item": "العنصر",
+          "repository": "المستودع",
+          "quantity": "الكمية",
+          "unitPrice": "سعر الوحدة",
+          "date": "التاريخ",
+          "notes": "ملاحظات",
+          "edit": "تعديل العنصر التالف",
+          "submit": "إرسال",
+          "successCreate": "تم إنشاء العنصر التالف بنجاح",
+          "successEdit": "تم تحديث العنصر التالف بنجاح",
+          "error": "خطأ في تحميل العنصر التالف"
+        }
+      }
+    }
+  },
+  "customer-supplier": {
+    "table": {
+      "head": {
+        "name": "الاسم",
+        "details": "التفاصيل",
+        "actions": "الإجراءات"
+      },
+      "edit": "تعديل",
+      "view": "عرض",
+      "remove": {
+        "label": "إزالة",
+        "confirm": "هل أنت متأكد أنك تريد إزالة هذا العميل/المورد؟",
+        "description": "لا يمكن التراجع عن هذا الإجراء.",
+        "yes": "حذف",
+        "no": "إلغاء",
+        "success": "تم حذف العميل/المورد",
+        "canceled": "تم إلغاء الحذف",
+        "error": "خطأ أثناء حذف العميل/المورد"
+      }
+    },
+    "form": {
+      "id": "المعرّف",
+      "name": "الاسم",
+      "detail": "التفاصيل",
+      "error": "خطأ في العميل/المورد"
+    },
+    "view": {
+      "title": "تفاصيل العميل/المورد",
+      "loading": "جارٍ التحميل",
+      "error": "فشل في تحميل التفاصيل.",
+      "creditBalance": "رصيد الائتمان",
+      "details": "التفاصيل",
+      "noDetails": "لا توجد تفاصيل متاحة",
+      "relatedDocuments": "المستندات ذات الصلة",
+      "salesInvoices": "فواتير المبيعات",
+      "purchaseInvoices": "فواتير الشراء",
+      "payments": "المدفوعات",
+      "expenses": "المصاريف",
+      "salesInvoiceRefunds": "مرتجعات فواتير المبيعات",
+      "refillableItemsRefund": "مرتجع عناصر قابلة لإعادة التعبئة",
+      "reports": "التقارير",
+      "accountStatement": "كشف الحساب",
+      "dueDcdCans": "العبوات المستحقة (DCD)",
+      "showRaw": "عرض الخام",
+      "showUI": "عرض واجهة المستخدم"
+    }
+  },
+  "invoice": {
+    "table": {
+      "view": "عرض",
+      "head": {
+        "owner": "المالك",
+        "issueDate": "تاريخ الإصدار",
+        "dueDate": "تاريخ الاستحقاق",
+        "totalAmount": "المبلغ الإجمالي",
+        "repositoryPremit": "إذن المستودع",
+        "originalInvoice": "الفاتورة الأصلية",
+        "notes": "ملاحظات",
+        "actions": "الإجراءات",
+        "status": "الحالة"
+      },
+      "remove": {
+        "label": "إزالة",
+        "confirm": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+        "description": "لا يمكن التراجع عن هذا الإجراء.",
+        "yes": "حذف",
+        "no": "إلغاء",
+        "success": "تم حذف العنصر",
+        "canceled": "تم إلغاء الحذف"
+      },
+      "edit": "تعديل",
+      "refund": "استرداد"
+    },
+    "form": {
+      "invoice": "فاتورة",
+      "issueDate": "تاريخ الإصدار",
+      "dueDate": "تاريخ الاستحقاق",
+      "owner": "المالك",
+      "items": "عناصر الفاتورة",
+      "addItem": "إضافة عنصر",
+      "notes": "ملاحظات",
+      "additionalNotes": "ملاحظات إضافية...",
+      "totalAmount": "المبلغ الإجمالي:",
+      "unitPrice": "سعر الوحدة",
+      "discount": "الخصم",
+      "taxRate": "نسبة الضريبة",
+      "repository": "المستودع",
+      "selectRepository": "اختر مستودعًا",
+      "update": "تحديث الفاتورة",
+      "create": "إنشاء فاتورة",
+      "successCreate": "تم إنشاء الفاتورة بنجاح",
+      "successEdit": "تم تحديث الفاتورة بنجاح",
+      "itemId": "معرّف العنصر:",
+      "itemName": "اسم العنصر",
+      "notSet": "غير محدد",
+      "description": "الوصف",
+      "previewItem": "معاينة العنصر",
+      "addToInvoice": "إضافة إلى الفاتورة",
+      "cancelPreview": "إلغاء",
+      "removeItem": "إزالة العنصر",
+      "quantity": "الكمية",
+      "noImage": "لا توجد صورة متاحة",
+      "paymentType": "نوع الدفع",
+      "cash": "نقدي",
+      "client": "عميل",
+      "addPayment": "إضافة دفعة مع هذه الفاتورة",
+      "showPayment": "إظهار الدفع",
+      "yes": "نعم",
+      "no": "لا",
+      "paymentAmount": "مبلغ الدفع",
+      "paymentAccount": "حساب الدفع",
+      "paymentNotes": "ملاحظات الدفع",
+      "selectPaymentAccount": "اختر حساب الدفع",
+      "noItemsError": "الرجاء إضافة عنصر واحد على الأقل إلى الفاتورة",
+      "ownerRequired": "المالك مطلوب",
+      "paymentFieldsRequired": "مبلغ الدفع والحساب مطلوبان للدفع الفوري",
+      "paymentDisabledZeroAmount": "الدفع معطل لأن المبلغ الإجمالي هو 0.00$",
+      "statusOptions": {
+        "3": "غير مدفوع",
+        "4": "مدفوع جزئياً",
+        "5": "مدفوع",
+        "6": "مدفوع بالزيادة",
+        "default": "غير معروف"
+      }
+    }
+  },
+  "finance": {
+    "table": {
+      "view": "عرض",
+      "edit": "تعديل",
+      "delete": "حذف"
+    },
+    "fields": {
+      "transaction": "إضافة دفعة",
+      "update": "تحديث الدفعة",
+      "owner": "المالك",
+      "paymentMethod": "طريقة الدفع",
+      "amount": "المبلغ",
+      "status": "الحالة",
+      "ref": "المرجع",
+      "date": "التاريخ",
+      "note": "ملاحظة",
+      "moreNotes": "ملاحظات إضافية...",
+      "optionalFields": "حقول اختيارية",
+      "paymentProof": "إثبات الدفع",
+      "expenseProof": "إثبات المصروف",
+      "transferProof": "إثبات التحويل",
+      "paymentRef": "مرجع الدفع",
+      "paymentRefHelper": "رقم مرجعي فريد لهذه الدفعة",
+      "transactionId": "رقم المعاملة",
+      "senderPhone": "رقم هاتف المرسل",
+      "senderName": "اسم المرسل",
+      "bankName": "اسم البنك",
+      "receivedBy": "استلمت بواسطة",
+      "fromVault": "من الخزينة",
+      "toVault": "إلى الخزينة",
+      "transferType": "نوع التحويل",
+      "dateRangeAfter": "التاريخ من",
+      "dateRangeBefore": "التاريخ إلى",
+      "category": "الفئة",
+      "image": "صورة الإيصال/الإثبات"
+    },
+    "status": {
+      "paid": "مدفوع",
+      "onHold": "معلق"
+    },
+    "success": {
+      "created": "تم إنشاء المعاملة بنجاح",
+      "updated": "تم تحديث المعاملة بنجاح",
+      "delete": "تم حذف المعاملة بنجاح"
+    },
+    "assert": {
+      "message": "هل أنت متأكد أنك تريد حذف هذه المعاملة؟"
+    },
+    "debtSettlement": {
+      "header": "تسوية الديون",
+      "settlementAmount": "مبلغ التسوية",
+      "status": {
+        "label": "الحالة",
+        "approved": "معتمد",
+        "not_approved": "غير معتمد"
+      }
+    },
+    "expense": {
+      "header": "المصروف",
+      "list": {
+        "noExpenses": "لم يتم العثور على مصروفات",
+        "notes": "ملاحظات",
+        "noImage": "لا توجد صورة مرفقة",
+        "summary": "ملخص",
+        "createTitle": "إنشاء مصروف"
+      },
+      "category": {
+        "name": "اسم الفئة",
+        "description": "الوصف",
+        "create": "إنشاء فئة",
+        "edit": "تعديل الفئة",
+        "namePlaceholder": "مثلاً: مستلزمات المكتب",
+        "descriptionPlaceholder": "وصف اختياري لهذه الفئة",
+        "deleteConfirm": "هل أنت متأكد من حذف هذه الفئة؟ لا يمكن التراجع عن هذا الإجراء.",
+        "deleteSuccess": "تم حذف الفئة بنجاح"
+      }
+    },
+    "general": {
+      "t": "معاملة",
+      "add": "إضافة",
+      "update": "تحديث"
+    },
+    "statusOptions": {
+      "confirmed": "تم التأكيد",
+      "pending": "قيد الانتظار",
+      "rejected": "مرفوض",
+      "reimbursed": "تم التعويض"
+    },
+    "transferTypes": {
+      "internal": "داخلي",
+      "external": "خارجي",
+      "p2p": "من نظير لنظير"
+    },
+    "placeholders": {
+      "paymentRef": "PAY-20240110-ABC12345",
+      "transactionId": "TXN123456789",
+      "senderPhone": "01234567890",
+      "senderName": "الاسم الثلاثي",
+      "bankName": "البنك الأهلي المصري",
+      "receivedBy": "اسم الموظف"
+    },
+    "helpers": {
+      "transactionId": "لإنستا باي / التحويل البنكي",
+      "senderPhone": "لمدفوعات المحافظ الإلكترونية",
+      "senderName": "للتحويلات البنكية",
+      "bankName": "للتحويلات البنكية",
+      "receivedBy": "من استلم النقود فعلياً"
+    },
+    "management": {
+      "title": "نظرة مالية عامة",
+      "computedFromTransactions": "محسوبة من المعاملات",
+      "totalBalance": "الرصيد الإجمالي",
+      "summary": "ملخص",
+      "totalAccounts": "إجمالي الحسابات",
+      "activeAccounts": "الحسابات النشطة",
+      "highestBalance": "أعلى رصيد",
+      "status": "الحالة",
+      "ofTotal": "من الإجمالي",
+      "loading": "جار التحميل...",
+      "accessDenied": "تم رفض الوصول / خطأ",
+      "defaultError": "تعذر تحميل البيانات."
+    }
+  },
+  "accountVault": {
+    "title": "خزينة الحسابات",
+    "businessAccounts": "الحسابات التجارية",
+    "accountTypes": "أنواع الحسابات",
+    "fields": {
+      "accountName": "اسم الحساب",
+      "accountType": "نوع الحساب",
+      "accountNumber": "رقم الحساب",
+      "phoneNumber": "رقم الهاتف",
+      "bankName": "اسم البنك",
+      "currentBalance": "الرصيد الحالي",
+      "isActive": "حالة النشاط",
+      "typeName": "اسم النوع"
+    },
+    "placeholders": {
+      "searchAccountName": "بحث باسم الحساب",
+      "searchAccountType": "تصفية حسب نوع الحساب",
+      "accountNumber": "أدخل رقم الحساب",
+      "phoneNumber": "أدخل رقم الهاتف (للمحافظ الإلكترونية)",
+      "bankName": "أدخل اسم البنك",
+      "typeName": "أدخل اسم نوع الحساب (مثال: نقدي، حساب بنكي)"
+    },
+    "actions": {
+      "createAccount": "إنشاء حساب تجاري",
+      "createType": "إنشاء نوع حساب",
+      "editAccount": "تعديل الحساب التجاري",
+      "editType": "تعديل نوع الحساب"
+    },
+    "status": {
+      "active": "نشط",
+      "inactive": "غير نشط"
+    },
+    "table": {
+      "delete": "حذف"
+    }
+  },
+  "refillableItems": {
+    "form": {
+      "title": {
+        "createRefilled": "إنشاء معاملة تعبئة",
+        "editRefilled": "تعديل معاملة التعبئة",
+        "createRefund": "إنشاء معاملة استرداد",
+        "editRefund": "تعديل معاملة الاسترداد"
+      },
+      "owner": "المالك",
+      "item": "العنصر",
+      "quantity": "كمية التعبئة",
+      "repository": "المستودع",
+      "notes": "ملاحظات",
+      "moreNotes": "ملاحظات إضافية...",
+      "refilledItem": "اختر العنصر المعاد تعبئته",
+      "usedItem": "اختر العنصر المستخدم",
+      "usedQuantity": "الكمية المستخدمة",
+      "employee": "الموظف",
+      "date": "التاريخ"
+    },
+    "refilled": {
+      "list": {
+        "refilledItem": "العنصر المعاد تعبئته",
+        "quantity": "الكمية",
+        "usedItem": "العنصر المستخدم",
+        "date": "التاريخ",
+        "repo": "المستودع",
+        "employee": "الموظف",
+        "notes": "ملاحظات"
+      }
+    },
+    "refund": {
+      "list": {
+        "client": "العميل",
+        "date": "التاريخ",
+        "refunded": "المسترد",
+        "quantity": "الكمية",
+        "repo": "المستودع",
+        "notes": "ملاحظات"
+      }
+    }
+  },
+  "paginationControls": {
+    "next": "الصفحة التالية",
+    "prev": "الصفحة السابقة",
+    "page": "الصفحة",
+    "of": "من"
+  },
+  "auth": {
+    "welcome": "مرحبًا بعودتك",
+    "username": "اسم المستخدم",
+    "password": "كلمة المرور",
+    "login": "تسجيل الدخول",
+    "loading": "جارٍ تسجيل الدخول",
+    "errors": {
+      "403": "بيانات اعتماد غير صالحة.",
+      "404": "الخدمة غير موجودة.",
+      "500": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
+      "missing": {
+        "username": "اسم المستخدم مطلوب",
+        "password": "كلمة المرور مطلوبة",
+        "general": "اسم المستخدم وكلمة المرور مطلوبان."
+      },
+      "etc": "خطأ في الخادم أثناء تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+      "invalidForm": "بيانات النموذج غير صالحة."
+    },
+    "logout": {
+      "loading": "جارٍ تسجيل الخروج…",
+      "completed": "اكتمل تسجيل الخروج",
+      "progress": "جارٍ تسجيل الخروج",
+      "progressMessage": "يرجى الانتظار بينما ننهي جلستك",
+      "completedMessage": "تم إنهاء جلستك",
+      "redirect": "إعادة التوجيه إلى صفحة تسجيل الدخول بعد ثوانٍ...",
+      "failed": "فشل تسجيل الخروج",
+      "retry": "إعادة محاولة تسجيل الخروج",
+      "error": "فشل تسجيل الخروج. يرجى المحاولة مرة أخرى."
+    },
+    "changePassword": {
+      "title": "تغيير كلمة المرور",
+      "description": "يجب تغيير كلمة المرور قبل المتابعة.",
+      "currentPassword": "كلمة المرور الحالية",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmPassword": "تأكيد كلمة المرور الجديدة",
+      "submit": "تغيير كلمة المرور",
+      "loading": "جارٍ التغيير...",
+      "back": "العودة",
+      "success": "تم تغيير كلمة المرور بنجاح!",
+      "errors": {
+        "allFields": "جميع الحقول مطلوبة.",
+        "match": "كلمات المرور غير متطابقة."
+      }
+    }
+  },
+  "user-management": {
+    "table": {
+      "create": "إنشاء مستخدم",
+      "head": {
+        "username": "اسم المستخدم",
+        "status": "الحالة",
+        "groups": "المجموعات",
+        "permissions": "الصلاحيات",
+        "dateJoined": "تاريخ الانضمام",
+        "actions": "الإجراءات"
+      },
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "superuser": "مشرف",
+      "permissionsCount": "صلاحية",
+      "edit": "تعديل",
+      "remove": {
+        "label": "إزالة",
+        "confirm": "حذف المستخدم؟",
+        "description": "سيتم حذف حساب المستخدم نهائياً.",
+        "yes": "حذف",
+        "no": "إلغاء",
+        "success": "تم حذف المستخدم بنجاح",
+        "canceled": "تم إلغاء الحذف"
+      }
+    },
+    "form": {
+      "createTitle": "إنشاء مستخدم",
+      "editTitle": "تعديل مستخدم",
+      "profileDetails": "تفاصيل الملف الشخصي",
+      "removePhoto": "إزالة الصورة",
+      "clickToUpload": "اضغط لرفع صورة جديدة",
+      "firstName": "الاسم الأول",
+      "lastName": "الاسم الأخير",
+      "basicInfo": "المعلومات الأساسية",
+      "username": "اسم المستخدم",
+      "password": "كلمة المرور",
+      "passwordHint": "اتركه فارغاً للاحتفاظ بكلمة المرور الحالية",
+      "isActive": "نشط",
+      "isStaff": "موظف",
+      "isSuperuser": "مشرف عام",
+      "permissions": "الصلاحيات والمجموعات",
+      "saveAsGroup": {
+        "button": "حفظ كمجموعة",
+        "title": "حفظ الصلاحيات كمجموعة",
+        "description": "إنشاء مجموعة جديدة بـ {count} صلاحية محددة حالياً.",
+        "namePlaceholder": "اسم المجموعة",
+        "nameRequired": "الرجاء إدخال اسم المجموعة",
+        "noPermissions": "لم يتم تحديد أي صلاحيات",
+        "save": "إنشاء المجموعة",
+        "saving": "جارٍ الإنشاء...",
+        "success": "تم إنشاء المجموعة بنجاح!",
+        "error": "فشل في إنشاء المجموعة"
+      }
+    },
+    "filters": {
+      "username": "البحث باسم المستخدم",
+      "all": "الكل",
+      "isActive": {
+        "label": "الحالة",
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "isSuperuser": {
+        "label": "مشرف عام",
+        "yes": "نعم",
+        "no": "لا"
+      },
+      "isStaff": {
+        "label": "موظف",
+        "yes": "نعم",
+        "no": "لا"
+      }
+    }
+  },
+  "permission-management": {
+    "title": "إدارة الصلاحيات",
+    "tabs": {
+      "groups": "المجموعات",
+      "permissions": "الصلاحيات"
+    },
+    "selector": {
+      "modeGroups": "المجموعات فقط",
+      "modeManual": "يدوي فقط",
+      "modeCombined": "مجمّع",
+      "groupsTitle": "اختر المجموعات",
+      "permissionsTitle": "الصلاحيات الفردية",
+      "selected": "محدد",
+      "selectAll": "تحديد الكل",
+      "clearAll": "مسح الكل",
+      "selectApp": "تحديد الكل",
+      "unselectApp": "إلغاء تحديد الكل",
+      "fromGroup": "من مجموعة",
+      "superuserRequired": "يتطلب مشرف عام",
+      "groupRemovedWarning": "تمت إزالة المجموعة '{groupNames}' للسماح بتحديد الأذونات المخصصة."
+    },
+    "permissions": {
+      "searchPlaceholder": "بحث في الصلاحيات...",
+      "expandAll": "توسيع الكل",
+      "collapseAll": "طي الكل",
+      "noResults": "لم يتم العثور على صلاحيات",
+      "superuserRequired": "يتطلب مشرف عام",
+      "table": {
+        "name": "الاسم",
+        "codename": "الكود",
+        "model": "النموذج"
+      }
+    },
+    "groups": {
+      "description": "إدارة مجموعات الصلاحيات لتبسيط التحكم في الوصول.",
+      "create": "إنشاء مجموعة",
+      "noGroups": "لم يتم العثور على مجموعات. انقر 'إنشاء مجموعة' لإضافة واحدة.",
+      "table": {
+        "name": "اسم المجموعة",
+        "permissionCount": "الصلاحيات",
+        "permissions": "صلاحية",
+        "actions": "الإجراءات",
+        "edit": "تعديل",
+        "delete": "حذف"
+      },
+      "delete": {
+        "confirm": "حذف المجموعة؟",
+        "description": "سيتم إزالة المجموعة وفصلها عن جميع المستخدمين.",
+        "yes": "حذف",
+        "no": "إلغاء",
+        "success": "تم حذف المجموعة بنجاح",
+        "canceled": "تم إلغاء الحذف"
+      }
+    },
+    "groupForm": {
+      "createTitle": "إنشاء مجموعة",
+      "editTitle": "تعديل مجموعة",
+      "namePlaceholder": "أدخل اسم المجموعة",
+      "inheritFrom": "وراثة الصلاحيات من مجموعات موجودة",
+      "permissionsTitle": "الصلاحيات",
+      "selected": "محدد",
+      "selectAll": "تحديد الكل",
+      "clearAll": "مسح الكل",
+      "selectApp": "تحديد الكل",
+      "unselectApp": "إلغاء تحديد الكل",
+      "saving": "جارٍ الحفظ..."
+    }
+  },
+  "inputs": {
+    "file": {
+      "upload": "اختر ملفات أو اسحبها وأسقطها",
+      "browse": "أو انقر للتصفح",
+      "maxSize": "الحد الأقصى لحجم الملف هو 100 ميجابايت",
+      "accepted": {
+        "all": "جميع الملفات",
+        "images": "الصور",
+        "videos": "الفيديوهات",
+        "audio": "الملفات الصوتية",
+        "documents": "المستندات",
+        "archives": "الأرشيفات"
+      },
+      "only": "فقط",
+      "preview": "انقر للمعاينة"
+    },
+    "searchableDropdown": {
+      "noOptions": "لا توجد خيارات متاحة",
+      "loading": "جارٍ التحميل",
+      "placeholder": "اختر خيارًا",
+      "searchPlaceholder": "اختر..."
+    },
+    "search": {
+      "itemName": "اسم الصنف",
+      "ownerName": "اسم المالك",
+      "repository": "المستودع",
+      "notes": "الملاحظات",
+      "category": "الفئة",
+      "categoryName": "اسم الفئة",
+      "accountName": "اسم الحساب",
+      "limit": "الحد",
+      "offset": "الإزاحة",
+      "fromDate": "من تاريخ",
+      "toDate": "إلى تاريخ",
+      "refilledItem": "الصنف المعبأ",
+      "usedItem": "الصنف المستخدم",
+      "orderNumber": "رقم الطلب",
+      "itemDescription": "وصف الصنف",
+      "paymentNumber": "رقم الدفعة",
+      "transactionNumber": "رقم المعاملة",
+      "type": "النوع",
+      "id": "المعرف",
+      "name": "الاسم",
+      "barcode": "الباركود",
+      "place": "المكان",
+      "origin": "المنشأ",
+      "repositoryName": "اسم المستودع",
+      "date": "التاريخ",
+      "status": "الحالة",
+      "repositoryPermit": "إذن المستودع",
+      "repositoryPermitOptions": {
+        "true": "تم التسليم",
+        "false": "لم يتم التسليم"
+      },
+      "issueDateAfter": "تاريخ الإصدار من",
+      "issueDateBefore": "تاريخ الإصدار إلى",
+      "dueDateAfter": "تاريخ الاستحقاق من",
+      "dueDateBefore": "تاريخ الاستحقاق إلى"
+    },
+    "quantity": {
+      "label": "الكمية",
+      "increment": "زيادة الكمية",
+      "decrement": "تقليل الكمية"
+    }
+  },
+  "global": {
+    "backToList": "العودة إلى القائمة",
+    "createdAt": "تاريخ الإنشاء",
+    "updatedAt": "تاريخ التحديث",
+    "actions": "الإجراءات",
+    "all": "الكل",
+    "searchPlaceholder": "بحث ...",
+    "form": {
+      "submit": "إرسال",
+      "edit": "تعديل",
+      "editSuccess": "تم التعديل بنجاح",
+      "createSuccess": "تم الإنشاء بنجاح",
+      "successEdit": "تم التحديث بنجاح",
+      "successCreate": "تم الإنشاء بنجاح",
+      "id": "المعرّف"
+    },
+    "errors": {
+      "400": "طلب غير صالح",
+      "403": "تم رفض الوصول.",
+      "404": "غير موجود",
+      "500": "خطأ داخلي في الخادم",
+      "503": "الخدمة غير متاحة. يرجى المحاولة مرة أخرى لاحقًا.",
+      "etc": "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
+      "pageNotFound": "الصفحة غير موجودة",
+      "nothing": "لا يوجد شيء لعرضه هنا",
+      "loadError": "فشل في تحميل البيانات",
+      "deleteError": "فشل في حذف العنصر"
+    },
+    "delete": {
+      "label": "إزالة",
+      "actionLabel": "حذف",
+      "cancelLabel": "إلغاء",
+      "confirmMessage": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+      "deleting": "جارٍ الحذف...",
+      "assert": {
+        "description": "لا يمكن التراجع عن هذا الإجراء.",
+        "canceled": "تم الإلغاء"
+      }
+    },
+    "print": {
+      "label": "طباعة"
+    }
+  },
+  "ownerAccountStatement": {
+    "transactionSummary": "ملخص المعاملات",
+    "table": {
+      "type": "النوع",
+      "count": "العدد",
+      "amount": "المبلغ"
+    },
+    "types": {
+      "salesInvoices": "فواتير المبيعات",
+      "returnSalesInvoices": "فواتير إرجاع المبيعات",
+      "purchasesInvoices": "فواتير الشراء",
+      "payments": "المدفوعات"
+    },
+    "creditTotals": {
+      "title": "إجماليات الائتمان",
+      "items": {
+        "InitialCreditBalance": "المستحق من العام السابق",
+        "SalesInvoices": "فواتير المبيعات",
+        "ReturnSalesInvoices": "مرتجعات فواتير المبيعات",
+        "payments": "المدفوعات",
+        "ReversPayments": "المدفوعات المعكوسة",
+        "PurchaseInvoices": "فواتير الشراء"
+      }
+    },
+    "transactions": {
+      "title": "المعاملات",
+      "fields": {
+        "ref": "معرّف المرجع",
+        "type": "النوع",
+        "date": "التاريخ",
+        "amount": "مبلغ المعاملة",
+        "remaining": "رصيد الائتمان المتبقي"
+      }
+    },
+    "noData": "لا توجد بيانات متاحة"
+  },
+  "dashboard": {
+    "emptyState": {
+      "title": "لوحة التحكم فارغة",
+      "description": "أضف أدوات لتخصيص لوحة التحكم والحصول على مؤشرات دفعة واحدة."
+    },
+    "customize": "تخصيص",
+    "saveCustomization": "حفظ التخطيط",
+    "cancelCustomization": "إلغاء",
+    "resetLayout": "إعادة ضبط",
+    "addWidget": "إضافة أداة",
+    "addWidgets": "إضافة أدوات",
+    "removeWidget": "إزالة",
+    "widgetLibrary": "مكتبة الأدوات",
+    "customizingHint": "اسحب الأدوات وغيّر حجمها لتخصيص التخطيط",
+    "allWidgetsActive": "جميع الأدوات نشطة",
+    "allWidgetsActiveHint": "احذف أداة أولاً لإضافتها مجدداً",
+    "widgets": {
+      "pieChart": {
+        "title": "المبيعات مقابل المدفوعات",
+        "description": "نسبة المبالغ النقدية مقابل المدفوعات المؤجلة."
+      },
+      "scatterChart": {
+        "title": "استخدام العناصر القابلة لإعادة التعبئة",
+        "description": "تاريخ استخدام وإعادة تعبئة العناصر بمرور الوقت."
+      },
+      "totalSales": {
+        "title": "إجمالي المبيعات",
+        "description": "إجمالي إيرادات المبيعات عبر جميع الفواتير.",
+        "subtitle": "مبيعات الكل"
+      },
+      "totalPayments": {
+        "title": "المبالغ المحصّلة",
+        "description": "إجمالي المدفوعات المحصّلة من العملاء.",
+        "subtitle": "المدفوعات المستلمة"
+      },
+      "pendingDebt": {
+        "title": "الديون المعلّقة",
+        "description": "الرصيد المؤجل غير المحصّل بعد.",
+        "subtitle": "الرصيد غير المسدّد"
+      }
+    }
+  },
+  "reports": {
+    "title": "لوحة التقارير",
+    "emptyState": {
+      "title": "لا توجد تقارير متاحة",
+      "description": "ليس لديك صلاحية لعرض أي تقارير. يرجى الاتصال بالمسؤول إذا كنت بحاجة إلى الوصول."
+    },
+    "reportSections": {
+      "warehouse": {
+        "title": "المستودع",
+        "links": {
+          "itemMovement": {
+            "label": "حركة العناصر",
+            "description": "تتبع تحركات ونقل المخزون"
+          },
+          "itemsSale": {
+            "label": "مبيعات العناصر",
+            "description": "تتبع مبيعات العناصر خلال الفترة"
+          },
+          "itemsAsXLSX": {
+            "label": "توليد العناصر كملف XLSX",
+            "description": "تصدير العناصر كملف XLSX"
+          }
+        }
+      },
+      "finance": {
+        "title": "المالية",
+        "links": {
+          "paymentsInPeriod": {
+            "label": "الدفعات خلال الفترة",
+            "description": "المعاملات والدفعات المالية"
+          },
+          "debtList": {
+            "label": "قائمة أرصدة الائتمان للمالكين",
+            "description": "قائمة المالكين الذين لديهم رصيد ائتماني"
+          }
+        }
+      },
+      "refillableItems": {
+        "title": "العناصر القابلة لإعادة التعبئة",
+        "links": {
+          "refilledItems": {
+            "label": "العناصر المعاد تعبئتها والمستخدمة",
+            "description": "العناصر المعاد تعبئتها والمستخدمة خلال الفترة"
+          },
+          "refillableItemsClient": {
+            "label": "عناصر قابلة لإعادة التعبئة لدى العميل",
+            "description": "العناصر القابلة لإعادة التعبئة التي يمتلكها العميل حاليًا"
+          }
+        }
+      },
+      "clientsSuppliers": {
+        "title": "العملاء والموردون",
+        "links": {
+          "accountStatement": {
+            "label": "كشف الحساب",
+            "description": "كشف حساب مفصل"
+          }
+        }
+      }
+    },
+    "generate": "توليد"
+  },
+  "Error": {
+    "title": "عفوًا! حدث خطأ ما",
+    "message": "واجهنا خطأ غير متوقع. لا تقلق، ليس ذنبك.",
+    "errorDetails": "تفاصيل الخطأ",
+    "retry": "حاول مرة أخرى",
+    "home": "العودة إلى الصفحة الرئيسية"
+  },
+  "NotFound": {
+    "title": "الصفحة غير موجودة",
+    "message": "عذرًا، لم نتمكن من العثور على الصفحة التي تبحث عنها. قد تكون نقلت أو حُذفت.",
+    "home": "العودة إلى الصفحة الرئيسية",
+    "back": "العودة",
+    "url": "عنوان URL المطلوب"
+  },
+  "EventNotFound": {
+    "title": "{name} غير موجود",
+    "message": "{name} الذي تبحث عنه غير موجود أو قد تم حذفه.",
+    "back": "العودة",
+    "eventId": "معرّف {name}"
+  },
+  "permitButton": {
+    "delivered": "تم التسليم",
+    "notDelivered": "لم يتم التسليم"
+  },
+  "successCreate": "تم الإنشاء بنجاح",
+  "successEdit": "تم التحديث بنجاح",
+  "datePicker": {
+    "months": {
+      "0": "يناير",
+      "1": "فبراير",
+      "2": "مارس",
+      "3": "أبريل",
+      "4": "مايو",
+      "5": "يونيو",
+      "6": "يوليو",
+      "7": "أغسطس",
+      "8": "سبتمبر",
+      "9": "أكتوبر",
+      "10": "نوفمبر",
+      "11": "ديسمبر"
+    },
+    "weekdays": [
+      "أحد",
+      "إثن",
+      "ثلا",
+      "أرب",
+      "خمي",
+      "جمع",
+      "سبت"
+    ],
+    "controls": {
+      "today": "اليوم",
+      "clear": "مسح",
+      "done": "تم",
+      "selectDate": "اختر التاريخ"
+    }
+  },
+  "settings": {
+    "title": "إعدادات المستخدم",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "username": "اسم المستخدم",
+    "firstNamePlaceholder": "محمد",
+    "lastNamePlaceholder": "أحمد",
+    "clickToUpload": "انقر لرفع صورة جديدة",
+    "removePhoto": "إزالة الصورة",
+    "cancel": "إلغاء",
+    "saveChanges": "حفظ التغييرات",
+    "changePassword": "تغيير كلمة المرور",
+    "saving": "جارٍ الحفظ...",
+    "successUpdate": "تم تحديث الملف الشخصي بنجاح",
+    "errorUpdate": "فشل في تحديث الملف الشخصي",
+    "errorGeneric": "حدث خطأ ما",
+    "database": {
+      "title": "إدارة قاعدة البيانات",
+      "createBackup": "إنشاء نسخة احتياطية لقاعدة البيانات",
+      "createBackupDataOnly": "إنشاء نسخة احتياطية لقاعدة البيانات (البيانات فقط)",
+      "processing": "جارِ المعالجة...",
+      "backupRetentionWarning": "ملاحظة: يتم الاحتفاظ بآخر {count} نسخة احتياطية فقط. يتم حذف النسخ القديمة تلقائيًا.",
+      "notes": "ملاحظات النسخة الاحتياطية",
+      "notesPlaceholder": "أدخل ملاحظات اختيارية لهذه النسخة...",
+      "saveChanges": "حفظ الإعدادات",
+      "saving": "جارٍ الحفظ...",
+      "configSaved": "تم تحديث الإعدادات بنجاح.",
+      "maxBackupsRetention": "الحد الأقصى للاحتفاظ بالنسخ الاحتياطية",
+      "noBackupsFound": "لا توجد نسخ احتياطية على الخادم",
+      "backupBy": "بواسطة: {user}"
+    },
+    "warehouse": {
+      "title": "إدارة المستودع",
+      "createItemsXlsx": "إنشاء قائمة العناصر كملف xlsx"
+    },
+    "browse": {
+      "title": "تصفح",
+      "media": "الوسائط"
+    },
+    "media": {
+      "title": "متصفح ملفات الوسائط",
+      "subtitle": "تصفح وترشيح ملف الوسائط الخاصة بك",
+      "stats": {
+        "totalFiles": "إجمالي الملفات",
+        "filteredResults": "النتائج المُرشَّحة",
+        "totalSize": "الحجم الإجمالي"
+      },
+      "search": {
+        "name": "الاسم",
+        "nameOrDescription": "الاسم أو الوصف",
+        "categoryName": "اسم الفئة",
+        "size": "الحجم",
+        "actions": "الإجراءات",
+        "view": "عرض",
+        "download": "تحميل"
+      },
+      "category": "الفئة",
+      "allCategories": "جميع الفئات",
+      "sortBy": "ترتيب حسب",
+      "fileName": "اسم الملف",
+      "fileSize": "حجم الملف",
+      "table": {
+        "file": "الملف",
+        "category": "الفئة"
+      },
+      "noFiles": "لم يتم العثور على ملفات تطابق معاييرك",
+      "showing": "عرض",
+      "of": "من",
+      "files": "ملفات"
+    }
+  },
+  "barcodeScanner": {
+    "scan": "مسح",
+    "scanBarcode": "مسح الباركود",
+    "cameraError": "خطأ في الكاميرا",
+    "retry": "إعادة المحاولة",
+    "torch": "مصباح",
+    "switch": "تبديل",
+    "positionBarcode": "ضع الباركود داخل الإطار",
+    "noItemFound": "لم يتم العثور على عنصر بالباركود",
+    "itemSelected": "تم اختيار العنصر",
+    "itemAdded": "تم إضافة العنصر",
+    "scanError": "حدث خطأ أثناء المسح",
+    "mode": {
+      "select": "وضع الماسح",
+      "camera": "الكاميرا",
+      "pos": "ماسح POS",
+      "recommendedMobile": "موصى به",
+      "recommendedDesktop": "موصى به"
+    },
+    "camera": {
+      "idle": "تم إيقاف الكاميرا مؤقتًا بسبب عدم النشاط",
+      "tapToResume": "اضغط لاستئناف المسح",
+      "timeout": "إيقاف تلقائي بعد {seconds} ثانية من عدم النشاط"
+    },
+    "pos": {
+      "waiting": "في انتظار المسح...",
+      "scanning": "جاري المسح...",
+      "ready": "وجه ماسح POS إلى الباركود",
+      "instructions": "استخدم ماسح الباركود اليدوي أو المكتبي",
+      "lastScan": "آخر مسح:",
+      "instructionStep1": "استخدم ماسح الباركود اليدوي أو المكتبي",
+      "instructionStep2": "وجهه إلى أي باركود وامسح",
+      "instructionStep3": "سيتم اكتشاف الباركود تلقائيًا"
+    },
+    "confirmation": {
+      "loading": "جاري التحميل...",
+      "error": "خطأ",
+      "confirmItem": "تأكيد العنصر",
+      "searchingItem": "جاري البحث عن العنصر...",
+      "itemNotFound": "لم يتم العثور على العنصر",
+      "itemId": "معرف العنصر",
+      "price": "السعر",
+      "cancel": "إلغاء",
+      "addToInvoice": "إضافة إلى الفاتورة",
+      "addToDamagedItems": "إضافة إلى البضائع التالفة",
+      "addItem": "إضافة عنصر",
+      "select": "اختيار",
+      "close": "إغلاق"
+    },
+    "manager": {
+      "title": "الأكواد الشريطية",
+      "addBarcode": "إضافة باركود",
+      "noBarcodesYet": "لم تتم إضافة أكواد شريطية بعد. انقر على \"إضافة باركود\" للبدء.",
+      "placeholder": "أدخل أو امسح الباركود",
+      "removeBarcode": "إزالة الباركود"
+    },
+    "errorBoundary": {
+      "title": "خطأ في الماسح",
+      "message": "واجه ماسح الباركود خطأ. يرجى المحاولة مرة أخرى أو استخدام الإدخال اليدوي.",
+      "close": "إغلاق"
+    }
+  },
+  "unauthorized": {
+    "title": "تم رفض الوصول",
+    "message": "ليس لديك الإذن للوصول إلى هذه الصفحة.",
+    "contactAdmin": "يرجى الاتصال بالمسؤول إذا كنت تعتقد أن هذا خطأ.",
+    "goBack": "العودة",
+    "goToDashboard": "الذهاب إلى لوحة التحكم"
+  }
 }

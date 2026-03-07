@@ -9,9 +9,13 @@ import ErrorLoading from "@/components/ErrorLoading";
 import { useTranslations } from "next-intl";
 import { useState } from 'react';
 import ImageView from "@/components/ImageView";
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function PaymentListTable({ data, type, pageCount }) {
     const t = useTranslations();
+    const editPerm = type === 'payment' ? PERMISSIONS.PAYMENTS.CHANGE : PERMISSIONS.REVERSE_PAYMENTS.CHANGE;
+    const deletePerm = type === 'payment' ? PERMISSIONS.PAYMENTS.DELETE : PERMISSIONS.REVERSE_PAYMENTS.DELETE;
     const [images, setImages] = useState([]);
     const [startIndex, setStartIndex] = useState(0);
 
@@ -154,26 +158,30 @@ export default function PaymentListTable({ data, type, pageCount }) {
                                             </span>
                                         </Link>
 
-                                        <Link
-                                            href={`/finance/${type}${type == 'payment' ? 's' : ''}/form/${payment.hashed_id}`}
-                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
-                                        >
-                                            <PencilIcon
-                                                className="
-                                                    h-4 w-4 mr-1
-                                                    transition-all duration-300 ease-in-out
-                                                    group-hover:rotate-[8deg]
-                                                    group-hover:-translate-y-0.5
-                                                    group-hover:scale-110
-                                                    group-hover:drop-shadow-sm
-                                                "
-                                            />
-                                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                                {t("finance.table.edit")}
-                                            </span>
-                                        </Link>
+                                        <PermissionGate permission={editPerm}>
+                                            <Link
+                                                href={`/finance/${type}${type == 'payment' ? 's' : ''}/form/${payment.hashed_id}`}
+                                                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                                            >
+                                                <PencilIcon
+                                                    className="
+                                                        h-4 w-4 mr-1
+                                                        transition-all duration-300 ease-in-out
+                                                        group-hover:rotate-[8deg]
+                                                        group-hover:-translate-y-0.5
+                                                        group-hover:scale-110
+                                                        group-hover:drop-shadow-sm
+                                                    "
+                                                />
+                                                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                                    {t("finance.table.edit")}
+                                                </span>
+                                            </Link>
+                                        </PermissionGate>
 
-                                        <DeleteButton type={type} id={payment.hashed_id} />
+                                        <PermissionGate permission={deletePerm}>
+                                            <DeleteButton type={type} id={payment.hashed_id} />
+                                        </PermissionGate>
                                         <ToolTip obj={payment} />
                                     </div>
                                 </td>
@@ -183,17 +191,7 @@ export default function PaymentListTable({ data, type, pageCount }) {
                 </table>
             </div>
 
-            {data.count == 0 &&
-                <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md mt-3" />
-            }
-
             <ImageView images={images} onClose={() => { setImages([]); setStartIndex(0); }} startIndex={startIndex} />
-
-            <PaginationControls
-                resCount={data.count}
-                hasNext={data.next}
-                hasPrev={data.previous}
-            />
         </>
     );
 }

@@ -29,6 +29,8 @@ export default function FileUploadInput({
     defaultValue = [],
     showPreview = false,
     setLoadind = (e) => { },
+    canAdd = true,    // show upload area (default: true — no effect on existing usages)
+    canDelete = true, // show remove buttons (default: true — no effect on existing usages)
     ...props
 }) {
 
@@ -335,63 +337,63 @@ export default function FileUploadInput({
                 </div>
             )}
 
-            {/* Upload Area */}
-            <div
-                onDragOver={handleDragOver}
-                onDragLeave={handleDragLeave}
-                onDrop={handleDrop}
-                className={`
+            {/* Upload Area — hidden when user lacks add permission */}
+            {canAdd && (
+                <div
+                    onDragOver={handleDragOver}
+                    onDragLeave={handleDragLeave}
+                    onDrop={handleDrop}
+                    className={`
           relative cursor-pointer border-2 border-dashed rounded-lg p-6 transition-all
           ${isDragging ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : borderColorClass}
           ${isFocused ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-gray-50 dark:bg-gray-800'}
           hover:bg-gray-100 dark:hover:bg-gray-700
         `}
-            >
-                {/* Upload Icon - Use the icon based on selected type */}
-                <div className={`flex flex-col items-center justify-center ${iconColorClass}`}>
-                    <div className="mb-3">
-                        {acceptedTypes === "all" ? (
-                            <ArrowUpTrayIcon className="w-8 h-8" />
-                        ) : (
-                            <div className="flex items-center gap-2">
-                                {/* <ArrowUpTrayIcon className="w-6 h-6" />
-                <span className="text-2xl">{currentType.icon}</span> */}
-                                {currentType.icon}
-                            </div>
+                >
+                    {/* Upload Icon - Use the icon based on selected type */}
+                    <div className={`flex flex-col items-center justify-center ${iconColorClass}`}>
+                        <div className="mb-3">
+                            {acceptedTypes === "all" ? (
+                                <ArrowUpTrayIcon className="w-8 h-8" />
+                            ) : (
+                                <div className="flex items-center gap-2">
+                                    {currentType.icon}
+                                </div>
+                            )}
+                        </div>
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                            {placeholder}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            {t("browse")}
+                        </p>
+                        {acceptedTypes !== "all" && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                {currentType.label} {t("only")}
+                            </p>
                         )}
                     </div>
-                    <p className="text-sm font-medium text-gray-900 dark:text-white">
-                        {placeholder}
-                    </p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                        {t("browse")}
-                    </p>
-                    {acceptedTypes !== "all" && (
-                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                            {currentType.label} {t("only")}
-                        </p>
-                    )}
-                </div>
 
-                {/* Hidden File Input */}
-                <input
-                    ref={fileInputRef}
-                    type="file"
-                    name={name}
-                    id={id}
-                    accept={selectedType.value}
-                    multiple={multiple}
-                    required={required}
-                    onChange={(e) => handleFileChange(e.target.files)}
-                    onBlur={(e) => {
-                        setIsFocused(false);
-                        onBlur(e);
-                    }}
-                    onFocus={() => setIsFocused(true)}
-                    className="absolute inset-0 opacity-0 cursor-pointer"
-                    {...props}
-                />
-            </div>
+                    {/* Hidden File Input */}
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        name={name}
+                        id={id}
+                        accept={selectedType.value}
+                        multiple={multiple}
+                        required={required}
+                        onChange={(e) => handleFileChange(e.target.files)}
+                        onBlur={(e) => {
+                            setIsFocused(false);
+                            onBlur(e);
+                        }}
+                        onFocus={() => setIsFocused(true)}
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                        {...props}
+                    />
+                </div>
+            )}
 
             {/* Selected Files */}
             {allFiles.length > 0 && (
@@ -432,13 +434,15 @@ export default function FileUploadInput({
 
                                     {/* file name & file size */}
                                     <FileInfo file={file} errorMessages={errorMessages} />
-                                    <button
-                                        type="button"
-                                        onClick={() => removeFile(index)}
-                                        className="p-1 text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors flex-shrink-0"
-                                    >
-                                        <XMarkIcon className="w-4 h-4" />
-                                    </button>
+                                    {canDelete && (
+                                        <button
+                                            type="button"
+                                            onClick={() => removeFile(index)}
+                                            className="p-1 text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors flex-shrink-0"
+                                        >
+                                            <XMarkIcon className="w-4 h-4" />
+                                        </button>
+                                    )}
 
                                 </div>
                                 {errorMessages && (

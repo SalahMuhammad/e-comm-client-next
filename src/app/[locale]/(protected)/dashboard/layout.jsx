@@ -1,12 +1,7 @@
-export default function DashboardLayout({ children, ScatterChart, PieChart, RefillableItemsCostAnalysis }) {
+export default function DashboardLayout({ children }) {
     return (
-        <>
-            <div>{ScatterChart}</div>
-            <div className="mb-3">{RefillableItemsCostAnalysis}</div>
-            <div className="grid grid-cols-8 gap-1 w-full">
-                <div className="col-span-8 md:col-span-4 row-span-4">{PieChart}</div>
-            </div>
-            <div>{children}</div>
-        </>
+        <div className="w-full relative">
+            {children}
+        </div>
     );
 }

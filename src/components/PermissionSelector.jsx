@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDownIcon, ChevronRightIcon, CheckIcon } from "@heroicons/react/24/outline";
 import { toast } from 'sonner';
+import { isPermissionSuperuserRequired } from "@/config/superuserPermissions";
+
 
 /**
  * PermissionSelector - Reusable component for selecting groups and permissions
@@ -397,9 +399,16 @@ function PermissionSelector({
                                                             <span className="text-sm text-gray-700 dark:text-gray-200 block truncate">
                                                                 {perm.name}
                                                             </span>
-                                                            <span className="text-xs text-gray-500 block truncate">
-                                                                {perm.codename}
-                                                            </span>
+                                                            <div className="flex items-center gap-2 flex-wrap">
+                                                                <span className="text-xs text-gray-500 block truncate">
+                                                                    {perm.codename}
+                                                                </span>
+                                                                {isPermissionSuperuserRequired(perm) && (
+                                                                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 px-1.5 py-0.5 rounded border border-red-300 dark:border-red-700 font-medium whitespace-nowrap">
+                                                                        {t("superuserRequired")}
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                         </div>
                                                         {isFromGroup && (
                                                             <span className="text-xs bg-blue-100 dark:bg-blue-800 text-blue-700 dark:text-blue-200 px-1.5 py-0.5 rounded">

@@ -1,6 +1,6 @@
 import { getDamagedItem } from "../../actions"
 import { getItem } from "../../../actions"
-import DamagedItemsForm from "../page"
+import { DamagedItemsForm } from "../DamagedItemsFormComponent";
 import NotFound from "@/components/NotFound"
 import { getTranslations } from "next-intl/server"
 

@@ -9,6 +9,8 @@ import { deleteGroup } from "./actions";
 import GroupFormClient from "./form/GroupFormClient";
 import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import * as Dialog from '@radix-ui/react-dialog';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function GroupsList({ groups, permissions, onGroupDeleted, onGroupCreated, onGroupUpdated }) {
     const t = useTranslations("permission-management.groups");
@@ -80,13 +82,15 @@ export default function GroupsList({ groups, permissions, onGroupDeleted, onGrou
                 <p className="text-gray-600 dark:text-gray-400 text-sm">
                     {t("description")}
                 </p>
-                <button
-                    onClick={handleCreate}
-                    className="flex w-full sm:w-auto justify-center items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors dark:bg-gray-600 dark:hover:bg-gray-700"
-                >
-                    <PlusIcon className="h-5 w-5" />
-                    <span>{t("create")}</span>
-                </button>
+                <PermissionGate permission={PERMISSIONS.GROUPS.ADD}>
+                    <button
+                        onClick={handleCreate}
+                        className="flex w-full sm:w-auto justify-center items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition-colors dark:bg-gray-600 dark:hover:bg-gray-700"
+                    >
+                        <PlusIcon className="h-5 w-5" />
+                        <span>{t("create")}</span>
+                    </button>
+                </PermissionGate>
             </div>
 
             {/* Groups Table */}
@@ -123,21 +127,25 @@ export default function GroupsList({ groups, permissions, onGroupDeleted, onGrou
                                     </td>
                                     <td className="px-6 py-4">
                                         <div className="flex items-center gap-2">
-                                            <button
-                                                onClick={() => handleEdit(group)}
-                                                className="group flex items-center gap-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
-                                            >
-                                                <PencilIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
-                                                <span className="text-sm">{t("table.edit")}</span>
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(group.id)}
-                                                disabled={deletingId === group.id}
-                                                className="group flex items-center gap-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors disabled:opacity-50"
-                                            >
-                                                <TrashIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
-                                                <span className="text-sm">{t("table.delete")}</span>
-                                            </button>
+                                            <PermissionGate permission={PERMISSIONS.GROUPS.CHANGE}>
+                                                <button
+                                                    onClick={() => handleEdit(group)}
+                                                    className="group flex items-center gap-1 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+                                                >
+                                                    <PencilIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
+                                                    <span className="text-sm">{t("table.edit")}</span>
+                                                </button>
+                                            </PermissionGate>
+                                            <PermissionGate permission={PERMISSIONS.GROUPS.DELETE}>
+                                                <button
+                                                    onClick={() => handleDelete(group.id)}
+                                                    disabled={deletingId === group.id}
+                                                    className="group flex items-center gap-1 text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 transition-colors disabled:opacity-50"
+                                                >
+                                                    <TrashIcon className="h-4 w-4 transition-transform group-hover:scale-110" />
+                                                    <span className="text-sm">{t("table.delete")}</span>
+                                                </button>
+                                            </PermissionGate>
                                         </div>
                                     </td>
                                 </tr>

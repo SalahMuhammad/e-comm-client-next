@@ -1,15 +1,12 @@
 "use client";
 
-import Form from "next/form";
+import GenericFormShell from "@/components/GenericFormShell";
 import { createUpdateUser } from "../actions";
 import { createUpdateGroup } from "../../permission-management/actions";
 import { useTranslations } from "next-intl";
-import { useActionState, useEffect, useState, useMemo } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { toast } from 'sonner';
-import { useRouter } from "next/navigation";
-import FormButton from "@/components/FormButton";
 import { TextInput, ToggleInput } from "@/components/inputs/index";
-import useGenericResponseHandler from "@/components/custom hooks/useGenericResponseHandler";
 import PermissionSelector from "@/components/PermissionSelector";
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 // import UserAvatar from "@/components/UserAvatar"; // UserAvatar is used inside AvatarUpload
@@ -20,8 +17,6 @@ function UserForm({ user, groups = [], permissions = [] }) {
     const t = useTranslations("user-management.form");
     const tGlobal = useTranslations("");
     const [state, formAction, isPending] = useActionState(createUpdateUser, { errors: {} });
-    const router = useRouter();
-    const handleGenericErrors = useGenericResponseHandler();
 
     // Track selected groups and permissions
     const [localGroups, setLocalGroups] = useState(groups);
@@ -122,14 +117,22 @@ function UserForm({ user, groups = [], permissions = [] }) {
 
     return (
         <>
-            <Form
-                action={formAction}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6"
+            <GenericFormShell
+                state={state}
+                formAction={formAction}
+                isPending={isPending}
+                obj={user}
+                t={t}
+                redirectPath="/user-management/list/"
+                isModal={false}
+                onSuccess={() => {
+                    if (user?.id) {
+                        toast.success(tGlobal("global.form.editSuccess"));
+                    } else {
+                        toast.success(tGlobal("global.form.createSuccess"));
+                    }
+                }}
             >
-                {user?.id && (
-                    <input type="hidden" name="id" value={user.id} />
-                )}
-
                 <div className="space-y-6">
                     {/* Basic Info Section */}
                     <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
@@ -281,22 +284,8 @@ function UserForm({ user, groups = [], permissions = [] }) {
                             inputNamePermissions="user_permissions"
                         />
                     </div>
-
-                    {/* Submit Button */}
-                    <FormButton
-                        type="submit"
-                        variant={user?.id ? "secondary" : "primary"}
-                        size="md"
-                        bgColor={user?.id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
-                        hoverBgColor={user?.id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
-                        textColor="text-white dark:text-gray-100"
-                        className="w-full"
-                        isLoading={isPending}
-                    >
-                        {user?.id ? tGlobal("global.form.edit") : tGlobal("global.form.submit")}
-                    </FormButton>
                 </div>
-            </Form>
+            </GenericFormShell>
 
             {/* Save as Group Modal */}
             {showGroupModal && (

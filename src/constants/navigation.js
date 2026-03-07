@@ -13,7 +13,9 @@ import {
     ShieldCheckIcon, KeyIcon
 } from '@heroicons/react/24/outline';
 
-export const getMenuItems = (t) => {
+import { routePermissions } from '@/config/route-permissions.config';
+
+export const getMenuItems = (t, isSuperuser = false) => {
     const menuItems = [
         {
             head: t('warehouse.headLabel'),
@@ -28,8 +30,6 @@ export const getMenuItems = (t) => {
                     path: '/items/list',
                     icon: <CubeIcon className="w-4 h-4" />,
                     addPath: '/items/form',
-                    permissions: ['items.view_items'],
-                    addPermissions: ['items.add_items']
                 },
                 // {
                 //     label: t('warehouse.subLabels.createItem'),
@@ -41,16 +41,12 @@ export const getMenuItems = (t) => {
                     path: '/items/damaged',
                     icon: <ExclamationTriangleIcon className="w-4 h-4" />,
                     addPath: '/items/damaged/form',
-                    permissions: ['items.view_damageditems'],
-                    addPermissions: ['items.add_damageditems']
                 },
                 {
                     label: t('warehouse.subLabels.repositories'),
                     path: '/repository/list',
                     icon: <BuildingStorefrontIcon className="w-4 h-4" />,
                     addPath: '/repository/form',
-                    permissions: ['repositories.view_repositories'],
-                    addPermissions: ['repositories.add_repositories']
                 },
                 // {
                 //     label: t('warehouse.subLabels.createRepository'),
@@ -72,8 +68,6 @@ export const getMenuItems = (t) => {
                     path: '/invoice/sales/list',
                     icon: <DocumentTextIcon className="w-4 h-4" />,
                     addPath: '/invoice/sales/form',
-                    permissions: ['sales.view_salesinvoice'],
-                    addPermissions: ['sales.add_salesinvoice']
                 },
                 // {
                 //     label: t('invoice.subLabels.createInvoice'),
@@ -84,7 +78,6 @@ export const getMenuItems = (t) => {
                     icon: <ClockIcon className="w-4 h-4" />,
                     label: t('invoice.subLabels.refund'),
                     path: '/invoice/sales/refund/list',
-                    permissions: ['sales.view_returninvoice']
                 }
             ]
         },
@@ -101,8 +94,6 @@ export const getMenuItems = (t) => {
                     path: '/invoice/purchases/list',
                     icon: <DocumentTextIcon className="w-4 h-4" />,
                     addPath: '/invoice/purchases/form',
-                    permissions: ['purchase.view_purchaseinvoices'],
-                    addPermissions: ['purchase.add_purchaseinvoices']
                 },
                 // {
                 //     label: t('invoice.subLabels.createInvoice'),
@@ -124,8 +115,6 @@ export const getMenuItems = (t) => {
                     path: '/customer-supplier/list',
                     icon: <UsersIcon className="w-4 h-4" />,
                     addPath: '/customer-supplier/form',
-                    permissions: ['buyer_supplier_party.view_party'],
-                    addPermissions: ['buyer_supplier_party.add_party']
                 },
                 // {
                 //     label: t('customersSuppliers.subLabels.createInvoice'),
@@ -146,15 +135,12 @@ export const getMenuItems = (t) => {
                     label: t('finance.subLabels.management'),
                     path: '/finance/management',
                     icon: <CreditCardIcon className="w-4 h-4" />,
-                    permissions: ['vault_and_methods.view_businessaccount']
                 },
                 {
                     label: t('finance.subLabels.payments'),
                     path: '/finance/payments/list',
                     icon: <CreditCardIcon className="w-4 h-4" />,
                     addPath: '/finance/payments/form',
-                    permissions: ['payments.view_payment'],
-                    addPermissions: ['payments.add_payment']
                 },
                 // { 
                 //     label: t('finance.subLabels.addPayment'), 
@@ -166,8 +152,6 @@ export const getMenuItems = (t) => {
                     path: '/finance/reverse-payment/list',
                     icon: <ReceiptPercentIcon className="w-4 h-4" />,
                     addPath: '/finance/reverse-payment/form',
-                    permissions: ['reverse_payment.view_reversepayment2'],
-                    addPermissions: ['reverse_payment.add_reversepayment2']
                 },
                 // { 
                 //     label: t('finance.subLabels.addReversePayment'), 
@@ -179,8 +163,6 @@ export const getMenuItems = (t) => {
                     path: '/finance/expense/list',
                     icon: <ExclamationTriangleIcon className="w-4 h-4" />,
                     addPath: '/finance/expense/form',
-                    permissions: ['expenses.view_expense'],
-                    addPermissions: ['expenses.add_expense']
                 },
                 // { 
                 //     label: t('finance.subLabels.addExpenses'), 
@@ -192,40 +174,30 @@ export const getMenuItems = (t) => {
                     path: '/finance/expense/category/list',
                     icon: <ExclamationTriangleIcon className="w-4 h-4" />,
                     addPath: '/finance/expense/category/form',
-                    permissions: ['expenses.view_category'],
-                    addPermissions: ['expenses.add_category']
                 },
                 {
                     label: t('finance.subLabels.debtSettlement'),
                     path: '/finance/debt-settlement/list',
                     icon: <ScaleIcon className="w-4 h-4" />,
                     addPath: '/finance/debt-settlement/form',
-                    permissions: ['debt_settlement.view_debtsettlement'],
-                    addPermissions: ['debt_settlement.add_debtsettlement']
                 },
                 {
                     label: t('finance.subLabels.internalTransfer'),
                     path: '/finance/internal-money-transfer/list',
                     icon: <BanknotesIcon className="w-4 h-4" />,
                     addPath: '/finance/internal-money-transfer/form',
-                    permissions: ['transfer.view_moneytransfer'],
-                    addPermissions: ['transfer.add_moneytransfer']
                 },
                 {
                     label: t('finance.subLabels.accountVault'),
                     path: '/finance/account-vault/list',
                     icon: <BuildingLibraryIcon className="w-4 h-4" />,
                     addPath: '/finance/account-vault/form',
-                    permissions: ['vault_and_methods.view_businessaccount'],
-                    addPermissions: ['vault_and_methods.add_businessaccount']
                 },
                 {
                     label: t('finance.subLabels.accountTypes'),
                     path: '/finance/account-vault/type/list',
                     icon: <ScaleIcon className="w-4 h-4" />,
                     addPath: '/finance/account-vault/type/form',
-                    permissions: ['vault_and_methods.view_accounttype'],
-                    addPermissions: ['vault_and_methods.add_accounttype']
                 },
                 // {
                 //     label: t('finance.subLabels.debtSettlementForm'),
@@ -248,8 +220,6 @@ export const getMenuItems = (t) => {
                     path: '/refillable-items/refilled/list',
                     icon: <BeakerIcon className="w-4 h-4" />,
                     addPath: '/refillable-items/refilled/form',
-                    permissions: ['refillable_items_system.view_refilleditem'],
-                    addPermissions: ['refillable_items_system.add_refilleditem']
                 },
                 // {
                 //     label: t('refilledCans.subLabels.createRefilled'),
@@ -261,8 +231,6 @@ export const getMenuItems = (t) => {
                     path: '/refillable-items/refund/list',
                     icon: <UserGroupIcon className="w-4 h-4" />,
                     addPath: '/refillable-items/refund/form',
-                    permissions: ['refillable_items_system.view_refundedrefillableitem'],
-                    addPermissions: ['refillable_items_system.add_refundedrefillableitem']
                 },
                 // {
                 //     label: t('refilledCans.subLabels.createRefund'),
@@ -283,18 +251,62 @@ export const getMenuItems = (t) => {
                     label: t('userManagement.subLabels.permissions'),
                     path: '/permission-management',
                     icon: <KeyIcon className="w-4 h-4" />,
-                    permissions: ['auth.view_permission']
                 },
                 {
                     label: t('userManagement.subLabels.users'),
                     path: '/user-management/list',
                     icon: <UsersIcon className="w-4 h-4" />,
                     addPath: '/user-management/form',
-                    permissions: ['users.view_user'],
-                    addPermissions: ['users.add_user']
                 }
             ]
         }
     ];
-    return menuItems;
+
+    return menuItems.map(section => ({
+        ...section,
+        links: section.links.map(link => {
+            const mappedPerms = routePermissions[link.path];
+            const perms = (mappedPerms && mappedPerms !== "public")
+                ? (Array.isArray(mappedPerms) ? mappedPerms : [mappedPerms])
+                : [];
+
+            const mappedAddPerms = link.addPath ? routePermissions[link.addPath] : null;
+            const addPerms = (mappedAddPerms && mappedAddPerms !== "public")
+                ? (Array.isArray(mappedAddPerms) ? mappedAddPerms : [mappedAddPerms])
+                : [];
+
+            return {
+                ...link,
+                permissions: perms,
+                addPermissions: addPerms
+            };
+        })
+    }));
+}
+
+export const getStandaloneLinks = (t, isSuperuser = false) => {
+    const standaloneLinks = [
+        {
+            label: t("reports.headLabel"),
+            path: '/reports',
+            icon: <WrenchScrewdriverIcon className="w-4 h-4" />,
+        },
+        {
+            label: t("settings"),
+            path: '/settings',
+            icon: <WrenchScrewdriverIcon className="w-4 h-4" />,
+        }
+    ];
+
+    return standaloneLinks.map(link => {
+        const mappedPerms = routePermissions[link.path];
+        const perms = (mappedPerms && mappedPerms !== "public")
+            ? (Array.isArray(mappedPerms) ? mappedPerms : [mappedPerms])
+            : [];
+
+        return {
+            ...link,
+            permissions: perms
+        };
+    });
 }

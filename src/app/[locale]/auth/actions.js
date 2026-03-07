@@ -43,7 +43,8 @@ export async function Login(prevState, formData) {
     await setServerCookie('auth_3', jwt.slice(quarterLength * 3));
     await setServerCookie('username', res.data.username);
 
-    // Store password change required flag
+
+    //Store password change required flag
     if (res.data.password_change_required) {
       await setServerCookie('password_change_required', 'true');
     } else {

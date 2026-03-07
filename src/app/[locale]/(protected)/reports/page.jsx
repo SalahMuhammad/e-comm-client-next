@@ -8,8 +8,12 @@ import {
     ArrowTopRightOnSquareIcon,
 } from '@heroicons/react/24/outline';
 import { getTranslations } from 'next-intl/server';
+import { PermissionGateServer } from '@/components/PermissionGateServer';
+import { PERMISSIONS } from '@/config/permissions.config';
+import { getUserPermissionsAndStatus } from '@/utils/auth/role';
 
 async function page({ params }) {
+    const { permissions: userPermissions, isSuperuser } = await getUserPermissionsAndStatus();
     const t = await getTranslations('reports');
 
     const reportSections = [
@@ -25,12 +29,14 @@ async function page({ params }) {
                     label: t("reportSections.warehouse.links.itemMovement.label"),
                     description: t("reportSections.warehouse.links.itemMovement.description"),
                     icon: ChartBarIcon,
+                    permission: PERMISSIONS.ITEMS.VIEW
                 },
                 {
                     href: "/reports/sales-refund-items-totals",
                     label: t("reportSections.warehouse.links.itemsSale.label"),
                     description: t("reportSections.warehouse.links.itemsSale.description"),
                     icon: ChartBarIcon,
+                    permission: PERMISSIONS.SALES_INVOICES.VIEW
                 }
             ]
         },
@@ -46,6 +52,7 @@ async function page({ params }) {
                     label: t("reportSections.clientsSuppliers.links.accountStatement.label"),
                     description: t("reportSections.clientsSuppliers.links.accountStatement.description"),
                     icon: CurrencyDollarIcon,
+                    permission: PERMISSIONS.PARTIES.VIEW
                 }
             ]
         },
@@ -61,19 +68,21 @@ async function page({ params }) {
                     label: t("reportSections.finance.links.paymentsInPeriod.label"),
                     description: t("reportSections.finance.links.paymentsInPeriod.description"),
                     icon: CurrencyDollarIcon,
+                    permission: PERMISSIONS.PAYMENTS.VIEW
                 },
                 {
                     href: "/reports/owners-credit-balance-list",
                     label: t("reportSections.finance.links.debtList.label"),
                     description: t("reportSections.finance.links.debtList.description"),
                     icon: CurrencyDollarIcon,
+                    permission: PERMISSIONS.PARTIES.VIEW
                 },
-                ,
                 {
                     href: "/reports/treasury-movement",
                     label: 'financial movement',
                     description: t("reportSections.finance.links.debtList.description"),
                     icon: CurrencyDollarIcon,
+                    permission: PERMISSIONS.BUSINESS_ACCOUNTS.VIEW
                 }
             ]
         },
@@ -90,16 +99,29 @@ async function page({ params }) {
                     label: t("reportSections.refillableItems.links.refilledItems.label"),
                     description: t("reportSections.refillableItems.links.refilledItems.description"),
                     icon: ArrowPathIcon,
+                    permission: PERMISSIONS.REFILLABLE_ITEMS.VIEW
                 },
                 {
                     href: "/reports/refillable-items-client-has",
                     label: t("reportSections.refillableItems.links.refillableItemsClient.label"),
                     description: t("reportSections.refillableItems.links.refillableItemsClient.description"),
                     icon: ArrowPathIcon,
+                    permission: PERMISSIONS.REFILLABLE_ITEMS.VIEW
                 }
             ]
         },
     ];
+
+    // Filter sections and their links based on current user's permissions
+    const filteredSections = reportSections
+        .map(section => ({
+            ...section,
+            links: section.links.filter(link =>
+                isSuperuser || (link.permission && userPermissions.includes(link.permission))
+            )
+        }))
+        // Hide the entire category card if there are no permitted links inside it
+        .filter(section => section.links.length > 0);
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-all duration-300 pt-3 rounded-md">
@@ -116,74 +138,89 @@ async function page({ params }) {
                 </div>
 
                 {/* Reports Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                    {reportSections.map((section, sectionIndex) => {
-                        const SectionIcon = section.icon;
-                        return (
-                            <div
-                                key={sectionIndex}
-                                className="group bg-white dark:bg-gray-800 rounded-3xl shadow-lg hover:shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:-translate-y-1"
-                            >
-                                {/* Section Header */}
-                                <div className={`bg-gradient-to-r ${section.gradient} ${section.darkGradient} p-6 relative overflow-hidden`}>
-                                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent pointer-events-none"></div>
-                                    <div className="relative flex items-center justify-between">
-                                        <div className="flex items-center space-x-3">
-                                            <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                                                <SectionIcon className="w-6 h-6 text-white drop-shadow-sm" />
+                {filteredSections.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                        {filteredSections.map((section, sectionIndex) => {
+                            const SectionIcon = section.icon;
+                            return (
+                                <div
+                                    key={sectionIndex}
+                                    className="group bg-white dark:bg-gray-800 rounded-3xl shadow-lg hover:shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:-translate-y-1"
+                                >
+                                    {/* Section Header */}
+                                    <div className={`bg-gradient-to-r ${section.gradient} ${section.darkGradient} p-6 relative overflow-hidden`}>
+                                        <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent pointer-events-none"></div>
+                                        <div className="relative flex items-center justify-between">
+                                            <div className="flex items-center space-x-3">
+                                                <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
+                                                    <SectionIcon className="w-6 h-6 text-white drop-shadow-sm" />
+                                                </div>
+                                                <h2 className="text-xl font-bold text-white drop-shadow-sm">
+                                                    {section.title}
+                                                </h2>
                                             </div>
-                                            <h2 className="text-xl font-bold text-white drop-shadow-sm">
-                                                {section.title}
-                                            </h2>
+                                            <div className="w-2 h-2 bg-white/40 rounded-full"></div>
                                         </div>
-                                        <div className="w-2 h-2 bg-white/40 rounded-full"></div>
+                                    </div>
+
+                                    {/* Section Links */}
+                                    <div className="p-6 space-y-4">
+                                        {section.links.map((link, linkIndex) => {
+                                            const LinkIcon = link.icon;
+                                            return (
+                                                <PermissionGateServer key={linkIndex} permission={link.permission}>
+                                                    <Link
+                                                        href={link.href}
+                                                        scroll={true}
+                                                        className="group/link block p-4 rounded-2xl border border-gray-100 dark:border-gray-600 hover:border-gray-200 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
+                                                    >
+                                                        <div className="flex items-center justify-between">
+                                                            <div className="flex items-start space-x-4 flex-1 min-w-0">
+                                                                <div className="flex-shrink-0 p-2 bg-gray-100 dark:bg-gray-700 rounded-xl group-hover/link:bg-gray-200 dark:group-hover/link:bg-gray-600 transition-colors">
+                                                                    <LinkIcon className={`w-5 h-5 text-${section.color}-600 dark:text-${section.color}-400`} />
+                                                                </div>
+                                                                <div className="flex-1 min-w-0">
+                                                                    <div className="flex items-center gap-2 mb-1">
+                                                                        <h3 className="font-semibold text-gray-900 dark:text-white group-hover/link:text-gray-700 dark:group-hover/link:text-gray-200 transition-colors truncate">
+                                                                            {link.label}
+                                                                        </h3>
+                                                                        {link.badge && (
+                                                                            <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-${section.color}-100 dark:bg-${section.color}-900/30 text-${section.color}-700 dark:text-${section.color}-300`}>
+                                                                                {link.badge}
+                                                                            </span>
+                                                                        )}
+                                                                    </div>
+                                                                    <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                                                                        {link.description}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex-shrink-0 ml-3">
+                                                                <ArrowTopRightOnSquareIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover/link:text-gray-600 dark:group-hover/link:text-gray-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all duration-200" />
+                                                            </div>
+                                                        </div>
+                                                    </Link>
+                                                </PermissionGateServer>
+                                            );
+                                        })}
                                     </div>
                                 </div>
-
-                                {/* Section Links */}
-                                <div className="p-6 space-y-4">
-                                    {section.links.map((link, linkIndex) => {
-                                        const LinkIcon = link.icon;
-                                        return (
-                                            <Link
-                                                key={linkIndex}
-                                                href={link.href}
-                                                scroll={true}
-                                                className="group/link block p-4 rounded-2xl border border-gray-100 dark:border-gray-600 hover:border-gray-200 dark:hover:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-200"
-                                            >
-                                                <div className="flex items-center justify-between">
-                                                    <div className="flex items-start space-x-4 flex-1 min-w-0">
-                                                        <div className="flex-shrink-0 p-2 bg-gray-100 dark:bg-gray-700 rounded-xl group-hover/link:bg-gray-200 dark:group-hover/link:bg-gray-600 transition-colors">
-                                                            <LinkIcon className={`w-5 h-5 text-${section.color}-600 dark:text-${section.color}-400`} />
-                                                        </div>
-                                                        <div className="flex-1 min-w-0">
-                                                            <div className="flex items-center gap-2 mb-1">
-                                                                <h3 className="font-semibold text-gray-900 dark:text-white group-hover/link:text-gray-700 dark:group-hover/link:text-gray-200 transition-colors truncate">
-                                                                    {link.label}
-                                                                </h3>
-                                                                {link.badge && (
-                                                                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-${section.color}-100 dark:bg-${section.color}-900/30 text-${section.color}-700 dark:text-${section.color}-300`}>
-                                                                        {link.badge}
-                                                                    </span>
-                                                                )}
-                                                            </div>
-                                                            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                                                                {link.description}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-shrink-0 ml-3">
-                                                        <ArrowTopRightOnSquareIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 group-hover/link:text-gray-600 dark:group-hover/link:text-gray-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-all duration-200" />
-                                                    </div>
-                                                </div>
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="flex flex-col items-center justify-center p-12 mt-4 text-center bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <div className="w-20 h-20 mb-6 rounded-full bg-gray-50 dark:bg-gray-700 flex items-center justify-center">
+                            <ChartBarIcon className="w-10 h-10 text-gray-400 dark:text-gray-500" />
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                            {t("emptyState.title")}
+                        </h2>
+                        <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+                            {t("emptyState.description")}
+                        </p>
+                    </div>
+                )}
 
             </div>
         </div>

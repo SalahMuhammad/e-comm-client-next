@@ -96,7 +96,9 @@
 				"lastUpdated": "Last Updated",
 				"by": "by",
 				"barcodes": "Barcodes",
-				"outOfStock": "Out of Stock"
+				"outOfStock": "Out of Stock",
+				"notFound": "Item Not Found",
+				"noAccess": "You don't have permission to view this item."
 			}
 		},
 		"repositories": {
@@ -202,6 +204,8 @@
 			}
 		},
 		"form": {
+			"title": "Create Customer/Supplier",
+			"edit": "Edit Customer/Supplier",
 			"id": "ID",
 			"name": "Name",
 			"detail": "Detail",
@@ -311,7 +315,17 @@
 		"table": {
 			"view": "View",
 			"edit": "Edit",
-			"delete": "Delete"
+			"delete": "Delete",
+			"remove": {
+				"label": "Remove",
+				"confirm": "Are you sure you want to remove this item?",
+				"description": "This action cannot be undone.",
+				"yes": "Delete",
+				"no": "Cancel",
+				"success": "Item deleted",
+				"canceled": "Deletion canceled",
+				"error": "Error Deleting Item"
+			}
 		},
 		"fields": {
 			"transaction": "Add Payment",
@@ -430,7 +444,10 @@
 			"activeAccounts": "Active Accounts",
 			"highestBalance": "Highest Balance",
 			"status": "Status",
-			"ofTotal": "of total"
+			"ofTotal": "of total",
+			"loading": "Loading...",
+			"accessDenied": "Access Denied / Error",
+			"defaultError": "Data could not be loaded."
 		}
 	},
 	"accountVault": {
@@ -471,12 +488,8 @@
 	},
 	"refillableItems": {
 		"form": {
-			"title": {
-				"createRefilled": "Create Refilled Transaction",
-				"editRefilled": "Edit Refilled Transaction",
-				"createRefund": "Create Refund Transaction",
-				"editRefund": "Edit Refund Transaction"
-			},
+			"title": "Create Refillable Item",
+			"edit": "Edit Refillable Item",
 			"owner": "Owner",
 			"item": "Item",
 			"quantity": "Refilled Quantity",
@@ -497,7 +510,9 @@
 				"date": "Date",
 				"repo": "Repository",
 				"employee": "Employee",
-				"notes": "Notes"
+				"notes": "Notes",
+				"dateFrom": "From Date",
+				"dateTo": "To Date"
 			}
 		},
 		"refund": {
@@ -507,7 +522,9 @@
 				"refunded": "Refunded",
 				"quantity": "Quantity",
 				"repo": "Repository",
-				"notes": "Notes"
+				"notes": "Notes",
+				"dateFrom": "From Date",
+				"dateTo": "To Date"
 			}
 		}
 	},
@@ -524,14 +541,14 @@
 		"login": "Login",
 		"loading": "Logging in",
 		"errors": {
+			"403": "Invalid credentials.",
+			"404": "Service not found.",
+			"500": "Server error. Please try again later.",
 			"missing": {
 				"username": "Username is required",
 				"password": "Password is required",
 				"general": "Username and password are required."
 			},
-			"403": "Invalid credentials.",
-			"404": "Service not found.",
-			"500": "Server error. Please try again later.",
 			"etc": "Server error during login. Please try again.",
 			"invalidForm": "Invalid form submission."
 		},
@@ -589,6 +606,8 @@
 			}
 		},
 		"form": {
+			"title": "Add User",
+			"edit": "Edit User",
 			"createTitle": "Create User",
 			"editTitle": "Edit User",
 			"profileDetails": "Profile Details",
@@ -618,6 +637,7 @@
 			}
 		},
 		"filters": {
+			"name": "Search by name",
 			"username": "Search by username",
 			"all": "All",
 			"isActive": {
@@ -655,6 +675,7 @@
 			"selectApp": "Select All",
 			"unselectApp": "Unselect All",
 			"fromGroup": "from group",
+			"superuserRequired": "Superuser Required",
 			"groupRemovedWarning": "Group '{groupNames}' removed to allow custom permission selection."
 		},
 		"permissions": {
@@ -662,6 +683,7 @@
 			"expandAll": "Expand All",
 			"collapseAll": "Collapse All",
 			"noResults": "No permissions found",
+			"superuserRequired": "Superuser Required",
 			"table": {
 				"name": "Name",
 				"codename": "Codename",
@@ -850,8 +872,78 @@
 		},
 		"noData": "No data available"
 	},
+	"dashboard": {
+		"emptyState": {
+			"title": "No Dashboard Widgets Available",
+			"description": "You do not have permission to view any widgets on the dashboard. Please contact your administrator if you need access."
+		},
+		"noWidgets": {
+			"title": "Dashboard is Empty",
+			"description": "You haven't added any widgets to your dashboard yet. Click Customize to add some."
+		},
+		"customize": "Customize",
+		"saveCustomization": "Save Layout",
+		"saveCustomizationCompact": "Save",
+		"cancelCustomization": "Cancel",
+		"resetLayout": "Reset",
+		"addWidget": "Add Widget",
+		"addWidgets": "Add Widgets",
+		"removeWidget": "Remove",
+		"widgetLibrary": "Widget Library",
+		"customizingHint": "Drag & resize widgets to customize your layout",
+		"allWidgetsActive": "All widgets are on the dashboard",
+		"allWidgetsActiveHint": "Remove a widget first to add it back",
+		"widgets": {
+			"pieChart": {
+				"title": "Sales vs Payments",
+				"description": "Percentage of cash vs deferred payments."
+			},
+			"scatterChart": {
+				"title": "Refillable Items Usage",
+				"description": "Refillable items usage and refill history over time."
+			},
+			"totalSales": {
+				"title": "Total Sales",
+				"description": "Total sales revenue across all invoices.",
+				"subtitle": "All time sales"
+			},
+			"totalPayments": {
+				"title": "Collected",
+				"description": "Total payments collected from customers.",
+				"subtitle": "Payments received"
+			},
+			"pendingDebt": {
+				"title": "Pending Debt",
+				"description": "Outstanding deferred balance not yet collected.",
+				"subtitle": "Unpaid balance"
+			},
+			"rica": {
+				"title": "RItems Cost Analysis",
+				"description": "Compare unit price trends across refillable items over time.",
+				"filtersTitle": "Filters",
+				"filter": "Filters",
+				"openFilters": "Open Filters",
+				"fromDate": "From Date",
+				"toDate": "To Date",
+				"refilledItems": "Refilled Items",
+				"usedItems": "Used Items",
+				"generate": "Generate",
+				"historicalRange": "Historical Range",
+				"window": "Window",
+				"avgPrice": "avg price",
+				"noData": "No data found for the selected filters.",
+				"noDataTitle": "No results found",
+				"noDataHint": "No data matched your selected filters. Try adjusting the date range or item selection.",
+				"applyFiltersHint": "Select filters above and click Generate to see the chart."
+			}
+		}
+	},
 	"reports": {
 		"title": "Reports Dashboard",
+		"emptyState": {
+			"title": "No Reports Available",
+			"description": "You do not have permission to view any reports. Please contact your administrator if you need access."
+		},
 		"reportSections": {
 			"warehouse": {
 				"title": "Warehouse",
@@ -1130,5 +1222,12 @@
 			"of": "of",
 			"files": "files"
 		}
+	},
+	"unauthorized": {
+		"title": "Access Denied",
+		"message": "You don't have permission to access this page.",
+		"contactAdmin": "Please contact your administrator if you believe this is a mistake.",
+		"goBack": "Go Back",
+		"goToDashboard": "Go to Dashboard"
 	}
 }

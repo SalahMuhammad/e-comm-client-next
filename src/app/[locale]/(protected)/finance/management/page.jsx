@@ -15,11 +15,21 @@ import {
 export default function Page() {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+    const t = useTranslations('finance.management')
 
     useEffect(() => {
         async function fetchData() {
-            const res = await getVultsTotalBalance()
-            setData(res.data)
+            try {
+                const res = await getVultsTotalBalance()
+                if (res.ok && res.data && res.data.accounts) {
+                    setData(res.data)
+                } else {
+                    setError(res.data?.detail || t('defaultError'))
+                }
+            } catch (err) {
+                setError(t('defaultError'))
+            }
             setLoading(false)
         }
         fetchData()
@@ -28,7 +38,17 @@ export default function Page() {
     if (loading) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-all duration-300 pt-3 rounded-md p-8 flex items-center justify-center">
-                <div className="text-gray-600 dark:text-gray-400">Loading...</div>
+                <div className="text-gray-600 dark:text-gray-400">{t('loading')}</div>
+            </div>
+        )
+    }
+
+    if (error || !data) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-all duration-300 pt-3 rounded-md p-8 flex flex-col items-center justify-center">
+                <XCircleIcon className="w-16 h-16 text-red-500 mb-4" />
+                <div className="text-gray-800 dark:text-gray-200 text-lg font-semibold mb-2">{t('accessDenied')}</div>
+                <div className="text-gray-600 dark:text-gray-400 text-center">{error || t('defaultError')}</div>
             </div>
         )
     }

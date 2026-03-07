@@ -17,9 +17,7 @@ import { toast } from 'sonner';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 
 const ACCEPTED_FILE_TYPES = [
-    { label: 'JSON', value: '.json' },
     { label: 'SQL', value: '.sql' },
-    { label: 'DUMP', value: '.dump' },
     { label: 'ZIP', value: '.zip' }
 ];
 

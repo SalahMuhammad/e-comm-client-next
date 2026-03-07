@@ -8,6 +8,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import Link from 'next/link';
 import { PlusIcon } from '@heroicons/react/24/outline';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 // Assume statusMap is defined elsewhere, e.g.:
 // const statusMap = {
@@ -84,13 +86,15 @@ function FilterButtons({ statusMap, allLabel = 'All', createLink }) {
             </div>
 
             {createLink && (
-                <Link
-                    href={createLink.href}
-                    className="w-full lg:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm dark:bg-blue-500 dark:hover:bg-blue-600"
-                >
-                    <PlusIcon className="w-5 h-5" />
-                    <span>{createLink.label}</span>
-                </Link>
+                <PermissionGate permission={PERMISSIONS.EXPENSES.ADD}>
+                    <Link
+                        href={createLink.href}
+                        className="w-full lg:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm dark:bg-blue-500 dark:hover:bg-blue-600"
+                    >
+                        <PlusIcon className="w-5 h-5" />
+                        <span>{createLink.label}</span>
+                    </Link>
+                </PermissionGate>
             )}
         </div>
     );

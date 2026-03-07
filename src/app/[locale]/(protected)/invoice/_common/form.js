@@ -9,8 +9,7 @@ import { useTranslations } from 'next-intl';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 import FieldError from '@/components/FieldError';
 import { toast } from 'sonner';
-import Form from 'next/form';
-import FormButton from "@/components/FormButton"
+import GenericFormShell from '@/components/GenericFormShell';
 import { useRouter } from "next/navigation";
 import ItemPreviewModal from '@/components/ItemPreviewModal';
 import { PhotoIcon } from '@heroicons/react/24/outline';
@@ -19,7 +18,6 @@ import { NumberInput, QuantityInput, DateInput, RadioSwitch } from '@/components
 import { getFormDefaultValue } from '@/utils/formDefaultValue';
 import BarcodeScanner from '@/components/BarcodeScanner';
 import BarcodeConfirmationModal from '@/components/BarcodeConfirmationModal';
-import { apiRequest } from '@/utils/api';
 import useBarcodeScanner from '@/components/custom hooks/useBarcodeScanner';
 
 const InvoiceForm = ({ type, initialData = null }) => {
@@ -137,15 +135,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
     } : undefined
 
     useEffect(() => {
-        if (state?.ok === undefined) return
-        if (handleGenericErrors(state)) return
-
-        if (state?.ok) {
-            toast.success(t(initialData?.id ? "successEdit" : "successCreate"));
-            if (state.data?.id) {
-                router.replace(`/invoice/${type}/view/${state.data?.hashed_id}`)
-            }
-        } else {
+        if (state?.ok === false) {
             const itemsError = state?.data?.[typePrefix];
             if (itemsError && typeof itemsError === 'object' && itemsError.detail) {
                 toast.error(itemsError.detail);
@@ -154,20 +144,26 @@ const InvoiceForm = ({ type, initialData = null }) => {
     }, [state])
 
     return (
-        <div className={styles.invoiceContainer}>
-            <Form
-                // action={action}
-                action={formAction}
-                className={styles.invoiceForm}
+        <>
+            <GenericFormShell
+                state={state}
+                formAction={formAction}
+                isPending={isPending}
+                obj={initialData}
+                t={tGlobal}
+                customTitle={t("invoice")}
+                showIdField={false}
+                onSuccess={(data) => {
+                    if (data?.id) {
+                        router.replace(`/invoice/${type}/view/${data.hashed_id}`);
+                    }
+                }}
             >
-                <div className={styles.invoiceHeader}>
-                    <h2>{t("invoice")}</h2>
-                    <input type="hidden" name="type" value={type} />
+                <input type="hidden" name="type" value={type} />
 
-                    {type.includes('refund') && (
-                        <input type="hidden" name="original_invoice" defaultValue={initialData?.id} />
-                    )}
-                </div>
+                {type.includes('refund') && (
+                    <input type="hidden" name="original_invoice" defaultValue={initialData?.id} />
+                )}
 
                 <div className={styles.invoiceDetails}>
                     {initialData?.id && (
@@ -564,21 +560,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                     <input type="hidden" name="total_amount" value={totalAmount.toFixed(2)} />
                 </div>
 
-                <div className={styles.formActions}>
-                    <FormButton
-                        type="submit"
-                        variant={initialData?.id ? "secondary" : "primary"}
-                        size="md"
-                        bgColor={initialData?.id ? "bg-emerald-500 dark:bg-emerald-600" : "bg-blue-500 dark:bg-blue-600"}
-                        hoverBgColor={initialData?.id ? "bg-emerald-700 dark:bg-emerald-800" : "bg-blue-700 dark:bg-blue-800"}
-                        textColor="text-white dark:text-gray-100"
-                        className="w-full"
-                        isLoading={isPending}
-                    >
-                        {initialData?.id ? tGlobal("global.form.edit") : tGlobal("global.form.submit")}
-                    </FormButton>
-                </div>
-            </Form>
+            </GenericFormShell>
 
             <ImageView
                 images={viewImages}
@@ -597,7 +579,7 @@ const InvoiceForm = ({ type, initialData = null }) => {
                 isLoading={barcodeLoading}
                 error={barcodeError}
             />
-        </div>
+        </>
     );
 };
 

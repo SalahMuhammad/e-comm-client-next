@@ -18,6 +18,12 @@ const StaticOptionsInput = ({ options, label, ...props }) => {
     }, []);
 
     const customStyles = {
+        container: (provided) => ({
+            ...provided,
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+        }),
         control: (provided, state) => ({
             ...provided,
             backgroundColor: 'transparent',
@@ -25,9 +31,10 @@ const StaticOptionsInput = ({ options, label, ...props }) => {
             borderBottom: `2px solid ${state.isFocused ? isDarkMode ? '#3b82f6' : '#2563eb' : isDarkMode ? '#4b5563' : '#d1d5db'}`,
             borderRadius: 0,
             boxShadow: 'none',
-            paddingLeft: '0.5rem',
-            paddingRight: '0.5rem',
-            minHeight: '2.5rem',
+            paddingLeft: '0.75rem',
+            paddingRight: '0.75rem',
+            minHeight: '2.75rem',
+            height: '100%',
             color: isDarkMode ? '#fff' : '#111827',
         }),
         singleValue: (provided) => ({
@@ -51,24 +58,65 @@ const StaticOptionsInput = ({ options, label, ...props }) => {
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isFocused
-                ? isDarkMode ? '#374151' : '#f3f4f6'
-                : isDarkMode ? '#1f2937' : '#ffffff',
-            color: isDarkMode ? '#f9fafb' : '#111827',
+            padding: '12px 14px',
+            backgroundColor: state.isSelected
+                ? isDarkMode ? '#2563eb' : '#3b82f6'
+                : state.isFocused
+                    ? isDarkMode ? '#374151' : '#f3f4f6'
+                    : 'transparent',
+            color: state.isSelected
+                ? '#ffffff'
+                : isDarkMode ? '#f9fafb' : '#111827',
             cursor: 'pointer',
-            '&:hover': {
-                backgroundColor: isDarkMode ? '#374151' : '#f3f4f6',
+            ':active': {
+                ...provided[':active'],
+                backgroundColor: isDarkMode ? '#2563eb' : '#3b82f6',
             },
         }),
         menuList: (provided) => ({
             ...provided,
             padding: '0.25rem',
         }),
+        valueContainer: (provided) => ({
+            ...provided,
+            maxHeight: '50px',
+            overflowY: 'auto',
+            /* Customize scrollbar for tags area */
+            '&::-webkit-scrollbar': {
+                width: '4px',
+                height: '4px',
+            },
+            '&::-webkit-scrollbar-track': {
+                background: 'transparent',
+            },
+            '&::-webkit-scrollbar-thumb': {
+                background: isDarkMode ? '#4b5563' : '#d1d5db',
+                borderRadius: '4px',
+            },
+        }),
+        multiValue: (provided) => ({
+            ...provided,
+            backgroundColor: isDarkMode ? '#374151' : '#e5e7eb',
+        }),
+        multiValueLabel: (provided) => ({
+            ...provided,
+            color: isDarkMode ? '#fff' : '#111827',
+        }),
+        multiValueRemove: (provided) => ({
+            ...provided,
+            color: isDarkMode ? '#9ca3af' : '#6b7280',
+            paddingLeft: '6px',
+            paddingRight: '6px',
+            ':hover': {
+                backgroundColor: isDarkMode ? '#ef4444' : '#f87171',
+                color: '#fff',
+            },
+        }),
     };
 
     return (
         <div
-            className="w-full mb-4"
+            className="w-full mb-4 h-full flex flex-col"
             onClick={(e) => e.stopPropagation()}
         >
             <label
@@ -81,6 +129,7 @@ const StaticOptionsInput = ({ options, label, ...props }) => {
                 instanceId={selectId}
                 options={options}
                 defaultValue={options[0]}
+                isSearchable={false}
                 styles={customStyles}
                 formatOptionLabel={(data, meta) => {
                     if (data.note && meta.context === 'menu') {

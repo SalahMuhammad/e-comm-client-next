@@ -1,3 +1,5 @@
+"use client";
+
 const bgColors = [
   'bg-red-500',
   'bg-green-500',
@@ -18,7 +20,6 @@ function getDeterministicColor(username) {
   return bgColors[index];
 }
 
-// import { UserIcon } from '@heroicons/react/24/solid';
 import { API_BASE_URL } from '@/config/api';
 
 export default function UserAvatar({ username, imageUrl, className = "w-8 h-8" }) {

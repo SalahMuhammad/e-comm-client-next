@@ -1,10 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import DeleteButton from './DeleteButton';
 import { PencilIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function RepositoryTable({ repositories, setRepositories }) {
   const t = useTranslations("warehouse.repositories")
@@ -25,8 +27,6 @@ export default function RepositoryTable({ repositories, setRepositories }) {
     }, 300); // match the transition duration
   };
 
-
-
   return (
     <tbody>
       {items.map((repository) => {
@@ -45,26 +45,30 @@ export default function RepositoryTable({ repositories, setRepositories }) {
             </th>
             <td className="flex items-center px-6 py-4 justify-end">
 
-              <Link
-                href={`/repository/form/${repository.id}`}
-                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
-              >
-                <PencilIcon
-                  className="
-                    h-4 w-4 mr-1
-                    transition-all duration-300 ease-in-out
-                    group-hover:rotate-[8deg]
-                    group-hover:-translate-y-0.5
-                    group-hover:scale-110
-                    group-hover:drop-shadow-sm
-                  "
-                />
-                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                  {t("table.edit")}
-                </span>
-              </Link>
+              <PermissionGate permission={PERMISSIONS.REPOSITORIES.CHANGE}>
+                <Link
+                  href={`/repository/form/${repository.id}`}
+                  className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                >
+                  <PencilIcon
+                    className="
+                      h-4 w-4 mr-1
+                      transition-all duration-300 ease-in-out
+                      group-hover:rotate-[8deg]
+                      group-hover:-translate-y-0.5
+                      group-hover:scale-110
+                      group-hover:drop-shadow-sm
+                    "
+                  />
+                  <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                    {t("table.edit")}
+                  </span>
+                </Link>
+              </PermissionGate>
 
-              <DeleteButton id={repository.id} onDelete={() => handleDelete(repository.id)} />
+              <PermissionGate permission={PERMISSIONS.REPOSITORIES.DELETE}>
+                <DeleteButton id={repository.id} onDelete={() => handleDelete(repository.id)} />
+              </PermissionGate>
 
             </td>
           </tr>

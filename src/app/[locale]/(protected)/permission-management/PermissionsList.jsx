@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDownIcon, ChevronRightIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { isPermissionSuperuserRequired } from "@/config/superuserPermissions";
+
 
 export default function PermissionsList({ permissions }) {
     const t = useTranslations("permission-management.permissions");
@@ -145,7 +147,14 @@ export default function PermissionsList({ permissions }) {
                                                 {perms.map(perm => (
                                                     <tr key={perm.id} className="border-t border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                                         <td className="px-4 py-2 text-gray-900 dark:text-white">
-                                                            {perm.name}
+                                                            <div className="flex items-center gap-2">
+                                                                {perm.name}
+                                                                {isPermissionSuperuserRequired(perm) && (
+                                                                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 px-2 py-0.5 rounded-full border border-red-300 dark:border-red-700 font-medium">
+                                                                        {t("superuserRequired")}
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                         </td>
                                                         <td className="px-4 py-2 text-gray-600 dark:text-gray-400 font-mono text-xs">
                                                             {perm.codename}

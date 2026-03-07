@@ -1,4 +1,4 @@
-import TransferForm from "../page";
+import TransferForm from "../TransferFormComponent";
 import { getTransfer } from "../../actions";
 
 

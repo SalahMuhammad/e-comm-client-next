@@ -27,7 +27,16 @@ async function ItemView({ id }) {
     const value = itemFluctuationData.last_30_dayes - itemFluctuationData.from_60_to_30_dayes
     const percentage = value * 100 / itemFluctuationData.from_60_to_30_dayes
 
-    if (!item?.id) throw new Response('Not Found', { status: 404 })
+    if (!item?.id) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+                <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <p className="text-2xl font-bold text-gray-700 dark:text-gray-200 mb-2">{t("notFound")}</p>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm">{t("noAccess")}</p>
+                </div>
+            </div>
+        );
+    }
 
     const isUpdated = new Date(item.created_at).toLocaleString() !== new Date(item.updated_at).toLocaleString()
 

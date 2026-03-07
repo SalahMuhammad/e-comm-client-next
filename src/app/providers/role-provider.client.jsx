@@ -1,42 +1,51 @@
 "use client";
 import React, { createContext, useContext, useMemo } from "react";
-import { usePermission } from "@/utils/auth/auth";
 
-const RoleContext = createContext({
-  role: "guest",
+const PermissionsContext = createContext({
   permissions: [],
   permSet: new Set(),
+  isSuperuser: false,
   hasPermission: () => false,
 });
 
-export default function RoleProviderClient({ role = "guest", permissions = [], children }) {
-  // Create Set once and memoize
+export default function RoleProviderClient({ permissions = [], isSuperuser = false, children }) {
+  // Create Set once and memoize for fast permission checks
   const permSet = useMemo(() => new Set(permissions || []), [permissions]);
 
   const value = useMemo(() => ({
-    role,
-    permissions,   // keep array if you need it
-    permSet,       // expose Set for very fast checks
-    hasPermission: (perm) => permSet.has(perm),
-  }), [role, permissions, permSet]);
+    permissions,      // Array of permission strings
+    permSet,          // Set for O(1) lookups
+    isSuperuser,      // Boolean for superuser status
+    hasPermission: (perm) => isSuperuser || permSet.has(perm),  // Superusers have all permissions
+  }), [permissions, permSet, isSuperuser]);
 
-  return <RoleContext.Provider value={value}>{children}</RoleContext.Provider>;
+  return <PermissionsContext.Provider value={value}>{children}</PermissionsContext.Provider>;
 }
 
-// hook to read role + helpers
-export function useRole() {
-  const { role } = useContext(RoleContext);
-
-  return role
-}
-
+/**
+ * Hook to access the permissions context.
+ * Throws if used outside of RoleProviderClient — catches accidental misuse early.
+ * @returns {Object} { permissions, permSet, isSuperuser, hasPermission }
+ */
 export function useRoleContext() {
-  return useContext(RoleContext);
+  const ctx = useContext(PermissionsContext);
+  if (!ctx) {
+    throw new Error(
+      '[useRoleContext] Must be used inside <RoleProvider>. ' +
+      'Make sure this component is wrapped by RoleProvider in the component tree.'
+    );
+  }
+  return ctx;
 }
 
-export function useHasPermission(permission, useServer = true) {
-  const ctx = useContext(RoleContext);
-  if (!ctx) return false;
-
-  return usePermission(permission, [ctx.role], ctx.permSet, useServer);
+/**
+ * Hook to check if user has a specific permission
+ * Always uses server-side permissions (from JWT)
+ * 
+ * @param {string} permission - Permission string to check (e.g., "items.view_items")
+ * @returns {boolean} True if user has permission or is superuser
+ */
+export function useHasPermission(permission) {
+  const { hasPermission } = useContext(PermissionsContext);
+  return hasPermission(permission);
 }
