@@ -1,5 +1,6 @@
 // number
 export { default as NumberInput } from './number/NumberInput';
+export { default as NumberInputV2 } from './number/NumberInputV2';
 export { default as QuantityInput } from './number/QuantityInput';
 // date
 export { default as DateInput } from './date/DateInput';
