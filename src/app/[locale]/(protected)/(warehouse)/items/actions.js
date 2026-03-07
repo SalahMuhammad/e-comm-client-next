@@ -49,7 +49,7 @@ export async function createUpdateItem(_, formData) {
     formData.set('barcodes', JSON.stringify(cleanBarcodes));
     const formValues = Object.fromEntries(formData.entries());
     formValues.barcodes = cleanBarcodes
-    
+
     const response = await apiRequest(`/api/items/${isUpdate ? formData.get('id') + '/' : ''}`, {
         method: `${isUpdate ? 'PUT' : 'POST'}`,
         body: formData,
@@ -64,7 +64,8 @@ export async function createUpdateItem(_, formData) {
 export async function getPP() {
     const response = await apiRequest('/api/pp/', { method: 'GET' });
     if (!response.ok) {
-        throw new Error('Failed to fetch item types');
+        console.error('getPP error payload:', await response.text?.() || response);
+        return [];
     }
-    return await response.data;
+    return response.data || [];
 }

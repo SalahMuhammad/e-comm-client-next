@@ -1,6 +1,5 @@
 const MultiPriceTooltip = ({ active, payload, label }) => {
     if (!active || !payload || !payload.length) return null;
-
     return (
         <div className="bg-white dark:bg-gray-900 p-4 rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700 min-w-[220px]">
             <p className="text-xs font-bold text-slate-400 uppercase mb-3 border-b pb-2">
@@ -24,5 +23,4 @@ const MultiPriceTooltip = ({ active, payload, label }) => {
         </div>
     );
 };
-
-export default MultiPriceTooltip
+export default MultiPriceTooltip;

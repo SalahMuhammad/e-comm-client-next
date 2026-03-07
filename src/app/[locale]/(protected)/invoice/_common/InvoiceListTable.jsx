@@ -9,12 +9,19 @@ import RepositoryPermitButton from "./RepositoryPermitButton";
 import numberFormatter from "@/utils/NumberFormatter";
 import { useTranslations } from "next-intl";
 import TableNote from '@/components/TableNote';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function InvoiceListTable({ initialData, type }) {
     const t = useTranslations("invoice");
     const [items, setItems] = useState(initialData);
     const [deletingId, setDeletingId] = useState(null);
     const isRefund = type.split('/')[1] || false;
+
+    // Get permissions based on the type
+    const isPurchase = type === 'purchases';
+    const editPermission = isPurchase ? PERMISSIONS.PURCHASE_INVOICES.CHANGE : PERMISSIONS.SALES_INVOICES.CHANGE;
+    const deletePermission = isPurchase ? PERMISSIONS.PURCHASE_INVOICES.DELETE : PERMISSIONS.SALES_INVOICES.DELETE;
 
     useEffect(() => {
         setItems(initialData);
@@ -106,27 +113,33 @@ export default function InvoiceListTable({ initialData, type }) {
                                 </Link>
                                 {!isRefund && (
                                     <>
-                                        <Link
-                                            href={`/invoice/${type}/form/${inv.hashed_id}`}
-                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
-                                        >
-                                            <PencilIcon className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />
-                                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                                {t("table.edit")}
-                                            </span>
-                                        </Link>
-                                        <Link
-                                            href={`/invoice/${type}/refund/form/${inv.hashed_id}`}
-                                            className="ml-2 flex items-center text-purple-600 hover:text-purple-500 group transition-colors dark:text-purple-400 dark:hover:text-white"
-                                        >
-                                            <svg className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
-                                            </svg>
-                                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                                {t("table.refund")}
-                                            </span>
-                                        </Link>
-                                        <DeleteButton type={type} hashed_id={inv.hashed_id} onDelete={() => handleDelete(inv.id)} />
+                                        <PermissionGate permission={editPermission}>
+                                            <Link
+                                                href={`/invoice/${type}/form/${inv.hashed_id}`}
+                                                className="ml-2 flex items-center text-blue-600 hover:text-blue-500 group transition-colors dark:text-blue-200 dark:hover:text-white"
+                                            >
+                                                <PencilIcon className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" />
+                                                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                                    {t("table.edit")}
+                                                </span>
+                                            </Link>
+                                        </PermissionGate>
+                                        <PermissionGate permission={PERMISSIONS.RETURN_INVOICES.ADD}>
+                                            <Link
+                                                href={`/invoice/${type}/refund/form/${inv.hashed_id}`}
+                                                className="ml-2 flex items-center text-purple-600 hover:text-purple-500 group transition-colors dark:text-purple-400 dark:hover:text-white"
+                                            >
+                                                <svg className="h-4 w-4 mr-1 transition-all duration-300 ease-in-out group-hover:rotate-[8deg] group-hover:-translate-y-0.5 group-hover:scale-110 group-hover:drop-shadow-sm" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path>
+                                                </svg>
+                                                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                                    {t("table.refund")}
+                                                </span>
+                                            </Link>
+                                        </PermissionGate>
+                                        <PermissionGate permission={deletePermission}>
+                                            <DeleteButton type={type} hashed_id={inv.hashed_id} onDelete={() => handleDelete(inv.id)} />
+                                        </PermissionGate>
                                     </>
                                 )}
                                 <ToolTip obj={inv} className="ml-3" />

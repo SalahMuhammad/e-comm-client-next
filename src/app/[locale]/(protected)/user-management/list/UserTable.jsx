@@ -7,6 +7,8 @@ import { PencilIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/ou
 import { useTranslations } from 'next-intl';
 import LocalizedDate from '@/components/LocalizedDate';
 import UserAvatar from '@/components/UserAvatar';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function UserTable({ users, currentUserId }) {
     const t = useTranslations("user-management")
@@ -91,12 +93,12 @@ export default function UserTable({ users, currentUserId }) {
                             )}
                         </td>
                         <td className="px-6 py-4">
-                            <div className="flex flex-wrap gap-1">
+                            <div className="flex gap-1 overflow-x-auto max-w-[250px] pb-1 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-600 scrollbar-track-transparent">
                                 {user.groups && user.groups.length > 0 ? (
                                     user.groups.map((group, idx) => (
                                         <span
                                             key={idx}
-                                            className="px-2 py-0.5 text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded"
+                                            className="px-2 py-0.5 text-xs bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 rounded whitespace-nowrap flex-shrink-0"
                                         >
                                             {typeof group === 'string' ? group : group.name}
                                         </span>
@@ -106,12 +108,12 @@ export default function UserTable({ users, currentUserId }) {
                                 )}
                             </div>
                         </td>
-                        <td className="px-6 py-4">
-                            <span className="px-2 py-0.5 text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded">
+                        <td className="px-6 py-4 min-w-[140px]">
+                            <span className="inline-flex items-center justify-center px-2 py-0.5 text-xs bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200 rounded whitespace-nowrap">
                                 {user.permission_count ?? 0} {t('table.permissionsCount')}
                             </span>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 min-w-[120px] whitespace-nowrap">
                             {user.date_joined ? (
                                 <LocalizedDate date={user.date_joined} />
                             ) : (
@@ -121,12 +123,13 @@ export default function UserTable({ users, currentUserId }) {
                         <td className="flex items-center px-6 py-4 justify-end">
                             {user.id !== currentUserId ? (
                                 <>
-                                    <Link
-                                        href={`/user-management/form/${user.id}`}
-                                        className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
-                                    >
-                                        <PencilIcon
-                                            className="
+                                    <PermissionGate permission={PERMISSIONS.USERS.CHANGE}>
+                                        <Link
+                                            href={`/user-management/form/${user.id}`}
+                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                                        >
+                                            <PencilIcon
+                                                className="
                             h-4 w-4 mr-1
                             transition-all duration-300 ease-in-out
                             group-hover:rotate-[8deg]
@@ -134,13 +137,16 @@ export default function UserTable({ users, currentUserId }) {
                             group-hover:scale-110
                             group-hover:drop-shadow-sm
                           "
-                                        />
-                                        <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                            {t("table.edit")}
-                                        </span>
-                                    </Link>
+                                            />
+                                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                                {t("table.edit")}
+                                            </span>
+                                        </Link>
+                                    </PermissionGate>
 
-                                    <DeleteButton id={user.id} onDelete={() => handleDelete(user.id)} />
+                                    <PermissionGate permission={PERMISSIONS.USERS.DELETE}>
+                                        <DeleteButton id={user.id} onDelete={() => handleDelete(user.id)} />
+                                    </PermissionGate>
                                 </>
                             ) : (
                                 <span className="text-xs text-gray-400 italic px-2">

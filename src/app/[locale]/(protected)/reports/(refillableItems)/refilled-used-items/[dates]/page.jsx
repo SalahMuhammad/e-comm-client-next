@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
 async function page({ params }) {
     const dates = (await params).dates
     const [fromDate, toDate] = dates.split('%20%20%20')
-    const res = await getRefilledItems(`?full_report&from=${fromDate}&to=${toDate}`)
+    const res = await getRefilledItems(`?full_report=true&date_after=${fromDate}&date_before=${toDate}`)
     const data = res?.data?.results || []
     const itemTransformerRes = await getdRefillableItems()
     const itemTransformerData = itemTransformerRes.data?.results || []

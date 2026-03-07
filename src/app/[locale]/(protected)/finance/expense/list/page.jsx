@@ -16,6 +16,8 @@ import { PencilIcon, TrashIcon, ChevronDownIcon, PhotoIcon, ExclamationCircleIco
 import { toast } from 'sonner';
 import { deleteExpense } from '../actions';
 import { useTranslations } from 'next-intl';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function ExpenseList() {
     const t = useTranslations('inputs.search');
@@ -134,40 +136,44 @@ export default function ExpenseList() {
                                                     <StatusIcon className="w-5 h-5" />
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    <Link
-                                                        href={`/finance/expense/form/${expense.hashed_id}`}
-                                                        className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white p-2 cursor-pointer"
-                                                        onClick={(e) => e.stopPropagation()}
-                                                    >
-                                                        <PencilIcon
-                                                            className="
-                                                                h-5 w-5
-                                                                transition-all duration-300 ease-in-out
-                                                                group-hover:rotate-[8deg]
-                                                                group-hover:-translate-y-0.5
-                                                                group-hover:scale-110
-                                                                group-hover:drop-shadow-sm
-                                                            "
-                                                        />
-                                                    </Link>
+                                                    <PermissionGate permission={PERMISSIONS.EXPENSES.CHANGE}>
+                                                        <Link
+                                                            href={`/finance/expense/form/${expense.hashed_id}`}
+                                                            className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white p-2 cursor-pointer"
+                                                            onClick={(e) => e.stopPropagation()}
+                                                        >
+                                                            <PencilIcon
+                                                                className="
+                                                                    h-5 w-5
+                                                                    transition-all duration-300 ease-in-out
+                                                                    group-hover:rotate-[8deg]
+                                                                    group-hover:-translate-y-0.5
+                                                                    group-hover:scale-110
+                                                                    group-hover:drop-shadow-sm
+                                                                "
+                                                            />
+                                                        </Link>
+                                                    </PermissionGate>
 
-                                                    <button
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            handleDelete(expense.hashed_id);
-                                                        }}
-                                                        className="flex items-center text-red-600 hover:text-red-800 group transition duration-300 dark:text-red-400 dark:hover:text-red-300 p-2 cursor-pointer"
-                                                    >
-                                                        <TrashIcon
-                                                            className="
-                                                                h-5 w-5
-                                                                transition-all duration-300 ease-in-out
-                                                                group-hover:scale-110
-                                                                group-hover:-translate-y-0.5
-                                                                group-hover:drop-shadow-sm
-                                                            "
-                                                        />
-                                                    </button>
+                                                    <PermissionGate permission={PERMISSIONS.EXPENSES.DELETE}>
+                                                        <button
+                                                            onClick={(e) => {
+                                                                e.stopPropagation();
+                                                                handleDelete(expense.hashed_id);
+                                                            }}
+                                                            className="flex items-center text-red-600 hover:text-red-800 group transition duration-300 dark:text-red-400 dark:hover:text-red-300 p-2 cursor-pointer"
+                                                        >
+                                                            <TrashIcon
+                                                                className="
+                                                                    h-5 w-5
+                                                                    transition-all duration-300 ease-in-out
+                                                                    group-hover:scale-110
+                                                                    group-hover:-translate-y-0.5
+                                                                    group-hover:drop-shadow-sm
+                                                                "
+                                                            />
+                                                        </button>
+                                                    </PermissionGate>
                                                 </div>
                                             </div>
 
@@ -251,40 +257,44 @@ export default function ExpenseList() {
 
                                             {/* Action Buttons (Desktop Only) */}
                                             <div className="flex items-center gap-2">
-                                                <Link
-                                                    href={`/finance/expense/form/${expense.hashed_id}`}
-                                                    className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white p-2 cursor-pointer"
-                                                    onClick={(e) => e.stopPropagation()}
-                                                >
-                                                    <PencilIcon
-                                                        className="
-                                                            h-5 w-5
-                                                            transition-all duration-300 ease-in-out
-                                                            group-hover:rotate-[8deg]
-                                                            group-hover:-translate-y-0.5
-                                                            group-hover:scale-110
-                                                            group-hover:drop-shadow-sm
-                                                        "
-                                                    />
-                                                </Link>
+                                                <PermissionGate permission={PERMISSIONS.EXPENSES.CHANGE}>
+                                                    <Link
+                                                        href={`/finance/expense/form/${expense.hashed_id}`}
+                                                        className="flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white p-2 cursor-pointer"
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        <PencilIcon
+                                                            className="
+                                                                h-5 w-5
+                                                                transition-all duration-300 ease-in-out
+                                                                group-hover:rotate-[8deg]
+                                                                group-hover:-translate-y-0.5
+                                                                group-hover:scale-110
+                                                                group-hover:drop-shadow-sm
+                                                            "
+                                                        />
+                                                    </Link>
+                                                </PermissionGate>
 
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        handleDelete(expense.hashed_id);
-                                                    }}
-                                                    className="flex items-center text-red-600 hover:text-red-800 group transition duration-300 dark:text-red-400 dark:hover:text-red-300 p-2 cursor-pointer"
-                                                >
-                                                    <TrashIcon
-                                                        className="
-                                                            h-5 w-5
-                                                            transition-all duration-300 ease-in-out
-                                                            group-hover:scale-110
-                                                            group-hover:-translate-y-0.5
-                                                            group-hover:drop-shadow-sm
-                                                        "
-                                                    />
-                                                </button>
+                                                <PermissionGate permission={PERMISSIONS.EXPENSES.DELETE}>
+                                                    <button
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            handleDelete(expense.hashed_id);
+                                                        }}
+                                                        className="flex items-center text-red-600 hover:text-red-800 group transition duration-300 dark:text-red-400 dark:hover:text-red-300 p-2 cursor-pointer"
+                                                    >
+                                                        <TrashIcon
+                                                            className="
+                                                                h-5 w-5
+                                                                transition-all duration-300 ease-in-out
+                                                                group-hover:scale-110
+                                                                group-hover:-translate-y-0.5
+                                                                group-hover:drop-shadow-sm
+                                                            "
+                                                        />
+                                                    </button>
+                                                </PermissionGate>
                                             </div>
                                         </div>
                                     </div>

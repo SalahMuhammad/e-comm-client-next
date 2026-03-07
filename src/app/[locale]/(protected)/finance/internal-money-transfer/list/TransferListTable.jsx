@@ -11,6 +11,8 @@ import LocalizedDate from '@/components/LocalizedDate';
 import { useTranslations } from "next-intl";
 import { useState } from 'react';
 import ImageView from "@/components/ImageView";
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function TransferListTable({ data }) {
     const t = useTranslations();
@@ -108,26 +110,30 @@ export default function TransferListTable({ data }) {
                                             </span>
                                         </Link>
 
-                                        <Link
-                                            href={`/finance/internal-money-transfer/form/${transfer.hashed_id}`}
-                                            className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
-                                        >
-                                            <PencilIcon
-                                                className="
-                                                    h-4 w-4 mr-1
-                                                    transition-all duration-300 ease-in-out
-                                                    group-hover:rotate-[8deg]
-                                                    group-hover:-translate-y-0.5
-                                                    group-hover:scale-110
-                                                    group-hover:drop-shadow-sm
-                                                "
-                                            />
-                                            <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                                                {t("finance.table.edit")}
-                                            </span>
-                                        </Link>
+                                        <PermissionGate permission={PERMISSIONS.INTERNAL_MONEY_TRANSFER.CHANGE}>
+                                            <Link
+                                                href={`/finance/internal-money-transfer/form/${transfer.hashed_id}`}
+                                                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                                            >
+                                                <PencilIcon
+                                                    className="
+                                                        h-4 w-4 mr-1
+                                                        transition-all duration-300 ease-in-out
+                                                        group-hover:rotate-[8deg]
+                                                        group-hover:-translate-y-0.5
+                                                        group-hover:scale-110
+                                                        group-hover:drop-shadow-sm
+                                                    "
+                                                />
+                                                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                                                    {t("finance.table.edit")}
+                                                </span>
+                                            </Link>
+                                        </PermissionGate>
 
-                                        <DeleteButton type={'internal-money-transfer'} id={transfer.hashed_id} />
+                                        <PermissionGate permission={PERMISSIONS.INTERNAL_MONEY_TRANSFER.DELETE}>
+                                            <DeleteButton type={'internal-money-transfer'} id={transfer.hashed_id} />
+                                        </PermissionGate>
                                         <ToolTip obj={transfer} />
                                     </div>
                                 </td>
@@ -137,17 +143,7 @@ export default function TransferListTable({ data }) {
                 </table>
             </div>
 
-            {data.count == 0 &&
-                <ErrorLoading name="global.errors" err="nothing" className="w-full transform-translate-x-1/2 flex justify-center items-center bg-gray-100 border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 p-5 rounded-md mt-3" />
-            }
-
             <ImageView images={images} onClose={() => { setImages([]); setStartIndex(0); }} startIndex={startIndex} />
-
-            <PaginationControls
-                resCount={data.count}
-                hasNext={data.next}
-                hasPrev={data.previous}
-            />
         </>
     );
 }

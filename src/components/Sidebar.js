@@ -10,7 +10,7 @@ import { useEffect, useState, useRef } from 'react';
 // import logout from './logout';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageToggle from './LanguageToggle';
-import { getMenuItems } from '@/constants/navigation';
+import { getMenuItems, getStandaloneLinks } from '@/constants/navigation';
 import { useCompany } from '@/app/providers/company-provider.client';
 import { useRoleContext } from '@/app/providers/role-provider.client';
 
@@ -81,16 +81,24 @@ export default function Sidebar({ username, token }) {
         }
     };
 
-    const { hasPermission } = useRoleContext();
+    const { hasPermission, isSuperuser } = useRoleContext();
 
     const [openSection, setOpenSection] = useState(null);
-    const rawMenuItems = getMenuItems(t);
+    const rawMenuItems = getMenuItems(t, isSuperuser);
+    const rawStandaloneLinks = getStandaloneLinks(t, isSuperuser);
+
+    const standaloneLinks = rawStandaloneLinks.filter(link => {
+        if (!link.permissions || link.permissions.length === 0) return true;
+        if (link.permissions.includes('superuser_only')) return isSuperuser;
+        return link.permissions.some(perm => hasPermission(perm));
+    });
 
     const menuItems = rawMenuItems.map(section => {
         // Filter links in the section
         const filteredLinks = section.links.filter(link => {
             // If no permissions defined, show it
             if (!link.permissions || link.permissions.length === 0) return true;
+            if (link.permissions.includes('superuser_only')) return isSuperuser;
             // Check if user has at least one of the required permissions
             return link.permissions.some(perm => hasPermission(perm));
         });
@@ -115,7 +123,7 @@ export default function Sidebar({ username, token }) {
                             </button>
                             <Link href="/dashboard" className="flex ms-2 md:me-24">
                                 <img src={companyDetails.logo} className="h-8 me-3" alt="Med Pro Logo" />
-                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
+                                <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white hidden sm:inline">
                                     {companyDetails.name}
                                 </span>
                             </Link>
@@ -138,6 +146,7 @@ export default function Sidebar({ username, token }) {
                                 <div
                                     className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-sm shadow-sm dark:bg-gray-700 dark:divide-gray-600 w-54 translate-x-[-7px]"
                                     id="dropdown-user"
+                                    suppressHydrationWarning
                                 >
                                     <div className="px-4 py-3" role="none">
                                         <p className="text-sm text-gray-900 dark:text-white" role="none">
@@ -199,7 +208,7 @@ export default function Sidebar({ username, token }) {
                 />
             )}
 
-            <aside ref={sidebarRef} id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white borderR border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
+            <aside ref={sidebarRef} id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white borderR border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar" suppressHydrationWarning>
                 <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800" id='SidebarDiv'>
                     <ul className="space-y-2 font-medium">
                         <li>
@@ -297,18 +306,14 @@ export default function Sidebar({ username, token }) {
                                 <span className="flex-1 ms-3 whitespace-nowrap">Sign In</span>
                             </a>
                         </li> */}
-                        <li>
-                            <Link href={'/reports'} onClick={closeSidebar} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                <WrenchScrewdriverIcon className="w-4 h-4" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">{t("reports.headLabel")}</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href={'/settings'} onClick={closeSidebar} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                                <WrenchScrewdriverIcon className="w-4 h-4" />
-                                <span className="flex-1 ms-3 whitespace-nowrap">{t("settings")}</span>
-                            </Link>
-                        </li>
+                        {standaloneLinks.map((link, j) => (
+                            <li key={`standalone-${j}`}>
+                                <Link href={link.path} onClick={closeSidebar} className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                    {link.icon}
+                                    <span className="flex-1 ms-3 whitespace-nowrap">{link.label}</span>
+                                </Link>
+                            </li>
+                        ))}
                         <li>
                             <a href="#" className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                                 <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

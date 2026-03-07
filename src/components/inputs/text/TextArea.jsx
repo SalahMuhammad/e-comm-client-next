@@ -31,20 +31,20 @@ export default function TextArea({
 
     // Reset height to get accurate scrollHeight
     textarea.style.height = 'auto';
-    
+
     // Calculate line height
     const lineHeight = parseInt(getComputedStyle(textarea).lineHeight);
     const paddingTop = parseInt(getComputedStyle(textarea).paddingTop);
     const paddingBottom = parseInt(getComputedStyle(textarea).paddingBottom);
-    
+
     // Calculate min and max heights
     const minHeight = lineHeight * minRows + paddingTop + paddingBottom;
     const maxHeight = lineHeight * maxRows + paddingTop + paddingBottom;
-    
+
     // Set new height within bounds
     const scrollHeight = textarea.scrollHeight;
     const newHeight = Math.min(Math.max(scrollHeight, minHeight), maxHeight);
-    
+
     textarea.style.height = `${newHeight}px`;
     textarea.style.overflowY = scrollHeight > maxHeight ? 'auto' : 'hidden';
   };
@@ -84,7 +84,7 @@ export default function TextArea({
         className={`
           block w-full py-2.5 pr-12 pl-2 text-sm bg-transparent border-0 border-b-2 resize-none
           ${textColor}
-          ${hasError 
+          ${hasError
             ? `border-red-500 focus:border-red-500 dark:border-red-400 dark:focus:border-red-400`
             : `${borderColor} ${focusColor}`
           }
@@ -96,10 +96,9 @@ export default function TextArea({
       <label
         htmlFor={id}
         className={`
-          absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] 
+          absolute text-sm duration-300 transform -translate-y-6 scale-75 top-3 origin-[0] 
           peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6
           ${hasError ? `peer-focus:${errorColor} ${errorColor}` : `${labelColor} ${focusLabelColor}`}
-          peer-focus:bg-gray-100 peer-focus:dark:bg-gray-900 px-1
         `}
       >
         {placeholder}

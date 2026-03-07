@@ -1,11 +1,12 @@
-import { getServerRole, getUserPermissions } from "@/utils/auth/role";
+import { getUserPermissionsAndStatus } from "@/utils/auth/role";
 import RoleProviderClient from "./role-provider.client";
 
 export default async function RoleProvider({ children }) {
-  const role = await getServerRole();
-  const permissions = await getUserPermissions();
+  // Use shared utility to get both permissions and superuser status from JWT
+  const { permissions, isSuperuser } = await getUserPermissionsAndStatus();
+
   return (
-    <RoleProviderClient role={role} permissions={permissions}>
+    <RoleProviderClient permissions={permissions} isSuperuser={isSuperuser}>
       {children}
     </RoleProviderClient>
   );

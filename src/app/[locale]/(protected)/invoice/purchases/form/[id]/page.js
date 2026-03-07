@@ -1,7 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { getInv } from "../../../_common/actions"
-import PurchaseForm from "../page"
-
+import { SalesForm as PurchaseForm } from "../PurchasesFormComponent"
 
 async function page({ params }) {
     const t = await getTranslations("global.errors");
@@ -14,7 +13,7 @@ async function page({ params }) {
                 <PurchaseForm initialData={inv} />
             ) : (
                 <div className="text-center text-red-500">{t('404')}</div>
-            ) }
+            )}
         </div>
     )
 }

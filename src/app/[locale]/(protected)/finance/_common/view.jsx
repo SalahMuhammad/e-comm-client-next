@@ -56,7 +56,7 @@ async function TransactionView({ id, type }) {
                 </Link>
 
                 <DeleteButton type={type} id={id} isDeleteFromView={true} />
-                
+
                 <PrintButton />
 
             </div>

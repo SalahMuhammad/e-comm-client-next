@@ -5,6 +5,8 @@ import Link from 'next/link';
 import DeleteButton from './DeleteButton';
 import { PencilIcon, EyeIcon } from '@heroicons/react/24/outline';
 import { useTranslations } from 'next-intl';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function CustomerSupplierTable({ CSs }) {
   const t = useTranslations("customer-supplier")
@@ -16,14 +18,11 @@ export default function CustomerSupplierTable({ CSs }) {
   }, [CSs]);
 
   const handleDelete = (id) => {
-    // trigger fade-out
     setDeletingId(id);
-
-    // wait for animation before removing
     setTimeout(() => {
       setItems(prev => prev.filter(CS => CS.id !== id));
       setDeletingId(null);
-    }, 300); // match the transition duration
+    }, 300);
   };
 
   return (
@@ -40,43 +39,49 @@ export default function CustomerSupplierTable({ CSs }) {
             `}
           >
             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {CS.name}
+              {CS.name}
             </th>
             <td className="px-6 py-4 max-w-xs overflow-x-auto">
-                <pre className="whitespace-pre-wrap">
-                    {CS.detail}
-                </pre>
+              <pre className="whitespace-pre-wrap">
+                {CS.detail}
+              </pre>
             </td>
             <td className="flex items-center px-6 py-4 justify-end">
-              <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/customer-supplier/view/${CS.id}`}>
-                <EyeIcon
-                  className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
-                />
-                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                  {t("table.view")}
-                </span>
-              </Link>
+              <PermissionGate permission={PERMISSIONS.PARTIES.VIEW}>
+                <Link className="ml-2 flex items-center text-blue-700 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white" href={`/customer-supplier/view/${CS.id}`}>
+                  <EyeIcon
+                    className="h-5 w-5 mr-1 transition-transform duration-300 ease-in-out transform origin-center group-hover:scale-125 group-hover:-translate-y-1 group-hover:drop-shadow-sm"
+                  />
+                  <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                    {t("table.view")}
+                  </span>
+                </Link>
+              </PermissionGate>
 
-              <Link
-                href={`/customer-supplier/form/${CS.id}`}
-                className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
-              >
-                <PencilIcon
-                  className="
-                    h-4 w-4 mr-1
-                    transition-all duration-300 ease-in-out
-                    group-hover:rotate-[8deg]
-                    group-hover:-translate-y-0.5
-                    group-hover:scale-110
-                    group-hover:drop-shadow-sm
-                  "
-                />
-                <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
-                  {t("table.edit")}
-                </span>
-              </Link>
+              <PermissionGate permission={PERMISSIONS.PARTIES.CHANGE}>
+                <Link
+                  href={`/customer-supplier/form/${CS.id}`}
+                  className="ml-2 flex items-center text-blue-600 hover:text-blue-800 group transition duration-300 dark:text-blue-200 dark:hover:text-white"
+                >
+                  <PencilIcon
+                    className="
+                      h-4 w-4 mr-1
+                      transition-all duration-300 ease-in-out
+                      group-hover:rotate-[8deg]
+                      group-hover:-translate-y-0.5
+                      group-hover:scale-110
+                      group-hover:drop-shadow-sm
+                    "
+                  />
+                  <span className="transition-opacity duration-300 group-hover:opacity-90 text-sm">
+                    {t("table.edit")}
+                  </span>
+                </Link>
+              </PermissionGate>
 
-              <DeleteButton id={CS.id} onDelete={() => handleDelete(CS.id)} />
+              <PermissionGate permission={PERMISSIONS.PARTIES.DELETE}>
+                <DeleteButton id={CS.id} onDelete={() => handleDelete(CS.id)} />
+              </PermissionGate>
 
             </td>
           </tr>
@@ -85,3 +90,5 @@ export default function CustomerSupplierTable({ CSs }) {
     </tbody>
   );
 }
+
+

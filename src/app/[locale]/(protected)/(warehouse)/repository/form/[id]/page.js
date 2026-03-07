@@ -1,6 +1,6 @@
 // import ErrorLoading from "@/components/ErrorLoading"
 import { getRepository } from "../../actions"
-import RepositoryForm from "../page"
+import { RepositoryForm } from "../RepositoryFormComponent";
 import NotFound from "@/components/NotFound"
 import { getTranslations } from "next-intl/server"
 
@@ -14,12 +14,12 @@ async function page({ params }) {
             {repo?.id ? (
                 <RepositoryForm obj={repo} />
             ) : (
-                <NotFound 
-                    name={t("warehouse.repositories.form.error")} 
-                    // customButton={{ href: "/repository/list", label: "Home", icon: <HomeIcon className="w-5 h-5" /> }} 
+                <NotFound
+                    name={t("warehouse.repositories.form.error")}
+                // customButton={{ href: "/repository/list", label: "Home", icon: <HomeIcon className="w-5 h-5" /> }} 
                 />
                 // <ErrorLoading name={"warehouse.repositories.form"} />
-            ) }
+            )}
         </div>
     )
 }

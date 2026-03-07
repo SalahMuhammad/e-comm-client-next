@@ -4,9 +4,15 @@ import { PlusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { TextInput } from '@/components/inputs';
 import BarcodeScanner from '@/components/BarcodeScanner';
 import { useTranslations } from 'next-intl';
+import { usePermissions } from '@/hooks/usePermissions';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 export default function BarcodeManager({ defaultBarcodes = [], onChange = () => { }, isParentOpen = true }) {
     const t = useTranslations('barcodeScanner.manager');
+    const { can } = usePermissions();
+    const canAdd = can(PERMISSIONS.ITEMS.BARCODES.ADD);
+    const canDelete = can(PERMISSIONS.ITEMS.BARCODES.DELETE);
+
     const [barcodes, setBarcodes] = useState(
         defaultBarcodes.map(b => ({
             id: b.id,
@@ -54,14 +60,16 @@ export default function BarcodeManager({ defaultBarcodes = [], onChange = () => 
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                         {t('title')}
                     </h3>
-                    <button
-                        type="button"
-                        onClick={addBarcode}
-                        className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm hover:shadow"
-                    >
-                        <PlusIcon className="w-4 h-4" />
-                        {t('addBarcode')}
-                    </button>
+                    {canAdd && (
+                        <button
+                            type="button"
+                            onClick={addBarcode}
+                            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-sm hover:shadow"
+                        >
+                            <PlusIcon className="w-4 h-4" />
+                            {t('addBarcode')}
+                        </button>
+                    )}
                 </div>
 
                 {/* Barcode List */}
@@ -97,14 +105,16 @@ export default function BarcodeManager({ defaultBarcodes = [], onChange = () => 
                                 />
 
                                 {/* Remove Button */}
-                                <button
-                                    type="button"
-                                    onClick={() => removeBarcode(item.tempId)}
-                                    className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors duration-300"
-                                    aria-label={t('removeBarcode')}
-                                >
-                                    <XMarkIcon className="w-5 h-5" />
-                                </button>
+                                {canDelete && (
+                                    <button
+                                        type="button"
+                                        onClick={() => removeBarcode(item.tempId)}
+                                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors duration-300"
+                                        aria-label={t('removeBarcode')}
+                                    >
+                                        <XMarkIcon className="w-5 h-5" />
+                                    </button>
+                                )}
                             </div>
                         ))
                     )}

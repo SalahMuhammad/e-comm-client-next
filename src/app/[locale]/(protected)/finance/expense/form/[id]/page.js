@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { getExpense } from "../../actions";
-import ExpenseForm from "../page";
+import ExpenseForm from "../Form";
 
 
 async function page({ params }) {

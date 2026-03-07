@@ -1,10 +1,4 @@
-import InvoiceForm from "../../_common/form";
-
-
-async function SalesForm({ initialData }) {
-    return (
-        <InvoiceForm type={'purchases'} initialData={initialData} />
-    )
+import { SalesForm } from "./PurchasesFormComponent";
+export default function PurchasesFormPage({ params, searchParams }) {
+    return <SalesForm />;
 }
-
-export default SalesForm
