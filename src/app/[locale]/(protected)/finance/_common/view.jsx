@@ -73,7 +73,7 @@ async function TransactionView({ id, type }) {
                 {/* <!-- Receipt Details --> */}
                 <div className={styles["receipt-details"]}>
                     <div className={styles["detail-row"]}>
-                        <span className={styles["label"]}>{type === 'payment' ? 'From' : 'To'}</span>
+                        <span className={styles["label"]}>{type === 'payments' ? 'From' : 'To'}</span>
                         <Link className={`${styles["value-field"]}`} href={`/customer-supplier/view/${transaction.owner}`}>
                             <span className="text-sm text-gray-900 hover:text-gray-700 transition-colors print:text-black">{transaction.owner_name}</span>
                         </Link>
@@ -103,7 +103,7 @@ async function TransactionView({ id, type }) {
                         </div> */}
                     </div>
 
-                    <ViewNoteValue note={transaction.notes} recieptAmount={transaction.amount} ref_order={transaction.ref} ref_order_total_amount={transaction?.ref_order_total_amount} />
+                    <ViewNoteValue note={transaction.notes} recieptAmount={transaction.amount} ref_order={transaction.related_order_ref} ref_order_total_amount={transaction?.ref_order_total_amount} />
                 </div>
 
                 {/* <!-- Footer Section --> */}
