@@ -78,6 +78,11 @@ export const getMenuItems = (t, isSuperuser = false) => {
                     icon: <ClockIcon className="w-4 h-4" />,
                     label: t('invoice.subLabels.refund'),
                     path: '/invoice/sales/refund/list',
+                },
+                {
+                    icon: <ClockIcon className="w-4 h-4" />,
+                    label: 'fff',
+                    path: '/invoice/maintenance/list',
                 }
             ]
         },

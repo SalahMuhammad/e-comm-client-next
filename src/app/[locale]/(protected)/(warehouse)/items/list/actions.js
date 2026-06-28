@@ -14,6 +14,19 @@ export async function getItems(queryStringParams) {
     return res
 }
 
+export async function getItemsoptions(queryStringParams) {
+    "use server";
+    const res = await apiRequest(`/api/items/`, {
+        method: "OPTIONS",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        cashe: "no-store", // Disable caching for this request
+    })
+
+    return res
+}
+
 export async function deleteItem(id) {
     "use server";
 

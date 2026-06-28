@@ -7,13 +7,20 @@ import { PulsingDots } from '@/components/loaders';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 
 
-const DynamicOptionsInput = ({ url, label, customLoadOptions, ...props }) => {
+const DynamicOptionsInput = ({ error = "", ...props }) => {
   const handleResponse = useGenericResponseHandler()
   const t = useTranslations("inputs.searchableDropdown");
   const selectId = useId();
   const [isFocused, setIsFocused] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false)
+
+  const {
+    customLoadOptions = null,
+    label = "",
+    url = "",
+    ...rest
+  } = props
 
   useEffect(() => {
     if (typeof document === 'undefined') return
@@ -43,7 +50,7 @@ const DynamicOptionsInput = ({ url, label, customLoadOptions, ...props }) => {
     callback(
       res?.data.results.map((obj) => ({
         value: obj.id,
-        label: obj.name,
+        label: obj.name || obj.obj_representation || ' - ',
       }))
     )
   };
@@ -142,7 +149,7 @@ const DynamicOptionsInput = ({ url, label, customLoadOptions, ...props }) => {
           components={{ NoOptionsMessage }}
           loadingMessage={LoadingMessage}
           placeholder={t("searchPlaceholder")}
-          {...props}
+          {...rest}
         />
         <label
           htmlFor={url}

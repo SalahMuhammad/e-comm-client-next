@@ -796,6 +796,8 @@
 		"updatedAt": "Updated At",
 		"createdBy": "Created By",
 		"updatedBy": "Updated By",
+        "lastUpdatedBy": "Last Updated By",
+        "lastUpdatedAt": "Last Updated At",
 		"actions": "Actions",
 		"all": "All",
 		"searchPlaceholder": "Search ...",
