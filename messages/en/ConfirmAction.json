@@ -1,0 +1,10 @@
+{
+    "delete": "Remove",
+    "title": "Are you sure?",
+    "description": "This action can't be undone.",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "loading": "Working on it…",
+    "success": "Done",
+    "error": "Something went wrong"
+}

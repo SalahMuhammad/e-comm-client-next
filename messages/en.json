@@ -782,7 +782,14 @@
 			"issueDateAfter": "Issue Date From",
 			"issueDateBefore": "Issue Date To",
 			"dueDateAfter": "Due Date From",
-			"dueDateBefore": "Due Date To"
+			"dueDateBefore": "Due Date To",
+
+            "serial_number": "SerialNumber",
+            "malfunctions": "Malfunctions",
+            "date_in": "Date in",
+            "maintenance_date": "Maintenance Date",
+            "date_out": "Date Out",
+            "maintained_by": "Maintained By FN"
 		},
 		"quantity": {
 			"label": "Quantity",

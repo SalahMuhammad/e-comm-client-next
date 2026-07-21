@@ -80,9 +80,10 @@ export const getMenuItems = (t, isSuperuser = false) => {
                     path: '/invoice/sales/refund/list',
                 },
                 {
-                    icon: <ClockIcon className="w-4 h-4" />,
-                    label: 'fff',
+                    label: 'Maintenance',
                     path: '/invoice/maintenance/list',
+                    icon: <WrenchScrewdriverIcon className="w-4 h-4" />,
+                    addPath: '/invoice/maintenance/form',
                 }
             ]
         },
