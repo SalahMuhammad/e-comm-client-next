@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import MaintenanceCard from './MaintenanceCard';
+import { WrenchScrewdriverIcon, PlusIcon } from '@heroicons/react/24/outline';
 
 
 // ─── Main list component ───────────────────────────────────────────────────────
@@ -39,7 +40,7 @@ const MaintenanceList = ({ initialData = { results: [], count: 0 }, pageSize = 2
                         <p className="text-lg font-medium">{t('empty')}</p>
                         <p className="text-sm mt-1">{t('emptyHint')}</p>
                         <button
-                            onClick={() => router.push('/invoice/maintenance/create')}
+                            onClick={() => router.push('/invoice/maintenance/form')}
                             className="mt-6 flex items-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm transition-all duration-200"
                         >
                             <PlusIcon className="w-4 h-4" />
@@ -49,10 +50,10 @@ const MaintenanceList = ({ initialData = { results: [], count: 0 }, pageSize = 2
                 ) : (
                     records?.map((record) => (
                         <MaintenanceCard
-                            key={record.id}
+                            key={record._hashed_id}
                             record={record}
                             onClick={() => router.push(`/invoice/maintenance/view/${record._hashed_id}`)}
-                            onEdit={() => router.push(`/invoice/maintenance/edit/${record._hashed_id}`)}
+                            onEdit={() => router.push(`/invoice/maintenance/form/${record._hashed_id}`)}
                             t={t}
                         />
                     ))

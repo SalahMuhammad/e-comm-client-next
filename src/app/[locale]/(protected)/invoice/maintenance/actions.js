@@ -1,6 +1,10 @@
-'use server';
+'use server'
 
-import { apiRequest } from "@/utils/api";
+
+import { revalidatePath } from 'next/cache'
+import { redirect } from 'next/navigation'
+import { cookies } from 'next/headers'
+import { apiRequest } from '@/utils/api'
 
 
 export async function getTransactions(queryStringParams, id, method="GET") {
@@ -18,90 +22,115 @@ export async function getTransactions(queryStringParams, id, method="GET") {
 }
 
 /**
- * Server action: create or update a maintenance record.
+ * saveMaintenance — server action for the maintenance form.
  *
- * POST  /api/maintenance/      — create
- * PUT   /api/maintenance/{id}/ — update (when formData contains `id`)
+ * Handles both create (POST) and update (PATCH).
+ * The client injects `parts_json` and optionally `maintenance_id`
+ * into the FormData before calling this.
+ *
+ * Returns { errors, values } on validation failure (Django 400),
+ * or redirects to the list page on success.
  */
-export async function createUpdateMaintenance(prevState, formData) {
-    const id        = formData.get('id');
-    const hashed_id = formData.get('hashed_id');
-    const isEdit    = !!id;
+export async function saveMaintenance(prevState, formData) {
+    const maintenanceId = formData.get('maintenance_id')
+    const isEdit = Boolean(maintenanceId)
 
-    // ── Build parts array ──────────────────────────────────────────────────────
-    const parts = [];
-    let i = 0;
-    while (formData.has(`parts[${i}][spare_part]`)) {
-        const spare_part = formData.get(`parts[${i}][spare_part]`);
-        const quantity   = formData.get(`parts[${i}][quantity]`);
-        if (spare_part) {
-            parts.push({
-                spare_part: Number(spare_part),
-                quantity:   Number(quantity) || 1,
-            });
+    const apiBase = process.env.DJANGO_API_BASE_URL  // e.g. http://localhost:8000/api
+
+    // ── Build the JSON body ──────────────────────────────────────────────────
+    // Forward every field that DynamicForm2 produced, plus parts_json.
+    // `parts_json` is already a JSON string; send it as the `parts` key
+    // so Django receives: { client: 1, item: 3, …, parts: [{…}, …] }
+    const body = {}
+    for (const [key, value] of formData.entries()) {
+        if (key === 'maintenance_id') continue          // internal routing key
+        if (key === 'parts_json') {
+            body.parts = JSON.parse(value)              // deserialise for Django
+        } else {
+            // Coerce empty strings to null for optional fields so Django
+            // doesn't receive '' for a nullable DateField.
+            body[key] = value === '' ? null : value
         }
-        i++;
     }
 
-    // ── Build payload ──────────────────────────────────────────────────────────
-    let payload = {};
+    const cookieStore = await cookies()
+    const csrfToken   = cookieStore.get('csrftoken')?.value ?? ''
 
-    if (isEdit) {
-        // PUT — only send updatable fields
-        const date_out = formData.get('date_out');
-        const notes    = formData.get('notes');
-        payload = {
-            ...(date_out ? { date_out } : {}),
-            ...(notes    ? { notes }    : {}),
-            parts,
-        };
-    } else {
-        // POST — full creation payload
-        const client        = formData.get('client');
-        const item          = formData.get('item');
-        const serial_number = formData.get('serial_number');
-        const malfunctions  = formData.get('malfunctions');
-        const notes         = formData.get('notes');
+    const url = isEdit
+        ? `api/maintenance/${maintenanceId}/`
+        : `api/maintenance/`
 
-        payload = {
-            client:        client  ? Number(client) : null,
-            item:          item    ? Number(item)   : null,
-            serial_number: serial_number || '',
-            malfunctions:  malfunctions  || '',
-            notes:         notes         || '',
-            parts,
-        };
-    }
+    const method = isEdit ? 'PATCH' : 'POST'
 
-    // ── Request ────────────────────────────────────────────────────────────────
-    const url    = isEdit
-        ? `/api/maintenance/${id}/`
-        : `/api/maintenance/`;
-    const method = isEdit ? 'PUT' : 'POST';
-
+    let res
     try {
-        const res = await fetch(url, {
+        res = await apiRequest(url, {
             method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-        });
-
-        const data = await res.json();
-
-        if (!res.ok) {
-            return {
-                ok:       false,
-                data,
-                formData: Object.fromEntries(formData.entries()),
-            };
-        }
-
-        return { ok: true, data };
-
-    } catch (error) {
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken':  csrfToken,
+            },
+            credentials: 'include',
+            body: JSON.stringify(body),
+        })
+    } catch (err) {
         return {
-            ok:    false,
-            data:  { detail: 'Network error. Please try again.' },
-        };
+            ...prevState,
+            errors: { non_field_errors: ['Network error — please try again.'] },
+        }
     }
+
+    if (res.ok) {
+        revalidatePath(`/invoice/maintenance/view/${res.data._hashed_id}`)
+        redirect(`/invoice/maintenance/view/${res.data._hashed_id}`)
+    }
+
+    // ── Validation / server errors ───────────────────────────────────────────
+    // Django returns field errors as { field: ['message', …], … }
+    // Parts errors come back as { parts: [{ spare_part: ['…'], quantity: ['…'] }] }
+    // We pass them through as-is so SparePartsEditor and DynamicForm2 can
+    // display them per-field.
+    let errors = {}
+    try {
+        const data = res.data
+        // Flatten single-item arrays for DynamicForm2 compatibility
+        for (const [key, val] of Object.entries(data)) {
+            if (key === 'parts') {
+                // Keep as array-of-objects — SparePartsEditor handles it
+                errors.parts = val
+            } else {
+                errors[key] = Array.isArray(val) ? val.join(' ') : val
+            }
+        }
+    } catch {
+        errors = { non_field_errors: [`Server error ${res.status}`] }
+    }
+
+    // Preserve the submitted field values so the form doesn't reset
+    const values = {}
+    for (const [key, value] of formData.entries()) {
+        if (key !== 'maintenance_id' && key !== 'parts_json') {
+            values[key] = value
+        }
+    }
+
+    return { errors, values }
+}
+
+/**
+ * getTransactions — fetch the OPTIONS metadata (field definitions).
+ * Unchanged from your original; kept here for reference.
+ */
+export async function deleteTransaction(_hashed_id) {
+    const res = await apiRequest(`/api/maintenance/${_hashed_id}/`, {
+        "method": 'Delete',
+        headers: { 'Content-Type': 'application/json' },
+    })
+
+    return res
+}
+
+export async function maintenanceRedirect() {
+    revalidatePath('/invoice/maintenance/list') 
+    redirect('/invoice/maintenance/list') 
 }

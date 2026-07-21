@@ -1,8 +1,8 @@
 import GenericDataTable from '@/components/GenericDataTable';
 import { getTranslations } from 'next-intl/server';
 import { getTransactions } from '../actions'
-import MaintenanceList from './components/List'
-import Header from './components/Header';
+import MaintenanceList from '../components/List'
+import Header from '../components/Header';
 
 
 export default async function Items({ searchParams }) {
@@ -17,12 +17,15 @@ export default async function Items({ searchParams }) {
             queryParams={[
                 { key: 'limit', default: 12 },
                 { key: 'offset', default: 0 },
-                { key: 'name', default: '', searchLabel: t('inputs.search.name') },
-                { key: 'type', default: '', searchLabel: t('inputs.search.type') },
-                { key: 'id', default: '', searchLabel: t('inputs.search.id') },
-                { key: 'barcode', default: '', searchLabel: t('inputs.search.barcode') },
-                { key: 'place', default: '', searchLabel: t('inputs.search.place') },
-                { key: 'origin', default: '', searchLabel: t('inputs.search.origin') },
+                { key: 'client_name', default: '', searchLabel: t('inputs.search.name') },
+                { key: 'serial_number', default: '', searchLabel: t('inputs.search.serial_number') },
+                { key: 'notes', default: '', searchLabel: t('inputs.search.notes') },
+                { key: 'malfunctions', default: '', searchLabel: t('inputs.search.malfunctions') },
+                { key: 'date_in', default: '', searchLabel: t('inputs.search.date_in') },
+                { key: 'maintenance_date', default: '', searchLabel: t('inputs.search.maintenance_date') },
+                { key: 'date_out', default: '', searchLabel: t('inputs.search.date_out') },
+                { key: 'maintained_by', default: '', searchLabel: t('inputs.search.maintained_by') },
+                { key: 'status', default: '', searchLabel: 'Status' },
             ]}
             emptyStateKey="warehouse.repositories.table"
             renderList={({ data }) => (

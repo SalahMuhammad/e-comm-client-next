@@ -1,10 +1,13 @@
-import { StatusBadge } from './utilit';
+import NotifyV2 from '@/components/sonner_actions/NotifyV2';
+import { StatusBadge } from './utility';
 import {
     WrenchScrewdriverIcon,
     CalendarIcon,
     UserIcon,
     CubeIcon,
 } from '@heroicons/react/24/outline';
+import { deleteTransaction, maintenanceRedirect } from '../actions';
+
 
 
 const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
@@ -82,13 +85,20 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
                     <span className="text-xs text-gray-400 dark:text-gray-500">
                         {t('updated')}: {new Date(record?._audit_info?.last_updated_at).toLocaleDateString()}
                     </span>
-                    <button
-                        onClick={onEdit}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-blue-200 dark:border-blue-800 transition-all duration-200"
-                    >
-                        <WrenchScrewdriverIcon className="w-3.5 h-3.5" />
-                        {t('editRecord')}
-                    </button>
+                    <div className='flex gap-8'>
+                        <NotifyV2
+                            variant='action'
+                            action={() => deleteTransaction(record._hashed_id)}
+                            onResponse={(result, error) => { if (!error) maintenanceRedirect() }}
+                        />
+                        <button
+                            onClick={onEdit}
+                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-blue-200 dark:border-blue-800 transition-all duration-200"
+                        >
+                            <WrenchScrewdriverIcon className="w-3.5 h-3.5" />
+                            {t('editRecord')}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
