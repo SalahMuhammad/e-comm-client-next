@@ -3,6 +3,7 @@ import { getOwnersCreditList } from "../actions"
 import numberFormatter from "@/utils/NumberFormatter"
 import { PermissionGateServer } from "@/components/PermissionGateServer"
 import { PERMISSIONS } from "@/config/permissions.config"
+import Link from "next/link"
 
 export async function generateMetadata({ params }) {
     return {
@@ -36,9 +37,9 @@ async function page() {
                         <tbody className="bg-white">
                             {data?.map((ownerObject, index) => (
                                 <tr key={index} className={`border-b border-gray-100 odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700`}>
-                                    <td className="p-4 w-[20rem] max-w-[20rem] text-sm w-sm w-sm text-gray-900">
+                                    <Link href={`/customer-supplier/view/${ownerObject.client_id}`} className="p-4 w-[20rem] max-w-[20rem] text-sm w-sm w-sm text-gray-900">
                                         {ownerObject.name}
-                                    </td>
+                                    </Link>
                                     <td className="p-4 text-sm w-sm" style={{ color: Number(ownerObject.amount) > 0 ? 'green' : 'red' }}>
                                         {numberFormatter(ownerObject.amount)}
                                     </td>
