@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { formatDate, toISODate } from "./dateV2Utils";
+import { formatDate, toISODate2 } from "./dateV2Utils";
 import DatePicker from "./DatePicker";
 
 
@@ -26,6 +26,7 @@ export default function DateInput({ error = "", appearance = {}, ...props }) {
         onBlur = () => { },
         label = "Select date",
         required = false,
+        format = "YYYY-MM-DD",
         ...rest 
     } = props;
 
@@ -46,21 +47,38 @@ export default function DateInput({ error = "", appearance = {}, ...props }) {
 
     // Format the display text based on focus state
     useEffect(() => {
+        // if (isFocused) {
+        //     // Show editable format (MM/DD/YYYY) when typing
+        //     if (internalISO) {
+        //         const [y, m, d] = internalISO.split('-');
+        //         setInputValue(`${parseInt(m)}/${parseInt(d)}/${y}`);
+        //     }
+        // } else {
+        //     // Show pretty format (e.g., October 12, 2023) when blurred
+        //     setInputValue(formatDate(internalISO, currentLocale));
+        // }
+
         if (isFocused) {
-            // Show editable format (MM/DD/YYYY) when typing
             if (internalISO) {
-                const [y, m, d] = internalISO.split('-');
-                setInputValue(`${parseInt(m)}/${parseInt(d)}/${y}`);
+                    const [y, m, d] = internalISO.split('-');
+                    // Dynamically construct format string
+                    const formatted = format
+                        .replace('YYYY', y)
+                        .replace('MM', m.padStart(2, '0'))
+                        .replace('DD', d.padStart(2, '0'));
+                    setInputValue(formatted);
+                } else {
+                    setInputValue("");
+                }
+            } else {
+                // Show pretty format when blurred
+                setInputValue(formatDate(internalISO, currentLocale));
             }
-        } else {
-            // Show pretty format (e.g., October 12, 2023) when blurred
-            setInputValue(formatDate(internalISO, currentLocale));
-        }
-    }, [internalISO, isFocused, currentLocale]);
+    }, [internalISO, isFocused, currentLocale, format]);
 
     // --- Handlers ---
     const commitValue = (val) => {
-        const iso = toISODate(val);
+        const iso = toISODate2(val, format);
         const finalISO = iso || (val === "" ? "" : internalISO); // Revert if invalid
         setInternalISO(finalISO);
         if (finalISO !== internalISO) {
@@ -96,10 +114,9 @@ export default function DateInput({ error = "", appearance = {}, ...props }) {
             
             <div className="relative">
                 <input
-                    {...rest}
                     id={id}
                     type="text"
-                    value={inputValue}
+                    value={internalISO}
                     placeholder=" " // Required for floating label logic
                     onFocus={() => setIsFocused(true)}
                     onBlur={(e) => { onBlur(e); /* commit handled by clickOutside or Enter */ }}
@@ -116,12 +133,13 @@ export default function DateInput({ error = "", appearance = {}, ...props }) {
                         }
                         appearance-none focus:outline-none focus:ring-0 peer cursor-pointer
                     `}
+                    {...rest}
                 />
 
                 <label
                     htmlFor={id}
                     className={`absolute text-sm duration-300 transform -translate-y-6 
-                        scale-75 top-3 origin-[0] peer-placeholder-shown:scale-100 
+                        scale-75 left-2 top-[10px] origin-[0] peer-placeholder-shown:scale-100 
                         peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6
                         ${hasError ? `${errorColor} peer-focus:${errorColor}` : `${labelColor} ${focusLabelColor}`}
                     `}

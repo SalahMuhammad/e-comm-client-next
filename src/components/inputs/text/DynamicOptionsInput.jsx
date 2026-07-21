@@ -7,7 +7,7 @@ import { PulsingDots } from '@/components/loaders';
 import useGenericResponseHandler from '@/components/custom hooks/useGenericResponseHandler';
 
 
-const DynamicOptionsInput = ({ error = "", ...props }) => {
+const DynamicOptionsInput = ({ error = "", appearance = {}, ...props }) => {
   const handleResponse = useGenericResponseHandler()
   const t = useTranslations("inputs.searchableDropdown");
   const selectId = useId();
@@ -15,12 +15,24 @@ const DynamicOptionsInput = ({ error = "", ...props }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false)
 
+
+  const {
+        textColor       = "text-gray-900 dark:text-white",
+        borderColor     = "border-gray-300 dark:border-gray-600",
+        focusColor      = "focus:border-blue-600 dark:focus:border-blue-500",
+        labelColor      = "text-gray-500 dark:text-gray-400",
+        focusLabelColor = "peer-focus:text-blue-600 peer-focus:dark:text-blue-500",
+        errorColor      = "text-red-500 dark:text-red-400",
+        icon            = null,
+    } = appearance;
+
   const {
     customLoadOptions = null,
     label = "",
     url = "",
     ...rest
   } = props
+  const hasError = Boolean(error);
 
   useEffect(() => {
     if (typeof document === 'undefined') return
@@ -112,6 +124,12 @@ const DynamicOptionsInput = ({ error = "", ...props }) => {
     valueContainer: (provided) => ({ ...provided, padding: '0.25rem 0.5rem' }),
   };
 
+  // Determine icon color
+    let iconColorClass = "text-gray-400 dark:text-gray-300";
+    if (hasError) iconColorClass = errorColor;
+    else if (isFocused) iconColorClass = focusColor;
+
+
 
   const NoOptionsMessage = () => (
     <div className="text-sm w-full text-center py-2 h-full" style={{ color: isDarkMode ? '#9ca3af' : '#6b7280' }}>
@@ -131,10 +149,19 @@ const DynamicOptionsInput = ({ error = "", ...props }) => {
         className={`relative w-full mb-3 group ${isMenuOpen ? 'z-50' : 'z-0'}`}
         onClick={(e) => e.stopPropagation()}
       >
+        {icon && (
+            <div className={`absolute top-2.5 right-3 flex items-center pointer-events-none ${iconColorClass}`}>
+                {icon}
+            </div>
+        )}
+
         <AsyncSelect
           instanceId={selectId}
           id={url}
-          className="basic-single peer"
+          className={`basic-single peer ${hasError
+            ? `border-red-500 focus:border-red-500 dark:border-red-400 dark:focus:border-red-400`
+            : `${borderColor} ${focusColor}`
+          }`}
           isLoading={false}
           classNamePrefix="select"
           isDisabled={false}
@@ -158,10 +185,18 @@ const DynamicOptionsInput = ({ error = "", ...props }) => {
             ${isFocused ? 'text-blue-600 dark:text-blue-500' : 'text-gray-500 dark:text-gray-400'}
             peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
             peer-focus:scale-75 peer-focus:-translate-y-6
+            ${hasError
+                ? `peer-focus:${errorColor} ${errorColor}`
+                : `${labelColor} ${focusLabelColor}`
+            }
           `}
         >
           {label}
         </label>
+
+        {hasError && <div className="min-h-[1.25rem] mt-1">
+            <p className={`text-sm ${errorColor}`}>{error}</p>
+        </div>}
       </div>
     </>
   );

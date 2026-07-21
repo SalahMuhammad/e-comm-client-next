@@ -23,3 +23,32 @@ export const toISODate = (input) => {
     }
     return "";
 };
+
+export const toISODate2 = (input, format = "MM/DD/YYYY") => {
+    if (!input) return "";
+    const clean = input.trim().replace(/,/g, '/');
+
+    // 1. Handle ISO YYYY-MM-DD
+    if (/^\d{4}-\d{2}-\d{2}$/.test(clean)) return clean;
+
+    // 2. Parse based on provided format (e.g., "DD/MM/YYYY")
+    const formatParts = format.split(/[-/]/);
+    const inputParts = clean.split(/[-/]/);
+
+    if (formatParts.length === 3 && inputParts.length === 3) {
+        const dateMap = {};
+        formatParts.forEach((part, i) => dateMap[part.toUpperCase()] = inputParts[i]);
+
+        if (dateMap['YYYY'] && dateMap['MM'] && dateMap['DD']) {
+            return `${dateMap['YYYY']}-${dateMap['MM'].padStart(2, "0")}-${dateMap['DD'].padStart(2, "0")}`;
+        }
+    }
+
+    // 3. Fallback to standard parser
+    const parsed = Date.parse(clean);
+    if (!isNaN(parsed)) {
+        const d = new Date(parsed);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    }
+    return "";
+};

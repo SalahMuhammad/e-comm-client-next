@@ -15,12 +15,13 @@ export default function TextArea2({ error = "", appearance = {}, ...props }) {
     } = appearance;
     // input props
     const {
-        id = "",
-        className = "mb-[1.25rem]",
-        placeholder = "",
-        onBlur = (e) => { },
-        minRows = 3,
-        maxRows = 8,
+        id              = "",
+        className       = "mb-[1.25rem]",
+        placeholder     = "",
+        onBlur          = (e) => { },
+        minRows         = 3,
+        maxRows         = 8,
+        onChange        = () => {},
         ...restInputProps
     } = props
     const hasError = Boolean(error);

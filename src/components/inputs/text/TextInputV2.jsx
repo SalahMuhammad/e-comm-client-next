@@ -61,7 +61,7 @@ export default function TextInput({ error = "", appearance = {}, ...props }) {
             <label
                 htmlFor={id}
                 className={`absolute text-sm duration-300 transform -translate-y-6 
-                        scale-75 top-3 origin-[0] peer-placeholder-shown:scale-100 
+                        scale-75 left-2 top-3 origin-[0] peer-placeholder-shown:scale-100 
                         peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6
                         ${hasError
                             ? `peer-focus:${errorColor} ${errorColor}`

@@ -12,7 +12,7 @@ export default function NumberInputV2({ error = "", appearance  = {}, ...props }
         labelColor          = dLabelColor,
         focusLabelColor     = dFocusLabelColor,
         errorColor          = dErrorColor,
-        containerCSSClasses = "",
+        containerCSSClasses = () => {},
         labelCSSClass       = "",
         icon                = null,
     } = appearance;
@@ -23,6 +23,8 @@ export default function NumberInputV2({ error = "", appearance  = {}, ...props }
         placeholder = "",
         onChange    = () => { },
         onBlur      = () => { },
+        className   = () => { },
+        onFocus     = () => { },
         ...restInputProps
     } = props
     const hasError = Boolean(error);
@@ -30,7 +32,7 @@ export default function NumberInputV2({ error = "", appearance  = {}, ...props }
 
 
     return (
-        <div className={`relative w-full mb-1 ${containerCSSClasses}`}>
+        <div className={`${containerCSSClasses(`relative w-full mb-1`)}`}>
             <Iconn 
                 icon={icon} 
                 isFocused={isFocused} 
@@ -52,16 +54,18 @@ export default function NumberInputV2({ error = "", appearance  = {}, ...props }
                     setIsFocused(false);
                     onBlur(e);
                 }}
-                onFocus={() => setIsFocused(true)}
-                className={`
-                    block w-full py-2.5 ${icon ? "pr-12" : "pr-2"} 
-                    pl-2 text-sm bg-transparent border-0 border-b-2
+                onFocus={(e) => {setIsFocused(true); onFocus(e)}}
+                className={`${className(`
+                        block w-full py-2.5 ${icon ? "pr-12" : "pr-2"} 
+                        pl-2 text-sm bg-transparent border-0 border-b-2
+                        appearance-none focus:outline-none focus:ring-0 peer
+                    `)}    
                     ${textColor} 
                     ${hasError
                         ? `border-red-500 focus:border-red-500 dark:border-red-400 dark:focus:border-red-400`
                         : `${borderColor} ${focusColor}`
                     }
-                    appearance-none focus:outline-none focus:ring-0 peer
+                    
                 `}
                 {...restInputProps}
             />

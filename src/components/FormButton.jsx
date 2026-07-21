@@ -28,12 +28,14 @@ export default function FormButton({
     primary: "text-black focus:ring-blue-400",
     secondary: "text-black focus:ring-gray-400",
     danger: "text-black focus:ring-red-400",
+    success: "text-black focus:ring-emerald-400", // New green variant
   };
 
   const variantBg = {
     primary: "bg-blue-100",
     secondary: "bg-gray-100",
     danger: "bg-red-100",
+    success: "bg-emerald-100", // New green background
   };
 
   const loadingStyles = isLoading ? "opacity-60 scale-[0.98] cursor-wait" : "";
