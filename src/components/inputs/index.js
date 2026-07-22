@@ -18,3 +18,5 @@ export { default as FileInput } from './FileInput';
 export { default as FileInputV2 } from './FileInputV2/Main';
 export { default as RadioSwitch } from './RadioSwitch';
 export { default as AvatarUpload } from './AvatarUpload';
+// 
+export { default as BooleanInput } from './BooleanInput'

@@ -33,7 +33,7 @@ export default function BooleanInput({ error = "", appearance = {}, ...props }) 
 
     return (
         <div className={`relative w-full mb-1 ${className}`}>
-            <div className="flex items-center justify-between py-2">
+            <div id={id} className="flex items-center justify-between py-2">
                 <div className="flex items-center space-x-3">
                     {icon && (
                         <div className={`flex items-center pointer-events-none ${iconColorClass}`}>
