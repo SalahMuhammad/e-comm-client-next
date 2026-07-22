@@ -4,7 +4,8 @@ import {
     FileInputV2,
     NumberInputV2,
     DynamicOptionsInput,
-    TextAreaInput2
+    TextAreaInput2,
+    BooleanInput
     // CheckboxInputV2, // verify this is actually exported from @/components/inputs
 } from "@/components/inputs";
 
@@ -35,6 +36,8 @@ export const componentMap = (field) => {
             return DateInputV2;
         case "file upload": // confirm this matches your DRF version's metadata.py
             return FileInputV2;
+        case 'boolean':
+            return BooleanInput
         // case "boolean":
         //     return CheckboxInputV2;
         default:

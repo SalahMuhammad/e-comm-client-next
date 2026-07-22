@@ -112,7 +112,11 @@ export default function DynamicForm2({
             group.fields.forEach(f => renderedFields.add(f))
 
             return (
-                <group.Wrapper key={`group-${name}`}>
+                <group.Wrapper 
+                    key={`group-${name}`} 
+                    {...group.wrapperProps}
+                >
+
                     {group.fields.map(fieldName => {
                         const field = orderedFields[fieldName]
                         if (!field) return null
@@ -150,7 +154,7 @@ export default function DynamicForm2({
 
                 {fieldElements}
                 
-                <div class="p-4 sm:p-6 border-t border-gray-200 dark:border-slate-700 flex justify-center">                    
+                <div className="p-4 sm:p-6 border-t border-gray-200 dark:border-slate-700 flex justify-center">                    
                     {renderSubmit
                         ? renderSubmit(isPending)
                         : (
