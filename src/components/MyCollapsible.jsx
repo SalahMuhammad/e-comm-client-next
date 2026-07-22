@@ -14,12 +14,12 @@ function MyCollapsible({ containerClasses, children, title }) {
             <Collapsible.Trigger asChild>
                 <button
                     type="button"
-                    className="flex items-center justify-between w-full p-2 rounded-lg cursor-pointer text-left focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
+                    className="flex items-center bg-gray-200 justify-between w-full p-2 rounded-lg cursor-pointer text-left focus:outline-none hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
                     aria-label="Toggle Price Inputs"
                 >
                     <span className="text-lg font-semibold text-gray-800 dark:text-white">{title}</span>
                     <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400 group-hover:underline">
-                        {open ? t("hide") : t("show")} {t("inputs")}
+                        {open ? t("hide") : t("show")}
                         <ChevronDownIcon
                             className={`w-5 h-5 transform transition-transform duration-300 ${
                                 open ? "rotate-180" : "rotate-0"
