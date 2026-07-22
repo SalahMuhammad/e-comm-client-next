@@ -5,7 +5,7 @@ import { useState } from "react";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
-function MyCollapsible({ children, title }) {
+function MyCollapsible({ containerClasses, children, title }) {
     const [open, setOpen] = useState(false);
     const t = useTranslations("warehouse.items.form.collapsible");
 
@@ -21,7 +21,7 @@ function MyCollapsible({ children, title }) {
                     <div className="flex items-center gap-1 text-blue-600 dark:text-blue-400 group-hover:underline">
                         {open ? t("hide") : t("show")} {t("inputs")}
                         <ChevronDownIcon
-                            className={`w-5 h-5 transform transition-transform ${
+                            className={`w-5 h-5 transform transition-transform duration-300 ${
                                 open ? "rotate-180" : "rotate-0"
                             }`}
                         />
@@ -29,10 +29,12 @@ function MyCollapsible({ children, title }) {
                 </button>
             </Collapsible.Trigger>
 
-            <Collapsible.Content
-                className="grid md:grid-cols-2 md:gap-2 mt-3 mb-1 transition-all duration-300 ease-in-out data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp"
-            >
-                {children}
+            <Collapsible.Content className="CollapsibleContent overflow-hidden">
+                <div className="pt-3 pb-2">
+                    <div className={containerClasses}>
+                        {children}
+                    </div>
+                </div>
             </Collapsible.Content>
         </Collapsible.Root>
     );
