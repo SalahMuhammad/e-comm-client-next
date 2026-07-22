@@ -10,7 +10,7 @@ function MyCollapsible({ containerClasses, children, title }) {
     const t = useTranslations("warehouse.items.form.collapsible");
 
     return (
-        <Collapsible.Root open={open} onOpenChange={setOpen} className="mb-3">
+        <Collapsible.Root open={open} onOpenChange={setOpen} className="my-3">
             <Collapsible.Trigger asChild>
                 <button
                     type="button"
