@@ -91,6 +91,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                 customeFields={{
                     parts: (formState) => 
                         <SubModelHandler
+                            title='Spare parts'
                             keys={['id', 'spare_part', '_spare_part_name', 'quantity']}
                             defaultValues={{ quantity: 1 }}
                             initialParts={initialData?.parts ?? []}
