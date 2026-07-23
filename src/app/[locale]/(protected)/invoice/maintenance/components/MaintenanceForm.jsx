@@ -9,6 +9,9 @@ import DynamicForm2 from '@/components/DjangoBasedDForm/DForm2'
 import { saveMaintenance } from '../actions'
 import { DynamicOptionsInput, NumberInputV2 } from "@/components/inputs";
 import SubModelHandler from '@/components/form-utils/SubModelHandler'
+import { save } from '@/utils/HTTPMethods';
+import { useNotify } from '@/components/sonner_actions/useNotify';
+import { useRouter } from 'next/navigation';
 
 
 
@@ -26,6 +29,8 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
     // Keep a ref to the latest parts array so we can read it at submit time
     // without the parts state living inside DynamicForm2 (which owns the
     // FormData / useActionState cycle).
+    const notify = useNotify();
+    const router = useRouter();
     const partsRef = useRef(initialData?.parts ?? [])
 
     const handlePartsChange = useCallback((parts) => {
@@ -54,13 +59,31 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                 }))
 
             formData.set('parts_json', JSON.stringify(payload))
+            
 
             // Pass the maintenance id for PATCH routing (edit mode).
             if (initialData?._hashed_id) {
-                formData.set('maintenance_id', initialData._hashed_id)
+                formData.set('_id', initialData._hashed_id)
             }
 
-            return saveMaintenance(prevState, formData)
+            const res = await save(prevState, formData, 'api/maintenance');
+            
+            if (res?.errors && Object.keys(res.errors).length > 0) {
+                notify({
+                    variant: 'error',
+                    title: 'Validation Failed',
+                    description: 'Please check the form for errors.',
+                });
+            } else if (res?.data?._hashed_id && res?.ok) {
+                notify({
+                    variant: 'success',
+                    message: 'Transaction saved successfully!',
+                    description: 'redirecting...',
+                });
+                router.push(`/invoice/maintenance/view/${res.data._hashed_id}`);
+            }
+
+            return res
         },
         [initialData?.id]
     )
