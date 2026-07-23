@@ -1,7 +1,7 @@
 'use client'
 
 
-import { useState, useCallback, useId, useMemo } from 'react'
+import { useState, useCallback, useId } from 'react'
 import MyButtonv2 from './MyButtonv2';
 
 /**
@@ -28,6 +28,7 @@ import MyButtonv2 from './MyButtonv2';
  *                   current parts array so the parent can serialise it
  */
 export default function SubModelHandler({
+    title,
     initialParts = [],
     // url = '?name=',
     // errors = {},
@@ -142,7 +143,7 @@ export default function SubModelHandler({
         <div className="mt-6">
             <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Spare parts
+                    {title}
                 </h3>
                 <MyButtonv2
                     variant='secondary'
@@ -157,7 +158,7 @@ export default function SubModelHandler({
 
             {visibleParts.length === 0 && (
                 <p className="text-sm text-gray-400 dark:text-gray-500 py-4 text-center border border-dashed border-gray-200 dark:border-gray-700 rounded-lg">
-                    No spare parts added yet
+                    No "{title}" added yet
                 </p>
             )}
 
@@ -189,7 +190,7 @@ function DeletedRow({ obj, disabled, onUndo }) {
     return (
         <div className="flex items-center justify-between px-3 py-2 mt-2 rounded-lg border border-dashed border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/10">
             <span className="text-sm text-red-600 dark:text-red-400 line-through">
-                {obj._spare_part_name || `Part #${obj.id}`}
+                {obj?._spare_part_name || `Part #${obj?.id} ?? -`}
             </span>
             <button
                 type="button"
