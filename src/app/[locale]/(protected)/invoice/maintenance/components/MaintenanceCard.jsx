@@ -6,11 +6,14 @@ import {
     UserIcon,
     CubeIcon,
 } from '@heroicons/react/24/outline';
-import { deleteTransaction, maintenanceRedirect } from '../actions';
+import { useRouter } from 'next/navigation';
+import { httpDelete } from '@/utils/HTTPMethods';
 
 
 
 const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
+    const router = useRouter();
+
     return (
         <div
             onClick={onClick}
@@ -88,8 +91,8 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
                     <div className='flex gap-8'>
                         <NotifyV2
                             variant='action'
-                            action={() => deleteTransaction(record._hashed_id)}
-                            onResponse={(result, error) => { if (!error) maintenanceRedirect() }}
+                            action={() => httpDelete(`api/maintenance/${record._hashed_id}/`)}
+                            onResponse={(result, error) => { if (!error) router.refresh() }}
                         />
                         <button
                             onClick={onEdit}

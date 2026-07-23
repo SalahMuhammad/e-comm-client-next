@@ -1,17 +1,19 @@
-import { getTransactions } from '../../actions'
+import { httpRequest } from '@/utils/HTTPMethods'
 import MaintenanceForm from '../../components/MaintenanceForm'
 import NotFound from "@/components/NotFound"
 
 
 async function page({ params }) {
     const { id } = await params
-    const res = await getTransactions(0, 0, "OPTIONS")
-    const res2 = await getTransactions(0, id, "GET")
+    const url = "/api/maintenance/"
+    const metadata = await httpRequest(url, 'OPTIONS')
+    const initialDataResponse = await httpRequest(`${url}${id}/`, 'GET')
+
 
     return (
         <div>
-            {res2.data?._hashed_id ? (
-                <MaintenanceForm metadata={res} initialData={res2.data}/>
+            {initialDataResponse.data?._hashed_id ? (
+                <MaintenanceForm metadata={metadata} initialData={initialDataResponse.data}/>
             ) : (
                 <NotFound 
                     name={'record'} 

@@ -1,8 +1,8 @@
 import GenericDataTable from '@/components/GenericDataTable';
 import { getTranslations } from 'next-intl/server';
-import { getTransactions } from '../actions'
 import MaintenanceList from '../components/List'
 import Header from '../components/Header';
+import { httpRequest } from '@/utils/HTTPMethods';
 
 
 export default async function Items({ searchParams }) {
@@ -11,7 +11,7 @@ export default async function Items({ searchParams }) {
     return (
         <GenericDataTable
             searchParams={searchParams}
-            fetchFn={getTransactions}
+            fetchFn={(qs) => httpRequest('api/maintenance/?' + qs)}
             // columns={["serial_number"]}
             headerSlot={<Header />}
             queryParams={[

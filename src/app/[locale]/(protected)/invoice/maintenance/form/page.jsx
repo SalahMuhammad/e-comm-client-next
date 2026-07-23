@@ -1,9 +1,10 @@
-import { getTransactions } from '../actions'
 import MaintenanceForm from '../components/MaintenanceForm'
+import { httpRequest } from '@/utils/HTTPMethods'
+
 
 
 async function page() {
-    const res = await getTransactions(0, 0, "OPTIONS")
+    const res = await httpRequest('api/maintenance/', "OPTIONS")
 
     return (
         <MaintenanceForm metadata={res}/>

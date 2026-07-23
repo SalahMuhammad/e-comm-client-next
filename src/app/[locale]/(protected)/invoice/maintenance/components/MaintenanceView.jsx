@@ -19,8 +19,8 @@ import { StatusBadge } from './utility';
 import AuditInfo from '@/components/AuditInfo_old_name_tooltip3';
 import AuditInfoAsToolTip from '@/components/AuditInfoAsToolTip';
 import { apiRequest } from '@/utils/api';
-import { deleteTransaction, maintenanceRedirect } from '../actions';
 import NotifyV2 from '@/components/sonner_actions/NotifyV2';
+import { httpDelete } from '@/utils/HTTPMethods';
 
 // ─── Field display helper ──────────────────────────────────────────────────────
 const InfoField = ({ icon: Icon, label, value, mono = false }) => (
@@ -99,8 +99,8 @@ const MaintenanceView = ({ data }) => {
                     <div className="flex items-center gap-8">
                         <NotifyV2
                             variant='action'
-                            action={() => deleteTransaction(data._hashed_id)}
-                            onResponse={(result, error) => { if (!error) maintenanceRedirect() }}
+                            action={() => httpDelete(`api/maintenance/${data._hashed_id}/`)}
+                            onResponse={(result, error) => { if (!error) router.push('/invoice/maintenance/list') }}
                         />
                         {isOpen && (
                             <button

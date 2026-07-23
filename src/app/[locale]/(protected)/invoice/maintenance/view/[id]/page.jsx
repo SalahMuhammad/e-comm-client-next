@@ -1,12 +1,12 @@
 import React from 'react'
 import MaintenanceView from '../../components/MaintenanceView'
-import { getTransactions } from '../../actions'
 import NotFound from "@/components/NotFound"
+import { httpRequest } from '@/utils/HTTPMethods'
 
 
 async function page({ params }) {
     const { id } = await params
-    const res = await getTransactions('', id)
+    const res = await httpRequest(`api/maintenance/${id}/`, "GET")
 
 
     return (
