@@ -55,8 +55,8 @@ export async function save(prevState, formData, endpoint, httpMethod, httpProps)
     //     }
     // }
 
-    const cookieStore = await cookies()
-    const csrfToken   = cookieStore.get('csrftoken')?.value ?? ''
+    // const cookieStore = await cookies()
+    // const csrfToken   = cookieStore.get('csrftoken')?.value ?? ''
 
     const url = isEdit
         ? `${endpoint}/${id}/`
