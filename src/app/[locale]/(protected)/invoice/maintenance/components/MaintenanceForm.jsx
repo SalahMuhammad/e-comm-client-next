@@ -65,7 +65,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                 formData.set('_id', initialData._hashed_id)
             }
 
-            const res = await save(prevState, formData, 'api/maintenance');
+            const res = await save(prevState, formData, 'api/maintenance', ['parts']);
             
             if (res?.errors && Object.keys(res.errors).length > 0) {
                 notify({
