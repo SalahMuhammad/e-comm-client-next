@@ -30,12 +30,12 @@ export async function httpRequest(url, method="GET", cutomeOptions={}) {
  * Returns { errors, values } on validation failure (Django 400),
  * or redirects to the list page on success.
  */
-export async function save(prevState, formData, endpoint, httpMethod, httpProps) {
+export async function save(prevState, formData, endpoint, subModels, httpMethod, httpProps) {
     'use server'
     const _idName = '_id'
     const id = formData.get(_idName)
     const isEdit = Boolean(id)
-    const subModelsNames = new Set();
+    const subModelsNames = new Set(subModels);
 
     // ── Build the JSON body ──────────────────────────────────────────────────
     // Forward every field that DynamicForm2 produced, plus parts_json.
@@ -91,7 +91,6 @@ export async function save(prevState, formData, endpoint, httpMethod, httpProps)
             if (key.includes('_json')) {
                 const filedKey = key.split('_json')[0]
                 body[filedKey] = JSON.parse(value)
-                subModelsNames.add(filedKey)
             } else {
                 body[key] = value === '' ? null : value
             }
