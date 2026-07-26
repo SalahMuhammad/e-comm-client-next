@@ -1,8 +1,6 @@
 'use server'
 
-import { revalidatePath } from "next/cache";
 import { apiRequest } from "./api";
-import { redirect } from 'next/navigation'
 
 
 
@@ -43,22 +41,22 @@ export async function save(prevState, formData, endpoint, httpMethod, httpProps)
     // Forward every field that DynamicForm2 produced, plus parts_json.
     // `parts_json` is already a JSON string; send it as the `parts` key
     // so Django receives: { client: 1, item: 3, …, parts: [{…}, …] }
-    const body = {}
-    for (const [key, value] of formData.entries()) {
-        if (key === 'id') continue          // internal routing key
-        if (key.includes('_json')) {
-            const filedKey = key.split('_json')[0]
-            body[filedKey] = JSON.parse(value)              // deserialise for Django
-            subModelsNames.add(filedKey)
-        } else {
-            // Coerce empty strings to null for optional fields so Django
-            // doesn't receive '' for a nullable DateField.
-            body[key] = value === '' ? null : value
-        }
-    }
+    // const body = {}
+    // for (const [key, value] of formData.entries()) {
+    //     if (key === 'id') continue          // internal routing key
+    //     if (key.includes('_json')) {
+    //         const filedKey = key.split('_json')[0]
+    //         body[filedKey] = JSON.parse(value)              // deserialise for Django
+    //         subModelsNames.add(filedKey)
+    //     } else {
+    //         // Coerce empty strings to null for optional fields so Django
+    //         // doesn't receive '' for a nullable DateField.
+    //         body[key] = value === '' ? null : value
+    //     }
+    // }
 
-    // const cookieStore = await cookies()
-    // const csrfToken   = cookieStore.get('csrftoken')?.value ?? ''
+    const cookieStore = await cookies()
+    const csrfToken   = cookieStore.get('csrftoken')?.value ?? ''
 
     const url = isEdit
         ? `${endpoint}/${id}/`
@@ -68,16 +66,47 @@ export async function save(prevState, formData, endpoint, httpMethod, httpProps)
     if (! method)
         method = isEdit ? 'PATCH' : 'POST'
 
+    // 1. Check if the FormData contains any binary files or file keys
+    let hasFiles = false
+    for (const [key, value] of formData.entries()) {
+        if (value instanceof File || key.includes('_file_')) {
+            hasFiles = true
+            break
+        }
+    }
+
+    let requestBody
+    let headers = {}
+
+    if (hasFiles) {
+        // 2. If files are present, pass the FormData directly.
+        // Do NOT set 'Content-Type' so fetch automatically sets 'multipart/form-data' with the boundary.
+        if (formData.has('id')) formData.delete('id')
+            requestBody = formData
+    } else {
+        // 3. Standard JSON path for non-file forms
+        const body = {}
+        for (const [key, value] of formData.entries()) {
+            if (key === 'id') continue
+            if (key.includes('_json')) {
+                const filedKey = key.split('_json')[0]
+                body[filedKey] = JSON.parse(value)
+                subModelsNames.add(filedKey)
+            } else {
+                body[key] = value === '' ? null : value
+            }
+        }
+        requestBody = JSON.stringify(body)
+        headers['Content-Type'] = 'application/json'
+    }
+
     let res
     try {
         res = await apiRequest(url, {
             method,
-            headers: {
-                'Content-Type': 'application/json',
-                // 'X-CSRFToken':  csrfToken,
-            },
+            headers,
             credentials: 'include',
-            body: JSON.stringify(body),
+            body: requestBody,
             ...httpProps
         })
     } catch (err) {
