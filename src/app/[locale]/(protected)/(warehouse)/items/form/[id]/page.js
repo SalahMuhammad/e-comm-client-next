@@ -1,27 +1,29 @@
-import { getItem } from "../../actions"
-// import ErrorLoading from "@/components/ErrorLoading"
-import ItemsForm from "../ItemsForm"
 import NotFound from "@/components/NotFound"
 import { getTranslations } from "next-intl/server"
+import ItemsForm from '../../components/ItemsFormV2'
+import { httpRequest } from "@/utils/HTTPMethods"
+
+
 
 async function page({ params }) {
-  const { id } = await params
-  const res = await getItem(id)
-  const t = await getTranslations("")
+    const { id } = await params
+    const url = "/api/items/"
+    const metadata = await httpRequest(url, 'OPTIONS')
+    const initialDataResponse = await httpRequest(`${url}${id}/`, 'GET')
+    const t = await getTranslations("")
 
-  return (
-    <div>
-      {res.data?.id ? (
-        <ItemsForm obj={res.data} />
-      ) : (
-        <NotFound
-          name={t("warehouse.items.form.error")}
-        // customButton={{ href: "/items/list", label: "Home", icon: <HomeIcon className="w-5 h-5" /> }} 
-        />
-        //   <ErrorLoading name={"warehouse.items.form"} />
-      )}
-    </div>
-  )
+
+    return (
+        <div>
+            {initialDataResponse.data?.id ? (
+                <ItemsForm metadata={metadata} initialData={initialDataResponse.data}/>
+            ) : (
+                <NotFound 
+                    name={t("warehouse.items.form.error")}
+                />
+            ) }
+        </div>
+    )
 }
 
 export default page

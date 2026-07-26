@@ -223,7 +223,7 @@ async function ItemView({ id }) {
                                     </div>
 
                                     <div className="space-y-3">
-                                        {item.type_name && (
+                                        {item._type_name && (
                                             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-purple-100/30 dark:border-gray-600/30">
                                                 <div className="flex items-center gap-2">
                                                     <TagIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
@@ -232,7 +232,7 @@ async function ItemView({ id }) {
                                                     </span>
                                                 </div>
                                                 <span className="font-bold text-purple-600 dark:text-purple-400 text-sm sm:text-base pl-8 sm:pl-0">
-                                                    {item.type_name}
+                                                    {item._type_name}
                                                 </span>
                                             </div>
                                         )}
@@ -262,6 +262,86 @@ async function ItemView({ id }) {
                                                 </span>
                                             </div>
                                         )}
+                                    </div>
+                                </div>
+
+                                {/* Third Column - Barcodes (only when barcodes exist) */}
+                                {(item?.barcodes?.length > 0) && (
+                                    <div className="space-y-6">
+                                        <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-cyan-100/50 dark:border-gray-600/30">
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="p-2 bg-cyan-500/10 rounded-lg">
+                                                    <QrCodeIcon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                                                </div>
+                                                <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("barcodes")}</h2>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                {item.barcodes.map((obj, index) => (
+                                                    <div key={index} className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-cyan-100/30 dark:border-gray-600/30">
+                                                        <div className="text-base font-bold text-cyan-600 dark:text-cyan-400 text-center">
+                                                            {obj.barcode}
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* ? Column - Additional information */}
+                                <div className="space-y-6">
+                                    <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-cyan-100/50 dark:border-gray-600/30">
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="p-2 bg-cyan-500/10 rounded-lg">
+                                                <InformationCircleIcon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                                            </div>
+                                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">Additional information</h2>
+                                        </div>
+
+                                        <div className="space-y-2">
+                                            {item.part_number && (
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-purple-100/30 dark:border-gray-600/30">
+                                                    <div className="flex items-center gap-2">
+                                                        <GlobeAltIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                                                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
+                                                            Part Number:
+                                                        </span>
+                                                    </div>
+                                                    <span className="font-bold text-purple-600 dark:text-purple-400 text-sm sm:text-base pl-8 sm:pl-0">
+                                                        {item.part_number}
+                                                    </span>
+                                                </div>
+                                            )}
+
+                                            {item.description && (
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-purple-100/30 dark:border-gray-600/30">
+                                                    <div className="flex items-center gap-2">
+                                                        <GlobeAltIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                                                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
+                                                            Description:
+                                                        </span>
+                                                    </div>
+                                                    <span className="font-bold text-purple-600 dark:text-purple-400 text-sm sm:text-base pl-8 sm:pl-0 whitespace-pre-line">
+                                                        {item.description}
+                                                    </span>
+                                                </div>
+                                            )}
+
+                                            {item.note && (
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-purple-100/30 dark:border-gray-600/30">
+                                                    <div className="flex items-center gap-2">
+                                                        <GlobeAltIcon className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                                                        <span className="text-gray-700 dark:text-gray-300 font-medium text-sm sm:text-base">
+                                                            note:
+                                                        </span>
+                                                    </div>
+                                                    <span className="font-bold text-purple-600 dark:text-purple-400 text-sm sm:text-base pl-8 sm:pl-0 whitespace-pre-line">
+                                                        {item.note}
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
 
@@ -325,30 +405,6 @@ async function ItemView({ id }) {
                                     </div>
                                 </div>
                             </div>
-
-                            {/* Third Column - Barcodes (only when barcodes exist) */}
-                            {(item?.barcodes?.length > 0) && (
-                                <div className="space-y-6">
-                                    <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-cyan-100/50 dark:border-gray-600/30">
-                                        <div className="flex items-center gap-3 mb-4">
-                                            <div className="p-2 bg-cyan-500/10 rounded-lg">
-                                                <QrCodeIcon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
-                                            </div>
-                                            <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("barcodes")}</h2>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            {item.barcodes.map((obj, index) => (
-                                                <div key={index} className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-cyan-100/30 dark:border-gray-600/30">
-                                                    <div className="text-base font-bold text-cyan-600 dark:text-cyan-400 text-center">
-                                                        {obj.barcode}
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>
