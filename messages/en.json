@@ -98,7 +98,8 @@
 				"barcodes": "Barcodes",
 				"outOfStock": "Out of Stock",
 				"notFound": "Item Not Found",
-				"noAccess": "You don't have permission to view this item."
+				"noAccess": "You don't have permission to view this item.",
+                "priceLog": "Price Log"
 			}
 		},
 		"repositories": {

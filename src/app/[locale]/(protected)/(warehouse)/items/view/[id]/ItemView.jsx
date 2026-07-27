@@ -288,8 +288,8 @@ async function ItemView({ id }) {
                                         </div>
                                     </div>
                                 )}
-
-                                {/* ? Column - Additional information */}
+                            </div>
+                            <div className="space-y-6">
                                 <div className="space-y-6">
                                     <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-cyan-100/50 dark:border-gray-600/30">
                                         <div className="flex items-center gap-3 mb-4">
@@ -405,6 +405,46 @@ async function ItemView({ id }) {
                                     </div>
                                 </div>
                             </div>
+                            {item.item_price_log.length > 0 && (
+                                <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-gray-700/50 dark:to-gray-600/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-lg border border-orange-100/50 dark:border-gray-600/30">
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="p-2 bg-orange-500/10 rounded-lg">
+                                            <TagIcon className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                                        </div>
+                                        <h2 className="text-xl font-bold text-gray-900 dark:text-white">{t("priceLog")}</h2>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        {item.item_price_log?.map((log, index) => (
+                                            <div key={index} className="p-3 bg-white/60 dark:bg-gray-800/60 rounded-lg border border-orange-100/30 dark:border-gray-600/30">
+                                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+                                                    <div className="flex items-center gap-2">
+                                                        <CurrencyDollarIcon className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                                                        <span className="text-gray-900 dark:text-white font-bold text-sm">
+                                                            {log.price}
+                                                        </span>
+                                                        {log.notes && (
+                                                            <span className="text-xs text-gray-500 dark:text-gray-400 font-normal">
+                                                                ({log.notes})
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                    <div className="text-right pl-8 sm:pl-0 flex flex-col sm:items-end gap-1">
+                                                        <div className="text-orange-600 dark:text-orange-400 text-xs font-medium">
+                                                            <LocalizedDate date={log.date} format="long" />
+                                                        </div>
+                                                        {log._by_username && (
+                                                            <div className="text-gray-500 dark:text-gray-400 text-xs">
+                                                                {t('by')} {log._by_username}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
