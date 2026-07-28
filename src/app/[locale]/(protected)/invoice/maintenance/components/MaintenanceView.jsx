@@ -21,6 +21,10 @@ import AuditInfoAsToolTip from '@/components/AuditInfoAsToolTip';
 import { apiRequest } from '@/utils/api';
 import NotifyV2 from '@/components/sonner_actions/NotifyV2';
 import { httpDelete } from '@/utils/HTTPMethods';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
+
+
 
 // ─── Field display helper ──────────────────────────────────────────────────────
 const InfoField = ({ icon: Icon, label, value, mono = false }) => (
@@ -40,7 +44,9 @@ const MaintenanceView = ({ data }) => {
     const router = useRouter();
     const t = useTranslations('maintenance.view');
     const [closing, setClosing] = useState(false);
-
+    // permission Names
+    const editPermission = PERMISSIONS.MAINTENANCE_INVOICES.CHANGE
+    const deletePermission = PERMISSIONS.MAINTENANCE_INVOICES.DELETE
 
     if (!data) {
         return (
@@ -97,28 +103,34 @@ const MaintenanceView = ({ data }) => {
                     </button>
 
                     <div className="flex items-center gap-8">
-                        <NotifyV2
-                            variant='action'
-                            action={() => httpDelete(`api/maintenance/${data._hashed_id}/`)}
-                            onResponse={(result, error) => { if (!error) router.push('/invoice/maintenance/list') }}
-                        />
+                        <PermissionGate permission={deletePermission}>
+                            <NotifyV2
+                                variant='action'
+                                action={() => httpDelete(`api/maintenance/${data._hashed_id}/`)}
+                                onResponse={(result, error) => { if (!error) router.push('/invoice/maintenance/list') }}
+                            />
+                        </PermissionGate>
                         {isOpen && (
-                            <button
-                                onClick={handleQuickClose}
-                                disabled={closing}
-                                className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-green-700 dark:text-green-400 border border-green-300 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors disabled:opacity-50"
-                            >
-                                <CheckCircleIcon className="w-4 h-4" />
-                                {closing ? t('closing') : t('markClosed')}
-                            </button>
+                            <PermissionGate permission={editPermission}>
+                                <button
+                                    onClick={handleQuickClose}
+                                    disabled={closing}
+                                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-green-700 dark:text-green-400 border border-green-300 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors disabled:opacity-50"
+                                >
+                                    <CheckCircleIcon className="w-4 h-4" />
+                                    {closing ? t('closing') : t('markClosed')}
+                                </button>
+                            </PermissionGate>
                         )}
-                        <button
-                            onClick={() => router.push(`/invoice/maintenance/form/${data._hashed_id}`)}
-                            className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200"
-                        >
-                            <PencilSquareIcon className="w-4 h-4" />
-                            {t('edit')}
-                        </button>
+                        <PermissionGate permission={editPermission}>
+                            <button
+                                onClick={() => router.push(`/invoice/maintenance/form/${data._hashed_id}`)}
+                                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold text-sm shadow-md hover:shadow-lg transition-all duration-200"
+                            >
+                                <PencilSquareIcon className="w-4 h-4" />
+                                {t('edit')}
+                            </button>
+                        </PermissionGate>
                     </div>
                 </div>
             </div>

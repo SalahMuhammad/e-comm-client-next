@@ -84,6 +84,13 @@ export const PERMISSIONS = {
         DELETE: 'sales.delete_salesinvoice',
     },
 
+    MAINTENANCE_INVOICES: {
+        VIEW: 'maintenance.view_maintenance',
+        ADD: 'maintenance.add_maintenance',
+        CHANGE: 'maintenance.change_maintenance',
+        DELETE: 'maintenance.delete_maintenance',
+    },
+
     // Finance - Payments
     PAYMENTS: {
         VIEW: 'payment.view_payment2',

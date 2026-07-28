@@ -8,11 +8,17 @@ import {
 } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { httpDelete } from '@/utils/HTTPMethods';
+import { PermissionGate } from '@/components/PermissionGate';
+import { PERMISSIONS } from '@/config/permissions.config';
 
 
 
 const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
     const router = useRouter();
+
+    // Get permissions based on the type
+    const editPermission = PERMISSIONS.MAINTENANCE_INVOICES.CHANGE
+    const deletePermission = PERMISSIONS.MAINTENANCE_INVOICES.DELETE
 
     return (
         <div
@@ -89,18 +95,22 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
                         {t('updated')}: {new Date(record?._audit_info?.last_updated_at).toLocaleDateString()}
                     </span>
                     <div className='flex gap-8'>
-                        <NotifyV2
-                            variant='action'
-                            action={() => httpDelete(`api/maintenance/${record._hashed_id}/`)}
-                            onResponse={(result, error) => { if (!error) router.refresh() }}
-                        />
-                        <button
-                            onClick={onEdit}
-                            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-blue-200 dark:border-blue-800 transition-all duration-200"
-                        >
-                            <WrenchScrewdriverIcon className="w-3.5 h-3.5" />
-                            {t('editRecord')}
-                        </button>
+                        <PermissionGate permission={deletePermission}>
+                            <NotifyV2
+                                variant='action'
+                                action={() => httpDelete(`api/maintenance/${record._hashed_id}/`)}
+                                onResponse={(result, error) => { if (!error) router.refresh() }}
+                            />
+                        </PermissionGate>
+                        <PermissionGate permission={editPermission}>
+                            <button
+                                onClick={onEdit}
+                                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 border border-blue-200 dark:border-blue-800 transition-all duration-200"
+                            >
+                                <WrenchScrewdriverIcon className="w-3.5 h-3.5" />
+                                {t('editRecord')}
+                            </button>
+                        </PermissionGate>
                     </div>
                 </div>
             </div>

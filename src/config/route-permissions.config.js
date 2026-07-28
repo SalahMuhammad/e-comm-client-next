@@ -63,6 +63,14 @@ export const routePermissions = {
     "/invoice/purchases/view/:id": ["purchase.view_purchaseinvoices"],
 
     // ============================================================================
+    // maintenance ROUTES
+    // ============================================================================
+    "/invoice/maintenance/list": ["maintenance.view_maintenance"],
+    "/invoice/maintenance/form": ["maintenance.add_maintenance"],
+    "/invoice/maintenance/form/:id": ["maintenance.change_maintenance"],
+    "/invoice/maintenance/view/:id": ["maintenance.view_maintenance"],
+
+    // ============================================================================
     // CUSTOMERS & SUPPLIERS ROUTES
     // ============================================================================
     "/customer-supplier/list": ["buyer_supplier_party.view_party"],
