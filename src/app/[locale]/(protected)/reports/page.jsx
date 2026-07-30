@@ -110,6 +110,22 @@ async function page({ params }) {
                 }
             ]
         },
+        {
+            title: t("reportSections.bills.title"),
+            icon: ArrowPathIcon,
+            color: "emerald",
+            gradient: "from-emerald-500 to-emerald-600",
+            darkGradient: "dark:from-emerald-600 dark:to-emerald-700",
+            links: [
+                {
+                    href: "/reports/maintenance-history/",
+                    label: t("reportSections.bills.links.maintenance.label"),
+                    description: t("reportSections.bills.links.maintenance.description"),
+                    icon: ArrowPathIcon,
+                    permission: PERMISSIONS.MAINTENANCE_INVOICES.VIEW
+                }
+            ]
+        },
     ];
 
     // Filter sections and their links based on current user's permissions
