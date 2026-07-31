@@ -52,3 +52,10 @@ export const toISODate2 = (input, format = "MM/DD/YYYY") => {
     }
     return "";
 };
+
+export const ensureISOString = (val) => {
+    if (val instanceof Date) {
+        return val.toISOString().split('T')[0];
+    }
+    return val ?? "";
+};

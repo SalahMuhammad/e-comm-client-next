@@ -53,6 +53,7 @@
       "dateIn":            "Date In",
       "maintenanceDate":   "Maintenance Date",
       "dateOut":           "Date Out",
+      "cost":              "Cost",
       "duration":          "Duration",
       "days":              "days",
       "stillOpen":         "Still open",

@@ -12,11 +12,15 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 // import UserAvatar from "@/components/UserAvatar"; // UserAvatar is used inside AvatarUpload
 // import { useRef } from "react";
 import { AvatarUpload } from "@/components/inputs";
+import { useRouter } from "next/navigation";
+
+
 
 function UserForm({ user, groups = [], permissions = [] }) {
     const t = useTranslations("user-management.form");
     const tGlobal = useTranslations("");
     const [state, formAction, isPending] = useActionState(createUpdateUser, { errors: {} });
+    const router = useRouter()
 
     // Track selected groups and permissions
     const [localGroups, setLocalGroups] = useState(groups);
@@ -52,7 +56,6 @@ function UserForm({ user, groups = [], permissions = [] }) {
 
     useEffect(() => {
         if (!state?.status) return;
-        if (handleGenericErrors(state)) return;
 
         if (state.ok) {
             if (user?.id) {
@@ -125,13 +128,13 @@ function UserForm({ user, groups = [], permissions = [] }) {
                 t={t}
                 redirectPath="/user-management/list/"
                 isModal={false}
-                onSuccess={() => {
-                    if (user?.id) {
-                        toast.success(tGlobal("global.form.editSuccess"));
-                    } else {
-                        toast.success(tGlobal("global.form.createSuccess"));
-                    }
-                }}
+                // onSuccess={() => {
+                //     if (user?.id) {
+                //         toast.success(tGlobal("global.form.editSuccess"));
+                //     } else {
+                //         toast.success(tGlobal("global.form.createSuccess"));
+                //     }
+                // }}
             >
                 <div className="space-y-6">
                     {/* Basic Info Section */}

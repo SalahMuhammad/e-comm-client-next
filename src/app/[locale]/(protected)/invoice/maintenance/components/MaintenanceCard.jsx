@@ -5,6 +5,7 @@ import {
     CalendarIcon,
     UserIcon,
     CubeIcon,
+    CurrencyDollarIcon
 } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { httpDelete } from '@/utils/HTTPMethods';
@@ -53,6 +54,14 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
                             <UserIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
                             <p className="text-sm text-gray-600 dark:text-gray-400 truncate">{record._client_name}</p>
                         </div>
+
+                        {/* cost */}
+                        {record?.cost && (
+                            <div className="flex items-center gap-1.5">
+                                <CurrencyDollarIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 shrink-0" />
+                                <p className="text-sm text-gray-600 dark:text-gray-400 truncate">{record.cost}</p>
+                            </div>
+                        )}
 
                         {/* Malfunctions preview */}
                         {record.malfunctions && (

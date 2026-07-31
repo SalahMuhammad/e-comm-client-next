@@ -2,47 +2,44 @@
 
 import { useState } from "react";
 
-
-export default function NumberInputV2({ error = "", appearance  = {}, ...props }) {
-    // style
+export default function NumberInputV2({ error = "", appearance = {}, ...props }) {
     const {
-        textColor           = dTextColor,
-        borderColor         = dBorderColor,
-        focusColor          = dFocusColor,
-        labelColor          = dLabelColor,
-        focusLabelColor     = dFocusLabelColor,
-        errorColor          = dErrorColor,
-        containerCSSClasses = () => {},
-        labelCSSClass       = "",
-        icon                = null,
+        textColor       = "text-gray-900 dark:text-white",
+        borderColor     = "border-gray-300 dark:border-gray-600",
+        focusColor      = "focus:border-blue-600 dark:focus:border-blue-500",
+        labelColor      = "text-gray-500 dark:text-gray-400",
+        focusLabelColor = "peer-focus:text-blue-600 peer-focus:dark:text-blue-500",
+        errorColor      = "text-red-500 dark:text-red-400",
+        icon            = null,
     } = appearance;
+
     // input props
     const {
         id          = "",
         min         = 0,
+        className   = "mb-[1.25rem]",
         placeholder = "",
         onChange    = () => { },
         onBlur      = () => { },
-        className   = () => { },
         onFocus     = () => { },
         ...restInputProps
-    } = props
+    } = props;
+
     const hasError = Boolean(error);
     const [isFocused, setIsFocused] = useState(false);
 
+    // Determine icon color
+    let iconColorClass = "text-gray-400 dark:text-gray-300";
+    if (hasError) iconColorClass = errorColor;
+    else if (isFocused) iconColorClass = focusColor;
 
     return (
-        <div className={`${containerCSSClasses(`relative w-full mb-1`)}`}>
-            <Iconn 
-                icon={icon} 
-                isFocused={isFocused} 
-                containerColor={hasError 
-                    ? errorColor 
-                    : isFocused 
-                        ? focusColor 
-                        : null
-                }
-            />
+        <div className={`relative w-full mb-1 ${className}`}>
+            {icon && (
+                <div className={`absolute top-2.5 right-3 flex items-center pointer-events-none ${iconColorClass}`}>
+                    {icon}
+                </div>
+            )}
 
             <input
                 id={id}
@@ -54,18 +51,18 @@ export default function NumberInputV2({ error = "", appearance  = {}, ...props }
                     setIsFocused(false);
                     onBlur(e);
                 }}
-                onFocus={(e) => {setIsFocused(true); onFocus(e)}}
-                className={`${className(`
-                        block w-full py-2.5 ${icon ? "pr-12" : "pr-2"} 
-                        pl-2 text-sm bg-transparent border-0 border-b-2
-                        appearance-none focus:outline-none focus:ring-0 peer
-                    `)}    
-                    ${textColor} 
+                onFocus={(e) => {
+                    setIsFocused(true);
+                    onFocus(e);
+                }}
+                className={`
+                    block w-full py-2.5 pr-12 pl-2 text-sm bg-transparent border-0 border-b-2
+                    ${textColor}
                     ${hasError
                         ? `border-red-500 focus:border-red-500 dark:border-red-400 dark:focus:border-red-400`
                         : `${borderColor} ${focusColor}`
                     }
-                    
+                    appearance-none focus:outline-none focus:ring-0 peer
                 `}
                 {...restInputProps}
             />
@@ -73,14 +70,12 @@ export default function NumberInputV2({ error = "", appearance  = {}, ...props }
             <label
                 htmlFor={id}
                 className={`absolute text-sm duration-300 transform -translate-y-6 
-                        translate-x-2 scale-75 top-3 z-10 origin-[0] 
-                        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 
-                        peer-focus:scale-75 peer-focus:-translate-y-8 ${labelCSSClass}
-                        ${hasError 
-                            // ? `peer-focus:${errorColor} ${errorColor}` 
-                            ? `peer-focus:${errorColor}` 
-                            : `${labelColor} ${focusLabelColor}
-                        `}
+                        scale-75 left-2 top-2 origin-[0] peer-placeholder-shown:scale-100 
+                        peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6
+                        ${hasError
+                            ? `peer-focus:${errorColor} ${errorColor}`
+                            : `${labelColor} ${focusLabelColor}`
+                        }
                 `}
             >
                 {placeholder}
@@ -93,26 +88,4 @@ export default function NumberInputV2({ error = "", appearance  = {}, ...props }
             )}
         </div>
     );
-}
-
-const dTextColor = "text-gray-900 dark:text-white";
-const dBorderColor = "border-gray-300 dark:border-gray-600";
-const dFocusColor = "focus:border-blue-600 dark:focus:border-blue-500";
-const dLabelColor = "text-gray-500 dark:text-gray-400";
-const dFocusLabelColor = "peer-focus:text-blue-600 peer-focus:dark:text-blue-500";
-const dErrorColor = "text-red-500 dark:text-red-400";
-
-const Iconn = ({ icon, containerColor }) => {
-     // Determine icon color
-    let iconColorClass = containerColor || "text-gray-400 dark:text-gray-300";
-
-
-    return icon && (
-        <div className={`absolute top-2.5 right-3 flex 
-                        items-center pointer-events-none ${iconColorClass}
-            `}
-        >
-            {icon}
-        </div>
-    )
 }

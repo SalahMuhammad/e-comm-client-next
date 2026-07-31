@@ -11,7 +11,7 @@ export default async function Items({ searchParams }) {
     return (
         <GenericDataTable
             searchParams={searchParams}
-            fetchFn={(qs) => httpRequest('api/maintenance/?' + qs)}
+            fetchFn={(qs) => httpRequest('api/maintenance/' + qs)}
             // columns={["serial_number"]}
             headerSlot={<Header />}
             queryParams={[

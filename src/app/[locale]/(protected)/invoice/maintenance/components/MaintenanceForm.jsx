@@ -4,13 +4,14 @@
 // If you need the initial data fetch on the server, split into a server
 // component that fetches, and a client component that receives the props.
 
-import { useRef, useCallback } from 'react'
+import { useRef, useCallback, useEffect, useState } from 'react'
 import DynamicForm2 from '@/components/DjangoBasedDForm/DForm2'
 import { DynamicOptionsInput, NumberInputV2 } from "@/components/inputs";
 import SubModelHandler from '@/components/form-utils/SubModelHandler'
-import { save } from '@/utils/HTTPMethods';
+import { save, httpRequest } from '@/utils/HTTPMethods';
 import { useNotify } from '@/components/sonner_actions/useNotify';
 import { useRouter } from 'next/navigation';
+import { ensureISOString } from '@/components/inputs/date/dateV2Utils';
 
 
 
@@ -31,9 +32,20 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
     const notify = useNotify();
     const router = useRouter();
     const partsRef = useRef(initialData?.parts ?? [])
+    const [serverConfig, setServerConfig] = useState({})
 
     const handlePartsChange = useCallback((parts) => {
         partsRef.current = parts
+    }, [])
+
+    useEffect(() => {
+        async function getData() {
+            const res = await httpRequest('api/services/configuration/')
+            if(res.ok)
+                setServerConfig(res.data?.items?.maintenance_optional_filters?.fields)
+        }
+
+        getData()
     }, [])
 
     // Wrap the real server action to inject parts_json into FormData before
@@ -100,7 +112,8 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                 by: initialData.by,
                 malfunctions: initialData.malfunctions,
                 notes: initialData.notes,
-                _hashed_id: initialData._hashed_id
+                _hashed_id: initialData._hashed_id,
+                cost: initialData.cost
             },
         }
         : DEFAULT_STATE
@@ -129,7 +142,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                                         part={obj}
                                         rowErrors={rowErrors}
                                         disabled={formState.isPending}
-                                        // url={url}
+                                        defaultFilter={serverConfig?.spare_parts}
                                         onSparePartChange={(selectedOption, actionMeta) =>
                                             updateFields(obj._rowKey, {
                                                 spare_part: selectedOption?.value ?? null,
@@ -145,17 +158,22 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                             }}
                         />
                 }}
-                fieldProps={{date_in: {format: "YYYY-MM-DD"}}}
+
+                
+                fieldProps={{
+                    date_in: {format: "YYYY-MM-DD", defaultValue: ensureISOString(new Date())},
+                    cost: {defaultValue: 0}
+                }}
                 ignore={['parts_json']}
                 metadata={metadata}
                 action={actionWithParts}
                 initialState={initialState}
-                fieldOrder={['client', 'item', 'serial_number', 'date_in', 'maintenance_date', 'date_out', 'by', 'malfunctions', 'notes']}
+                fieldOrder={['client', 'item', 'serial_number', 'date_in', 'maintenance_date', 'date_out', 'malfunctions', 'notes','maintained_by', 'cost']}
                 dynamicOptionsInputURL={{
-                    item: 'api/items/?name=',
+                    item: `api/items/?${serverConfig?.maintainable_items ? serverConfig?.maintainable_items + '&' : ''}name=`,
                     client: 'api/buyer-supplier-party/?s=',
                     maintained_by: 'api/employees/?first_name=',
-                    parts: 'api/items/?name=',
+                    // parts: 'api/items/?name=',
                 }}
             />
         </div>
@@ -167,6 +185,7 @@ function SparepartFormRow({
     uid,
     index,
     part,
+    defaultFilter,
     rowErrors,
     disabled,
     onSparePartChange,
@@ -176,12 +195,12 @@ function SparepartFormRow({
     return (
         <div className="flex items-start gap-2 p-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
             {/* Spare part autocomplete */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-3/4">
                 <DynamicOptionsInput
                     id={`${uid}-spare-${index}`}
                     label="Spare part"
                     // name={`parts[${index}][spare_part]`}
-                    url={'api/items/?name='}
+                    url={`api/items/?${defaultFilter ? defaultFilter + '&' : ''}name=`}
                     defaultValue={{value: part.spare_part, label: part._spare_part_name}}
                     // displayValue={part._spareName}
                     error={rowErrors.spare_part}
@@ -200,16 +219,6 @@ function SparepartFormRow({
                 disabled={disabled}
                 error={rowErrors.quantity}
                 placeholder='Qty'
-                appearance={{containerCSSClasses: (defaultProps) => `relative w-24 shrink-0 mb-1`}}
-                className={(defaultStyle) => `
-                        w-full rounded-md border px-2 py-1.5 text-sm
-                        border-gray-300 dark:border-gray-600
-                        bg-white dark:bg-gray-800
-                        text-gray-900 dark:text-gray-100
-                        focus:outline-none focus:ring-2 focus:ring-primary-500
-                        disabled:opacity-50
-                        ${rowErrors.quantity ? 'border-red-500 focus:ring-red-500' : ''}
-                    `}
                 onFocus={(e) => e.target.select()}
             />
 

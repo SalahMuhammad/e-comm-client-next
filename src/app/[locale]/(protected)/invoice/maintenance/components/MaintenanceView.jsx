@@ -14,6 +14,7 @@ import {
     DocumentTextIcon,
     ClockIcon,
     CheckCircleIcon,
+    CurrencyDollarIcon
 } from '@heroicons/react/24/outline';
 import { StatusBadge } from './utility';
 import AuditInfo from '@/components/AuditInfo_old_name_tooltip3';
@@ -173,6 +174,7 @@ const MaintenanceView = ({ data }) => {
                                 ? `${Math.max(1, Math.round((new Date(data.date_out) - new Date(data.date_in)) / 86400000))} ${t('days')}`
                                 : t('stillOpen')
                         } />
+                        {data?.cost && <InfoField icon={CurrencyDollarIcon} label={t('cost')} value={data.cost} />}
                     </div>
                 </div>
 
