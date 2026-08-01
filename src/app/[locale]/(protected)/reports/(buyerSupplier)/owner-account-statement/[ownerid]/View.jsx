@@ -2,6 +2,8 @@ import CompanyDetailsHead from "@/components/CompanyDetailsHead";
 import numberFormatter from "@/utils/NumberFormatter";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { InlineLinkIcon } from '@/components/MyLink'
+
 
 
 function PageView({ data }) {
@@ -16,7 +18,9 @@ function PageView({ data }) {
     return (
         <div className="p-6 space-y-6 min-w-2xl">
             <CompanyDetailsHead >
-                <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Account statement for "{data?.data?.list?.[0]?.owner_name}"</h2>
+                <InlineLinkIcon href={`/customer-supplier/view/${data.data?.owner_id}`}>
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Account statement for "{data?.data?.list?.[0]?.owner_name}"</h2>
+                </InlineLinkIcon>
             </CompanyDetailsHead>
 
             <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
@@ -32,8 +36,8 @@ function PageView({ data }) {
                             </tr>
                         </thead>
                         <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            {Object.entries(data.data?.count).map(([key, value]) => (
-                                <tr key={key + value} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                            {Object.entries(data.data?.count).map(([key, value], index) => (
+                                <tr key={key + index} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{t(`creditTotals.items.${key}`)}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{value}</td>
                                 </tr>
@@ -57,10 +61,10 @@ function PageView({ data }) {
                         </thead>
                         <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                             {data?.data?.credit_totals && Object.entries(data.data.credit_totals).length > 0 ? (
-                                Object.entries(data.data.credit_totals).map(([key, value]) => {
+                                Object.entries(data.data.credit_totals).map(([key, value], index) => {
                                     const label = t(`creditTotals.items.${key.split(' ').join('')}`)
                                     return (
-                                        <tr key={key} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                        <tr key={key + index} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{label}</td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{numberFormatter(value)}</td>
                                         </tr>
@@ -97,7 +101,7 @@ function PageView({ data }) {
                                 const amount = transaction?.amount ? transaction.amount : transaction.total_amount
 
                                 return (
-                                    <tr key={transaction.id + transaction.type.replaceAll(' ', '')} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700">
+                                    <tr key={(transaction?.id || transaction?.hashed_id) + transaction.type.replaceAll(' ', '')} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 dark:border-gray-700">
                                         <DynamicRefIdLink transaction={transaction} />
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                                             {transaction.type}
@@ -144,6 +148,9 @@ const DynamicRefIdLink = ({ transaction }) => {
             break;
         case 'debt settlement':
             url = `/finance/debt-settlement/list?s=${transaction.owner_name}`
+            break;
+        case 'maintenance':
+            url = `/invoice/maintenance/view/${transaction.hashed_id}`
             break;
     }
 
