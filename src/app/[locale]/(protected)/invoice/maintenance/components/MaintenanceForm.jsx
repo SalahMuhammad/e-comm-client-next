@@ -162,7 +162,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                 
                 fieldProps={{
                     date_in: {format: "YYYY-MM-DD", defaultValue: ensureISOString(new Date())},
-                    cost: {defaultValue: 0}
+                    cost: {defaultValue: initialState.values.cost || 0}
                 }}
                 ignore={['parts_json']}
                 metadata={metadata}
