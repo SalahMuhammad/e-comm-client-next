@@ -32,22 +32,12 @@ function PageView({ data }) {
                             </tr>
                         </thead>
                         <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            <tr className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{t('types.salesInvoices')}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{data.data.sales_invs}</td>
-                            </tr>
-                            <tr className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{t('types.returnSalesInvoices')}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{data.data.return_sales_invs}</td>
-                            </tr>
-                            <tr className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{t('types.purchasesInvoices')}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{data.data.purcahses_invs}</td>
-                            </tr>
-                            <tr className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{t('types.payments')}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{data.data.payments}</td>
-                            </tr>
+                            {Object.entries(data.data?.count).map(([key, value]) => (
+                                <tr key={key + value} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{t(`creditTotals.items.${key}`)}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">{value}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>

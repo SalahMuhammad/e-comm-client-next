@@ -863,10 +863,12 @@
 			"title": "Credit Totals",
 			"items": {
 				"InitialCreditBalance": "Due from last year",
-				"SalesInvoices": "Sales Invoices",
-				"ReturnSalesInvoices": "Sales Invoices Refund",
-				"payments": "Payments",
-				"ReversPayments": "Revers Payments",
+				"SalesInvoice": "Sales Invoices",
+				"ReturnInvoice": "Sales Invoices Refund",
+				"Payment2": "Payments",
+                "Maintenance": "Maintenance",
+                "DebtSettlement": "Debt Settlement",
+				"ReversePayment2": "Revers Payments",
 				"PurchaseInvoices": "Purchase Invoices"
 			}
 		},
