@@ -50,7 +50,7 @@ function MyForm({ initialData, type }) {
         label: state.formData?.payment_method_name || initialData?.payment_method_name
     } : undefined
 
-
+    const invoiceRefUrl = `/api/${type == 'reverse-payment' ? 'purchases' : 'sales'}/?${selectedOwner ? `owner=${selectedOwner}&` : ''}status=3,4&no=`
 
 
     const handleAccountTransformer = (res, callback) => {
@@ -154,7 +154,7 @@ function MyForm({ initialData, type }) {
                 {(type === 'payment' || type === 'payments' || type === 'reverse-payment') && (
                     <div className={`mt-8 ${styles.formGroup}`}>
                         <DynamicOptionsInput
-                            url={selectedOwner ? `/api/sales/?owner=${selectedOwner}&status=3,4&no=` : '/api/sales/?no='}
+                            url={invoiceRefUrl}
                             label={t('finance.fields.relatedInvoice')}
                             customLoadOptions={handleSaleTransformer}
                             name="sale"
