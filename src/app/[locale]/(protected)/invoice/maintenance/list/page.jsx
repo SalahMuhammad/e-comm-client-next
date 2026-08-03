@@ -18,7 +18,7 @@ export default async function Items({ searchParams }) {
                 { key: 'limit', default: 12 },
                 { key: 'offset', default: 0 },
                 { key: 'client_name', default: '', searchLabel: t('inputs.search.name') },
-                { key: 'serial_number', default: '', searchLabel: t('inputs.search.serial_number') },
+                { key: 'serial_numbers', default: '', searchLabel: t('inputs.search.serial_number') },
                 { key: 'notes', default: '', searchLabel: t('inputs.search.notes') },
                 { key: 'malfunctions', default: '', searchLabel: t('inputs.search.malfunctions') },
                 { key: 'date_in', default: '', searchLabel: t('inputs.search.date_in') },

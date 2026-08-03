@@ -66,5 +66,58 @@
       "createdAt":         "Created at",
       "lastUpdatedBy":     "Last updated by",
       "lastUpdatedAt":     "Last updated at"
+    },
+    "report": {
+      "title": "Maintenance Report",
+      "serial": "Serial Number",
+      "search": "Search",
+      "error404": "No Items linked with this serial number",
+      "table": {
+        "title": "Maintenance history",
+        "serial": "Serial",
+        "filter": "Filter status:",
+        "all": "All",
+        "fields": {
+          "client": "Client",
+          "dateIn": "Date In",
+          "dateOut": "Date Out",
+          "maintenanceDate":"Maintenance Date",
+          "maintainedBy": "Maintained by",
+          "parts": "Parts used",
+          "replacedParts": "Parts replaced",
+          "status": "Status",
+          "malfunctions": "Malfunctions",
+          "notes": "Notes",
+          "item": "Item"
+        },
+        "status": {
+          "pending":     "Pending",
+          "inProgress":  "In Progress",
+          "completed":   "MCompleted",
+          "cancelled":   "Cancelled",
+          "rejected":    "Rejected",
+          "maintained":  "Maintained",
+          "unknown":     "Unknown"
+        },
+        "timeLineChart": {
+          "nothing": "No records to display",
+          "pts": "{pts} pts",
+          "all": "All",
+          "status": "Click points to add them to comparison",
+          "unlimited": "Unlimited",
+          "upTo": "up to {num}"
+        },
+        "table": {
+          "field": "Field",
+          "was": "was {status}",
+          "changed": "changed",
+          "comparison": "Comparison",
+          "unlimited": "Unlimited comparisons",
+          "clear": "Clear all",
+          "des": "Select 2 or more points on the chart to compare their details.",
+          "context": "context (prev)",
+          "selected": "selected"
+        }
+      }
     }
 }
