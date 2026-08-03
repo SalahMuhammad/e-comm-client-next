@@ -24,6 +24,7 @@ import NotifyV2 from '@/components/sonner_actions/NotifyV2';
 import { httpDelete } from '@/utils/HTTPMethods';
 import { PermissionGate } from '@/components/PermissionGate';
 import { PERMISSIONS } from '@/config/permissions.config';
+import { InlineLinkIcon } from '@/components/MyLink';
 
 
 
@@ -162,8 +163,12 @@ const MaintenanceView = ({ data }) => {
 
                     {/* Info grid */}
                     <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-5 pt-5 border-t border-gray-100 dark:border-gray-700">
-                        <InfoField icon={UserIcon} label={t('client')} value={data._client_name} />
-                        <InfoField icon={CubeIcon} label={t('item')} value={data._item_name} />
+                        <InlineLinkIcon href={`/customer-supplier/view/${data.client}`}>
+                            <InfoField icon={UserIcon} label={t('client')} value={data._client_name} />
+                        </InlineLinkIcon>
+                        <InlineLinkIcon href={`/items/view/${data.item}`}>
+                            <InfoField icon={CubeIcon} label={t('item')} value={data._item_name} />
+                        </InlineLinkIcon>
                         <InfoField label={t('serialNumber')} value={data.serial_number} mono />
                         <InfoField icon={UserIcon} label={t('handledBy')} value={data._maintained_by_name} />
                         <InfoField icon={CalendarIcon} label={t('dateIn')} value={data.date_in} />
