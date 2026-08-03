@@ -1006,6 +1006,15 @@
 						"description": "Detailed account statements"
 					}
 				}
+			},
+			"bills": {
+				"title": "Bills",
+				"links": {
+					"maintenance": {
+						"label": "Maintenance",
+						"description": "Maintenance history"
+					}
+				}
 			}
 		},
 		"generate": "Generate"
