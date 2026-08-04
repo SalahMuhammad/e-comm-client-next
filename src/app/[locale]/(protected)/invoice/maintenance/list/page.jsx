@@ -6,7 +6,7 @@ import { httpRequest } from '@/utils/HTTPMethods';
 
 
 export default async function Items({ searchParams }) {
-    const t = await getTranslations();
+    const t = await getTranslations('maintenance.view');
 
     return (
         <GenericDataTable
@@ -17,15 +17,15 @@ export default async function Items({ searchParams }) {
             queryParams={[
                 { key: 'limit', default: 12 },
                 { key: 'offset', default: 0 },
-                { key: 'client_name', default: '', searchLabel: t('inputs.search.name') },
-                { key: 'serial_numbers', default: '', searchLabel: t('inputs.search.serial_number') },
-                { key: 'notes', default: '', searchLabel: t('inputs.search.notes') },
-                { key: 'malfunctions', default: '', searchLabel: t('inputs.search.malfunctions') },
-                { key: 'date_in', default: '', searchLabel: t('inputs.search.date_in') },
-                { key: 'maintenance_date', default: '', searchLabel: t('inputs.search.maintenance_date') },
-                { key: 'date_out', default: '', searchLabel: t('inputs.search.date_out') },
-                { key: 'maintained_by', default: '', searchLabel: t('inputs.search.maintained_by') },
-                { key: 'status', default: '', searchLabel: 'Status' },
+                { key: 'client_name', default: '', searchLabel: t('client') },
+                { key: 'serial_numbers', default: '', searchLabel: t('serialNumber') },
+                { key: 'notes', default: '', searchLabel: t('notes') },
+                { key: 'malfunctions', default: '', searchLabel: t('malfunctions') },
+                { key: 'date_in', default: '', searchLabel: t('dateIn') },
+                { key: 'maintenance_date', default: '', searchLabel: t('maintenanceDate') },
+                { key: 'date_out', default: '', searchLabel: t('dateOut') },
+                { key: 'maintained_by', default: '', searchLabel: t('handledBy') },
+                { key: 'status', default: '', searchLabel: t('status.status') },
             ]}
             emptyStateKey="warehouse.repositories.table"
             renderList={({ data }) => (

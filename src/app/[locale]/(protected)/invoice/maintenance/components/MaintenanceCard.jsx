@@ -15,7 +15,7 @@ import { PERMISSIONS } from '@/config/permissions.config';
 import { IconBoxLink } from '@/components/MyLink';
 import { handleQuickCloseMaintenance } from './MaintenanceView';
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { toast } from 'sonner';
 
 
 
@@ -23,10 +23,9 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
     const router = useRouter();
     const [closing, setClosing] = useState(false);
 
-
     // Get permissions based on the type
-    const editPermission = PERMISSIONS.MAINTENANCE_INVOICES.CHANGE
-    const deletePermission = PERMISSIONS.MAINTENANCE_INVOICES.DELETE
+    const editPermission = PERMISSIONS.MAINTENANCE_INVOICES.CHANGE;
+    const deletePermission = PERMISSIONS.MAINTENANCE_INVOICES.DELETE;
 
     return (
         <div
@@ -43,7 +42,7 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
                             <span className="text-xs font-mono text-gray-400 dark:text-gray-500">#{record._hashed_id}</span>
                             {record?.serial_number && (
                                 <span className="text-xs px-2 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 font-mono">
-                                    SN: {record.serial_number}
+                                    {t('snPrefix')}: {record.serial_number}
                                 </span>
                             )}
                         </div>
@@ -114,7 +113,7 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
                         {!record.date_out && (
                             <PermissionGate permission={editPermission}>
                                 <button
-                                    onClick={() => handleQuickCloseMaintenance(record._hashed_id, setClosing, () => {toast.success(t('closedSuccess')); router.refresh();})}
+                                    onClick={() => handleQuickCloseMaintenance(record._hashed_id, setClosing, () => { toast.success(t('closedSuccess')); router.refresh(); })}
                                     disabled={closing}
                                     className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-green-700 dark:text-green-400 border border-green-300 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors disabled:opacity-50"
                                 >
@@ -125,7 +124,7 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
                         )}
                         <PermissionGate permission={deletePermission}>
                             <IconBoxLink href={`/reports/maintenance-history/${record.serial_number}`}>
-                                Analysis
+                                {t('analysis')}
                             </IconBoxLink>
                         </PermissionGate>
                         <PermissionGate permission={deletePermission}>

@@ -36,6 +36,7 @@
         "updated": "تم التحديث",
         "editRecord": "تعديل / إغلاق",
         "markClosed": "إغلاق السجل",
+        "snPrefix": "الرقم التسلسلي",
         "closing": "جاري الإغلاق…",
         "closedSuccess": "تم إغلاق السجل بنجاح",
         "analysis": "التحليل",
@@ -53,6 +54,13 @@
         "client": "العميل",
         "item": "المنتج",
         "serialNumber": "الرقم التسلسلي",
+        "status": {
+            "status": "الحالة",
+            "pending": "قيد الانتظار",
+            "in_progress": "قيد التنفيذ",
+            "completed": "مكتمل",
+            "cancelled": "ملغي"
+        },
         "handledBy": "بواسطة",
         "dateIn": "تاريخ الاستلام",
         "maintenanceDate": "تاريخ الصيانة",
