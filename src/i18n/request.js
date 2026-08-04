@@ -16,6 +16,7 @@ export default getRequestConfig(async ({requestLocale}) => {
         MainMenu: (await import(`../../messages/${locale}/MainMenu.json`)).default,
         maintenance: (await import(`../../messages/${locale}/Maintenance.json`)).default,
         ConfirmAction: (await import(`../../messages/${locale}/ConfirmAction.json`)).default,
+        auditInfo: (await import(`../../messages/${locale}/AuditInfo.json`)).default,
     }
   };
 });

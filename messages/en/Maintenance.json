@@ -35,6 +35,7 @@
       "parts":             "parts",
       "updated":           "Updated",
       "editRecord":        "Edit / Close",
+      "analysis":           "Analysis",
       "showing":           "Showing {from}–{to} of {total}"
     },
     "view": {
@@ -62,10 +63,7 @@
       "partId":            "ID:",
       "noParts":           "No spare parts recorded",
       "notes":             "Notes",
-      "createdBy":         "Created by",
-      "createdAt":         "Created at",
-      "lastUpdatedBy":     "Last updated by",
-      "lastUpdatedAt":     "Last updated at"
+      "analysis":          "Analysis"
     },
     "report": {
       "title": "Maintenance Report",

@@ -95,7 +95,7 @@ const MaintenanceView = ({ data }) => {
                         </PermissionGate>
                         <PermissionGate permission={deletePermission}>
                             <IconBoxLink href={`/reports/maintenance-history/${data.serial_number}`}>
-                                Analysis
+                                {t('analysis')}
                             </IconBoxLink>
                         </PermissionGate>
                         {isOpen && (
