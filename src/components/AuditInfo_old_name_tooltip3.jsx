@@ -11,7 +11,7 @@ function AuditInfo({
     time_diff,
     flex_direction = 'flex-col'
 }) {
-    const t = useTranslations('global');
+    const t = useTranslations('auditInfo');
 
 
     return (
