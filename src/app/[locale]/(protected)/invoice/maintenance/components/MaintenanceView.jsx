@@ -24,7 +24,7 @@ import NotifyV2 from '@/components/sonner_actions/NotifyV2';
 import { httpDelete } from '@/utils/HTTPMethods';
 import { PermissionGate } from '@/components/PermissionGate';
 import { PERMISSIONS } from '@/config/permissions.config';
-import { InlineLinkIcon } from '@/components/MyLink';
+import { IconBoxLink, InlineLinkIcon } from '@/components/MyLink';
 
 
 
@@ -69,26 +69,7 @@ const MaintenanceView = ({ data }) => {
     const isOpen = !data.date_out;
 
     // ── Quick status transition (optional convenience action) ──────────────────
-    const handleQuickClose = async () => {
-        setClosing(true);
-        try {
-            const res = await apiRequest(`/api/maintenance/${data._hashed_id}/`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    date_out: new Date().toISOString().split('T')[0],
-                    // parts: data.parts.map((p) => ({ spare_part: p.spare_part, quantity: p.quantity })),
-                }),
-            });
-        if (!res.ok) throw new Error();
-            toast.success(t('closedSuccess'));
-            router.refresh();
-        } catch {
-            toast.error(t('closeError'));
-        } finally {
-            setClosing(false);
-        }
-    };
+    
 
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-950 pb-16">
@@ -112,10 +93,15 @@ const MaintenanceView = ({ data }) => {
                                 onResponse={(result, error) => { if (!error) router.push('/invoice/maintenance/list') }}
                             />
                         </PermissionGate>
+                        <PermissionGate permission={deletePermission}>
+                            <IconBoxLink href={`/reports/maintenance-history/${data.serial_number}`}>
+                                Analysis
+                            </IconBoxLink>
+                        </PermissionGate>
                         {isOpen && (
                             <PermissionGate permission={editPermission}>
                                 <button
-                                    onClick={handleQuickClose}
+                                    onClick={() => handleQuickCloseMaintenance(data._hashed_id, setClosing, () => {toast.success(t('closedSuccess')); router.refresh();})}
                                     disabled={closing}
                                     className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-green-700 dark:text-green-400 border border-green-300 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors disabled:opacity-50"
                                 >
@@ -224,7 +210,7 @@ const MaintenanceView = ({ data }) => {
                                         </div>
                                     </div>
                                     {/* <p className="text-xs text-gray-400 dark:text-gray-500"> */}
-                                        <AuditInfoAsToolTip data={part?._audit_info} />
+                                    <AuditInfoAsToolTip data={part?._audit_info} />
                                     {/* </p> */}
                                 </div>
                             ))}
@@ -257,3 +243,25 @@ const MaintenanceView = ({ data }) => {
 };
 
 export default MaintenanceView;
+
+
+export const handleQuickCloseMaintenance = async (id, setClosing, f) => {
+    setClosing(true);
+    try {
+        const res = await apiRequest(`/api/maintenance/${id}/`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                date_out: new Date().toISOString().split('T')[0],
+            }),
+        });
+        console.log(res)
+        if (!res.ok) throw new Error();
+        f()
+        return true
+    } catch {
+        return false
+    } finally {
+        setClosing(false);
+    }
+};

@@ -5,17 +5,24 @@ import {
     CalendarIcon,
     UserIcon,
     CubeIcon,
-    CurrencyDollarIcon
+    CurrencyDollarIcon,
+    CheckCircleIcon
 } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import { httpDelete } from '@/utils/HTTPMethods';
 import { PermissionGate } from '@/components/PermissionGate';
 import { PERMISSIONS } from '@/config/permissions.config';
+import { IconBoxLink } from '@/components/MyLink';
+import { handleQuickCloseMaintenance } from './MaintenanceView';
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 
 
 const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
     const router = useRouter();
+    const [closing, setClosing] = useState(false);
+
 
     // Get permissions based on the type
     const editPermission = PERMISSIONS.MAINTENANCE_INVOICES.CHANGE
@@ -104,6 +111,23 @@ const MaintenanceCard = ({ record, onClick, onEdit, t }) => {
                         {t('updated')}: {new Date(record?._audit_info?.last_updated_at).toLocaleDateString()}
                     </span>
                     <div className='flex gap-8'>
+                        {!record.date_out && (
+                            <PermissionGate permission={editPermission}>
+                                <button
+                                    onClick={() => handleQuickCloseMaintenance(record._hashed_id, setClosing, () => {toast.success(t('closedSuccess')); router.refresh();})}
+                                    disabled={closing}
+                                    className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold text-green-700 dark:text-green-400 border border-green-300 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 transition-colors disabled:opacity-50"
+                                >
+                                    <CheckCircleIcon className="w-4 h-4" />
+                                    {closing ? t('closing') : t('markClosed')}
+                                </button>
+                            </PermissionGate>
+                        )}
+                        <PermissionGate permission={deletePermission}>
+                            <IconBoxLink href={`/reports/maintenance-history/${record.serial_number}`}>
+                                Analysis
+                            </IconBoxLink>
+                        </PermissionGate>
                         <PermissionGate permission={deletePermission}>
                             <NotifyV2
                                 variant='action'

@@ -91,14 +91,14 @@ export default function MaintenanceComparisonDashboard({
 
   // Passing customStatusStyles down to StatusBadge in render
   const fields = [
-    { key: "client", label: t("fields.client"), accessor: (r) => r._client_name, ignoreDiff: true },
-    { key: "item", label: "Item", accessor: (r) => r._item_name, ignoreDiff: true },
+    { key: "client", label: t("fields.client"), accessor: (r) => r._client_name },
+    { key: "item", label: "Item", accessor: (r) => r._item_name },
     { key: "status", label: "Status", accessor: (r) => r.status, render: (v) => <StatusBadge status={v} customStyles={statusStyles} /> },
-    { key: "date_in", label: t("fields.dateIn"), accessor: (r) => (r.date_in ? formatDate(parseDate(r.date_in)) : null) },
-    { key: "maintenance_date", label: t("fields.maintenanceDate"), accessor: (r) => (r.maintenance_date ? formatDate(parseDate(r.maintenance_date)) : null) },
-    { key: "date_out", label: t("fields.dateOut"), accessor: (r) => (r.date_out ? formatDate(parseDate(r.date_out)) : null) },
+    { key: "date_in", label: t("fields.dateIn"), accessor: (r) => (r.date_in ? formatDate(parseDate(r.date_in)) : null), ignoreDiff: true },
+    { key: "maintenance_date", label: t("fields.maintenanceDate"), accessor: (r) => (r.maintenance_date ? formatDate(parseDate(r.maintenance_date)) : null), ignoreDiff: true },
+    { key: "date_out", label: t("fields.dateOut"), accessor: (r) => (r.date_out ? formatDate(parseDate(r.date_out)) : null), ignoreDiff: true },
     { key: "maintained_by", label: t("fields.maintainedBy"), accessor: (r) => r._maintained_by_name?.trim() || null },
-    { key: "malfunctions", label: t("fields.malfunctions"), accessor: (r) => r.malfunctions },
+    { key: "malfunctions", label: t("fields.malfunctions"), accessor: (r) => r.malfunctions, ignoreDiff: true },
     { key: "notes", label: t("fields.notes"), accessor: (r) => r.notes, ignoreDiff: true },
     { key: "parts", label: t("fields.parts"), accessor: (r) => r.parts, isList: true },
   ];

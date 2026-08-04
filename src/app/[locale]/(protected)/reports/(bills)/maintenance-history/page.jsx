@@ -31,7 +31,7 @@ function page() {
         if (handleResponse(res)) return;
         if (res.ok) {
             if ((res?.data?.count || 0) != 0) {
-                // redirect(`/reports/maintenance-history/${serialNum}`, RedirectType.push);
+                redirect(`/reports/maintenance-history/${serialNum}`, RedirectType.push);
             } else {
                 toast.error(t("error404"))
             }
