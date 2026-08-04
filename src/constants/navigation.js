@@ -80,7 +80,7 @@ export const getMenuItems = (t, isSuperuser = false) => {
                     path: '/invoice/sales/refund/list',
                 },
                 {
-                    label: 'Maintenance',
+                    label: t('invoice.maintenance.headLabel'),
                     path: '/invoice/maintenance/list',
                     icon: <WrenchScrewdriverIcon className="w-4 h-4" />,
                     addPath: '/invoice/maintenance/form',

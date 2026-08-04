@@ -1,0 +1,92 @@
+{
+    "dashboard": {
+        "headLabel": "لوحة التحكم"
+    },
+    "warehouse": {
+        "headLabel": "المستودع",
+        "subLabels": {
+            "items": "الأصناف",
+            "createItem": "إنشاء صنف",
+            "repositories": "المستودعات",
+            "createRepository": "إنشاء مستودع",
+            "damagedItems": "الأصناف التالفة"
+        }
+    },
+    "invoice": {
+        "sales": {
+            "headLabel": "المبيعات"
+        },
+        "purchase": {
+            "headLabel": "المشتريات"
+        },
+        "maintenance": {
+            "headLabel": "الصيانة"
+        },
+        "subLabels": {
+            "invoiceManagement": "إدارة الفواتير",
+            "createInvoice": "إنشاء فاتورة",
+            "refund": "مرتجع المبيعات"
+        }
+    },
+    "customersSuppliers": {
+        "headLabel": "العملاء والموردين",
+        "subLabels": {
+            "management": "إدارة العملاء والموردين",
+            "createInvoice": "إنشاء عميل/مورد"
+        }
+    },
+    "finance": {
+        "headLabel": "المالية",
+        "subLabels": {
+            "payments": "الدفعة",
+            "addPayment": "إضافة دفعة",
+            "expenses": "المصروفات",
+            "addExpenses": "إضافة مصروف",
+            "reversePayment": "عكس الدفعة",
+            "addReversePayment": "إضافة عكس دفعة",
+            "debtSettlement": "تسوية الديون",
+            "debtSettlementForm": "إضافة تسوية ديون",
+            "internalTransfer": "التحويلات الداخلية",
+            "addInternalTransfer": "إضافة تحويل داخلي",
+            "accountVault": "حسابات العمل",
+            "accountTypes": "أنواع الحسابات",
+            "expenseCategories": "تصنيفات المصروفات",
+            "debts": "الديون",
+            "management": "الإدارة"
+        }
+    },
+    "reports": {
+        "headLabel": "التقارير",
+        "subLabels": {
+            "refilled": "الأعيرة المُعبأة والعبوات الكبيرة المستخدمة",
+            "payments": "المدفوعات خلال الفترة",
+            "accountStatement": "كشف حساب العملاء والموردين",
+            "refillableItemsClientClientHas": "العناصر القابلة للتعبئة لدى العملاء"
+        }
+    },
+    "refilledCans": {
+        "headLabel": "العناصر القابلة للتعبئة",
+        "subLabels": {
+            "refilled": "المُعبأة",
+            "createRefilled": "نموذج التعبئة",
+            "refund": "المرتجعات",
+            "createRefund": "نموذج الاسترجاع",
+            "cansWithClints": "العناصر القابلة للتعبئة لدى العملاء"
+        }
+    },
+    "userManagement": {
+        "headLabel": "إدارة المستخدمين",
+        "subLabels": {
+            "users": "المستخدمين",
+            "permissions": "الصلاحيات",
+            "createUser": "إنشاء مستخدم"
+        }
+    },
+    "userDropDown": {
+        "settings": "الإعدادات",
+        "signOut": "تسجيل الخروج"
+    },
+    "settings": "الإعدادات",
+    "signUp": "تسجيل الدخول",
+    "quickAdd": "إضافة سريعة"
+}

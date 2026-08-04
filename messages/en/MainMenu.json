@@ -19,6 +19,9 @@
         "purchase": {
             "headLabel": "Purchase"
         },
+        "maintenance": {
+            "headLabel": "Maintenance"
+        },
         "subLabels": {
             "invoiceManagement": "Invoice management",
             "createInvoice": "Create invoice",
