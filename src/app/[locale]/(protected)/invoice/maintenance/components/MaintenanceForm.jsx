@@ -210,7 +210,6 @@ function SparepartFormRow({
                     // name={`parts[${index}][spare_part]`}
                     url={`api/items/?${defaultFilter ? defaultFilter + '&' : ''}name=`}
                     defaultValue={{value: part.spare_part, label: part._spare_part_name}}
-                    // displayValue={part._spareName}
                     error={rowErrors.spare_part}
                     disabled={disabled}
                     onChange={(selectedOption, actionMeta) => onSparePartChange(selectedOption, actionMeta)}
@@ -235,8 +234,7 @@ function SparepartFormRow({
                 label="Repository"
                 // name={`parts[${index}][spare_part]`}
                 url={`api/repositories/?s=`}
-                defaultValue={{value: part.repository || 10000, label: part._repository_name || 'main'}}
-                // displayValue={part._spareName}
+                defaultValue={{value: part.repository, label: part._repository_name ?? 'main'}}
                 error={rowErrors.repository}
                 disabled={disabled}
                 onChange={(selectedOption, actionMeta) => onRepositoryChange(selectedOption, actionMeta)}
