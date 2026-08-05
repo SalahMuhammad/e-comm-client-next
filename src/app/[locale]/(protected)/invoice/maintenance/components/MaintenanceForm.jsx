@@ -62,10 +62,11 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                     if (!p.id && p._action === 'delete') return false
                     return true
                 })
-                .map(({ id, spare_part, quantity, _action }) => ({
+                .map(({ id, spare_part, quantity, repository, _action }) => ({
                     id,
                     spare_part,
                     quantity,
+                    repository,
                     _action,
                 }))
 
@@ -127,7 +128,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                     parts: (formState) => 
                         <SubModelHandler
                             title='Spare parts'
-                            keys={['id', 'spare_part', '_spare_part_name', 'quantity']}
+                            keys={['id', 'spare_part', '_spare_part_name', 'quantity', 'repository', '_repository_name']}
                             defaultValues={{ quantity: 1 }}
                             initialParts={initialData?.parts ?? []}
                             disabled={formState.isPending}
@@ -151,6 +152,12 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                                         }
                                         onQuantityChange={(val) =>
                                             updateField(obj._rowKey, 'quantity', val)
+                                        }
+                                        onRepositoryChange={(selectedOption, actionMeta) =>
+                                            updateFields(obj._rowKey, {
+                                                repository: selectedOption?.value ?? null,
+                                                repository_name: selectedOption?.label ?? '',
+                                            })
                                         }
                                         onDelete={() => markDeleted(obj._rowKey)}
                                     />
@@ -190,6 +197,7 @@ function SparepartFormRow({
     disabled,
     onSparePartChange,
     onQuantityChange,
+    onRepositoryChange,
     onDelete,
 }) {
     return (
@@ -220,6 +228,18 @@ function SparepartFormRow({
                 error={rowErrors.quantity}
                 placeholder='Qty'
                 onFocus={(e) => e.target.select()}
+            />
+
+            <DynamicOptionsInput
+                id={`${uid}-repository-${index}`}
+                label="Repository"
+                // name={`parts[${index}][spare_part]`}
+                url={`api/repositories/?s=`}
+                defaultValue={{value: part.repository || 10000, label: part._repository_name || 'main'}}
+                // displayValue={part._spareName}
+                error={rowErrors.repository}
+                disabled={disabled}
+                onChange={(selectedOption, actionMeta) => onRepositoryChange(selectedOption, actionMeta)}
             />
 
             {/* Delete button */}

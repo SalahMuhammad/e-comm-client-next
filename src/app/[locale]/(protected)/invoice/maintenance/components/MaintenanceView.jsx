@@ -204,14 +204,12 @@ const MaintenanceView = ({ data }) => {
                                                 {part._spare_part_name || `#${part.spare_part}`}
                                             </p>
                                             <span className="px-3 py-1 rounded-lg bg-gray-50 dark:bg-gray-900/40 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                                                × {part.quantity}
+                                                × {part.quantity} - {part?._repository_name}
                                             </span>
 
                                         </div>
                                     </div>
-                                    {/* <p className="text-xs text-gray-400 dark:text-gray-500"> */}
                                     <AuditInfoAsToolTip data={part?._audit_info} />
-                                    {/* </p> */}
                                 </div>
                             ))}
                         </div>
