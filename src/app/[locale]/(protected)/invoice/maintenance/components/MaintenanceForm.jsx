@@ -42,7 +42,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
         async function getData() {
             const res = await httpRequest('api/services/configuration/')
             if(res.ok)
-                setServerConfig(res.data?.items?.maintenance_optional_filters?.fields)
+                setServerConfig(res.data?.data?.items?.maintenance_optional_filters?.fields)
         }
 
         getData()
