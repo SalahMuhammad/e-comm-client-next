@@ -1,6 +1,6 @@
 import { getTranslations } from "next-intl/server"
 import { getCS } from "../../actions"
-import CSForm from "../page"
+import CSForm from "../../components/CSForm"
 import NotFound from "@/components/NotFound"
 // import ErrorLoading from "@/components/ErrorLoading"
 

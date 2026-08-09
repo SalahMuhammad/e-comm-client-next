@@ -3,14 +3,12 @@
 import { createUpdateCS } from "../actions"
 import { useTranslations } from "next-intl";
 import { useActionState } from "react"
-import { toast } from 'sonner'
 import { TextInput, TextAreaInput } from "@/components/inputs/index"
 import GenericFormShell from '@/components/GenericFormShell';
 
 
 function CSForm({ obj }) {
     const t = useTranslations("customer-supplier.form");
-    const tGlobal = useTranslations("");
     const [state, formAction, isPending] = useActionState(createUpdateCS, { errors: {} });
     const defaultName = state?.formData?.name || (!state?.ok && obj?.name) || ''
     const defaultDetail = state?.formData?.detail || (!state?.ok && obj?.detail) || ''
