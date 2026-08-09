@@ -41,7 +41,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
     useEffect(() => {
         async function getData() {
             const res = await httpRequest('api/services/configuration/')
-            if(res.ok)
+            if (res.ok)
                 setServerConfig(res.data?.data?.items?.maintenance_optional_filters?.fields)
         }
 
@@ -71,7 +71,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                 }))
 
             formData.set('parts_json', JSON.stringify(payload))
-            
+
 
             // Pass the maintenance id for PATCH routing (edit mode).
             if (initialData?._hashed_id) {
@@ -79,7 +79,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
             }
 
             const res = await save(prevState, formData, 'api/maintenance', ['parts']);
-            
+
             if (res?.errors && Object.keys(res.errors).length > 0) {
                 notify({
                     variant: 'error',
@@ -125,7 +125,7 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
             <DynamicForm2
                 title={initialData?._hashed_id ? `Edit maintenance record: ${initialData._hashed_id}` : 'New maintenance record'}
                 customeFields={{
-                    parts: (formState) => 
+                    parts: (formState) =>
                         <SubModelHandler
                             title='Spare parts'
                             keys={['id', 'spare_part', '_spare_part_name', 'quantity', 'repository', '_repository_name']}
@@ -166,16 +166,16 @@ export default function MaintenanceForm({ initialData = null, metadata }) {
                         />
                 }}
 
-                
+
                 fieldProps={{
-                    date_in: {format: "YYYY-MM-DD", defaultValue: ensureISOString(new Date())},
-                    cost: {defaultValue: initialState.values.cost || 0}
+                    date_in: { format: "YYYY-MM-DD", defaultValue: ensureISOString(new Date()) },
+                    cost: { defaultValue: initialState.values.cost || 0 }
                 }}
                 ignore={['parts_json']}
                 metadata={metadata}
                 action={actionWithParts}
                 initialState={initialState}
-                fieldOrder={['client', 'item', 'serial_number', 'date_in', 'maintenance_date', 'date_out', 'malfunctions', 'notes','maintained_by', 'cost']}
+                fieldOrder={['client', 'item', 'serial_number', 'date_in', 'maintenance_date', 'date_out', 'malfunctions', 'notes', 'maintained_by', 'cost']}
                 dynamicOptionsInputURL={{
                     item: `api/items/?${serverConfig?.maintainable_items ? serverConfig?.maintainable_items + '&' : ''}name=`,
                     client: 'api/buyer-supplier-party/?s=',
@@ -209,7 +209,7 @@ function SparepartFormRow({
                     label="Spare part"
                     // name={`parts[${index}][spare_part]`}
                     url={`api/items/?${defaultFilter ? defaultFilter + '&' : ''}name=`}
-                    defaultValue={{value: part.spare_part, label: part._spare_part_name}}
+                    defaultValue={{ value: part.spare_part, label: part._spare_part_name }}
                     error={rowErrors.spare_part}
                     disabled={disabled}
                     onChange={(selectedOption, actionMeta) => onSparePartChange(selectedOption, actionMeta)}
@@ -217,7 +217,7 @@ function SparepartFormRow({
             </div>
 
             {/* Quantity */}
-            <NumberInputV2 
+            <NumberInputV2
                 id={`${uid}-qty-${index}`}
                 min="1"
                 step="1"
@@ -234,7 +234,7 @@ function SparepartFormRow({
                 label="Repository"
                 // name={`parts[${index}][spare_part]`}
                 url={`api/repositories/?s=`}
-                defaultValue={{value: part.repository, label: part._repository_name ?? 'main'}}
+                defaultValue={{ value: part.repository, label: part._repository_name ?? 'main' }}
                 error={rowErrors.repository}
                 disabled={disabled}
                 onChange={(selectedOption, actionMeta) => onRepositoryChange(selectedOption, actionMeta)}
