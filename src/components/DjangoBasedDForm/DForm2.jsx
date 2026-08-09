@@ -61,7 +61,7 @@ export default function DynamicForm2({
         const isControlled = 'value' in fieldOverride
         const defaultProps = resolveDefaultFieldProps(field, name, state?.values, isControlled)
 
-        if (dynamicOptionsInputURL[name] && ! field['url']?.includes(dynamicOptionsInputURL[name])) {
+        if (dynamicOptionsInputURL[name] && !field['url']?.includes(dynamicOptionsInputURL[name])) {
             field['url'] = dynamicOptionsInputURL[name]
         }
 
@@ -100,8 +100,12 @@ export default function DynamicForm2({
             const CustomComponent = customeFields[name];
 
             return (
-                <div key={name}>
-                    {CustomComponent(fieldProps)}
+                <div key={name} className="w-full h-full overflow-x-auto z-50 overflow-y-hidden pb-20">
+                    <div className="flex h-full w-max min-w-full items-center gap-4">
+                        <div className="flex-1 min-w-0">
+                            {CustomComponent(fieldProps)}
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -112,8 +116,8 @@ export default function DynamicForm2({
             group.fields.forEach(f => renderedFields.add(f))
 
             return (
-                <group.Wrapper 
-                    key={`group-${name}`} 
+                <group.Wrapper
+                    key={`group-${name}`}
                     {...group.wrapperProps}
                 >
 
@@ -131,7 +135,7 @@ export default function DynamicForm2({
 
         return (
             // <div key={name} className="flex flex-col">
-                renderField(field, name)
+            renderField(field, name)
             // </div>
         )
     })
@@ -149,16 +153,16 @@ export default function DynamicForm2({
                 )}
 
                 {nonFieldError && (
-                    <NotifyV2 key={Math.random()} message={nonFieldError} variant='error'/> 
+                    <NotifyV2 key={Math.random()} message={nonFieldError} variant='error' />
                 )}
 
                 {fieldElements}
-                
-                <div className="p-4 sm:p-6 border-t border-gray-200 dark:border-slate-700 flex justify-center">                    
+
+                <div className="p-4 sm:p-6 border-t border-gray-200 dark:border-slate-700 flex justify-center">
                     {renderSubmit
                         ? renderSubmit(isPending)
                         : (
-                            <MyButtonv2 
+                            <MyButtonv2
                                 type='submit'
                                 variant={(initialState.values?.id || initialState.values?._hashed_id) ? 'success' : 'primary'}
                                 disabled={isPending}
