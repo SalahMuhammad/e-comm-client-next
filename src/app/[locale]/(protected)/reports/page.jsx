@@ -107,6 +107,14 @@ async function page({ params }) {
                     description: t("reportSections.refillableItems.links.refillableItemsClient.description"),
                     icon: ArrowPathIcon,
                     permission: PERMISSIONS.REFILLABLE_ITEMS.VIEW
+                },
+                ,
+                {
+                    href: "/reports/remaining-refillable-items",
+                    label: t("reportSections.refillableItems.links.refillableItemsAll.label"),
+                    description: t("reportSections.refillableItems.links.refillableItemsAll.description"),
+                    icon: ArrowPathIcon,
+                    permission: PERMISSIONS.REFILLABLE_ITEMS.VIEW
                 }
             ]
         },

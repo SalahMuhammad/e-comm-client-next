@@ -997,6 +997,10 @@
 					"refillableItemsClient": {
 						"label": "Client Refillable Items",
 						"description": "Refillable items client currently has"
+					},
+                    "refillableItemsAll": {
+						"label": "Remaining Refillable Items",
+						"description": "All Refillable items currently outside"
 					}
 				}
 			},

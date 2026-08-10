@@ -17,6 +17,9 @@ export default getRequestConfig(async ({requestLocale}) => {
         maintenance: (await import(`../../messages/${locale}/Maintenance.json`)).default,
         ConfirmAction: (await import(`../../messages/${locale}/ConfirmAction.json`)).default,
         auditInfo: (await import(`../../messages/${locale}/AuditInfo.json`)).default,
+        refillableItems: {
+            AllRemainingCansOutside: (await import(`../../messages/${locale}/refillable-items/AllRemainingCansOutside.json`)).default,
+        }
     }
   };
 });

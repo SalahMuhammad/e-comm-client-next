@@ -1,0 +1,9 @@
+{
+    "title": "Cylinders Balance Report by Owner",
+    "description": "Cylinders inventory and balance report per owner/clinic",
+    "owner": "Owner",
+    "cylindersTotals": "Cylinders Totals",
+    "noDataFound": "No data found",
+    "thankYou": "Thank you for your business!",
+    "generatedOn": "Generated on {date}"
+}
