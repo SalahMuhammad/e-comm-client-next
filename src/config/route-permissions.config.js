@@ -149,6 +149,16 @@ export const routePermissions = {
     "/user-management/list": ["users.view_user"],
     "/user-management/form": ["users.add_user"],
     "/user-management/form/:id": ["users.change_user"],
+
+
+
+
+
+
+
+
+
+    "/services/request-log-manager": ["is_superuser"]
 };
 
 /**

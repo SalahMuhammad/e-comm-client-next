@@ -16,6 +16,8 @@ import { useRoleContext } from '@/app/providers/role-provider.client';
 
 import SettingsModal from './SettingsModal';
 import { API_BASE_URL } from '@/config/api';
+import { InlineLinkIcon } from './MyLink';
+import { PermissionGate } from './PermissionGate';
 // import { getClientAuthToken } from '@/utils/cookieHandler';
 
 export default function Sidebar({ username, token }) {
@@ -130,7 +132,11 @@ export default function Sidebar({ username, token }) {
                         </div>
 
                         <div className="flex items-center">
-
+                            <PermissionGate permission='is_superuser'>
+                                <InlineLinkIcon href='/services/request-log-manager'> 
+                                    Request Log
+                                </InlineLinkIcon>
+                            </PermissionGate>
                             <ThemeToggle />
                             <LanguageToggle />
 
